@@ -5,7 +5,7 @@ BoyceCodd Normalform (BCNF) is the highest Normalform  supported by this applica
 A relation in 1.NF or 2.NF is not adequate, because 1.NF and 2.NF were developed historically as stepping stones to 3.NF and BCNF.
 In some special applications, relations were intentionally left in 2.NF, most time out of performance reasons.
 BCNF was proposed as a simpler form of 3.NF, but it was found to be stricter than 3.NF.
-You don´t have to append the file ending .xml while saving. If you do not write the ending, the system will automatically append .xml.
+You donï¿½t have to append the file ending .xml while saving. If you do not write the ending, the system will automatically append .xml.
 In the export menu, you can choose between text and graphical export.
 The 'Tips of the Day' messages can be (de)activated in Extras/Options.
 In the optionsmenu you can choose the language of the program. Switching the language requires a restart of the programm. 

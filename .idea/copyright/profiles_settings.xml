@@ -1,5 +1,10 @@
 <component name="CopyrightManager">
-  <settings default="">
+  <settings default="dba">
     <module2copyright />
+    <LanguageOptions name="__TEMPLATE__">
+      <option name="separateBefore" value="true" />
+      <option name="separateAfter" value="true" />
+      <option name="box" value="true" />
+    </LanguageOptions>
   </settings>
 </component>

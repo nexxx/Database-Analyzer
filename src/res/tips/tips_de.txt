@@ -1,19 +1,19 @@
-Häufiges Speichern ist sinnvoll!
-Wählen Sie ein Element aus dem Navigationsbaum aus und führen Sie darauf einen Rechtsklick aus um ein Kontextmenü zu öffnen.
-Diese Tipps erscheinen nicht mehr beim Start wenn  sie das zugehörige Kästchen abwählen.
-BoyceCodd Normalform (BCNF) ist die höchste Normalform die von dieser Applikation unterstützt wird.
+HÃ¤ufiges Speichern ist sinnvoll!
+WÃ¤hlen Sie ein Element aus dem Navigationsbaum aus und fÃ¼hren Sie darauf einen Rechtsklick aus um ein KontextmenÃ¼ zu Ã¶ffnen.
+Diese Tipps erscheinen nicht mehr beim Start wenn  sie das zugehÃ¶rige KÃ¤stchen abwÃ¤hlen.
+BoyceCodd Normalform (BCNF) ist die hÃ¶chste Normalform die von dieser Applikation unterstÃ¼tzt wird.
 1.NF und 2.NF sind nicht ausreichend, da sie in der Geschichte als Vorstufen der 3.NF und der BCNF entwickelt wurden.
-Bei manchen speziellen Anwendungen belässt man Relationen absichtlich in 2.NF, meistens aus Performancegründen. 
+Bei manchen speziellen Anwendungen belÃ¤sst man Relationen absichtlich in 2.NF, meistens aus PerformancegrÃ¼nden.
 Die BoyceCodd Normalform (BCNF) wurde als einfachere Form der 3.NF vorgeschlagen, es stellte sich heraus das die BCNF strenger war als die 3.NF.
-Beim Speichern müssen sie die Endung .xml nicht dem Dateinamen hinzufügen. Falls keine Endung angegeben wird, hängt das System automatisch .xml an.
-Beim Exportieren können sie zwischen Text- und Grafikexport auswählen.
-Die 'Tipps des Tages' Meldungen können unter Extras/Optionen (de)aktiviert werden.
-Im Optionsmenü kann die Sprache des Programmes verändert werden. Um den Sprachwechsel fertigzustellen muss das Programm neu gestartet werden.
-Im DB-Baum sehen sie ganz unten die Normalform der Datenbank und falls eine Relation (oder Attribut bzw FD) ausgehält ist, die NF der (Eltern) Relation.
-Sie können ebenso alle Elemente in der grafischen Repräsentation markieren und damit weiterarbeiten.
-Unter der grafischen Repräsentation wird nach Bedarf eine Meldungsleiste eingeblendet.
+Beim Speichern mÃ¼ssen sie die Endung .xml nicht dem Dateinamen hinzufÃ¼gen. Falls keine Endung angegeben wird, hÃ¤ngt das System automatisch .xml an.
+Beim Exportieren kÃ¶nnen sie zwischen Text- und Grafikexport auswÃ¤hlen.
+Die 'Tipps des Tages' Meldungen kÃ¶nnen unter Extras/Optionen (de)aktiviert werden.
+Im OptionsmenÃ¼ kann die Sprache des Programmes verÃ¤ndert werden. Um den Sprachwechsel fertigzustellen muss das Programm neu gestartet werden.
+Im DB-Baum sehen sie ganz unten die Normalform der Datenbank und falls eine Relation (oder Attribut bzw FD) ausgewÃ¤hlt ist, die NF der (Eltern) Relation.
+Sie kÃ¶nnen ebenso alle Elemente in der grafischen ReprÃ¤sentation markieren und damit weiterarbeiten.
+Unter der grafischen ReprÃ¤sentation wird nach Bedarf eine Meldungsleiste eingeblendet.
 Unter Hilfe/Benutzerhandbuch finden sie eine durchsuchbare Hilfe.
-Mit Bearbeiten/Rückgängig können die letzten vorigen Arbeitsschritte rückgängig gemacht werden.
-Unter Bearbeiten/Kundeninformationen oder mit Rechtsklick auf die Datenbank können sie die Metainformationen zum Kunden und Notizen zur Datenbank eingeben.
-Bei der Kundeninformations-notiz kann mit dem Knopf 'akt. Datum einfügen' das Datum und die Uhrzeit eingefügt werden.
-Bei Attributen kann der Datentyp eingestellt werden. Dies erleichtert später die Integration in die Datenbank!
+Mit Bearbeiten/RÃ¼ckgÃ¤ngig kÃ¶nnen die letzten vorigen Arbeitsschritte rÃ¼ckgÃ¤ngig gemacht werden.
+Unter Bearbeiten/Kundeninformationen oder mit Rechtsklick auf die Datenbank kÃ¶nnen sie die Metainformationen zum Kunden und Notizen zur Datenbank eingeben.
+Bei der Kundeninformations-notiz kann mit dem Knopf 'akt. Datum einfÃ¼gen' das Datum und die Uhrzeit eingefÃ¼gt werden.
+Bei Attributen kann der Datentyp eingestellt werden. Dies erleichtert spÃ¤ter die Integration in die Datenbank!
