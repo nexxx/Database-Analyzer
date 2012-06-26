@@ -25,6 +25,10 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 
 /**
@@ -77,13 +81,35 @@ public class About extends JDialog {
       }
     });
 
-    String text = "<html>Database Analyzer<br><br>Version: 1.0<br>Authors: Andreas Freitag, Sebastian Theuermann,<br>Tanja Pongratz, Patrick Prinster, Matej Kollar<br><br>Visit http://www.databasenormalizer.com<br>(c) Copyright, 2012.  All rights reserved.</html>";
+    Properties prop = new Properties();
+    try {
+      InputStream is = this.getClass().getClassLoader()
+              .getResourceAsStream("res/version_num.properties");
+      prop.load(is);
+      is.close();
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (NullPointerException e) {
+      e.printStackTrace();
+    }
+
+    String version_number = "v" + prop.getProperty("versionnumber") +
+            " " + prop.getProperty("state");
+
+    String text = "<html><FONT FACE=Courier New>Database " +
+            "Analyzer<br>" + version_number + "<br><br>Authors: " +
+            "Andreas Freitag, Sebastian Theuermann<br><br>DBA is " +
+            "licensed under the GPL v3 license.<br>For more informations " +
+            "visit: " + "<br>http://www.gnu.org/licenses/</html>";
     JLabel lblText = new JLabel(text);
     lblText.setBackground(Color.white);
     lblText.setOpaque(true);
     lblText.setBorder(new EmptyBorder(5, 5, 5, 5));
     contentPanel.add(lblText, BorderLayout.CENTER);
     jDialog.pack();
+
     setLocationRelativeTo(null);
   }
 }

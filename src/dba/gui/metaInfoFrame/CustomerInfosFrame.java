@@ -68,7 +68,7 @@ public class CustomerInfosFrame extends JDialog implements Observable {
   private ListSelectionModel listSelectionModel;
   private JComboBox<String> cbPerson;
   private JComboBox<String> cbRelations;
-  public final String DATE_FORMAT_NOW = "EE, dd.MMM yyyy - HH:mm";
+  private final String DATE_FORMAT_NOW = "EE, dd.MMM yyyy - HH:mm";
   private ArrayList<Observer> observers;
 
   /**
@@ -299,7 +299,7 @@ public class CustomerInfosFrame extends JDialog implements Observable {
 
   private void exportToCSV() {
     JFileChooser fc = new JFileChooser(Options.getInstance().getExportFolder());
-    FileFilter type = new ExtensionFilter(".csv", ".csv");
+    FileFilter type = new ExtensionFilter();
     fc.addChoosableFileFilter(type);
     fc.setFileFilter(type);
     fc.setAcceptAllFileFilterUsed(false);
@@ -351,44 +351,35 @@ public class CustomerInfosFrame extends JDialog implements Observable {
 
       switch (result) {
         case JOptionPane.YES_OPTION:
-          try {
-            FileWriter writer = new FileWriter(outputFile);
-            String toWrite = "Name, Job, E-Mail, Telefon, Fax\n";
-            for (Person p : database.getPersons()) {
-              toWrite = toWrite + p.getName() + ",";
-              toWrite = toWrite + p.getJob() + ",";
-              toWrite = toWrite + p.getMail() + ",";
-              toWrite = toWrite + p.getTel() + ",";
-              toWrite = toWrite + p.getFax() + "\n";
-            }
-            writer.write(toWrite);
-            writer.close();
-            returnVal = FeedbackEnum.SUCCESSFUL;
-          } catch (Exception e) {
-            returnVal = FeedbackEnum.FAILED;
-          }
+          returnVal = writeFile(outputFile);
           break;
         case JOptionPane.NO_OPTION:
           exportToCSV();
       }
 
     } else {
-      try {
-        FileWriter writer = new FileWriter(outputFile);
-        String toWrite = "Name, Job, E-Mail, Telefon, Fax\n";
-        for (Person p : database.getPersons()) {
-          toWrite = toWrite + p.getName() + ",";
-          toWrite = toWrite + p.getJob() + ",";
-          toWrite = toWrite + p.getMail() + ",";
-          toWrite = toWrite + p.getTel() + ",";
-          toWrite = toWrite + p.getFax() + "\n";
-        }
-        writer.write(toWrite);
-        writer.close();
-        returnVal = FeedbackEnum.SUCCESSFUL;
-      } catch (Exception e) {
-        returnVal = FeedbackEnum.FAILED;
+      returnVal = writeFile(outputFile);
+    }
+    return returnVal;
+  }
+
+  private FeedbackEnum writeFile(File outputFile) {
+    FeedbackEnum returnVal;
+    try {
+      FileWriter writer = new FileWriter(outputFile);
+      String toWrite = "Name, Job, E-Mail, Telefon, Fax\n";
+      for (Person p : database.getPersons()) {
+        toWrite = toWrite + p.getName() + ",";
+        toWrite = toWrite + p.getJob() + ",";
+        toWrite = toWrite + p.getMail() + ",";
+        toWrite = toWrite + p.getTel() + ",";
+        toWrite = toWrite + p.getFax() + "\n";
       }
+      writer.write(toWrite);
+      writer.close();
+      returnVal = FeedbackEnum.SUCCESSFUL;
+    } catch (Exception e) {
+      returnVal = FeedbackEnum.FAILED;
     }
     return returnVal;
   }
@@ -419,12 +410,12 @@ public class CustomerInfosFrame extends JDialog implements Observable {
 
     private String description;
 
-    public ExtensionFilter(String description, String extension) {
-      this(description, new String[]{extension});
+    public ExtensionFilter() {
+      this(new String[]{".csv"});
     }
 
-    public ExtensionFilter(String description, String extensions[]) {
-      this.description = description;
+    public ExtensionFilter(String extensions[]) {
+      this.description = ".csv";
       this.extensions = extensions.clone();
     }
 
@@ -433,7 +424,6 @@ public class CustomerInfosFrame extends JDialog implements Observable {
       if (file.isDirectory()) {
         return true;
       }
-      int count = extensions.length;
       String path = file.getAbsolutePath();
       for (String ext : extensions) {
         if (path.endsWith(ext)
