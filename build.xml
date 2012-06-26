@@ -1,0 +1,97 @@
+<!--
+###############################################################################
+# Ant build file for DBA                                                      #
+# Author: Andreas Freitag                                                     #
+# Targets: Clean.....Cleanup build directory                                  #
+#          compile...Compile all classes                                      #                  
+#          dist......Distribute a runable JAR file and a lib folder           #
+#                    with all needed external libs                            #
+#          run-gui...Run DBA with GUI                                         #          
+###############################################################################
+-->
+<project name="DB-Analyzer" basedir="." default="dist">
+
+	<!--Define all properties-->
+	<property name="src.dir" value="src" />
+	<property name="build.dir" value="build" />
+	<property name="classes.dir" value="${build.dir}/classes" />
+	<property name="jar.dir" value="${build.dir}/jar" />
+	<property name="main-class" value="dba/Main" />
+	<property name="lib.dir" value="lib" />
+	<property name="ext.lib.dir" value="lib" />
+	<property name="res.dir.name" value="res" />
+	<property name="res.dir" value="${src.dir}/${res.dir.name}" />
+	<property name="jar.filename" value="${ant.project.name}.jar" />
+
+	<!--Create Timestamp for Manifest-->
+	<tstamp>
+		<format property="TODAY" pattern="yyyy-MM-dd HH:mm:ss" />
+	</tstamp>
+
+	<!--Set the classpath for lib folder-->
+	<path id="classpath">
+		<fileset dir="${lib.dir}" includes="**/*.jar" />
+	</path>
+
+	<!--Cleanup target: remove build folder-->
+	<target name="clean">
+		<delete dir="${build.dir}" />
+	</target>
+
+	<!--Compile target: compile all java classes and store them into the build/classes folder-->
+	<target name="compile" depends="clean">
+		<mkdir dir="${classes.dir}" />
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath" includeantruntime="true" />
+	</target>
+
+	<!--Create a path with all needed libaries-->
+	<path id="lib.path">
+		<fileset dir="${basedir}/">
+			<include name="${lib.dir}/**/*.jar" />
+		</fileset>
+	</path>
+
+	<!--Convert the path to a string, containing all libaries seperates with 'SPACE'-->
+	<pathconvert property="lib.path.string" pathsep=" ">
+		<path refid="lib.path" />
+		<mapper>
+			<chainedmapper>
+				<flattenmapper />
+				<globmapper from="*.jar" to="${ext.lib.dir}/*.jar" />
+			</chainedmapper>
+		</mapper>
+	</pathconvert>
+
+	<!--Distribute Target: Copy all JAR libs to lib folder, create MANIFEST and package all needed files into the JAR. Finally unsign the created jar-->
+	<target name="dist" depends="compile">
+		<mkdir dir="${jar.dir}" />
+		<mkdir dir="${jar.dir}/${ext.lib.dir}" />
+		<copy todir="${jar.dir}/${ext.lib.dir}">
+			<fileset dir="${lib.dir}" />
+		</copy>
+		<jar destfile="${jar.dir}/${jar.filename}" basedir="${classes.dir}" filesetmanifest="mergewithoutmain">
+
+			<manifest>
+				<attribute name="Main-Class" value="${main-class}" />
+				<attribute name="Class-Path" value="${lib.path.string}" />
+				<attribute name="Built-By" value="${user.name}" />
+				<attribute name="Built-Date" value="${TODAY}" />
+			</manifest>
+
+			<fileset dir="${src.dir}">
+				<include name="${res.dir.name}/**/*" />
+			</fileset>
+		</jar>
+	</target>
+
+	<!--Run-Gui Target: Runs the created JAR with GUI-->
+	<target name="run-gui" depends="dist">
+		<java fork="true" classname="${main-class}">
+			<classpath>
+				<path location="${jar.dir}/${jar.filename}" />
+			</classpath>
+		</java>
+	</target>
+</project>
+
+
