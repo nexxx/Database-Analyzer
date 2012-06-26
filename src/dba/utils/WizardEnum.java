@@ -22,6 +22,6 @@ package dba.utils;
  */
 public enum WizardEnum {
 
-  NEW, EDIT;
+  NEW, EDIT
 
 }

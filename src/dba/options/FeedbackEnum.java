@@ -22,6 +22,6 @@ package dba.options;
  */
 public enum FeedbackEnum {
 
-  SUCCESSFUL, FAILED, CANCEL;
+  SUCCESSFUL, FAILED, CANCEL
 
 }

@@ -18,39 +18,6 @@
 package dba.gui;
 
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
-
-import javax.help.HelpSet;
-import javax.help.JHelp;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.JSplitPane;
-import javax.swing.JTabbedPane;
-import javax.swing.KeyStroke;
-import javax.swing.SwingConstants;
-import javax.swing.WindowConstants;
-import javax.swing.tree.DefaultMutableTreeNode;
-
-import logic.Analysis.GeneralRelationCheck;
 import data.Database;
 import data.FunctionalDependency;
 import data.NormalForm;
@@ -58,17 +25,9 @@ import data.TimeLine;
 import data.events.Change;
 import data.events.ChangeListener;
 import data.events.Time;
-import dba.gui.auxClasses.CustomTree;
-import dba.gui.auxClasses.DatabaseTreePanel;
-import dba.gui.auxClasses.GuiLogic;
-import dba.gui.auxClasses.RelationDetailsView;
-import dba.gui.auxClasses.RelationView;
+import dba.gui.auxClasses.*;
 import dba.gui.auxClasses.feedback.FeedbackbarPanel;
-import dba.gui.auxClasses.toolBars.ToolBar;
-import dba.gui.auxClasses.toolBars.ToolBarAttribute;
-import dba.gui.auxClasses.toolBars.ToolBarDatabase;
-import dba.gui.auxClasses.toolBars.ToolBarFd;
-import dba.gui.auxClasses.toolBars.ToolBarRelation;
+import dba.gui.auxClasses.toolBars.*;
 import dba.gui.metaInfoFrame.CustomerInfosFrame;
 import dba.init.Initialize;
 import dba.options.Feedback;
@@ -77,39 +36,43 @@ import dba.options.Options;
 import dba.utils.GetIcons;
 import dba.utils.Localization;
 import dba.utils.constants;
+import logic.Analysis.GeneralRelationCheck;
+
+import javax.help.HelpSet;
+import javax.help.JHelp;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Class which is a Observable. It represents and Paints the
  * MainWindow
- * 
+ *
  * @author Andreas Freitag
- * 
  */
 public class MainWindow implements constants, Observer {
   private JFrame frame;
-  private JPanel contentPane;
   private JMenuItem saveMenuItem;
-  private JMenuItem saveAsMenuItem;
-  private JMenuItem exportMenuItem;
   private JMenuItem undoMenuItem;
   private JMenuItem redoMenuItem;
-  private JMenuItem metaInfoMenuItem;
   private Database database;
   private DatabaseTreePanel dbTreePanel;
-  private ImageIcon iconFrame;
   private ImageIcon iconNew;
   private ImageIcon iconOpen;
   private ImageIcon iconSave;
   private ImageIcon iconExport;
   private ImageIcon iconClose;
-  private ImageIcon iconUndo;
-  private ImageIcon iconRedo;
   private ImageIcon iconMetaInfo;
   private ImageIcon iconOptions;
   private ImageIcon iconAbout;
   private ImageIcon iconHelp;
   private Localization locale;
-  private PropertyChangeListener changeListener;
   private JPanel pnlToolBar;
   private ToolBar toolBar;
   private ToolBarDatabase toolBarDatabase;
@@ -120,456 +83,452 @@ public class MainWindow implements constants, Observer {
   private GuiLogic guiLogic;
   private RelationView relationView;
   private RelationDetailsView relationDetailsView;
-  private JPanel pnlRight;
   private FeedbackbarPanel feedbackbarPanel;
-  private JTabbedPane displayTab;
 
   /**
    * Create the frame.
    */
   public MainWindow() {
-	checker = new GeneralRelationCheck();
-	GetIcons getIcon = GetIcons.getInstance();
-	iconFrame = getIcon.getIconFrame();
-	iconNew = getIcon.getMenuNew();
-	iconOpen = getIcon.getMenuOpen();
-	iconSave = getIcon.getMenuSave();
-	iconExport = getIcon.getMenuExport();
-	iconClose = getIcon.getMenuClose();
-	iconUndo = getIcon.getMenuUndo();
-	iconRedo = getIcon.getMenuRedo();
-	iconMetaInfo = getIcon.getMenuEditInfos();
-	iconOptions = getIcon.getMenuOptions();
-	iconAbout = getIcon.getMenuAbout();
-	iconHelp = getIcon.getMenuHelp();
+    checker = new GeneralRelationCheck();
+    GetIcons getIcon = GetIcons.getInstance();
+    ImageIcon iconFrame = getIcon.getIconFrame();
+    iconNew = getIcon.getMenuNew();
+    iconOpen = getIcon.getMenuOpen();
+    iconSave = getIcon.getMenuSave();
+    iconExport = getIcon.getMenuExport();
+    iconClose = getIcon.getMenuClose();
+    ImageIcon iconUndo = getIcon.getMenuUndo();
+    ImageIcon iconRedo = getIcon.getMenuRedo();
+    iconMetaInfo = getIcon.getMenuEditInfos();
+    iconOptions = getIcon.getMenuOptions();
+    iconAbout = getIcon.getMenuAbout();
+    iconHelp = getIcon.getMenuHelp();
 
-	locale = Localization.getInstance();
-	feedbackbarPanel = FeedbackbarPanel.getInstance();
+    locale = Localization.getInstance();
+    feedbackbarPanel = FeedbackbarPanel.getInstance();
 
-	frame = new JFrame(locale.getString("GUI_FrameTitle"));
-	frame.setIconImage(iconFrame.getImage());
-	frame.addWindowListener(new WindowAdapter() {
-	  @Override
-	  public void windowClosing(WindowEvent e) {
-		checkDirtyStateBeforeExiting();
-	  }
-	});
+    frame = new JFrame(locale.getString("GUI_FrameTitle"));
+    frame.setIconImage(iconFrame.getImage());
+    frame.addWindowListener(new WindowAdapter() {
+      @Override
+      public void windowClosing(WindowEvent e) {
+        checkDirtyStateBeforeExiting();
+      }
+    });
 
-	contentPane = new JPanel();
-	// contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-	contentPane.setLayout(new BorderLayout());
-	frame.setContentPane(contentPane);
+    JPanel contentPane = new JPanel();
+    // contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+    contentPane.setLayout(new BorderLayout());
+    frame.setContentPane(contentPane);
 
-	database = new Database();
-	dbTreePanel = new DatabaseTreePanel(database);
-	guiLogic = new GuiLogic(dbTreePanel);
-	relationView = new RelationView(guiLogic);
-	relationDetailsView = new RelationDetailsView(guiLogic);
-	displayTab = new JTabbedPane(SwingConstants.TOP);
+    database = new Database();
+    dbTreePanel = new DatabaseTreePanel(database);
+    guiLogic = new GuiLogic(dbTreePanel);
+    relationView = new RelationView(guiLogic);
+    relationDetailsView = new RelationDetailsView(guiLogic);
+    JTabbedPane displayTab = new JTabbedPane(SwingConstants.TOP);
 
-	pnlToolBar = new JPanel(new BorderLayout());
-	toolBar = new ToolBar(relationView, relationDetailsView, dbTreePanel);
+    pnlToolBar = new JPanel(new BorderLayout());
+    toolBar = new ToolBar(relationView, relationDetailsView, dbTreePanel);
 
-	pnlToolBar.add(toolBar, BorderLayout.CENTER);
-	contentPane.add(pnlToolBar, BorderLayout.PAGE_START);
+    pnlToolBar.add(toolBar, BorderLayout.CENTER);
+    contentPane.add(pnlToolBar, BorderLayout.PAGE_START);
 
-	toolBarDatabase = new ToolBarDatabase(dbTreePanel, relationView,
-	    relationDetailsView);
-	toolBarRelation = new ToolBarRelation(dbTreePanel, relationView,
-	    relationDetailsView);
-	toolBarAttribute = new ToolBarAttribute(dbTreePanel, relationView,
-	    relationDetailsView);
-	toolBarFd = new ToolBarFd(dbTreePanel, relationView, relationDetailsView);
+    toolBarDatabase = new ToolBarDatabase(dbTreePanel, relationView,
+            relationDetailsView);
+    toolBarRelation = new ToolBarRelation(dbTreePanel, relationView,
+            relationDetailsView);
+    toolBarAttribute = new ToolBarAttribute(dbTreePanel, relationView,
+            relationDetailsView);
+    toolBarFd = new ToolBarFd(dbTreePanel, relationView, relationDetailsView);
 
-	changeListener = new PropertyChangeListener() {
+    PropertyChangeListener changeListener = new PropertyChangeListener() {
 
-	  @Override
-	  public void propertyChange(PropertyChangeEvent evt) {
-		if (evt.getPropertyName().equalsIgnoreCase("TreeClick")) {
-		  if (((String) evt.getNewValue()).equalsIgnoreCase("Database")) {
-			pnlToolBar.removeAll();
-			if (CustomTree.getInstance().getDatabase().getDatabase().isEmpty()) {
-			  toolBarDatabase.setEnabledInspect(false);
-			} else {
-			  toolBarDatabase.setEnabledInspect(true);
-			}
-			pnlToolBar.add(toolBarDatabase, BorderLayout.CENTER);
-		  } else if (((String) evt.getNewValue()).equalsIgnoreCase("Relation")) {
-			pnlToolBar.removeAll();
-			DefaultMutableTreeNode node = (DefaultMutableTreeNode) dbTreePanel
-			    .getTree().getLastSelectedPathComponent();
-			enableOptimizeButtons(node);
-			pnlToolBar.add(toolBarRelation, BorderLayout.CENTER);
-		  } else if (((String) evt.getNewValue()).equalsIgnoreCase("Attribute")) {
-			pnlToolBar.removeAll();
-			toolBarAttribute.updateElements();
-			pnlToolBar.add(toolBarAttribute, BorderLayout.CENTER);
-		  } else if (((String) evt.getNewValue()).equalsIgnoreCase("FD")) {
-			pnlToolBar.removeAll();
-			pnlToolBar.add(toolBarFd, BorderLayout.CENTER);
-		  } else {
-			pnlToolBar.removeAll();
-			pnlToolBar.add(toolBar, BorderLayout.CENTER);
-		  }
-		}
-	  }
-	};
+      @Override
+      public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equalsIgnoreCase("TreeClick")) {
+          if (((String) evt.getNewValue()).equalsIgnoreCase("Database")) {
+            pnlToolBar.removeAll();
+            if (CustomTree.getInstance().getDatabase().getDatabase().isEmpty()) {
+              toolBarDatabase.setEnabledInspect(false);
+            } else {
+              toolBarDatabase.setEnabledInspect(true);
+            }
+            pnlToolBar.add(toolBarDatabase, BorderLayout.CENTER);
+          } else if (((String) evt.getNewValue()).equalsIgnoreCase("Relation")) {
+            pnlToolBar.removeAll();
+            enableOptimizeButtons();
+            pnlToolBar.add(toolBarRelation, BorderLayout.CENTER);
+          } else if (((String) evt.getNewValue()).equalsIgnoreCase("Attribute")) {
+            pnlToolBar.removeAll();
+            toolBarAttribute.updateElements();
+            pnlToolBar.add(toolBarAttribute, BorderLayout.CENTER);
+          } else if (((String) evt.getNewValue()).equalsIgnoreCase("FD")) {
+            pnlToolBar.removeAll();
+            pnlToolBar.add(toolBarFd, BorderLayout.CENTER);
+          } else {
+            pnlToolBar.removeAll();
+            pnlToolBar.add(toolBar, BorderLayout.CENTER);
+          }
+        }
+      }
+    };
 
-	undoMenuItem = new JMenuItem(locale.getString("GUI_Undo"), iconUndo);
-	undoMenuItem.setEnabled(false);
-	redoMenuItem = new JMenuItem(locale.getString("GUI_Redo"), iconRedo);
-	redoMenuItem.setEnabled(false);
+    undoMenuItem = new JMenuItem(locale.getString("GUI_Undo"), iconUndo);
+    undoMenuItem.setEnabled(false);
+    redoMenuItem = new JMenuItem(locale.getString("GUI_Redo"), iconRedo);
+    redoMenuItem.setEnabled(false);
 
-	TimeLine.getInstance().initialize(database);
+    TimeLine.getInstance().initialize(database);
 
-	TimeLine.getInstance().addChangeListener(new ChangeListener() {
-	  @Override
-	  public void Change(Change change) {
-		if (change.getTime() == Time.AFTERCHANGE) {
-		  database = (Database) TimeLine.getInstance().getCurrentElement();
-		  dbTreePanel.setDatabase(database);
-		  dbTreePanel.updateTree();
+    TimeLine.getInstance().addChangeListener(new ChangeListener() {
+      @Override
+      public void Change(Change change) {
+        if (change.getTime() == Time.AFTERCHANGE) {
+          database = (Database) TimeLine.getInstance().getCurrentElement();
+          dbTreePanel.setDatabase(database);
+          dbTreePanel.updateTree();
 
-		  undoMenuItem.setEnabled(TimeLine.getInstance().getBackwardPossible());
-		  redoMenuItem.setEnabled(TimeLine.getInstance().getForwardPossible());
+          undoMenuItem.setEnabled(TimeLine.getInstance().getBackwardPossible());
+          redoMenuItem.setEnabled(TimeLine.getInstance().getForwardPossible());
 
-		  relationView.display(database);
-		  relationDetailsView.display(database);
-		}
-	  }
-	});
+          relationView.display(database);
+          relationDetailsView.display(database);
+        }
+      }
+    });
 
-	frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-	frame.setSize(1024, 600);
-	frame.setMinimumSize(new Dimension(800, 480));
-	frame.setLocationRelativeTo(null);
+    frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+    frame.setSize(1024, 600);
+    frame.setMinimumSize(new Dimension(800, 480));
+    frame.setLocationRelativeTo(null);
 
-	Initialize init = new Initialize();
-	init.init();
-	Dimension minimumSizeSplitPane = new Dimension(100, 50);
+    Initialize init = new Initialize();
+    init.init();
+    Dimension minimumSizeSplitPane = new Dimension(100, 50);
 
-	dbTreePanel.addPropertyChangeListener(changeListener);
-	// relationView.addPropertyChangeListener(changeListener);
+    dbTreePanel.addPropertyChangeListener(changeListener);
+    // relationView.addPropertyChangeListener(changeListener);
 
-	pnlRight = new JPanel(new BorderLayout());
-	pnlRight.setMinimumSize(minimumSizeSplitPane);
-	pnlRight.add(relationView, BorderLayout.CENTER);
-	pnlRight.add(feedbackbarPanel, BorderLayout.SOUTH);
+    JPanel pnlRight = new JPanel(new BorderLayout());
+    pnlRight.setMinimumSize(minimumSizeSplitPane);
+    pnlRight.add(relationView, BorderLayout.CENTER);
+    pnlRight.add(feedbackbarPanel, BorderLayout.SOUTH);
 
-	// RelationView
-	displayTab.addTab(locale.getString("GUI_Relations"), relationView);
+    // RelationView
+    displayTab.addTab(locale.getString("GUI_Relations"), relationView);
 
-	// RelationDetails
-	displayTab.addTab(locale.getString("GUI_RelationDetails"),
-	    relationDetailsView);
+    // RelationDetails
+    displayTab.addTab(locale.getString("GUI_RelationDetails"),
+            relationDetailsView);
 
-	pnlRight = new JPanel(new BorderLayout());
-	pnlRight.setMinimumSize(minimumSizeSplitPane);
-	pnlRight.add(displayTab, BorderLayout.CENTER);
-	pnlRight.add(feedbackbarPanel, BorderLayout.SOUTH);
+    pnlRight = new JPanel(new BorderLayout());
+    pnlRight.setMinimumSize(minimumSizeSplitPane);
+    pnlRight.add(displayTab, BorderLayout.CENTER);
+    pnlRight.add(feedbackbarPanel, BorderLayout.SOUTH);
 
-	JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-	    dbTreePanel, pnlRight);
-	splitPane.setDividerLocation(250);
-	dbTreePanel.setMinimumSize(minimumSizeSplitPane);
-	frame.add(splitPane, BorderLayout.CENTER);
+    JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+            dbTreePanel, pnlRight);
+    splitPane.setDividerLocation(250);
+    dbTreePanel.setMinimumSize(minimumSizeSplitPane);
+    frame.add(splitPane, BorderLayout.CENTER);
 
-	JMenuBar menuBar = new JMenuBar();
-	frame.setJMenuBar(menuBar);
+    JMenuBar menuBar = new JMenuBar();
+    frame.setJMenuBar(menuBar);
 
-	createFileMenu(menuBar);
-	createEditMenu(menuBar);
-	createExtrasMenu(menuBar);
-	createHelpMenu(menuBar);
+    createFileMenu(menuBar);
+    createEditMenu(menuBar);
+    createExtrasMenu(menuBar);
+    createHelpMenu(menuBar);
 
-	dbTreePanel.getTree().setSelectedItem(0);
+    dbTreePanel.getTree().setSelectedItem(0);
   }
 
   /**
    * Getter for the MainFrame
-   * 
+   *
    * @return Mainframe
    */
   public JFrame getFrame() {
-	return frame;
+    return frame;
   }
 
   private void createFileMenu(JMenuBar menuBar) {
-	JMenu fileMenu = new JMenu(locale.getString("GUI_File"));
-	menuBar.add(fileMenu);
+    JMenu fileMenu = new JMenu(locale.getString("GUI_File"));
+    menuBar.add(fileMenu);
 
-	JMenuItem newMenuItem = new JMenuItem(locale.getString("GUI_New"), iconNew);
-	newMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
-	    InputEvent.CTRL_MASK));
-	newMenuItem.addActionListener(new ActionListener() {
-	  @Override
-	  public void actionPerformed(ActionEvent arg0) {
-		FeedbackEnum returnVal = guiLogic.newDatabase();
-		if (returnVal == FeedbackEnum.SUCCESSFUL) {
-		  feedbackbarPanel.showFeedback(locale.getString("FB_NewDB"),
-			  FeedbackEnum.SUCCESSFUL);
-		}
-	  }
-	});
-	fileMenu.add(newMenuItem);
+    JMenuItem newMenuItem = new JMenuItem(locale.getString("GUI_New"), iconNew);
+    newMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
+            InputEvent.CTRL_MASK));
+    newMenuItem.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent arg0) {
+        FeedbackEnum returnVal = guiLogic.newDatabase();
+        if (returnVal == FeedbackEnum.SUCCESSFUL) {
+          feedbackbarPanel.showFeedback(locale.getString("FB_NewDB"),
+                  FeedbackEnum.SUCCESSFUL);
+        }
+      }
+    });
+    fileMenu.add(newMenuItem);
 
-	JMenuItem openMenuItem = new JMenuItem(locale.getString("GUI_Open"),
-	    iconOpen);
-	openMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,
-	    InputEvent.CTRL_MASK));
-	openMenuItem.addActionListener(new ActionListener() {
-	  @Override
-	  public void actionPerformed(ActionEvent arg0) {
-		FeedbackEnum returnVal = guiLogic.open();
-		if (returnVal == FeedbackEnum.FAILED) {
-		  feedbackbarPanel.showFeedback(locale.getString("FB_OpenFailed"),
-			  FeedbackEnum.FAILED);
-		}
-	  }
-	});
-	fileMenu.add(openMenuItem);
+    JMenuItem openMenuItem = new JMenuItem(locale.getString("GUI_Open"),
+            iconOpen);
+    openMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,
+            InputEvent.CTRL_MASK));
+    openMenuItem.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent arg0) {
+        FeedbackEnum returnVal = guiLogic.open();
+        if (returnVal == FeedbackEnum.FAILED) {
+          feedbackbarPanel.showFeedback(locale.getString("FB_OpenFailed"),
+                  FeedbackEnum.FAILED);
+        }
+      }
+    });
+    fileMenu.add(openMenuItem);
 
-	fileMenu.add(new JSeparator());
+    fileMenu.add(new JSeparator());
 
-	saveMenuItem = new JMenuItem(locale.getString("GUI_Save"), iconSave);
-	saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
-	    InputEvent.CTRL_MASK));
-	saveMenuItem.addActionListener(new ActionListener() {
-	  @Override
-	  public void actionPerformed(ActionEvent arg0) {
-		FeedbackEnum returnVal = guiLogic.save();
-		if (returnVal == FeedbackEnum.SUCCESSFUL) {
-		  feedbackbarPanel.showFeedback(locale.getString("FB_Save"),
-			  FeedbackEnum.SUCCESSFUL);
-		} else if (returnVal == FeedbackEnum.FAILED) {
-		  feedbackbarPanel.showFeedback(locale.getString("FB_SaveFailed"),
-			  FeedbackEnum.FAILED);
-		}
-	  }
-	});
-	fileMenu.add(saveMenuItem);
+    saveMenuItem = new JMenuItem(locale.getString("GUI_Save"), iconSave);
+    saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
+            InputEvent.CTRL_MASK));
+    saveMenuItem.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent arg0) {
+        FeedbackEnum returnVal = guiLogic.save();
+        if (returnVal == FeedbackEnum.SUCCESSFUL) {
+          feedbackbarPanel.showFeedback(locale.getString("FB_Save"),
+                  FeedbackEnum.SUCCESSFUL);
+        } else if (returnVal == FeedbackEnum.FAILED) {
+          feedbackbarPanel.showFeedback(locale.getString("FB_SaveFailed"),
+                  FeedbackEnum.FAILED);
+        }
+      }
+    });
+    fileMenu.add(saveMenuItem);
 
-	saveAsMenuItem = new JMenuItem(locale.getString("GUI_SaveAs"), iconSave);
-	saveAsMenuItem.addActionListener(new ActionListener() {
-	  @Override
-	  public void actionPerformed(ActionEvent arg0) {
-		FeedbackEnum returnVal = guiLogic.saveAs();
-		if (returnVal == FeedbackEnum.SUCCESSFUL) {
-		  feedbackbarPanel.showFeedback(locale.getString("FB_Save"),
-			  FeedbackEnum.SUCCESSFUL);
-		} else if (returnVal == FeedbackEnum.FAILED) {
-		  feedbackbarPanel.showFeedback(locale.getString("FB_SaveFailed"),
-			  FeedbackEnum.FAILED);
-		}
-	  }
-	});
-	fileMenu.add(saveAsMenuItem);
+    JMenuItem saveAsMenuItem = new JMenuItem(locale.getString("GUI_SaveAs"), iconSave);
+    saveAsMenuItem.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent arg0) {
+        FeedbackEnum returnVal = guiLogic.saveAs();
+        if (returnVal == FeedbackEnum.SUCCESSFUL) {
+          feedbackbarPanel.showFeedback(locale.getString("FB_Save"),
+                  FeedbackEnum.SUCCESSFUL);
+        } else if (returnVal == FeedbackEnum.FAILED) {
+          feedbackbarPanel.showFeedback(locale.getString("FB_SaveFailed"),
+                  FeedbackEnum.FAILED);
+        }
+      }
+    });
+    fileMenu.add(saveAsMenuItem);
 
-	fileMenu.add(new JSeparator());
+    fileMenu.add(new JSeparator());
 
-	exportMenuItem = new JMenuItem(locale.getString("GUI_Export"), iconExport);
-	exportMenuItem.addActionListener(new ActionListener() {
-	  @Override
-	  public void actionPerformed(ActionEvent arg0) {
-		FeedbackEnum returnVal = guiLogic.export();
-		if (returnVal == FeedbackEnum.SUCCESSFUL) {
-		  feedbackbarPanel.showFeedback(locale.getString("FB_Export"),
-			  FeedbackEnum.SUCCESSFUL);
-		} else if (returnVal == FeedbackEnum.FAILED) {
-		  feedbackbarPanel.showFeedback(locale.getString("FB_ExportFailed"),
-			  FeedbackEnum.FAILED);
-		}
-	  }
-	});
-	fileMenu.add(exportMenuItem);
+    JMenuItem exportMenuItem = new JMenuItem(locale.getString("GUI_Export"), iconExport);
+    exportMenuItem.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent arg0) {
+        FeedbackEnum returnVal = guiLogic.export();
+        if (returnVal == FeedbackEnum.SUCCESSFUL) {
+          feedbackbarPanel.showFeedback(locale.getString("FB_Export"),
+                  FeedbackEnum.SUCCESSFUL);
+        } else if (returnVal == FeedbackEnum.FAILED) {
+          feedbackbarPanel.showFeedback(locale.getString("FB_ExportFailed"),
+                  FeedbackEnum.FAILED);
+        }
+      }
+    });
+    fileMenu.add(exportMenuItem);
 
-	fileMenu.add(new JSeparator());
+    fileMenu.add(new JSeparator());
 
-	JMenuItem exitMenuItem = new JMenuItem(locale.getString("GUI_Exit"),
-	    iconClose);
-	exitMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q,
-	    InputEvent.CTRL_MASK));
-	exitMenuItem.addActionListener(new ActionListener() {
-	  @Override
-	  public void actionPerformed(ActionEvent arg0) {
-		checkDirtyStateBeforeExiting();
-	  }
-	});
-	fileMenu.add(exitMenuItem);
+    JMenuItem exitMenuItem = new JMenuItem(locale.getString("GUI_Exit"),
+            iconClose);
+    exitMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q,
+            InputEvent.CTRL_MASK));
+    exitMenuItem.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent arg0) {
+        checkDirtyStateBeforeExiting();
+      }
+    });
+    fileMenu.add(exitMenuItem);
   }
 
   private void createEditMenu(JMenuBar menuBar) {
-	JMenu editMenu = new JMenu(locale.getString("GUI_Edit"));
-	menuBar.add(editMenu);
+    JMenu editMenu = new JMenu(locale.getString("GUI_Edit"));
+    menuBar.add(editMenu);
 
-	undoMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z,
-	    InputEvent.CTRL_MASK));
-	undoMenuItem.addActionListener(new ActionListener() {
-	  @Override
-	  public void actionPerformed(ActionEvent arg0) {
-		guiLogic.undo();
-	  }
-	});
-	editMenu.add(undoMenuItem);
+    undoMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z,
+            InputEvent.CTRL_MASK));
+    undoMenuItem.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent arg0) {
+        guiLogic.undo();
+      }
+    });
+    editMenu.add(undoMenuItem);
 
-	redoMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y,
-	    InputEvent.CTRL_MASK));
-	redoMenuItem.addActionListener(new ActionListener() {
-	  @Override
-	  public void actionPerformed(ActionEvent arg0) {
-		guiLogic.redo();
-	  }
-	});
-	editMenu.add(redoMenuItem);
+    redoMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y,
+            InputEvent.CTRL_MASK));
+    redoMenuItem.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent arg0) {
+        guiLogic.redo();
+      }
+    });
+    editMenu.add(redoMenuItem);
 
-	editMenu.add(new JSeparator());
+    editMenu.add(new JSeparator());
 
-	metaInfoMenuItem = new JMenuItem(locale.getString("MI_FunctionName"),
-	    iconMetaInfo);
-	metaInfoMenuItem.addActionListener(new ActionListener() {
-	  @Override
-	  public void actionPerformed(ActionEvent arg0) {
-		openInfoFrame();
-	  }
-	});
-	editMenu.add(metaInfoMenuItem);
+    JMenuItem metaInfoMenuItem = new JMenuItem(locale.getString("MI_FunctionName"),
+            iconMetaInfo);
+    metaInfoMenuItem.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent arg0) {
+        openInfoFrame();
+      }
+    });
+    editMenu.add(metaInfoMenuItem);
   }
 
   private void openInfoFrame() {
-	CustomerInfosFrame infoFrame = new CustomerInfosFrame(database);
-	infoFrame.addObserver(this);
-	infoFrame.setVisible(true);
+    CustomerInfosFrame infoFrame = new CustomerInfosFrame(database);
+    infoFrame.addObserver(this);
+    infoFrame.setVisible(true);
   }
 
   private void createHelpMenu(JMenuBar menuBar) {
-	JMenu helpMenu = new JMenu(locale.getString("GUI_Help"));
-	menuBar.add(helpMenu);
+    JMenu helpMenu = new JMenu(locale.getString("GUI_Help"));
+    menuBar.add(helpMenu);
 
-	JMenuItem userGuideMenuItem = new JMenuItem(
-	    locale.getString("GUI_UserGuide"), iconHelp);
-	userGuideMenuItem.addActionListener(new ActionListener() {
-	  @Override
-	  public void actionPerformed(ActionEvent e) {
-		showHelp();
-	  }
-	});
-	userGuideMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
-	// userGuideMenuItem.setEnabled(false);
-	helpMenu.add(userGuideMenuItem);
+    JMenuItem userGuideMenuItem = new JMenuItem(
+            locale.getString("GUI_UserGuide"), iconHelp);
+    userGuideMenuItem.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        showHelp();
+      }
+    });
+    userGuideMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
+    // userGuideMenuItem.setEnabled(false);
+    helpMenu.add(userGuideMenuItem);
 
-	JMenuItem aboutMenuItem = new JMenuItem(locale.getString("GUI_About"),
-	    iconAbout);
-	aboutMenuItem.addActionListener(new ActionListener() {
-	  @Override
-	  public void actionPerformed(ActionEvent e) {
-		About about = new About();
-		about.setVisible(true);
-	  }
-	});
-	helpMenu.add(aboutMenuItem);
+    JMenuItem aboutMenuItem = new JMenuItem(locale.getString("GUI_About"),
+            iconAbout);
+    aboutMenuItem.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        About about = new About();
+        about.setVisible(true);
+      }
+    });
+    helpMenu.add(aboutMenuItem);
   }
 
   private void showHelp() {
-	JHelp helpViewer = null;
-	try {
-	  ClassLoader cl = MainWindow.class.getClassLoader();
-	  URL url = HelpSet.findHelpSet(cl, "jhelpset_"
-		  + Options.getInstance().getLanguage() + ".hs");
-	  if (url == null) {
-		url = HelpSet.findHelpSet(cl, "jhelpset_en.hs");
-	  }
-	  helpViewer = new JHelp(new HelpSet(cl, url));
-	} catch (Exception ex) {
-	  System.err.println("API Help Set not found");
-	}
+    JHelp helpViewer = null;
+    try {
+      ClassLoader cl = MainWindow.class.getClassLoader();
+      URL url = HelpSet.findHelpSet(cl, "jhelpset_"
+              + Options.getInstance().getLanguage() + ".hs");
+      if (url == null) {
+        url = HelpSet.findHelpSet(cl, "jhelpset_en.hs");
+      }
+      helpViewer = new JHelp(new HelpSet(cl, url));
+    } catch (Exception ex) {
+      System.err.println("API Help Set not found");
+    }
 
-	JFrame frame = new JFrame();
-	frame.setTitle(locale.getString("HE_FrameTitle"));
-	frame.setSize(600, 500);
-	frame.getContentPane().add(helpViewer);
-	frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-	frame.setLocationRelativeTo(null);
-	frame.setVisible(true);
+    JFrame frame = new JFrame();
+    frame.setTitle(locale.getString("HE_FrameTitle"));
+    frame.setSize(600, 500);
+    frame.getContentPane().add(helpViewer);
+    frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+    frame.setLocationRelativeTo(null);
+    frame.setVisible(true);
   }
 
   private void createExtrasMenu(JMenuBar menuBar) {
-	JMenu extrasMenu = new JMenu(locale.getString("GUI_Extras"));
-	menuBar.add(extrasMenu);
+    JMenu extrasMenu = new JMenu(locale.getString("GUI_Extras"));
+    menuBar.add(extrasMenu);
 
-	JMenuItem optionsMenuItem = new JMenuItem(locale.getString("GUI_Options"),
-	    iconOptions);
-	optionsMenuItem.addActionListener(new ActionListener() {
-	  @Override
-	  public void actionPerformed(ActionEvent e) {
+    JMenuItem optionsMenuItem = new JMenuItem(locale.getString("GUI_Options"),
+            iconOptions);
+    optionsMenuItem.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
 
-		optionsMenu optionsMenu = new optionsMenu();
-		optionsMenu.setVisible(true);
-	  }
-	});
-	optionsMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,
-	    InputEvent.CTRL_MASK));
-	extrasMenu.add(optionsMenuItem);
+        optionsMenu optionsMenu = new optionsMenu();
+        optionsMenu.setVisible(true);
+      }
+    });
+    optionsMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,
+            InputEvent.CTRL_MASK));
+    extrasMenu.add(optionsMenuItem);
   }
 
   private void checkDirtyStateBeforeExiting() {
-	int result = JOptionPane.NO_OPTION;
-	if (TimeLine.getInstance().getCurrentElement().isDirty()) {
-	  Object[] options = { locale.getString("GUI_Yes"),
-		  locale.getString("GUI_No"), locale.getString("TREE_Cancel") };
-	  result = JOptionPane.showOptionDialog(frame,
-		  locale.getString("TREE_ExitMsg"), locale.getString("TREE_ExitTitle"),
-		  JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-		  options, options[2]);
-	}
-	switch (result) {
-	case JOptionPane.YES_OPTION:
-	  saveMenuItem.doClick();
-	  System.exit(0);
-	  break;
-	case JOptionPane.NO_OPTION:
-	  System.exit(0);
-	  break;
-	case JOptionPane.CANCEL_OPTION:
+    int result = JOptionPane.NO_OPTION;
+    if (TimeLine.getInstance().getCurrentElement().isDirty()) {
+      Object[] options = {locale.getString("GUI_Yes"),
+              locale.getString("GUI_No"), locale.getString("TREE_Cancel")};
+      result = JOptionPane.showOptionDialog(frame,
+              locale.getString("TREE_ExitMsg"), locale.getString("TREE_ExitTitle"),
+              JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+              options, options[2]);
+    }
+    switch (result) {
+      case JOptionPane.YES_OPTION:
+        saveMenuItem.doClick();
+        System.exit(0);
+        break;
+      case JOptionPane.NO_OPTION:
+        System.exit(0);
+        break;
+      case JOptionPane.CANCEL_OPTION:
 
-	default:
-	  break;
-	}
+      default:
+        break;
+    }
   }
 
-  private void enableOptimizeButtons(DefaultMutableTreeNode node) {
-	NormalForm currentNF = checker.getNF(dbTreePanel.getTree().getRelation(),
-	    new ArrayList<FunctionalDependency>());
-	if (currentNF != NormalForm.SECOND && currentNF != NormalForm.THIRD
-	    && currentNF != NormalForm.BOYCECODD) {
-	  toolBarRelation.setEnabledOpti2NF(true);
-	} else {
-	  toolBarRelation.setEnabledOpti2NF(false);
-	}
+  private void enableOptimizeButtons() {
+    NormalForm currentNF = checker.getNF(dbTreePanel.getTree().getRelation(),
+            new ArrayList<FunctionalDependency>());
+    if (currentNF != NormalForm.SECOND && currentNF != NormalForm.THIRD
+            && currentNF != NormalForm.BOYCECODD) {
+      toolBarRelation.setEnabledOpti2NF(true);
+    } else {
+      toolBarRelation.setEnabledOpti2NF(false);
+    }
 
-	if (currentNF != NormalForm.THIRD && currentNF != NormalForm.BOYCECODD) {
-	  toolBarRelation.setEnabledOpti3NF(true);
-	} else {
-	  toolBarRelation.setEnabledOpti3NF(false);
-	}
+    if (currentNF != NormalForm.THIRD && currentNF != NormalForm.BOYCECODD) {
+      toolBarRelation.setEnabledOpti3NF(true);
+    } else {
+      toolBarRelation.setEnabledOpti3NF(false);
+    }
 
-	if (currentNF != NormalForm.BOYCECODD) {
-	  toolBarRelation.setEnabledOpti(true);
-	} else {
-	  toolBarRelation.setEnabledOpti(false);
-	}
+    if (currentNF != NormalForm.BOYCECODD) {
+      toolBarRelation.setEnabledOpti(true);
+    } else {
+      toolBarRelation.setEnabledOpti(false);
+    }
 
-	if (CustomTree.getInstance().getRelation().getAttributes().size() < 2) {
-	  toolBarRelation.setEnabledFD(false);
-	} else {
-	  toolBarRelation.setEnabledFD(true);
-	}
+    if (CustomTree.getInstance().getRelation().getAttributes().size() < 2) {
+      toolBarRelation.setEnabledFD(false);
+    } else {
+      toolBarRelation.setEnabledFD(true);
+    }
   }
 
   @Override
   public void update(Observable o, Object arg) {
-	if (arg instanceof Feedback) {
-	  Feedback feedback = (Feedback) arg;
-	  feedbackbarPanel.showFeedback(feedback.getText(), feedback.getFeedback());
-	}
+    if (arg instanceof Feedback) {
+      Feedback feedback = (Feedback) arg;
+      feedbackbarPanel.showFeedback(feedback.getText(), feedback.getFeedback());
+    }
   }
 }

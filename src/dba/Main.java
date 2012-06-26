@@ -16,6 +16,7 @@
  ******************************************************************************/
 
 package dba;
+
 import dba.gui.MainWindow;
 import dba.gui.tippOfTheDayFrame;
 import dba.init.Initialize;
@@ -27,20 +28,19 @@ public class Main {
 
   /**
    * Main Class
-   * 
-   * @param args
-   *          Arguments ( -cmd to start as commandline application)
+   *
+   * @param args Arguments ( -cmd to start as commandline application)
    */
   public static void main(String[] args) {
 
-	// Initialize - Load options ETC
-	Initialize initialize = new Initialize();
-	initialize.init();
+    // Initialize - Load options ETC
+    Initialize initialize = new Initialize();
+    initialize.init();
 
-	MainWindow mainWindow = new MainWindow();
-	mainWindow.getFrame().setVisible(true);
-	@SuppressWarnings("unused")
-	tippOfTheDayFrame tippFrame = new tippOfTheDayFrame();
+    MainWindow mainWindow = new MainWindow();
+    mainWindow.getFrame().setVisible(true);
+    tippOfTheDayFrame tippFrame = new tippOfTheDayFrame();
+    tippFrame.showTOD();
   }
 
 }
