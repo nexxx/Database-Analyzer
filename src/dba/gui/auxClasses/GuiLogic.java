@@ -17,10 +17,7 @@
 
 package dba.gui.auxClasses;
 
-import data.Database;
-import data.FunctionalDependency;
-import data.RelationSchema;
-import data.TimeLine;
+import data.*;
 import dba.data.fileIO.ReadFromXML;
 import dba.data.fileIO.SaveToXml;
 import dba.gui.auxClasses.feedback.FeedbackbarPanel;
@@ -492,6 +489,18 @@ public class GuiLogic {
       return FeedbackEnum.FAILED;
     }
 
+    if (writeContacts(folder) == FeedbackEnum.FAILED) {
+      return FeedbackEnum.FAILED;
+    }
+
+    if (writeImages(folder) == FeedbackEnum.FAILED) {
+      return FeedbackEnum.FAILED;
+    }
+
+    if (writeTextDescription(folder) == FeedbackEnum.FAILED) {
+      return FeedbackEnum.FAILED;
+    }
+
     return FeedbackEnum.SUCCESSFUL;
   }
 
@@ -505,6 +514,7 @@ public class GuiLogic {
   }
 
   private FeedbackEnum writeIndex(String folder, String path) {
+    File absFolder = new File(folder);
 
     Map root = new HashMap();
 
@@ -517,11 +527,11 @@ public class GuiLogic {
 
     root.put("CustInfo", company);
     root.put("CustAddress", address);
-    root.put("NotesUrl", folder + "/Notes.html");
-    root.put("ContactsUrl", folder + "/Contacts.html");
-    root.put("RelViewUrl", folder + "/Relations.html");
-    root.put("FdsViewUrl", folder + "/FDs.html");
-    root.put("TextUrl", folder + "/txtDesctiption.html");
+    root.put("NotesUrl", absFolder.getName() + "/Notes.html");
+    root.put("ContactsUrl", absFolder.getName() + "/Contacts.html");
+    root.put("RelViewUrl", absFolder.getName() + "/Relations.html");
+    root.put("FdsViewUrl", absFolder.getName() + "/FDs.html");
+    root.put("TextUrl", absFolder.getName() + "/txtDescription.html");
 
     Template temp;
     try {
@@ -558,6 +568,111 @@ public class GuiLogic {
     try {
       Writer out = new OutputStreamWriter(new FileOutputStream
               (folder + "/Notes.html"));
+      temp.process(root, out);
+      out.flush();
+      out.close();
+    } catch (Exception e) {
+      return FeedbackEnum.FAILED;
+    }
+    return FeedbackEnum.SUCCESSFUL;
+  }
+
+  private FeedbackEnum writeContacts(String folder) {
+    Map root = new HashMap();
+    String contacts = "";
+
+    for (Person p : CustomTree.getInstance().getDatabase().getPersons()) {
+      contacts = contacts + "Name: " + p.getName() + "<br>";
+      contacts = contacts + "Job:  " + p.getJob() + "<br>";
+      contacts = contacts + "Mail: " + p.getMail() + "<br>";
+      contacts = contacts + "Tel:  " + p.getTel() + "<br>";
+      contacts = contacts + "Fax:  " + p.getFax() + "<br><br>";
+    }
+    root.put("Contacts", contacts);
+
+    Template temp;
+    try {
+      temp = cfg.getTemplate("template_contacts.ftl");
+    } catch (IOException e) {
+      return FeedbackEnum.FAILED;
+    }
+
+    try {
+      Writer out = new OutputStreamWriter(new FileOutputStream
+              (folder + "/Contacts.html"));
+      temp.process(root, out);
+      out.flush();
+      out.close();
+    } catch (Exception e) {
+      return FeedbackEnum.FAILED;
+    }
+    return FeedbackEnum.SUCCESSFUL;
+  }
+
+  private FeedbackEnum writeImages(String folder) {
+    Map root = new HashMap();
+    notifyObservers(folder + "/db.png");
+
+    Template temp;
+    try {
+      temp = cfg.getTemplate("template_relations.ftl");
+    } catch (IOException e) {
+      return FeedbackEnum.FAILED;
+    }
+
+    try {
+      Writer out = new OutputStreamWriter(new FileOutputStream
+              (folder + "/Relations.html"));
+      temp.process(root, out);
+      out.flush();
+      out.close();
+    } catch (Exception e) {
+      return FeedbackEnum.FAILED;
+    }
+
+    try {
+      temp = cfg.getTemplate("template_fds.ftl");
+    } catch (IOException e) {
+      return FeedbackEnum.FAILED;
+    }
+
+    try {
+      Writer out = new OutputStreamWriter(new FileOutputStream
+              (folder + "/FDs.html"));
+      temp.process(root, out);
+      out.flush();
+      out.close();
+    } catch (Exception e) {
+      return FeedbackEnum.FAILED;
+    }
+    return FeedbackEnum.SUCCESSFUL;
+  }
+
+  private FeedbackEnum writeTextDescription(String folder) {
+    Map root = new HashMap();
+
+    String text = "";
+
+    for (RelationSchema relation : database.getDatabase()) {
+      text = text + relation.toString() + "<br>";
+      for (FunctionalDependency fd : relation.getFunctionalDependencies()) {
+        text = text + "(" + fd.toString() + ")" + "<br>";
+      }
+      text = text + "<br><br>";
+    }
+
+    root.put("Text", text);
+
+    Template temp;
+    try {
+      temp = cfg.getTemplate("template_txtDescription.ftl");
+    } catch (IOException e) {
+      return FeedbackEnum.FAILED;
+    }
+
+    try {
+      Writer out = new OutputStreamWriter(new FileOutputStream
+              (folder + "/txtDescription.html"));
       temp.process(root, out);
       out.flush();
       out.close();
