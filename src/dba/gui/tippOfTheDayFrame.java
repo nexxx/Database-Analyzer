@@ -154,7 +154,9 @@ public class tippOfTheDayFrame extends JDialog {
    * Show the tip of the day frame
    */
   public void showTOD() {
-    jDialog.setVisible(true);
+    if (!options.getShowTippsOnStartup()) {
+      jDialog.setVisible(true);
+    }
   }
 
   private String getRandomTip() {

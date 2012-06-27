@@ -27,14 +27,16 @@ import dba.gui.auxClasses.feedback.FeedbackbarPanel;
 import dba.options.FeedbackEnum;
 import dba.options.Options;
 import dba.utils.Localization;
+import freemarker.template.Configuration;
+import freemarker.template.DefaultObjectWrapper;
+import freemarker.template.Template;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Observer;
 
 public class GuiLogic {
@@ -267,8 +269,10 @@ public class GuiLogic {
     fc.setDialogTitle(locale.getString("GUI_Export"));
     FileFilter typeImage = new ExtensionFilter(".png", ".png");
     FileFilter typeText = new ExtensionFilter(".txt", ".txt");
+    FileFilter typeHtml = new ExtensionFilter(".html", ".html");
     fc.addChoosableFileFilter(typeImage);
     fc.addChoosableFileFilter(typeText);
+    fc.addChoosableFileFilter(typeHtml);
     fc.setFileFilter(typeImage);
     fc.setAcceptAllFileFilterUsed(false);
     int returnVal = fc.showSaveDialog(fc);
@@ -287,6 +291,11 @@ public class GuiLogic {
             path = path + ".txt";
           }
           return exportText(path);
+        } else if (fc.getFileFilter() == typeHtml) {
+          if (!path.endsWith(".html")) {
+            path = path + ".html";
+          }
+          return exportHtml(path);
         } else {
           // Should not happen
         }
@@ -328,6 +337,81 @@ public class GuiLogic {
     } else {
       return writeText(path);
     }
+  }
+
+  private FeedbackEnum exportHtml(String path) {
+    File outputFile = new File(path);
+
+    if (!path.endsWith(".html")) {
+      outputFile = new File(path + ".html");
+    }
+
+    if (outputFile.exists()) {
+      Object[] options = {locale.getString("GUI_Yes"),
+              locale.getString("GUI_No")};
+      int result = JOptionPane.showOptionDialog(null,
+              locale.getString("GUI_TheFile") + " " + outputFile.getName() + " "
+                      + locale.getString("GUI_AlreadyExisting"), "Export",
+              JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+              options, options[1]);
+
+      switch (result) {
+        case JOptionPane.YES_OPTION:
+          return writeText(path);
+        case JOptionPane.NO_OPTION:
+          return export();
+        default:
+          return FeedbackEnum.CANCEL;
+      }
+    } else {
+      return writeHtml(path);
+    }
+  }
+
+  private FeedbackEnum writeHtml(String path) {
+    Configuration cfg = new Configuration();
+    try {
+      cfg.setClassForTemplateLoading(this.getClass(), "/res/templates");
+    } catch (Exception e) {
+      System.out.println("Template Folder FAILED");
+      return FeedbackEnum.FAILED;
+    }
+    cfg.setObjectWrapper(new DefaultObjectWrapper());
+
+
+// Create the root hash
+    Map root = new HashMap();
+// Put string ``user'' into the root
+    root.put("user", "Big Joe");
+// Create the hash for ``latestProduct''
+    Map latest = new HashMap();
+// and put it into the root
+    root.put("latestProduct", latest);
+// put ``url'' and ``name'' into latest
+    latest.put("url", "products/greenmouse.html");
+    latest.put("name", "green mouse");
+
+    Template temp;
+    try {
+      temp = cfg.getTemplate("template.ftl");
+    } catch (IOException e) {
+      System.out.println("Template FAILED");
+      e.printStackTrace();
+      return FeedbackEnum.FAILED;
+    }
+
+    try {
+      Writer out = new OutputStreamWriter(new FileOutputStream(path));
+      temp.process(root, out);
+      out.flush();
+      out.close();
+    } catch (Exception e) {
+      System.out.println("Writing FAILED");
+      e.printStackTrace();
+      return FeedbackEnum.FAILED;
+    }
+
+    return FeedbackEnum.SUCCESSFUL;
   }
 
   private FeedbackEnum writeText(String path) {
