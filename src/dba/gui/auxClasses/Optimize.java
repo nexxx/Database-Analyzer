@@ -115,8 +115,7 @@ public class Optimize extends JDialog {
                 BorderLayout.SOUTH);
         break;
       default:
-        new IllegalArgumentException();
-        break;
+        throw new IllegalArgumentException();
     }
     setSize(450, 300);
     setMinimumSize(new Dimension(400, 250));
