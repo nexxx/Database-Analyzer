@@ -29,9 +29,10 @@ import javax.swing.*;
  */
 public class Initialize {
 
-  Options options;
+  private Options options;
 
   public Initialize() {
+    super();
     options = Options.getInstance();
   }
 

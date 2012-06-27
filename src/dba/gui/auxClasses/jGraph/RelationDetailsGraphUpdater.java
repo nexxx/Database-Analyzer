@@ -36,6 +36,7 @@ public class RelationDetailsGraphUpdater implements Runnable {
 
   public RelationDetailsGraphUpdater(mxGraph graph,
                                      ArrayList<RelationSchema> relations) {
+    super();
     dbRelations = relations;
     parentPane = graph.getDefaultParent();
     this.graph = graph;
@@ -63,7 +64,7 @@ public class RelationDetailsGraphUpdater implements Runnable {
   /**
    * Displays all relations with their functional dependencies
    */
-  public void display() {
+  private void display() {
     int offset = 25;
     mxCell relationCell;
 

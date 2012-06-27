@@ -34,6 +34,7 @@ public class Localization {
   private ResourceBundle captions;
 
   private Localization() {
+    super();
     Options options = Options.getInstance();
     Locale locale = new Locale(options.getLanguage());
     Locale.setDefault(new Locale(options.getLanguage()));

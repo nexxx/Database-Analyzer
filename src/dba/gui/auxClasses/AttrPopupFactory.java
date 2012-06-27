@@ -52,6 +52,7 @@ public class AttrPopupFactory implements constants {
    * @param jtree JTree with the DB
    */
   public AttrPopupFactory(CustomTree jtree) {
+    super();
     locale = Localization.getInstance();
     tree = jtree;
     attrLogic = new AttrLogic();

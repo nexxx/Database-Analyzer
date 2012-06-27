@@ -165,13 +165,4 @@ public class PersonTableModel extends AbstractTableModel {
     fireTableRowsDeleted(selectedRows, selectedRows);
   }
 
-  /**
-   * Get Personname of the given row
-   *
-   * @param row Row which name we want to know
-   * @return String with the Name
-   */
-  public String getRowsName(int row) {
-    return data.get(row).getName();
-  }
 }

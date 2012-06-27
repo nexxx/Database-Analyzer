@@ -75,6 +75,7 @@ public class CustomerInfosFrame extends JDialog implements Observable {
    * Create the dialog.
    */
   public CustomerInfosFrame(Database db) {
+    super();
     database = db;
     locale = Localization.getInstance();
     frame = this;
@@ -385,18 +386,11 @@ public class CustomerInfosFrame extends JDialog implements Observable {
   }
 
   // Observable Methods
-  @Override
   public void addObserver(Observer observer) {
     observers.add(observer);
   }
 
-  @Override
-  public void removeObserver(Observer observer) {
-    observers.remove(observer);
-  }
-
-  @Override
-  public void notify(Object arg) {
+  private void notify(Object arg) {
     for (Observer observer : observers) {
       observer.update(null, arg);
     }
@@ -415,6 +409,7 @@ public class CustomerInfosFrame extends JDialog implements Observable {
     }
 
     public ExtensionFilter(String extensions[]) {
+      super();
       this.description = ".csv";
       this.extensions = extensions.clone();
     }

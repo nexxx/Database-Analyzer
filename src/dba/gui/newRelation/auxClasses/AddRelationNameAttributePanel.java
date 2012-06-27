@@ -67,6 +67,7 @@ public class AddRelationNameAttributePanel extends JPanel implements constants {
    */
   public AddRelationNameAttributePanel(RelationSchema relation, Database db,
                                        WizardEnum wizardType) {
+    super();
     locale = Localization.getInstance();
 
     GetIcons getIcons = GetIcons.getInstance();

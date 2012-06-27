@@ -42,6 +42,7 @@ public class RelationGraphUpdater implements Runnable {
   public RelationGraphUpdater(mxGraph graph, mxGraphComponent graphComponent,
                               ArrayList<RelationSchema> relations,
                               ArrayList<ForeignKeyConstraint> foreignKeys) {
+    super();
     dbRelations = relations;
     this.foreignKeys = foreignKeys;
     parentPane = graph.getDefaultParent();
@@ -113,7 +114,7 @@ public class RelationGraphUpdater implements Runnable {
   /**
    * Displays all given relations
    */
-  public void display() {
+  private void display() {
     // offset of 40 to compensate Header
     ArrayList<String> fkRelations = getFkInvolvedRelations();
     int offset = 40;

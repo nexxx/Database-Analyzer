@@ -45,6 +45,7 @@ public class inspectFrame extends JDialog {
    */
   @SuppressWarnings("static-access")
   private inspectFrame() {
+    super();
     locale = Localization.getInstance();
     GetIcons getIcons = GetIcons.getInstance();
 

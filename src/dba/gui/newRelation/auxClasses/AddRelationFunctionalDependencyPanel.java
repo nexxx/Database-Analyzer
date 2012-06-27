@@ -62,6 +62,7 @@ public class AddRelationFunctionalDependencyPanel extends JPanel implements
    * @param relation RelationSchema which will the edited
    */
   public AddRelationFunctionalDependencyPanel(RelationSchema relation) {
+    super();
     Localization locale = Localization.getInstance();
 
     GetIcons getIcons = GetIcons.getInstance();
@@ -182,7 +183,7 @@ public class AddRelationFunctionalDependencyPanel extends JPanel implements
     listFDs.addListSelectionListener(new ListSelectionListener() {
       @Override
       public void valueChanged(ListSelectionEvent arg0) {
-        if (listFDs.getSelectedValuesList().size() > 0) {
+        if (!listFDs.getSelectedValuesList().isEmpty()) {
           btnDelete.setEnabled(true);
           btnEdit.setEnabled(true);
         } else {
@@ -251,7 +252,7 @@ public class AddRelationFunctionalDependencyPanel extends JPanel implements
    *
    * @return ArrayList with all TargetAttributes
    */
-  public ArrayList<Attribute> getTargetAttributes() {
+  private ArrayList<Attribute> getTargetAttributes() {
     ArrayList<Attribute> targetAttributes = new ArrayList<>();
     for (Attribute attr : listTarget.getSelectedValuesList()) {
       targetAttributes.add(attr);

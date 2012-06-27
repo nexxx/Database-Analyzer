@@ -58,6 +58,7 @@ public class RelPopupFactory implements constants {
    * @param jtree JTree with the DB
    */
   public RelPopupFactory(CustomTree jtree) {
+    super();
     relLogic = new RelationLogic();
     tree = jtree;
     locale = Localization.getInstance();

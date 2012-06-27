@@ -50,6 +50,7 @@ public class Options extends Observable {
    * Constructor for the options class
    */
   private Options() {
+    super();
     availableLocale = new HashMap<>();
     availableLocale.put("de", "Deutsch");
     availableLocale.put("en", "English");

@@ -58,6 +58,7 @@ public class tippOfTheDayFrame extends JDialog {
    * option is enables
    */
   public tippOfTheDayFrame() {
+    super();
     options = Options.getInstance();
     locale = Localization.getInstance();
 

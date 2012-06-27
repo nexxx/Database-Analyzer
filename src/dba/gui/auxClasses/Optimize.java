@@ -45,6 +45,7 @@ public class Optimize extends JDialog {
    * Defaultconstructor to create the dialog.
    */
   public Optimize(RelationSchema relation, NormalForm nf) {
+    super();
     Localization locale = Localization.getInstance();
     this.setTitle(locale.getString("OPTI_FrameTitle"));
     GetIcons getIcons = GetIcons.getInstance();

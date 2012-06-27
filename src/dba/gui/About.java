@@ -25,7 +25,6 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -49,6 +48,7 @@ public class About extends JDialog {
    */
   @SuppressWarnings("static-access")
   public About() {
+    super();
     Localization locale = Localization.getInstance();
     GetIcons getIcons = GetIcons.getInstance();
 
@@ -87,11 +87,7 @@ public class About extends JDialog {
               .getResourceAsStream("res/version_num.properties");
       prop.load(is);
       is.close();
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-    } catch (IOException e) {
-      e.printStackTrace();
-    } catch (NullPointerException e) {
+    } catch (NullPointerException | IOException e) {
       e.printStackTrace();
     }
 

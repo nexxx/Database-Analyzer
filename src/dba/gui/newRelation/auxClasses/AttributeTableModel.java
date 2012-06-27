@@ -55,7 +55,7 @@ public class AttributeTableModel extends AbstractTableModel {
    *
    * @param data ArrayList with Attributes
    */
-  public AttributeTableModel(ArrayList<Attribute> data) {
+  private AttributeTableModel(ArrayList<Attribute> data) {
     this();
     this.data = data;
   }
@@ -160,16 +160,6 @@ public class AttributeTableModel extends AbstractTableModel {
       default:
         throw new IllegalArgumentException();
     }
-  }
-
-  /**
-   * Add new row to our Table
-   *
-   * @param attr Attribute which will be added
-   */
-  public void addRow(Attribute attr) {
-    data.add(attr);
-    fireTableRowsInserted(0, getRowCount());
   }
 
   /**

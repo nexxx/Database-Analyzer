@@ -58,6 +58,7 @@ public class CustomTree extends JTree {
   private static final long serialVersionUID = -7671158844002979801L;
 
   private CustomTree() {
+    super();
     UIManager.put("PopupMenu.consumeEventOnClose", Boolean.FALSE);
     tree = this;
     this.addTreeSelectionListener(new TreeSelectionListener() {
@@ -363,13 +364,6 @@ public class CustomTree extends JTree {
 
     supressExpansionEvent = false; // Now we can go back to responding
     // normally to expansion events
-  }
-
-  /**
-   * Reset the stored list
-   */
-  public void resetExpansionState() {
-    expandedTreeObjects.clear();
   }
 
   /**

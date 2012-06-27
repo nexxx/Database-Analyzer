@@ -19,7 +19,7 @@ package dba.options;
 
 /**
  * Represents a Feedback (Text,Result)
- * 
+ *
  * @author Sebastian Theuermann
  */
 public class Feedback {
@@ -28,16 +28,17 @@ public class Feedback {
   private FeedbackEnum feedback;
 
   public Feedback(String text, FeedbackEnum feedback) {
-	this.text = text;
-	this.feedback = feedback;
+    super();
+    this.text = text;
+    this.feedback = feedback;
   }
 
   public String getText() {
-	return text;
+    return text;
   }
 
   public FeedbackEnum getFeedback() {
-	return feedback;
+    return feedback;
   }
 
 }

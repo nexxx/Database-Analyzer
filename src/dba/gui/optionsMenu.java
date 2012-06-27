@@ -48,6 +48,7 @@ public class optionsMenu extends JDialog {
    * Create the dialog.
    */
   public optionsMenu() {
+    super();
     locale = Localization.getInstance();
     options = Options.getInstance();
     currentLocale = options.getLanguage();

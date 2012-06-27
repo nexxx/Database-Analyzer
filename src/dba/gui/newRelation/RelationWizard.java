@@ -60,6 +60,7 @@ public class RelationWizard extends JDialog implements constants {
    * Defaultconstructor to create the frame.
    */
   public RelationWizard(Database database, RelationSchema rel, WizardEnum type) {
+    super();
     this.setModal(true);
     Localization locale = Localization.getInstance();
 
@@ -202,7 +203,7 @@ public class RelationWizard extends JDialog implements constants {
     return relation;
   }
 
-  class cancelButtonListener implements ActionListener {
+  private class cancelButtonListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
       dispose();
@@ -210,7 +211,7 @@ public class RelationWizard extends JDialog implements constants {
 
   }
 
-  class finishButtonListener implements ActionListener {
+  private class finishButtonListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {

@@ -20,11 +20,9 @@ package dba;
 import dba.gui.MainWindow;
 import dba.gui.tippOfTheDayFrame;
 import dba.init.Initialize;
-import dba.options.Options;
 
 
 public class Main {
-  Options options;
 
   /**
    * Main Class

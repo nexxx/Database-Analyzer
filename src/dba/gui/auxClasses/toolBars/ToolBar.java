@@ -43,8 +43,8 @@ import java.util.Observer;
  * @author Andreas Freitag
  */
 public class ToolBar extends JToolBar implements Observer {
-  protected GetIcons getIcons;
-  protected Localization locale;
+  GetIcons getIcons;
+  Localization locale;
 
   /**
    *

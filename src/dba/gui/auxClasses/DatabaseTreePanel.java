@@ -71,6 +71,7 @@ public class DatabaseTreePanel extends JPanel {
    * Defaultconstructor to create the panel.
    */
   public DatabaseTreePanel(Database db) {
+    super();
     locale = Localization.getInstance();
     setLayout(new BorderLayout());
     database = db;

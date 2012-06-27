@@ -50,9 +50,9 @@ public class RelationView extends JGraphView implements Observer {
    */
   private static final long serialVersionUID = -6169070587706507110L;
   // constants
-  final static String ATTRIBUTECOLOR = "#00FF00";
-  final static String RELATIONCOLOR = "#00CD00";
-  final static String BACKGROUNDCOLOR = "#A7E2FF";
+  private final static String ATTRIBUTECOLOR = "#00FF00";
+  private final static String RELATIONCOLOR = "#00CD00";
+  private final static String BACKGROUNDCOLOR = "#A7E2FF";
 
   private mxCell selectedCell;
   private mxGraph graph;
@@ -156,17 +156,6 @@ public class RelationView extends JGraphView implements Observer {
   }
 
   /**
-   * Displays all given Relations
-   *
-   * @param relations Arraylist containing all relations
-   */
-  public void display(ArrayList<RelationSchema> relations) {
-    RelationGraphUpdater updater = new RelationGraphUpdater(graph,
-            graphComponent, relations, null);
-    updater.run();
-  }
-
-  /**
    * Displays all given Relations with ForeignKeys
    *
    * @param relations Arraylist containing all relations
@@ -203,7 +192,7 @@ public class RelationView extends JGraphView implements Observer {
    *
    * @param path the path + the fileName
    */
-  public void exportToPng(String path) {
+  private void exportToPng(String path) {
     Dimension d = graphComponent.getGraphControl().getSize();
     BufferedImage image = new BufferedImage(d.width, d.height,
             BufferedImage.TYPE_INT_ARGB);

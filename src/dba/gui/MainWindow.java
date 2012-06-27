@@ -89,6 +89,7 @@ public class MainWindow implements constants, Observer {
    * Create the frame.
    */
   public MainWindow() {
+    super();
     checker = new GeneralRelationCheck();
     GetIcons getIcon = GetIcons.getInstance();
     ImageIcon iconFrame = getIcon.getIconFrame();

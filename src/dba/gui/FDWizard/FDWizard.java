@@ -62,6 +62,7 @@ public class FDWizard extends JDialog implements constants {
    * @param functionalDependency FD which will be edited (null if new FD will be created)
    */
   public FDWizard(RelationSchema rel, FunctionalDependency functionalDependency) {
+    super();
     locale = Localization.getInstance();
 
     FunctionalDependency fd = functionalDependency;
@@ -219,10 +220,6 @@ public class FDWizard extends JDialog implements constants {
     }
   }
 
-  public RelationSchema getRelation() {
-    return relation;
-  }
-
   public boolean getRelationChanged() {
     return relationChanged;
   }
@@ -232,7 +229,7 @@ public class FDWizard extends JDialog implements constants {
    *
    * @return ArrayList with all SourceAttributes
    */
-  public ArrayList<Attribute> getSourceAttributes() {
+  private ArrayList<Attribute> getSourceAttributes() {
     ArrayList<Attribute> sourceAttributes = new ArrayList<>();
     for (Attribute attr : listSource.getSelectedValuesList()) {
       sourceAttributes.add(attr);
@@ -246,7 +243,7 @@ public class FDWizard extends JDialog implements constants {
    *
    * @return ArrayList with all TargetAttributes
    */
-  public ArrayList<Attribute> getTargetAttributes() {
+  private ArrayList<Attribute> getTargetAttributes() {
     ArrayList<Attribute> targetAttributes = new ArrayList<>();
     for (Attribute attr : listTarget.getSelectedValuesList()) {
       targetAttributes.add(attr);

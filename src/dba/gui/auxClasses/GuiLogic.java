@@ -48,6 +48,7 @@ public class GuiLogic {
   private static ArrayList<Observer> observers = new ArrayList<>();
 
   public GuiLogic(DatabaseTreePanel dbTreePanel) {
+    super();
     tree = CustomTree.getInstance();
     database = tree.getDatabase();
     dbTree = dbTreePanel;
@@ -356,6 +357,7 @@ public class GuiLogic {
     }
 
     public ExtensionFilter(String description, String extensions[]) {
+      super();
       this.description = description;
       this.extensions = extensions.clone();
     }
@@ -365,7 +367,6 @@ public class GuiLogic {
       if (file.isDirectory()) {
         return true;
       }
-      int count = extensions.length;
       String path = file.getAbsolutePath();
       for (String ext : extensions) {
         if (path.endsWith(ext)
@@ -392,16 +393,6 @@ public class GuiLogic {
    */
   public boolean addObserver(Observer observer) {
     return observers.add(observer);
-  }
-
-  /**
-   * Removes a Observer from the Collection
-   *
-   * @param observer the observer to remove
-   * @return true/false
-   */
-  public boolean removeObserver(Observer observer) {
-    return observers.remove(observer);
   }
 
   /**

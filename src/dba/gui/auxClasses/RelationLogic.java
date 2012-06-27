@@ -39,6 +39,7 @@ public class RelationLogic {
   private CustomTree tree;
 
   public RelationLogic() {
+    super();
     tree = CustomTree.getInstance();
     locale = Localization.getInstance();
   }
@@ -125,7 +126,7 @@ public class RelationLogic {
             locale.getString("TREE_RelRenMsg"),
             locale.getString("TREE_RelRenTitle"), JOptionPane.QUESTION_MESSAGE,
             null, null, relation.getName());
-    if (name != null && name.length() > 0 && !tree.checkIfRelationExists(name)) {
+    if (name != null && !name.isEmpty() && !tree.checkIfRelationExists(name)) {
       tree.getDatabase().renameRelationSchema(relation, name);
     } else {
       FeedbackbarPanel.getInstance().showFeedback(
