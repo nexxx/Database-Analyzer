@@ -61,9 +61,10 @@ public class GuiLogic {
     //freemaker init
     cfg = new Configuration();
     try {
-      cfg.setClassForTemplateLoading(this.getClass(), "/res/templates");
+      cfg.setClassForTemplateLoading(this.getClass(),
+              "/res/templates/" + Options.getInstance().getLanguage());
+
     } catch (Exception e) {
-      //TODO Handle catch clause!
     }
     cfg.setObjectWrapper(new DefaultObjectWrapper());
   }
