@@ -48,6 +48,8 @@ public class GuiLogic {
   private static String lastFileNameBackup;
   private CustomTree tree;
   private static ArrayList<Observer> observers = new ArrayList<>();
+  private Configuration cfg;
+
 
   public GuiLogic(DatabaseTreePanel dbTreePanel) {
     super();
@@ -58,6 +60,15 @@ public class GuiLogic {
     lastFileName = null;
     lastFileNameBackup = null;
     options = Options.getInstance();
+
+    //freemaker init
+    cfg = new Configuration();
+    try {
+      cfg.setClassForTemplateLoading(this.getClass(), "/res/templates");
+    } catch (Exception e) {
+      //TODO Handle catch clause!
+    }
+    cfg.setObjectWrapper(new DefaultObjectWrapper());
   }
 
   /**
@@ -292,9 +303,7 @@ public class GuiLogic {
           }
           return exportText(path);
         } else if (fc.getFileFilter() == typeHtml) {
-          if (!path.endsWith(".html")) {
-            path = path + ".html";
-          }
+
           return exportHtml(path);
         } else {
           // Should not happen
@@ -366,52 +375,6 @@ public class GuiLogic {
     } else {
       return writeHtml(path);
     }
-  }
-
-  private FeedbackEnum writeHtml(String path) {
-    Configuration cfg = new Configuration();
-    try {
-      cfg.setClassForTemplateLoading(this.getClass(), "/res/templates");
-    } catch (Exception e) {
-      System.out.println("Template Folder FAILED");
-      return FeedbackEnum.FAILED;
-    }
-    cfg.setObjectWrapper(new DefaultObjectWrapper());
-
-
-// Create the root hash
-    Map root = new HashMap();
-// Put string ``user'' into the root
-    root.put("user", "Big Joe");
-// Create the hash for ``latestProduct''
-    Map latest = new HashMap();
-// and put it into the root
-    root.put("latestProduct", latest);
-// put ``url'' and ``name'' into latest
-    latest.put("url", "products/greenmouse.html");
-    latest.put("name", "green mouse");
-
-    Template temp;
-    try {
-      temp = cfg.getTemplate("template.ftl");
-    } catch (IOException e) {
-      System.out.println("Template FAILED");
-      e.printStackTrace();
-      return FeedbackEnum.FAILED;
-    }
-
-    try {
-      Writer out = new OutputStreamWriter(new FileOutputStream(path));
-      temp.process(root, out);
-      out.flush();
-      out.close();
-    } catch (Exception e) {
-      System.out.println("Writing FAILED");
-      e.printStackTrace();
-      return FeedbackEnum.FAILED;
-    }
-
-    return FeedbackEnum.SUCCESSFUL;
   }
 
   private FeedbackEnum writeText(String path) {
@@ -502,5 +465,105 @@ public class GuiLogic {
               locale.getString("FB_RedoFailed"), FeedbackEnum.FAILED);
     }
     tree.setSelectedItem(0);
+  }
+
+  /**
+   * Create needed Folders, write Images and HTML File
+   *
+   * @return FeedbackEnum
+   */
+  private FeedbackEnum writeHtml(String path) {
+    String folder;
+
+    folder = path;
+    if (!path.endsWith(".html")) {
+      path = path + ".html";
+    }
+
+    if (makeDirs(folder) == FeedbackEnum.FAILED) {
+      return FeedbackEnum.FAILED;
+    }
+
+    if (writeIndex(folder, path) == FeedbackEnum.FAILED) {
+      return FeedbackEnum.FAILED;
+    }
+
+    if (writeNotes(folder) == FeedbackEnum.FAILED) {
+      return FeedbackEnum.FAILED;
+    }
+
+    return FeedbackEnum.SUCCESSFUL;
+  }
+
+  private FeedbackEnum makeDirs(String folder) {
+    boolean success = (
+            new File(folder)).mkdir();
+    if (!success) {
+      return FeedbackEnum.FAILED;
+    }
+    return FeedbackEnum.SUCCESSFUL;
+  }
+
+  private FeedbackEnum writeIndex(String folder, String path) {
+
+    Map root = new HashMap();
+
+    String company = CustomTree.getInstance().getDatabase()
+            .getCustCompany();
+    company = company.replace("\n", "<br>");
+    String address = CustomTree.getInstance().getDatabase()
+            .getCustAdress();
+    address = address.replace("\n", "<br>");
+
+    root.put("CustInfo", company);
+    root.put("CustAddress", address);
+    root.put("NotesUrl", folder + "/Notes.html");
+    root.put("ContactsUrl", folder + "/Contacts.html");
+    root.put("RelViewUrl", folder + "/Relations.html");
+    root.put("FdsViewUrl", folder + "/FDs.html");
+    root.put("TextUrl", folder + "/txtDesctiption.html");
+
+    Template temp;
+    try {
+      temp = cfg.getTemplate("template_index.ftl");
+    } catch (IOException e) {
+      return FeedbackEnum.FAILED;
+    }
+
+    try {
+      Writer out = new OutputStreamWriter(new FileOutputStream(path));
+      temp.process(root, out);
+      out.flush();
+      out.close();
+    } catch (Exception e) {
+      return FeedbackEnum.FAILED;
+    }
+    return FeedbackEnum.SUCCESSFUL;
+  }
+
+  private FeedbackEnum writeNotes(String folder) {
+    Map root = new HashMap();
+
+    String notes = CustomTree.getInstance().getDatabase().getNotes();
+    notes = notes.replace("\n", "<br>");
+    root.put("Notes", notes);
+
+    Template temp;
+    try {
+      temp = cfg.getTemplate("template_notes.ftl");
+    } catch (IOException e) {
+      return FeedbackEnum.FAILED;
+    }
+
+    try {
+      Writer out = new OutputStreamWriter(new FileOutputStream
+              (folder + "/Notes.html"));
+      temp.process(root, out);
+      out.flush();
+      out.close();
+    } catch (Exception e) {
+      return FeedbackEnum.FAILED;
+    }
+    return FeedbackEnum.SUCCESSFUL;
   }
 }
