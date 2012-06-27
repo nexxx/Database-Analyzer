@@ -281,7 +281,7 @@ public class GuiLogic {
     fc.addChoosableFileFilter(typeImage);
     fc.addChoosableFileFilter(typeText);
     fc.addChoosableFileFilter(typeHtml);
-    fc.setFileFilter(typeImage);
+    fc.setFileFilter(typeHtml);
     fc.setAcceptAllFileFilterUsed(false);
     int returnVal = fc.showSaveDialog(fc);
 
