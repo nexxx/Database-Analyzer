@@ -71,6 +71,10 @@ public class GuiLogic {
     cfg.setObjectWrapper(new DefaultObjectWrapper());
   }
 
+  public String getLastFileName() {
+    return lastFileName;
+  }
+
   /**
    * Loads the database from the xml file
    */
@@ -86,17 +90,14 @@ public class GuiLogic {
       switch (result) {
         case JOptionPane.YES_OPTION:
           save();
-          openDB();
-          return FeedbackEnum.SUCCESSFUL;
+          return openDB();
         case JOptionPane.NO_OPTION:
-          openDB();
-          return FeedbackEnum.SUCCESSFUL;
+          return openDB();
         case JOptionPane.CANCEL_OPTION:
           break;
       }
     } else {
-      openDB();
-      return FeedbackEnum.SUCCESSFUL;
+      return openDB();
     }
     return FeedbackEnum.CANCEL;
   }
@@ -124,7 +125,8 @@ public class GuiLogic {
           database.setDirty(false);
           lastFileName = path;
           lastFileNameBackup = path;
-          TimeLine.getInstance().addHistoricObject(database);
+          TimeLine.getInstance().initialize(database);
+          //TimeLine.getInstance().addHistoricObject(database);
 
           tree.setSelectionRow(0);
           return FeedbackEnum.SUCCESSFUL;
@@ -159,6 +161,7 @@ public class GuiLogic {
           String path = fc.getSelectedFile().getCanonicalPath();
           FeedbackEnum ret = saveWithFilePicker(path);
           lastFileName = path;
+          TimeLine.getInstance().notifyAboutChange();
           return ret;
         } catch (IOException ex) {
           return FeedbackEnum.FAILED;
@@ -258,6 +261,7 @@ public class GuiLogic {
       }
     } else {
       createNewDb();
+      lastFileName = null;
       return FeedbackEnum.SUCCESSFUL;
     }
     return FeedbackEnum.CANCEL;
@@ -270,7 +274,8 @@ public class GuiLogic {
     database.initPropertyChangeListeners();
     database.setDirty(false);
     lastFileName = null;
-    TimeLine.getInstance().addHistoricObject(database);
+    TimeLine.getInstance().initialize(database);
+    //TimeLine.getInstance().addHistoricObject(database);
     tree.setSelectedItem(0);
   }
 

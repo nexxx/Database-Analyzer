@@ -108,7 +108,7 @@ public class MainWindow implements constants, Observer {
     locale = Localization.getInstance();
     feedbackbarPanel = FeedbackbarPanel.getInstance();
 
-    frame = new JFrame(locale.getString("GUI_FrameTitle"));
+    frame = new JFrame(locale.getString("GUI_FrameTitle") + " - " + locale.getString("GUI_FrameTitleNotSaved"));
     frame.setIconImage(iconFrame.getImage());
     frame.addWindowListener(new WindowAdapter() {
       @Override
@@ -195,6 +195,15 @@ public class MainWindow implements constants, Observer {
 
           relationView.display(database);
           relationDetailsView.display(database);
+
+          if (guiLogic.getLastFileName() != null) {
+            frame.setTitle(locale.getString("GUI_FrameTitle") + " - " +
+                    guiLogic.getLastFileName());
+          } else {
+            frame.setTitle(locale.getString("GUI_FrameTitle") + " - " +
+                    locale.getString("GUI_FrameTitleNotSaved"));
+          }
+
         }
       }
     });
