@@ -440,7 +440,8 @@ public class MainWindow implements constants, Observer {
       }
       helpViewer = new JHelp(new HelpSet(cl, url));
     } catch (Exception ex) {
-      System.err.println("API Help Set not found");
+      feedbackbarPanel.showFeedback(locale.getString("FB_LoadHelpFailed"),
+              FeedbackEnum.FAILED);
     }
 
     JFrame frame = new JFrame();

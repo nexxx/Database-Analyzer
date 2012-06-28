@@ -486,20 +486,25 @@ public class GuiLogic {
       return FeedbackEnum.FAILED;
     }
 
-    if (writeNotes(folder) == FeedbackEnum.FAILED) {
-      return FeedbackEnum.FAILED;
+    if (!CustomTree.getInstance().getDatabase().getNotes().isEmpty()) {
+      if (writeNotes(folder) == FeedbackEnum.FAILED) {
+        return FeedbackEnum.FAILED;
+      }
     }
 
-    if (writeContacts(folder) == FeedbackEnum.FAILED) {
-      return FeedbackEnum.FAILED;
+    if (!CustomTree.getInstance().getDatabase().getPersons().isEmpty()) {
+      if (writeContacts(folder) == FeedbackEnum.FAILED) {
+        return FeedbackEnum.FAILED;
+      }
     }
+    if (!CustomTree.getInstance().getDatabase().getDatabase().isEmpty()) {
+      if (writeImages(folder) == FeedbackEnum.FAILED) {
+        return FeedbackEnum.FAILED;
+      }
 
-    if (writeImages(folder) == FeedbackEnum.FAILED) {
-      return FeedbackEnum.FAILED;
-    }
-
-    if (writeTextDescription(folder) == FeedbackEnum.FAILED) {
-      return FeedbackEnum.FAILED;
+      if (writeTextDescription(folder) == FeedbackEnum.FAILED) {
+        return FeedbackEnum.FAILED;
+      }
     }
 
     return FeedbackEnum.SUCCESSFUL;
@@ -526,13 +531,24 @@ public class GuiLogic {
             .getCustAdress();
     address = address.replace("\n", "<br>");
 
-    root.put("CustInfo", company);
-    root.put("CustAddress", address);
-    root.put("NotesUrl", absFolder.getName() + "/Notes.html");
-    root.put("ContactsUrl", absFolder.getName() + "/Contacts.html");
-    root.put("RelViewUrl", absFolder.getName() + "/Relations.html");
-    root.put("FdsViewUrl", absFolder.getName() + "/FDs.html");
-    root.put("TextUrl", absFolder.getName() + "/txtDescription.html");
+    if (!company.isEmpty()) {
+      root.put("CustInfo", company);
+    }
+    if (!address.isEmpty()) {
+      root.put("CustAddress", address);
+    }
+    if (!CustomTree.getInstance().getDatabase().getNotes().isEmpty()) {
+      root.put("NotesUrl", absFolder.getName() + "/Notes.html");
+    }
+    if (!CustomTree.getInstance().getDatabase().getPersons().isEmpty()) {
+      root.put("ContactsUrl", absFolder.getName() + "/Contacts.html");
+    }
+    if (!CustomTree.getInstance().getDatabase().getDatabase().isEmpty()) {
+      root.put("RelViewUrl", absFolder.getName() + "/Relations.html");
+      root.put("FdsViewUrl", absFolder.getName() + "/FDs.html");
+      root.put("TextUrl", absFolder.getName() + "/txtDescription.html");
+    }
+
 
     Template temp;
     try {

@@ -152,9 +152,9 @@ public class CustomerInfosFrame extends JDialog implements Observable {
     pnlCustomer.add(spAdress, "grow");
 
     tableModel = new PersonTableModel(database.getPersons());
-    if (tableModel.getRowCount() == 0) {
-      tableModel.addRow(new Person());
-    }
+//    if (tableModel.getRowCount() == 0) {
+//      tableModel.addRow(new Person());
+//    }
     table = new CustomTable(tableModel);
     table.addPropertyChangeListener(new PropertyChangeListener() {
       @Override
