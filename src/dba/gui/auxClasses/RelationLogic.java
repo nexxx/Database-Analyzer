@@ -168,7 +168,8 @@ public class RelationLogic {
     Database database = tree.getDatabase();
     RelationSchema relation = tree.getRelation();
 
-    Optimize optimizeFrame = new Optimize(relation, NormalForm.SECOND);
+    OptimizeFrame optimizeFrame = new OptimizeFrame(relation,
+            NormalForm.SECOND);
     optimizeFrame.setVisible(true);
     if (optimizeFrame.isModified()) {
       database.insertNormalizationResult(relation,
@@ -181,7 +182,8 @@ public class RelationLogic {
     Database database = tree.getDatabase();
     RelationSchema relation = tree.getRelation();
 
-    Optimize optimizeFrame = new Optimize(relation, NormalForm.THIRD);
+    OptimizeFrame optimizeFrame = new OptimizeFrame(relation,
+            NormalForm.THIRD);
     optimizeFrame.setVisible(true);
     if (optimizeFrame.isModified()) {
       database.insertNormalizationResult(relation,
@@ -194,7 +196,8 @@ public class RelationLogic {
     Database database = tree.getDatabase();
     RelationSchema relation = tree.getRelation();
 
-    Optimize optimizeFrame = new Optimize(relation, NormalForm.BOYCECODD);
+    OptimizeFrame optimizeFrame = new OptimizeFrame(relation,
+            NormalForm.BOYCECODD);
     optimizeFrame.setVisible(true);
     if (optimizeFrame.isModified()) {
       database.insertNormalizationResult(relation,

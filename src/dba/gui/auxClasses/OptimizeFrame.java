@@ -34,7 +34,7 @@ import java.util.ArrayList;
  *
  * @author Andreas Freitag
  */
-public class Optimize extends JDialog {
+public class OptimizeFrame extends JDialog {
 
   private static final long serialVersionUID = 3804928181363080738L;
   private JDialog jDialog;
@@ -44,7 +44,7 @@ public class Optimize extends JDialog {
   /**
    * Defaultconstructor to create the dialog.
    */
-  public Optimize(RelationSchema relation, NormalForm nf) {
+  public OptimizeFrame(RelationSchema relation, NormalForm nf) {
     super();
     Localization locale = Localization.getInstance();
     this.setTitle(locale.getString("OPTI_FrameTitle"));
@@ -95,11 +95,19 @@ public class Optimize extends JDialog {
     normalizationResult = optimizer.normalize(relation, currentNF, nf);
 
     RelationView relationView = new RelationView();
-    JScrollPane scrollPane = new JScrollPane(relationView);
+    JScrollPane scrollPaneRel = new JScrollPane(relationView);
     relationView.display(normalizationResult.getRelations(),
             normalizationResult.getForeignKeys());
 
-    contentPanel.add(scrollPane, BorderLayout.CENTER);
+    RelationDetailsView relationDetailsView = new RelationDetailsView();
+    JScrollPane scrollPaneFd = new JScrollPane(relationDetailsView);
+    relationDetailsView.display(normalizationResult.getRelations());
+
+    JTabbedPane tabbedPane = new JTabbedPane();
+    tabbedPane.addTab(locale.getString("GUI_Relations"), scrollPaneRel);
+    tabbedPane.addTab(locale.getString("GUI_RelationDetails"), scrollPaneFd);
+
+    contentPanel.add(tabbedPane, BorderLayout.CENTER);
     contentPanel.add(new JLabel(locale.getString("OPTI_Result")),
             BorderLayout.NORTH);
     switch (nf) {
@@ -118,7 +126,7 @@ public class Optimize extends JDialog {
       default:
         throw new IllegalArgumentException();
     }
-    setSize(450, 300);
+    setSize(800, 600);
     setMinimumSize(new Dimension(400, 250));
     setLocationRelativeTo(null);
 

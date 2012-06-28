@@ -58,6 +58,11 @@ public class RelationDetailsView extends JGraphView implements Observer {
   private mxGraph graph;
   private mxGraphComponent graphComponent;
 
+  public RelationDetailsView() {
+    super();
+    initGraphics();
+  }
+
   /**
    * Creates a new instance and registers this instance as a observer
    * of given GuiLogic
@@ -151,7 +156,7 @@ public class RelationDetailsView extends JGraphView implements Observer {
   /**
    * Displays all given Relations
    */
-  private void display(ArrayList<RelationSchema> relations) {
+  public void display(ArrayList<RelationSchema> relations) {
 
     RelationDetailsGraphUpdater updater = new RelationDetailsGraphUpdater(
             graph, relations);
