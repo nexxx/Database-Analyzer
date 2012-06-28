@@ -62,8 +62,7 @@ public class ToolBar extends JToolBar implements Observer {
   /**
    * Defaultconstructor to create Toolbar
    */
-  public ToolBar(RelationView relView, RelationDetailsView relDetailView,
-                 DatabaseTreePanel dbTreePanel) {
+  public ToolBar(RelationView relView, RelationDetailsView relDetailView, DatabaseTreePanel dbTreePanel) {
     super();
     feedbackbarPanel = FeedbackbarPanel.getInstance();
     guiLogic = new GuiLogic(dbTreePanel);
@@ -110,8 +109,7 @@ public class ToolBar extends JToolBar implements Observer {
       public void actionPerformed(ActionEvent arg0) {
         FeedbackEnum returnVal = guiLogic.newDatabase();
         if (returnVal == FeedbackEnum.SUCCESSFUL) {
-          feedbackbarPanel.showFeedback(locale.getString("FB_NewDB"),
-                  FeedbackEnum.SUCCESSFUL);
+          feedbackbarPanel.showFeedback(locale.getString("FB_NewDB"), FeedbackEnum.SUCCESSFUL);
         }
       }
     });
@@ -122,8 +120,7 @@ public class ToolBar extends JToolBar implements Observer {
       public void actionPerformed(ActionEvent arg0) {
         FeedbackEnum returnVal = guiLogic.open();
         if (returnVal == FeedbackEnum.FAILED) {
-          feedbackbarPanel.showFeedback(locale.getString("FB_OpenFailed"),
-                  FeedbackEnum.FAILED);
+          feedbackbarPanel.showFeedback(locale.getString("FB_OpenFailed"), FeedbackEnum.FAILED);
         }
       }
     });
@@ -134,11 +131,9 @@ public class ToolBar extends JToolBar implements Observer {
       public void actionPerformed(ActionEvent arg0) {
         FeedbackEnum returnVal = guiLogic.save();
         if (returnVal == FeedbackEnum.SUCCESSFUL) {
-          feedbackbarPanel.showFeedback(locale.getString("FB_Save"),
-                  FeedbackEnum.SUCCESSFUL);
+          feedbackbarPanel.showFeedback(locale.getString("FB_Save"), FeedbackEnum.SUCCESSFUL);
         } else if (returnVal == FeedbackEnum.FAILED) {
-          feedbackbarPanel.showFeedback(locale.getString("FB_SaveFailed"),
-                  FeedbackEnum.FAILED);
+          feedbackbarPanel.showFeedback(locale.getString("FB_SaveFailed"), FeedbackEnum.FAILED);
         }
       }
     });

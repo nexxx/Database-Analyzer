@@ -68,8 +68,7 @@ public class DbPopupFactory implements constants {
   public JPopupMenu getDbPopupMenu() {
     JPopupMenu dbPopUpMenu = new JPopupMenu();
 
-    JMenuItem wizardDatabaseMenuItem = new JMenuItem(
-            locale.getString("TREE_DBNewRelWiz"), iconWizard);
+    JMenuItem wizardDatabaseMenuItem = new JMenuItem(locale.getString("TREE_DBNewRelWiz"), iconWizard);
     wizardDatabaseMenuItem.addActionListener(new ActionListener() {
 
       @Override
@@ -81,8 +80,7 @@ public class DbPopupFactory implements constants {
     });
     dbPopUpMenu.add(wizardDatabaseMenuItem);
 
-    JMenuItem addDatabaseMenuItem = new JMenuItem(
-            locale.getString("TREE_DBAddEmptyRel"), iconRelation);
+    JMenuItem addDatabaseMenuItem = new JMenuItem(locale.getString("TREE_DBAddEmptyRel"), iconRelation);
     addDatabaseMenuItem.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent arg0) {
@@ -93,8 +91,7 @@ public class DbPopupFactory implements constants {
     });
     dbPopUpMenu.add(addDatabaseMenuItem);
 
-    inspectDatabaseMenuItem = new JMenuItem(locale.getString("TREE_DBInspect"),
-            iconInspect);
+    inspectDatabaseMenuItem = new JMenuItem(locale.getString("TREE_DBInspect"), iconInspect);
     inspectDatabaseMenuItem.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent arg0) {

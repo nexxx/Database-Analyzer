@@ -65,8 +65,7 @@ public class CustomTree extends JTree {
 
       @Override
       public void valueChanged(TreeSelectionEvent e) {
-        lastSelectedNode = (DefaultMutableTreeNode) tree
-                .getLastSelectedPathComponent();
+        lastSelectedNode = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
       }
     });
 
@@ -103,12 +102,9 @@ public class CustomTree extends JTree {
    * @return parent relation
    */
   public RelationSchema getParentRelation() {
-    RelationSchema relation = (RelationSchema) ((RelationNode) ((DefaultMutableTreeNode) this
-            .getSelectionPath().getLastPathComponent()).getParent())
-            .getUserObject();
+    RelationSchema relation = (RelationSchema) ((RelationNode) ((DefaultMutableTreeNode) this.getSelectionPath().getLastPathComponent()).getParent()).getUserObject();
     if (relation == null) {
-      return (RelationSchema) ((RelationNode) lastSelectedNode.getParent())
-              .getUserObject();
+      return (RelationSchema) ((RelationNode) lastSelectedNode.getParent()).getUserObject();
     }
     return relation;
   }
@@ -119,8 +115,7 @@ public class CustomTree extends JTree {
    * @return marked attribute
    */
   public Attribute getAttribute() {
-    Attribute attribute = (Attribute) ((AttributeNode) this.getSelectionPath()
-            .getLastPathComponent()).getUserObject();
+    Attribute attribute = (Attribute) ((AttributeNode) this.getSelectionPath().getLastPathComponent()).getUserObject();
     if (attribute == null) {
       return (Attribute) lastSelectedNode.getUserObject();
     }
@@ -149,8 +144,7 @@ public class CustomTree extends JTree {
    * @return Database
    */
   public Database getDatabase() {
-    Database database = (Database) ((DatabaseNode) this.getModel().getRoot())
-            .getUserObject();
+    Database database = (Database) ((DatabaseNode) this.getModel().getRoot()).getUserObject();
     if (database == null) {
       return (Database) lastSelectedNode.getUserObject();
     }
@@ -163,8 +157,7 @@ public class CustomTree extends JTree {
    * @return Marked FD
    */
   public FunctionalDependency getFd() {
-    FunctionalDependency fd = (FunctionalDependency) ((FunctionalDependencyNode) this
-            .getSelectionPath().getLastPathComponent()).getUserObject();
+    FunctionalDependency fd = (FunctionalDependency) ((FunctionalDependencyNode) this.getSelectionPath().getLastPathComponent()).getUserObject();
     if (fd == null) {
       return (FunctionalDependency) lastSelectedNode.getUserObject();
     }
@@ -177,8 +170,7 @@ public class CustomTree extends JTree {
    * @return current marked relation
    */
   public RelationSchema getRelation() {
-    RelationSchema relation = (RelationSchema) ((RelationNode) this
-            .getSelectionPath().getLastPathComponent()).getUserObject();
+    RelationSchema relation = (RelationSchema) ((RelationNode) this.getSelectionPath().getLastPathComponent()).getUserObject();
     if (relation == null) {
       return (RelationSchema) lastSelectedNode.getUserObject();
     }
@@ -198,17 +190,14 @@ public class CustomTree extends JTree {
       case DelAttribute:
       case DelFD:
         // Parent Relation
-        rowNr = tree.getRowForPath(new TreePath(
-                ((RelationNode) ((DefaultMutableTreeNode) this.getSelectionPath()
-                        .getLastPathComponent()).getParent()).getPath()));
+        rowNr = tree.getRowForPath(new TreePath(((RelationNode) ((DefaultMutableTreeNode) this.getSelectionPath().getLastPathComponent()).getParent()).getPath()));
         break;
       case AddRelation:
       case DelRelation:
       case InspectDb:
       case OptimizeDb:
         // Database
-        rowNr = tree.getRowForPath(new TreePath(((DatabaseNode) this.getModel()
-                .getRoot()).getPath()));
+        rowNr = tree.getRowForPath(new TreePath(((DatabaseNode) this.getModel().getRoot()).getPath()));
         break;
       case RenameRel:
       case EditRel:
@@ -217,8 +206,7 @@ public class CustomTree extends JTree {
       case AddFD:
       case AddAttribute:
         // Relation
-        rowNr = tree.getRowForPath(new TreePath(((RelationNode) this
-                .getSelectionPath().getLastPathComponent()).getPath()));
+        rowNr = tree.getRowForPath(new TreePath(((RelationNode) this.getSelectionPath().getLastPathComponent()).getPath()));
         break;
       case RenameAttr:
       case EditAttr:
@@ -226,13 +214,11 @@ public class CustomTree extends JTree {
       case ToggleFk:
       case SwitchType:
         // Attribute
-        rowNr = tree.getRowForPath(new TreePath(((AttributeNode) this
-                .getSelectionPath().getLastPathComponent()).getPath()));
+        rowNr = tree.getRowForPath(new TreePath(((AttributeNode) this.getSelectionPath().getLastPathComponent()).getPath()));
         break;
       case EditFd:
         // FD
-        rowNr = tree.getRowForPath(new TreePath(((FunctionalDependencyNode) this
-                .getSelectionPath().getLastPathComponent()).getPath()));
+        rowNr = tree.getRowForPath(new TreePath(((FunctionalDependencyNode) this.getSelectionPath().getLastPathComponent()).getPath()));
         break;
 
     }
@@ -280,8 +266,7 @@ public class CustomTree extends JTree {
     int cc;
     cc = tree.getModel().getChildCount(root);
     for (int i = 0; i < cc; i++) {
-      DefaultMutableTreeNode child = (DefaultMutableTreeNode) tree.getModel()
-              .getChild(root, i);
+      DefaultMutableTreeNode child = (DefaultMutableTreeNode) tree.getModel().getChild(root, i);
       if (child.getUserObject() == target) {
         TreeNode[] pathWithNodes = child.getPath();
         TreePath path = new TreePath(pathWithNodes);
@@ -293,8 +278,7 @@ public class CustomTree extends JTree {
     }
   }
 
-  private void restoreTreeNode(CustomTree tree, TreePath parent,
-                               DefaultMutableTreeNode treeNode) {
+  private void restoreTreeNode(CustomTree tree, TreePath parent, DefaultMutableTreeNode treeNode) {
     // Traverse down through the children
     TreeNode node = (TreeNode) parent.getLastPathComponent();
 
@@ -302,8 +286,7 @@ public class CustomTree extends JTree {
       // Create a child numerator over the node
       Enumeration<?> en = node.children();
       while (en.hasMoreElements()) { // While we have children
-        DefaultMutableTreeNode dmTreeNode = (DefaultMutableTreeNode) en
-                .nextElement(); // Derive the node
+        DefaultMutableTreeNode dmTreeNode = (DefaultMutableTreeNode) en.nextElement(); // Derive the node
         TreePath path = parent.pathByAddingChild(dmTreeNode); // Derive
         // the
         // path
@@ -317,8 +300,7 @@ public class CustomTree extends JTree {
     if (treeNode != null) { // If true, this is the root node - ignore
       // it
       if (treeNode instanceof RelationNode) {
-        if (expandedTreeObjects.contains(((RelationSchema) treeNode
-                .getUserObject()).getOwnId())) {
+        if (expandedTreeObjects.contains(((RelationSchema) treeNode.getUserObject()).getOwnId())) {
           tree.expandPath(parent); // et viola
         }
 
@@ -329,12 +311,10 @@ public class CustomTree extends JTree {
   private void processTreeExpansion(TreeExpansionEvent e) {
 
     if (!supressExpansionEvent) {
-      DefaultMutableTreeNode node = (DefaultMutableTreeNode) e.getPath()
-              .getLastPathComponent();
+      DefaultMutableTreeNode node = (DefaultMutableTreeNode) e.getPath().getLastPathComponent();
 
       if (node instanceof RelationNode) {
-        expandedTreeObjects.add(((RelationSchema) node.getUserObject())
-                .getOwnId());
+        expandedTreeObjects.add(((RelationSchema) node.getUserObject()).getOwnId());
       }
 
     }
@@ -342,8 +322,7 @@ public class CustomTree extends JTree {
   }
 
   private void processTreeCollapse(TreeExpansionEvent e) {
-    DefaultMutableTreeNode node = (DefaultMutableTreeNode) e.getPath()
-            .getLastPathComponent();
+    DefaultMutableTreeNode node = (DefaultMutableTreeNode) e.getPath().getLastPathComponent();
 
     if (node instanceof RelationNode) {
       Integer schemaId = ((RelationSchema) node.getUserObject()).getOwnId();

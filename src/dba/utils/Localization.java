@@ -38,8 +38,7 @@ public class Localization {
     Options options = Options.getInstance();
     Locale locale = new Locale(options.getLanguage());
     Locale.setDefault(new Locale(options.getLanguage()));
-    captions = ResourceBundle.getBundle(
-            "res.localization.localizationMessages", locale);
+    captions = ResourceBundle.getBundle("res.localization.localizationMessages", locale);
   }
 
   /**

@@ -65,8 +65,7 @@ public class AddRelationNameAttributePanel extends JPanel implements constants {
    *                 Wizard')
    * @param db       Database Object
    */
-  public AddRelationNameAttributePanel(RelationSchema relation, Database db,
-                                       WizardEnum wizardType) {
+  public AddRelationNameAttributePanel(RelationSchema relation, Database db, WizardEnum wizardType) {
     super();
     locale = Localization.getInstance();
 
@@ -96,15 +95,21 @@ public class AddRelationNameAttributePanel extends JPanel implements constants {
         txtAttrName.requestFocus();
       }
     });
-    tableModel = new AttributeTableModel(tmpRelation.getAttributes(), database,
-            tmpRelation);
+
+    if (wizardType == WizardEnum.NEW) {
+      tableModel = new AttributeTableModel(tmpRelation.getAttributes(), database, tmpRelation);
+    } else {
+      tableModel = new AttributeTableModelEdit(tmpRelation.getAttributes(), database, tmpRelation);
+    }
     table = new JTable(tableModel);
 
-    JComboBox<String> comboBox = new JComboBox<>(mySql.getInstance()
-            .getTypes());
+    JComboBox<String> comboBox = new JComboBox<>(mySql.getInstance().getTypes());
 
     TableColumn col = table.getColumnModel().getColumn(1);
     col.setCellEditor(new DefaultCellEditor(comboBox));
+
+    TableColumn colFk = table.getColumnModel().getColumn(3);
+    colFk.setCellEditor(null);
 
     txtRelName = new JTextField();
 
@@ -129,20 +134,14 @@ public class AddRelationNameAttributePanel extends JPanel implements constants {
           oldName = tmpRelation.getName();
         }
 
-        if (checkIfRelationExists(txtRelName.getText(), oldName)
-                || txtRelName.getText().isEmpty()
-                || txtRelName.getText().equals(
-                locale.getString("WIZ_AttrNameQuestion"))) {
+        if (checkIfRelationExists(txtRelName.getText(), oldName) || txtRelName.getText().isEmpty() || txtRelName.getText().equals(locale.getString("WIZ_AttrNameQuestion"))) {
           lblAlreadyExisting.setVisible(true);
-          AddRelationNameAttributePanel.this.firePropertyChange("RelName",
-                  null, false);
+          AddRelationNameAttributePanel.this.firePropertyChange("RelName", null, false);
         } else {
-          database.updateFkRelationNames(tmpRelation.getName(),
-                  txtRelName.getText());
+          database.updateFkRelationNames(tmpRelation.getName(), txtRelName.getText());
           tmpRelation.setName(txtRelName.getText());
           lblAlreadyExisting.setVisible(false);
-          AddRelationNameAttributePanel.this.firePropertyChange("RelName",
-                  null, true);
+          AddRelationNameAttributePanel.this.firePropertyChange("RelName", null, true);
         }
       }
     });
@@ -166,8 +165,7 @@ public class AddRelationNameAttributePanel extends JPanel implements constants {
         addAttribute();
       }
     });
-    txtAttrName.getDocument().addDocumentListener(
-            new CustomDocumentListener(btnAdd));
+    txtAttrName.getDocument().addDocumentListener(new CustomDocumentListener(btnAdd));
     add(txtAttrName, "growx");
 
     // Button Add
@@ -219,9 +217,7 @@ public class AddRelationNameAttributePanel extends JPanel implements constants {
       return;
     }
     if (!tmpRelation.addAttribute(txtAttrName.getText())) {
-      JOptionPane.showMessageDialog(this,
-              locale.getString("WIZ_Attr") + " '" + txtAttrName.getText() + "' "
-                      + locale.getString("WIZ_AttrDialogExisting"));
+      JOptionPane.showMessageDialog(this, locale.getString("WIZ_Attr") + " '" + txtAttrName.getText() + "' " + locale.getString("WIZ_AttrDialogExisting"));
       txtAttrName.selectAll();
       return;
     }
@@ -240,8 +236,7 @@ public class AddRelationNameAttributePanel extends JPanel implements constants {
 
     if (oldName != null) {
       for (RelationSchema relation : database.getDatabase()) {
-        if (relation.getName().equalsIgnoreCase(relName)
-                && !relation.getName().equalsIgnoreCase(oldName)) {
+        if (relation.getName().equalsIgnoreCase(relName) && !relation.getName().equalsIgnoreCase(oldName)) {
           return true;
         }
       }

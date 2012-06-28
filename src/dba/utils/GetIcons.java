@@ -171,8 +171,7 @@ public class GetIcons implements constants {
     URL imgURL = getClass().getResource("/res/icons/" + iconName);
     if (imgURL != null) {
       ImageIcon icon = new ImageIcon(imgURL);
-      Image image = icon.getImage().getScaledInstance(size, size,
-              Image.SCALE_SMOOTH);
+      Image image = icon.getImage().getScaledInstance(size, size, Image.SCALE_SMOOTH);
       return new ImageIcon(image);
     } else {
       System.err.println("Couldn't find icon: " + iconName);

@@ -34,8 +34,7 @@ public class RelationDetailsGraphUpdater implements Runnable {
   private Object parentPane;
   private ArrayList<RelationSchema> dbRelations;
 
-  public RelationDetailsGraphUpdater(mxGraph graph,
-                                     ArrayList<RelationSchema> relations) {
+  public RelationDetailsGraphUpdater(mxGraph graph, ArrayList<RelationSchema> relations) {
     super();
     dbRelations = relations;
     parentPane = graph.getDefaultParent();
@@ -72,8 +71,7 @@ public class RelationDetailsGraphUpdater implements Runnable {
 
     for (RelationSchema relation : dbRelations) {
       relationCell = (mxCell) insertRelation(graph, relation, offset);
-      offset += relationCell.getGeometry().getHeight()
-              + (50 + 30 * relation.getFunctionalDependencies().size());
+      offset += relationCell.getGeometry().getHeight() + (50 + 30 * relation.getFunctionalDependencies().size());
 
     }
   }
@@ -86,30 +84,24 @@ public class RelationDetailsGraphUpdater implements Runnable {
    * @param verticalOffset the vertical offset of the relation
    * @return the mxCell representing the Relation
    */
-  private Object insertRelation(mxGraph graph, RelationSchema relation,
-                                int verticalOffset) {
+  private Object insertRelation(mxGraph graph, RelationSchema relation, int verticalOffset) {
     int attributeOffset;
     int horizontalOffset = 0;
     int attributeWidth;
     ArrayList<mxCell> attributeCells = new ArrayList<>();
 
-    mxCell relationVertex = (mxCell) graph.insertVertex(parentPane,
-            relation.getName(), relation, horizontalOffset, verticalOffset,
-            getRequiredWidth(relation), 25, "RELATION_HEADER");
+    mxCell relationVertex = (mxCell) graph.insertVertex(parentPane, relation.getName(), relation, horizontalOffset, verticalOffset, getRequiredWidth(relation), 25, "RELATION_HEADER");
 
     attributeOffset = (int) (relationVertex.getGeometry().getY() + 25);
 
     // Add attributes
     for (Attribute attr : relation.getAttributes()) {
       attributeWidth = getRequiredWidth(attr);
-      attributeCells.add((mxCell) graph.insertVertex(parentPane,
-              attr.getName(), attr, horizontalOffset, attributeOffset,
-              attributeWidth, 25, getAttributeStyle(attr)));
+      attributeCells.add((mxCell) graph.insertVertex(parentPane, attr.getName(), attr, horizontalOffset, attributeOffset, attributeWidth, 25, getAttributeStyle(attr)));
       horizontalOffset += attributeWidth;
     }
 
-    drawFunctionalDependencies(relation.getAttributes(), attributeCells,
-            relation.getFunctionalDependencies());
+    drawFunctionalDependencies(relation.getAttributes(), attributeCells, relation.getFunctionalDependencies());
 
     return relationVertex;
   }
@@ -160,8 +152,7 @@ public class RelationDetailsGraphUpdater implements Runnable {
    * @param attributeCells the mxCells containing the attributes
    * @param fds            the functionalDependencies to display
    */
-  private void drawFunctionalDependencies(ArrayList<Attribute> attributes,
-                                          ArrayList<mxCell> attributeCells, ArrayList<FunctionalDependency> fds) {
+  private void drawFunctionalDependencies(ArrayList<Attribute> attributes, ArrayList<mxCell> attributeCells, ArrayList<FunctionalDependency> fds) {
     int offset = 2;
 
     for (FunctionalDependency fd : fds) {
@@ -179,9 +170,7 @@ public class RelationDetailsGraphUpdater implements Runnable {
    * @param fd             the functionalDependency to display
    * @param verticalOffset the offset between two functionalDependencies
    */
-  private void drawFunctionalDependency(ArrayList<Attribute> attributes,
-                                        ArrayList<mxCell> attributeCells, FunctionalDependency fd,
-                                        int verticalOffset) {
+  private void drawFunctionalDependency(ArrayList<Attribute> attributes, ArrayList<mxCell> attributeCells, FunctionalDependency fd, int verticalOffset) {
     // draws all the near nodes
     ArrayList<mxCell> nearNodes = drawNodes(attributeCells, verticalOffset + 2);
 
@@ -203,9 +192,7 @@ public class RelationDetailsGraphUpdater implements Runnable {
     ArrayList<mxCell> nodes = new ArrayList<>();
 
     for (mxCell cell : attributes) {
-      nodes.add((mxCell) graph.insertVertex(parentPane, null, null, cell
-              .getGeometry().getCenterX(), getCellLowestYPoint(cell) + offset, 1,
-              1, "NODE"));
+      nodes.add((mxCell) graph.insertVertex(parentPane, null, null, cell.getGeometry().getCenterX(), getCellLowestYPoint(cell) + offset, 1, 1, "NODE"));
     }
 
     return nodes;
@@ -231,31 +218,26 @@ public class RelationDetailsGraphUpdater implements Runnable {
    * @param farNodes   the Array of Nodes which are further away of the
    *                   attribute-Nodes
    */
-  private void drawAttributeArrows(ArrayList<Attribute> attributes,
-                                   FunctionalDependency fd, ArrayList<mxCell> nearNodes,
-                                   ArrayList<mxCell> farNodes) {
+  private void drawAttributeArrows(ArrayList<Attribute> attributes, FunctionalDependency fd, ArrayList<mxCell> nearNodes, ArrayList<mxCell> farNodes) {
     int index;
     ArrayList<Integer> indices = new ArrayList<>();
 
     // draw arrows for the SourceAttributes
     for (Attribute sourceAttr : fd.getSourceAttributes()) {
       index = attributes.indexOf(sourceAttr);
-      graph.insertEdge(parentPane, null, "", nearNodes.get(index),
-              farNodes.get(index), "EDGE_PLAIN");
+      graph.insertEdge(parentPane, null, "", nearNodes.get(index), farNodes.get(index), "EDGE_PLAIN");
       indices.add(index);
     }
 
     // draw arrows for the TargetAttributes
     for (Attribute targetAttr : fd.getTargetAttributes()) {
       index = attributes.indexOf(targetAttr);
-      graph.insertEdge(parentPane, null, "", farNodes.get(index),
-              nearNodes.get(index), "EDGE_ARROW");
+      graph.insertEdge(parentPane, null, "", farNodes.get(index), nearNodes.get(index), "EDGE_ARROW");
       indices.add(index);
     }
 
     // Connect arrows
     java.util.Collections.sort(indices);
-    graph.insertEdge(parentPane, null, "", farNodes.get(indices.get(0)),
-            farNodes.get(indices.get(indices.size() - 1)), "EDGE_PLAIN");
+    graph.insertEdge(parentPane, null, "", farNodes.get(indices.get(0)), farNodes.get(indices.get(indices.size() - 1)), "EDGE_PLAIN");
   }
 }

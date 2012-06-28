@@ -80,8 +80,7 @@ public class CustomerInfosFrame extends JDialog implements Observable {
     locale = Localization.getInstance();
     frame = this;
     frame.setTitle(locale.getString("MI_FrameTitle"));
-    frame.setIconImage(GetIcons.getInstance().getIconEditInfosFrame()
-            .getImage());
+    frame.setIconImage(GetIcons.getInstance().getIconEditInfosFrame().getImage());
     frame.setModal(true);
     frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     frame.setSize(700, 450);
@@ -135,8 +134,7 @@ public class CustomerInfosFrame extends JDialog implements Observable {
 
   private JPanel createCustomerPanel() {
     JPanel panel = new JPanel(new BorderLayout());
-    JPanel pnlCustomer = new JPanel(new MigLayout("wrap 2, filly",
-            "[grow 50][grow 50]"));
+    JPanel pnlCustomer = new JPanel(new MigLayout("wrap 2, filly", "[grow 50][grow 50]"));
     JPanel pnlPersons = new JPanel(new BorderLayout());
     JPanel pnlPersonButton = new JPanel(new GridLayout());
 
@@ -152,9 +150,9 @@ public class CustomerInfosFrame extends JDialog implements Observable {
     pnlCustomer.add(spAdress, "grow");
 
     tableModel = new PersonTableModel(database.getPersons());
-//    if (tableModel.getRowCount() == 0) {
-//      tableModel.addRow(new Person());
-//    }
+    //    if (tableModel.getRowCount() == 0) {
+    //      tableModel.addRow(new Person());
+    //    }
     table = new CustomTable(tableModel);
     table.addPropertyChangeListener(new PropertyChangeListener() {
       @Override
@@ -248,8 +246,7 @@ public class CustomerInfosFrame extends JDialog implements Observable {
       @Override
       public void actionPerformed(ActionEvent arg0) {
         if (cbPerson.getItemCount() >= 1 && cbPerson.getSelectedIndex() > 0) {
-          txtNotes.insert((String) cbPerson.getSelectedItem(),
-                  txtNotes.getCaretPosition());
+          txtNotes.insert((String) cbPerson.getSelectedItem(), txtNotes.getCaretPosition());
           cbPerson.setSelectedIndex(0);
           txtNotes.requestFocus();
         }
@@ -262,10 +259,8 @@ public class CustomerInfosFrame extends JDialog implements Observable {
 
       @Override
       public void actionPerformed(ActionEvent arg0) {
-        if (cbRelations.getItemCount() >= 1
-                && cbRelations.getSelectedIndex() > 0) {
-          txtNotes.insert((String) cbRelations.getSelectedItem(),
-                  txtNotes.getCaretPosition());
+        if (cbRelations.getItemCount() >= 1 && cbRelations.getSelectedIndex() > 0) {
+          txtNotes.insert((String) cbRelations.getSelectedItem(), txtNotes.getCaretPosition());
           cbRelations.setSelectedIndex(0);
           txtNotes.requestFocus();
         }
@@ -313,12 +308,10 @@ public class CustomerInfosFrame extends JDialog implements Observable {
         FeedbackEnum ret = saveWithFilePicker(path);
         switch (ret) {
           case SUCCESSFUL:
-            notify(new Feedback(locale.getString("FB_Export"),
-                    FeedbackEnum.SUCCESSFUL));
+            notify(new Feedback(locale.getString("FB_Export"), FeedbackEnum.SUCCESSFUL));
             break;
           case FAILED:
-            notify(new Feedback(locale.getString("FB_ExportFailed"),
-                    FeedbackEnum.FAILED));
+            notify(new Feedback(locale.getString("FB_ExportFailed"), FeedbackEnum.FAILED));
             break;
 
           default:
@@ -326,8 +319,7 @@ public class CustomerInfosFrame extends JDialog implements Observable {
         }
 
       } catch (IOException e) {
-        notify(new Feedback(locale.getString("FB_ExportFailed"),
-                FeedbackEnum.FAILED));
+        notify(new Feedback(locale.getString("FB_ExportFailed"), FeedbackEnum.FAILED));
       }
 
     }
@@ -342,13 +334,8 @@ public class CustomerInfosFrame extends JDialog implements Observable {
     }
 
     if (outputFile.exists()) {
-      Object[] options = {locale.getString("GUI_Yes"),
-              locale.getString("GUI_No")};
-      int result = JOptionPane.showOptionDialog(null,
-              locale.getString("GUI_TheFile") + " " + outputFile.getName() + " "
-                      + locale.getString("GUI_AlreadyExisting"),
-              locale.getString("GUI_SaveTitle"), JOptionPane.YES_NO_OPTION,
-              JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+      Object[] options = {locale.getString("GUI_Yes"), locale.getString("GUI_No")};
+      int result = JOptionPane.showOptionDialog(null, locale.getString("GUI_TheFile") + " " + outputFile.getName() + " " + locale.getString("GUI_AlreadyExisting"), locale.getString("GUI_SaveTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 
       switch (result) {
         case JOptionPane.YES_OPTION:
@@ -421,8 +408,7 @@ public class CustomerInfosFrame extends JDialog implements Observable {
       }
       String path = file.getAbsolutePath();
       for (String ext : extensions) {
-        if (path.endsWith(ext)
-                && path.charAt(path.length() - ext.length()) == '.') {
+        if (path.endsWith(ext) && path.charAt(path.length() - ext.length()) == '.') {
           return true;
         }
       }

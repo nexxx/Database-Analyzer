@@ -33,8 +33,7 @@ public class DatabaseLogic {
   public void newWizardRelation() {
     Database database = CustomTree.getInstance().getDatabase();
     RelationSchema relation = new RelationSchema();
-    RelationWizard wizard = new RelationWizard(database, relation,
-            WizardEnum.NEW);
+    RelationWizard wizard = new RelationWizard(database, relation, WizardEnum.NEW);
     wizard.setVisible(true);
 
     if (wizard.getRelationChanged()) {

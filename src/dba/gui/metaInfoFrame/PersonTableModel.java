@@ -40,9 +40,7 @@ public class PersonTableModel extends AbstractTableModel {
   private PersonTableModel() {
     super();
     Localization locale = Localization.getInstance();
-    columnNames = new String[]{locale.getString("MI_Name"),
-            locale.getString("MI_Title"), locale.getString("MI_Mail"),
-            locale.getString("MI_Tel"), locale.getString("MI_Fax")};
+    columnNames = new String[]{locale.getString("MI_Name"), locale.getString("MI_Title"), locale.getString("MI_Mail"), locale.getString("MI_Tel"), locale.getString("MI_Fax")};
     data = new ArrayList<>();
   }
 

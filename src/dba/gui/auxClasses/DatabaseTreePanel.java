@@ -83,8 +83,7 @@ public class DatabaseTreePanel extends JPanel {
     tree.setModel(defaultTreeModel);
     CustomTreeCellRenderer renderer = new CustomTreeCellRenderer();
     tree.setCellRenderer(renderer);
-    tree.getSelectionModel().setSelectionMode(
-            TreeSelectionModel.SINGLE_TREE_SELECTION);
+    tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
     root.setAllowsChildren(true);
 
     tree.expandPath(new TreePath(root.getPath()));
@@ -118,12 +117,10 @@ public class DatabaseTreePanel extends JPanel {
       public void valueChanged(TreeSelectionEvent e) {
         // System.out.println("JTree Item selected!");
 
-        DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree
-                .getLastSelectedPathComponent();
+        DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
 
         if (node instanceof DatabaseNode) {
-          DatabaseTreePanel.this.firePropertyChange("TreeClick", null,
-                  "Database");
+          DatabaseTreePanel.this.firePropertyChange("TreeClick", null, "Database");
           if (tree.getDatabase().getDatabase().isEmpty()) {
             dbPopupFactory.setEnabledInspect(false);
           } else {
@@ -131,8 +128,7 @@ public class DatabaseTreePanel extends JPanel {
           }
           addRightClickPopUpMenu(tree);
         } else if (node instanceof RelationNode) {
-          DatabaseTreePanel.this.firePropertyChange("TreeClick", null,
-                  "Relation");
+          DatabaseTreePanel.this.firePropertyChange("TreeClick", null, "Relation");
           enableOptimizeButtons();
           if (tree.getRelation().getAttributes().size() < 2) {
             relPopupFactory.setEnabledFD(false);
@@ -141,8 +137,7 @@ public class DatabaseTreePanel extends JPanel {
           }
           addRightClickPopUpMenu(tree);
         } else if (node instanceof AttributeNode) {
-          DatabaseTreePanel.this.firePropertyChange("TreeClick", null,
-                  "Attribute");
+          DatabaseTreePanel.this.firePropertyChange("TreeClick", null, "Attribute");
           attrPopupFactory.updateElements();
           addRightClickPopUpMenu(tree);
         } else if (node instanceof FunctionalDependencyNode) {
@@ -157,10 +152,8 @@ public class DatabaseTreePanel extends JPanel {
   }
 
   private void enableOptimizeButtons() {
-    NormalForm currentNF = checker.getNF(tree.getRelation(),
-            new ArrayList<FunctionalDependency>());
-    if (currentNF != NormalForm.SECOND && currentNF != NormalForm.THIRD
-            && currentNF != NormalForm.BOYCECODD) {
+    NormalForm currentNF = checker.getNF(tree.getRelation(), new ArrayList<FunctionalDependency>());
+    if (currentNF != NormalForm.SECOND && currentNF != NormalForm.THIRD && currentNF != NormalForm.BOYCECODD) {
       relPopupFactory.setEnabledOpti2NF(true);
     } else {
       relPopupFactory.setEnabledOpti2NF(false);
@@ -180,8 +173,7 @@ public class DatabaseTreePanel extends JPanel {
   }
 
   private void updateInspectLabels() {
-    DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree
-            .getLastSelectedPathComponent();
+    DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
 
     String nfTextDb = getNFStringDb();
     lblNormalFormDb.setText(nfTextDb);
@@ -268,16 +260,13 @@ public class DatabaseTreePanel extends JPanel {
       if (relation.getAttributes().isEmpty()) {
         return "";
       }
-      normalForm = RelationUtils.getInstance().getNormalFormText(
-              checker.getNF(relation, new ArrayList<FunctionalDependency>()));
-    } else if (node instanceof AttributeNode
-            || node instanceof FunctionalDependencyNode) {
+      normalForm = RelationUtils.getInstance().getNormalFormText(checker.getNF(relation, new ArrayList<FunctionalDependency>()));
+    } else if (node instanceof AttributeNode || node instanceof FunctionalDependencyNode) {
       RelationSchema relation = tree.getParentRelation();
       if (relation.getAttributes().isEmpty()) {
         return "";
       }
-      normalForm = RelationUtils.getInstance().getNormalFormText(
-              checker.getNF(relation, new ArrayList<FunctionalDependency>()));
+      normalForm = RelationUtils.getInstance().getNormalFormText(checker.getNF(relation, new ArrayList<FunctionalDependency>()));
     } else {
       return "";
     }
@@ -292,8 +281,7 @@ public class DatabaseTreePanel extends JPanel {
     if (database.getDatabase().isEmpty()) {
       return "";
     }
-    normalForm = RelationUtils.getInstance().getNormalFormText(
-            checker.getNF(database.getDatabase()));
+    normalForm = RelationUtils.getInstance().getNormalFormText(checker.getNF(database.getDatabase()));
 
     return locale.getString("TREE_Database") + ": " + normalForm;
   }

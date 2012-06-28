@@ -39,9 +39,7 @@ public class RelationGraphUpdater implements Runnable {
   private ArrayList<RelationSchema> dbRelations;
   private ArrayList<ForeignKeyConstraint> foreignKeys;
 
-  public RelationGraphUpdater(mxGraph graph, mxGraphComponent graphComponent,
-                              ArrayList<RelationSchema> relations,
-                              ArrayList<ForeignKeyConstraint> foreignKeys) {
+  public RelationGraphUpdater(mxGraph graph, mxGraphComponent graphComponent, ArrayList<RelationSchema> relations, ArrayList<ForeignKeyConstraint> foreignKeys) {
     super();
     dbRelations = relations;
     this.foreignKeys = foreignKeys;
@@ -101,8 +99,7 @@ public class RelationGraphUpdater implements Runnable {
     mxCell cell;
     for (Object obj : graph.getChildVertices(graph.getDefaultParent())) {
       cell = (mxCell) obj;
-      cellPoint = cell.getGeometry().getPoint().y
-              + (int) cell.getGeometry().getHeight();
+      cellPoint = cell.getGeometry().getPoint().y + (int) cell.getGeometry().getHeight();
       if (cellPoint > lowestCellPoint) {
         lowestCellPoint = cellPoint;
       }
@@ -156,20 +153,16 @@ public class RelationGraphUpdater implements Runnable {
    * @param offset   the vertical ofset of the relation
    * @return the mxCell representing the Relation
    */
-  private Object insertRelation(mxGraph graph, RelationSchema relation,
-                                int offset) {
+  private Object insertRelation(mxGraph graph, RelationSchema relation, int offset) {
     // Compensate big header
     int attributeOffset = 40;
     int width = getRequiredWidth(relation);
 
-    mxCell relationVertex = (mxCell) graph.insertVertex(parentPane, relation
-            .getName(), relation, 0, offset, width, 40 + 1 + relation
-            .getAttributes().size() * 25, "RELATION");
+    mxCell relationVertex = (mxCell) graph.insertVertex(parentPane, relation.getName(), relation, 0, offset, width, 40 + 1 + relation.getAttributes().size() * 25, "RELATION");
 
     // Add attributes
     for (Attribute attr : relation.getAttributes()) {
-      graph.insertVertex(relationVertex, attr.getName(), attr, 1,
-              attributeOffset, width - 2, 25, getAttributeStyle(attr));
+      graph.insertVertex(relationVertex, attr.getName(), attr, 1, attributeOffset, width - 2, 25, getAttributeStyle(attr));
       attributeOffset += 25;
 
     }
@@ -224,8 +217,7 @@ public class RelationGraphUpdater implements Runnable {
    * @param graphComponent component
    */
   private void updateLayout(mxGraphComponent graphComponent) {
-    mxHierarchicalLayout layout = new mxHierarchicalLayout(graph,
-            SwingConstants.WEST);
+    mxHierarchicalLayout layout = new mxHierarchicalLayout(graph, SwingConstants.WEST);
 
     Object cell = graphComponent.getGraph().getDefaultParent();
     layout.execute(cell);
@@ -266,8 +258,7 @@ public class RelationGraphUpdater implements Runnable {
       if (visible) {
         graph.insertEdge(parentPane, null, "", fkCells.get(0), fkCells.get(1));
       } else {
-        graph.insertEdge(parentPane, null, "", fkCells.get(0), fkCells.get(1),
-                "INVISIBLE_EDGE");
+        graph.insertEdge(parentPane, null, "", fkCells.get(0), fkCells.get(1), "INVISIBLE_EDGE");
       }
     }
   }
@@ -279,17 +270,14 @@ public class RelationGraphUpdater implements Runnable {
    * @param relationCells the RelationCells containing the Attributes
    * @return a ArrayList containing a Source- and a TargetAttribute
    */
-  private ArrayList<mxCell> findFkAttributeCells(ForeignKeyConstraint fk,
-                                                 ArrayList<mxCell> relationCells) {
+  private ArrayList<mxCell> findFkAttributeCells(ForeignKeyConstraint fk, ArrayList<mxCell> relationCells) {
     ArrayList<mxCell> fkCells = new ArrayList<>();
     if (relationCells.size() == 2) {
       mxCell sourceCell;
       mxCell targetCell;
 
-      sourceCell = getAttributeCell(relationCells.get(0),
-              fk.getSourceAttributeName());
-      targetCell = getAttributeCell(relationCells.get(1),
-              fk.getTargetAttributeName());
+      sourceCell = getAttributeCell(relationCells.get(0), fk.getSourceAttributeName());
+      targetCell = getAttributeCell(relationCells.get(1), fk.getTargetAttributeName());
 
       if (sourceCell != null) {
         fkCells.add(sourceCell);

@@ -114,8 +114,7 @@ public class ToggleControl extends JPanel {
    */
   private void selectButton(JToggleButton btn) {
     selectedButton = btn;
-    ToggleControl.this.firePropertyChange("SelectedButton", btn,
-            getSelectedButtonIndex());
+    ToggleControl.this.firePropertyChange("SelectedButton", btn, getSelectedButtonIndex());
   }
 
   /**

@@ -15,55 +15,36 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.      *
  ******************************************************************************/
 
-package dba.gui.auxClasses.jGraph;
+package dba.gui.newRelation.auxClasses;
 
-import com.mxgraph.model.mxCell;
-import com.mxgraph.view.mxGraph;
 import data.Attribute;
+import data.Database;
 import data.RelationSchema;
+import dba.gui.auxClasses.CustomTree;
+
+import java.util.ArrayList;
 
 /**
- * mxGraph-extension to provide custom behaviour
+ * Custom Tablemodel which can handle our ArrayList with Attributes
+ * and contains all Actions to handle it
+ *
+ * @author Andreas Freitag
  */
-public class XGraph extends mxGraph {
+public class AttributeTableModelEdit extends AttributeTableModel {
 
-  // Overrides method to provide a cell label in the display
-  @Override
-  public String convertValueToString(Object cell) {
-    if (cell instanceof mxCell) {
-      mxCell xCell = (mxCell) cell;
-      Object value = xCell.getValue();
-
-      if (value instanceof RelationSchema) {
-        // return only the name of the relation
-        return ((RelationSchema) value).getName();
-      } else if (value instanceof Attribute) {
-        // return a space (for pk/fk icons) and the name of the
-        // attribute
-        String result = "         ";
-
-        result += ((Attribute) value).getName();
-        return result;
-      }
-    }
-
-    return super.convertValueToString(cell);
+  public AttributeTableModelEdit(ArrayList<Attribute> data, Database db, RelationSchema rel) {
+    super(data, db, rel);
   }
 
-  /**
-   * Disallow selection of Edges
-   */
   @Override
-  public boolean isCellSelectable(Object cell) {
-    if (cell != null) {
-      if (cell instanceof mxCell) {
-        mxCell myCell = (mxCell) cell;
-        if (myCell.isEdge()) {
-          return false;
-        }
-      }
+  public boolean isCellEditable(int row, int col) {
+    if (CustomTree.getInstance().getDatabase().getDatabase().size() >= 2) {
+      return true;
     }
-    return super.isCellSelectable(cell);
-  }
+    if (col == 3) {
+      return false;
+    }
+    return true;
 
+  }
 }

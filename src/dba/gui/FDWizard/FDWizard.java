@@ -83,8 +83,7 @@ public class FDWizard extends JDialog implements constants {
     setIconImage(iconFrame.getImage());
     setModal(true);
     contentPane = new JPanel();
-    JPanel pnlMain = new JPanel(new MigLayout("wrap 3",
-            "[fill, grow][grow,fill,32:32:32][fill, grow]"));
+    JPanel pnlMain = new JPanel(new MigLayout("wrap 3", "[fill, grow][grow,fill,32:32:32][fill, grow]"));
     // contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
     setContentPane(contentPane);
     setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -163,13 +162,10 @@ public class FDWizard extends JDialog implements constants {
 
       @Override
       public void actionPerformed(ActionEvent arg0) {
-        FunctionalDependency fd = new FunctionalDependency(
-                getSourceAttributes(), getTargetAttributes());
-        for (FunctionalDependency functionalDependency : relation
-                .getFunctionalDependencies()) {
+        FunctionalDependency fd = new FunctionalDependency(getSourceAttributes(), getTargetAttributes());
+        for (FunctionalDependency functionalDependency : relation.getFunctionalDependencies()) {
           if (fd.equals(functionalDependency)) {
-            JOptionPane.showMessageDialog(contentPane,
-                    locale.getString("WIZ_FDAlreadyExistingMsg"));
+            JOptionPane.showMessageDialog(contentPane, locale.getString("WIZ_FDAlreadyExistingMsg"));
             return;
           }
         }
@@ -186,8 +182,7 @@ public class FDWizard extends JDialog implements constants {
 
   }
 
-  private void setSelectableElements(JList<Attribute> list,
-                                     JList<Attribute> otherList) {
+  private void setSelectableElements(JList<Attribute> list, JList<Attribute> otherList) {
     for (int i : otherList.getSelectedIndices()) {
       for (int j : list.getSelectedIndices()) {
         if (i == j) {
@@ -212,8 +207,7 @@ public class FDWizard extends JDialog implements constants {
   }
 
   private void checkForButton() {
-    if (listSource.getSelectedIndices().length != 0
-            && listTarget.getSelectedIndices().length != 0) {
+    if (listSource.getSelectedIndices().length != 0 && listTarget.getSelectedIndices().length != 0) {
       btnFinish.setEnabled(true);
     } else {
       btnFinish.setEnabled(false);

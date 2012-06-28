@@ -88,8 +88,7 @@ public class RelationLogic {
     Database database = tree.getDatabase();
     RelationSchema relation = tree.getRelation();
     RelationSchema tmpRelation = relation.getClone();
-    RelationWizard wizard = new RelationWizard(database, tmpRelation,
-            WizardEnum.EDIT);
+    RelationWizard wizard = new RelationWizard(database, tmpRelation, WizardEnum.EDIT);
     wizard.setVisible(true);
 
     if (wizard.getRelationChanged()) {
@@ -106,12 +105,8 @@ public class RelationLogic {
 
     RelationSchema relation = tree.getRelation();
 
-    Object[] options = {locale.getString("TREE_Yes"),
-            locale.getString("TREE_No")};
-    int n = JOptionPane.showOptionDialog(null,
-            locale.getString("TREE_RelDelMsg") + " '" + relation.getName() + "'",
-            locale.getString("TREE_RelDelTitle"), JOptionPane.YES_NO_OPTION,
-            JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+    Object[] options = {locale.getString("TREE_Yes"), locale.getString("TREE_No")};
+    int n = JOptionPane.showOptionDialog(null, locale.getString("TREE_RelDelMsg") + " '" + relation.getName() + "'", locale.getString("TREE_RelDelTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
     if (n == 0) {
       database.removeRelationSchema(relation);
     }
@@ -122,15 +117,11 @@ public class RelationLogic {
    */
   public void renameRelation() {
     RelationSchema relation = tree.getRelation();
-    String name = (String) JOptionPane.showInputDialog(null,
-            locale.getString("TREE_RelRenMsg"),
-            locale.getString("TREE_RelRenTitle"), JOptionPane.QUESTION_MESSAGE,
-            null, null, relation.getName());
+    String name = (String) JOptionPane.showInputDialog(null, locale.getString("TREE_RelRenMsg"), locale.getString("TREE_RelRenTitle"), JOptionPane.QUESTION_MESSAGE, null, null, relation.getName());
     if (name != null && !name.isEmpty() && !tree.checkIfRelationExists(name)) {
       tree.getDatabase().renameRelationSchema(relation, name);
     } else {
-      FeedbackbarPanel.getInstance().showFeedback(
-              locale.getString("FB_RenameFailed"), FeedbackEnum.FAILED);
+      FeedbackbarPanel.getInstance().showFeedback(locale.getString("FB_RenameFailed"), FeedbackEnum.FAILED);
     }
   }
 
@@ -168,13 +159,10 @@ public class RelationLogic {
     Database database = tree.getDatabase();
     RelationSchema relation = tree.getRelation();
 
-    OptimizeFrame optimizeFrame = new OptimizeFrame(relation,
-            NormalForm.SECOND);
+    OptimizeFrame optimizeFrame = new OptimizeFrame(relation, NormalForm.SECOND);
     optimizeFrame.setVisible(true);
     if (optimizeFrame.isModified()) {
-      database.insertNormalizationResult(relation,
-              optimizeFrame.getNormalizedRelations(),
-              optimizeFrame.getForeignKeys());
+      database.insertNormalizationResult(relation, optimizeFrame.getNormalizedRelations(), optimizeFrame.getForeignKeys());
     }
   }
 
@@ -182,13 +170,10 @@ public class RelationLogic {
     Database database = tree.getDatabase();
     RelationSchema relation = tree.getRelation();
 
-    OptimizeFrame optimizeFrame = new OptimizeFrame(relation,
-            NormalForm.THIRD);
+    OptimizeFrame optimizeFrame = new OptimizeFrame(relation, NormalForm.THIRD);
     optimizeFrame.setVisible(true);
     if (optimizeFrame.isModified()) {
-      database.insertNormalizationResult(relation,
-              optimizeFrame.getNormalizedRelations(),
-              optimizeFrame.getForeignKeys());
+      database.insertNormalizationResult(relation, optimizeFrame.getNormalizedRelations(), optimizeFrame.getForeignKeys());
     }
   }
 
@@ -196,13 +181,10 @@ public class RelationLogic {
     Database database = tree.getDatabase();
     RelationSchema relation = tree.getRelation();
 
-    OptimizeFrame optimizeFrame = new OptimizeFrame(relation,
-            NormalForm.BOYCECODD);
+    OptimizeFrame optimizeFrame = new OptimizeFrame(relation, NormalForm.BOYCECODD);
     optimizeFrame.setVisible(true);
     if (optimizeFrame.isModified()) {
-      database.insertNormalizationResult(relation,
-              optimizeFrame.getNormalizedRelations(),
-              optimizeFrame.getForeignKeys());
+      database.insertNormalizationResult(relation, optimizeFrame.getNormalizedRelations(), optimizeFrame.getForeignKeys());
     }
   }
 }

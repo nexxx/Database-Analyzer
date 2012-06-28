@@ -39,8 +39,7 @@ import java.util.ArrayList;
  *
  * @author Andreas Freitag
  */
-public class AddRelationFunctionalDependencyPanel extends JPanel implements
-        constants {
+public class AddRelationFunctionalDependencyPanel extends JPanel implements constants {
   /**
    *
    */
@@ -72,9 +71,7 @@ public class AddRelationFunctionalDependencyPanel extends JPanel implements
     ImageIcon iconDelete = getIcons.getButtonDelete();
     ImageIcon iconFdArrow = getIcons.getFdArrow();
 
-    setLayout(new MigLayout(
-            "wrap 5",
-            "[fill, grow][grow,fill,32:32:32][fill, grow][grow,fill,130:130:130][fill, grow]"));
+    setLayout(new MigLayout("wrap 5", "[fill, grow][grow,fill,32:32:32][fill, grow][grow,fill,130:130:130][fill, grow]"));
 
     tmpRelation = relation;
     btnAdd = new JButton(locale.getString("WIZ_Add"), iconAdd);
@@ -220,8 +217,7 @@ public class AddRelationFunctionalDependencyPanel extends JPanel implements
     }
   }
 
-  private void setSelectableElements(JList<Attribute> list,
-                                     JList<Attribute> otherList) {
+  private void setSelectableElements(JList<Attribute> list, JList<Attribute> otherList) {
     for (int i : otherList.getSelectedIndices()) {
       for (int j : list.getSelectedIndices()) {
         if (i == j) {
@@ -261,8 +257,7 @@ public class AddRelationFunctionalDependencyPanel extends JPanel implements
   }
 
   private void addFDToRelation() {
-    FunctionalDependency fd = new FunctionalDependency(getSourceAttributes(),
-            getTargetAttributes());
+    FunctionalDependency fd = new FunctionalDependency(getSourceAttributes(), getTargetAttributes());
     tmpRelation.addFunctionalDependency(fd);
   }
 
@@ -287,8 +282,7 @@ public class AddRelationFunctionalDependencyPanel extends JPanel implements
   }
 
   private void enableDisableAddBtn() {
-    if (listSource.getSelectedIndices().length == 0
-            || listTarget.getSelectedIndices().length == 0) {
+    if (listSource.getSelectedIndices().length == 0 || listTarget.getSelectedIndices().length == 0) {
       btnAdd.setEnabled(false);
     } else {
       btnAdd.setEnabled(true);

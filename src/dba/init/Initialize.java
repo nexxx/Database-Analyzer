@@ -76,11 +76,9 @@ public class Initialize {
     // Set LookAndFeel
     try {
       // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-      UIManager
-              .setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+      UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
     } catch (Exception e) {
-      System.out
-              .println("Nimbus LookAndFeel not found. Using standard LookAndFeel instead");
+      System.out.println("Nimbus LookAndFeel not found. Using standard LookAndFeel instead");
       e.printStackTrace();
     }
   }

@@ -21,6 +21,7 @@ import data.Attribute;
 import data.Database;
 import data.RelationSchema;
 import dba.gui.FkWizard.FkWizard;
+import dba.gui.auxClasses.CustomTree;
 import dba.utils.Localization;
 
 import javax.swing.table.AbstractTableModel;
@@ -45,8 +46,7 @@ public class AttributeTableModel extends AbstractTableModel {
   private AttributeTableModel() {
     super();
     Localization locale = Localization.getInstance();
-    columnNames = new String[]{locale.getString("WIZ_ColAttrName"),
-            locale.getString("WIZ_ColType"), "PK", "FK"};
+    columnNames = new String[]{locale.getString("WIZ_ColAttrName"), locale.getString("WIZ_ColType"), "PK", "FK"};
     data = new ArrayList<>();
   }
 
@@ -60,8 +60,7 @@ public class AttributeTableModel extends AbstractTableModel {
     this.data = data;
   }
 
-  public AttributeTableModel(ArrayList<Attribute> data, Database db,
-                             RelationSchema rel) {
+  public AttributeTableModel(ArrayList<Attribute> data, Database db, RelationSchema rel) {
     this(data);
     relation = rel;
     database = db;
@@ -112,8 +111,13 @@ public class AttributeTableModel extends AbstractTableModel {
 
   @Override
   public boolean isCellEditable(int row, int col) {
+    if (CustomTree.getInstance().getDatabase().getDatabase().size() >= 1) {
+      return true;
+    }
+    if (col == 3) {
+      return false;
+    }
     return true;
-
   }
 
   @Override
@@ -126,8 +130,7 @@ public class AttributeTableModel extends AbstractTableModel {
     switch (column) {
       case 0:
         if (value instanceof String) {
-          database.updateFkAttributeNames(relation.getName(), attr.getName(),
-                  (String) value);
+          database.updateFkAttributeNames(relation.getName(), attr.getName(), (String) value);
           attr.setName((String) value);
         }
         return;
@@ -168,8 +171,7 @@ public class AttributeTableModel extends AbstractTableModel {
    * @param row Row to delete ( 0 until n )
    */
   public void removeRow(int row) {
-    data.remove(row); // delete record from file
-    fireTableRowsDeleted(row, row);
+    data.remove(row); // delete record from file fireTableRowsDeleted(row, row);
   }
 
 }

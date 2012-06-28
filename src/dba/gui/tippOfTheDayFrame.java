@@ -182,8 +182,7 @@ public class tippOfTheDayFrame extends JDialog {
         tips.add(strLine);
       }
     } catch (Exception e) {
-      FeedbackbarPanel.getInstance().showFeedback(
-              locale.getString("FB_ReadTipsFailed"), FeedbackEnum.FAILED);
+      FeedbackbarPanel.getInstance().showFeedback(locale.getString("FB_ReadTipsFailed"), FeedbackEnum.FAILED);
       e.printStackTrace();
     }
   }
@@ -195,8 +194,7 @@ public class tippOfTheDayFrame extends JDialog {
   private InputStream getTipsFile() {
     InputStream is;
 
-    is = getClass().getResourceAsStream(
-            "/res/tips/" + "tips_" + getCurrentLang() + ".txt");
+    is = getClass().getResourceAsStream("/res/tips/" + "tips_" + getCurrentLang() + ".txt");
     if (is == null) {
       is = getClass().getResourceAsStream("/res/tips/tips_en.txt");
     }

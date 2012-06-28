@@ -135,12 +135,9 @@ public class MainWindow implements constants, Observer {
     pnlToolBar.add(toolBar, BorderLayout.CENTER);
     contentPane.add(pnlToolBar, BorderLayout.PAGE_START);
 
-    toolBarDatabase = new ToolBarDatabase(dbTreePanel, relationView,
-            relationDetailsView);
-    toolBarRelation = new ToolBarRelation(dbTreePanel, relationView,
-            relationDetailsView);
-    toolBarAttribute = new ToolBarAttribute(dbTreePanel, relationView,
-            relationDetailsView);
+    toolBarDatabase = new ToolBarDatabase(dbTreePanel, relationView, relationDetailsView);
+    toolBarRelation = new ToolBarRelation(dbTreePanel, relationView, relationDetailsView);
+    toolBarAttribute = new ToolBarAttribute(dbTreePanel, relationView, relationDetailsView);
     toolBarFd = new ToolBarFd(dbTreePanel, relationView, relationDetailsView);
 
     PropertyChangeListener changeListener = new PropertyChangeListener() {
@@ -198,10 +195,10 @@ public class MainWindow implements constants, Observer {
 
           if (guiLogic.getLastFileName() != null) {
             frame.setTitle(locale.getString("GUI_FrameTitle") + " - " +
-                    guiLogic.getLastFileName());
+              guiLogic.getLastFileName());
           } else {
             frame.setTitle(locale.getString("GUI_FrameTitle") + " - " +
-                    locale.getString("GUI_FrameTitleNotSaved"));
+              locale.getString("GUI_FrameTitleNotSaved"));
           }
 
         }
@@ -229,16 +226,14 @@ public class MainWindow implements constants, Observer {
     displayTab.addTab(locale.getString("GUI_Relations"), relationView);
 
     // RelationDetails
-    displayTab.addTab(locale.getString("GUI_RelationDetails"),
-            relationDetailsView);
+    displayTab.addTab(locale.getString("GUI_RelationDetails"), relationDetailsView);
 
     pnlRight = new JPanel(new BorderLayout());
     pnlRight.setMinimumSize(minimumSizeSplitPane);
     pnlRight.add(displayTab, BorderLayout.CENTER);
     pnlRight.add(feedbackbarPanel, BorderLayout.SOUTH);
 
-    JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-            dbTreePanel, pnlRight);
+    JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, dbTreePanel, pnlRight);
     splitPane.setDividerLocation(250);
     dbTreePanel.setMinimumSize(minimumSizeSplitPane);
     frame.add(splitPane, BorderLayout.CENTER);
@@ -268,31 +263,26 @@ public class MainWindow implements constants, Observer {
     menuBar.add(fileMenu);
 
     JMenuItem newMenuItem = new JMenuItem(locale.getString("GUI_New"), iconNew);
-    newMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
-            InputEvent.CTRL_MASK));
+    newMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK));
     newMenuItem.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent arg0) {
         FeedbackEnum returnVal = guiLogic.newDatabase();
         if (returnVal == FeedbackEnum.SUCCESSFUL) {
-          feedbackbarPanel.showFeedback(locale.getString("FB_NewDB"),
-                  FeedbackEnum.SUCCESSFUL);
+          feedbackbarPanel.showFeedback(locale.getString("FB_NewDB"), FeedbackEnum.SUCCESSFUL);
         }
       }
     });
     fileMenu.add(newMenuItem);
 
-    JMenuItem openMenuItem = new JMenuItem(locale.getString("GUI_Open"),
-            iconOpen);
-    openMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,
-            InputEvent.CTRL_MASK));
+    JMenuItem openMenuItem = new JMenuItem(locale.getString("GUI_Open"), iconOpen);
+    openMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
     openMenuItem.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent arg0) {
         FeedbackEnum returnVal = guiLogic.open();
         if (returnVal == FeedbackEnum.FAILED) {
-          feedbackbarPanel.showFeedback(locale.getString("FB_OpenFailed"),
-                  FeedbackEnum.FAILED);
+          feedbackbarPanel.showFeedback(locale.getString("FB_OpenFailed"), FeedbackEnum.FAILED);
         }
       }
     });
@@ -301,18 +291,15 @@ public class MainWindow implements constants, Observer {
     fileMenu.add(new JSeparator());
 
     saveMenuItem = new JMenuItem(locale.getString("GUI_Save"), iconSave);
-    saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
-            InputEvent.CTRL_MASK));
+    saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
     saveMenuItem.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent arg0) {
         FeedbackEnum returnVal = guiLogic.save();
         if (returnVal == FeedbackEnum.SUCCESSFUL) {
-          feedbackbarPanel.showFeedback(locale.getString("FB_Save"),
-                  FeedbackEnum.SUCCESSFUL);
+          feedbackbarPanel.showFeedback(locale.getString("FB_Save"), FeedbackEnum.SUCCESSFUL);
         } else if (returnVal == FeedbackEnum.FAILED) {
-          feedbackbarPanel.showFeedback(locale.getString("FB_SaveFailed"),
-                  FeedbackEnum.FAILED);
+          feedbackbarPanel.showFeedback(locale.getString("FB_SaveFailed"), FeedbackEnum.FAILED);
         }
       }
     });
@@ -324,11 +311,9 @@ public class MainWindow implements constants, Observer {
       public void actionPerformed(ActionEvent arg0) {
         FeedbackEnum returnVal = guiLogic.saveAs();
         if (returnVal == FeedbackEnum.SUCCESSFUL) {
-          feedbackbarPanel.showFeedback(locale.getString("FB_Save"),
-                  FeedbackEnum.SUCCESSFUL);
+          feedbackbarPanel.showFeedback(locale.getString("FB_Save"), FeedbackEnum.SUCCESSFUL);
         } else if (returnVal == FeedbackEnum.FAILED) {
-          feedbackbarPanel.showFeedback(locale.getString("FB_SaveFailed"),
-                  FeedbackEnum.FAILED);
+          feedbackbarPanel.showFeedback(locale.getString("FB_SaveFailed"), FeedbackEnum.FAILED);
         }
       }
     });
@@ -342,11 +327,9 @@ public class MainWindow implements constants, Observer {
       public void actionPerformed(ActionEvent arg0) {
         FeedbackEnum returnVal = guiLogic.export();
         if (returnVal == FeedbackEnum.SUCCESSFUL) {
-          feedbackbarPanel.showFeedback(locale.getString("FB_Export"),
-                  FeedbackEnum.SUCCESSFUL);
+          feedbackbarPanel.showFeedback(locale.getString("FB_Export"), FeedbackEnum.SUCCESSFUL);
         } else if (returnVal == FeedbackEnum.FAILED) {
-          feedbackbarPanel.showFeedback(locale.getString("FB_ExportFailed"),
-                  FeedbackEnum.FAILED);
+          feedbackbarPanel.showFeedback(locale.getString("FB_ExportFailed"), FeedbackEnum.FAILED);
         }
       }
     });
@@ -354,10 +337,8 @@ public class MainWindow implements constants, Observer {
 
     fileMenu.add(new JSeparator());
 
-    JMenuItem exitMenuItem = new JMenuItem(locale.getString("GUI_Exit"),
-            iconClose);
-    exitMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q,
-            InputEvent.CTRL_MASK));
+    JMenuItem exitMenuItem = new JMenuItem(locale.getString("GUI_Exit"), iconClose);
+    exitMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_MASK));
     exitMenuItem.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent arg0) {
@@ -371,8 +352,7 @@ public class MainWindow implements constants, Observer {
     JMenu editMenu = new JMenu(locale.getString("GUI_Edit"));
     menuBar.add(editMenu);
 
-    undoMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z,
-            InputEvent.CTRL_MASK));
+    undoMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, InputEvent.CTRL_MASK));
     undoMenuItem.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent arg0) {
@@ -381,8 +361,7 @@ public class MainWindow implements constants, Observer {
     });
     editMenu.add(undoMenuItem);
 
-    redoMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y,
-            InputEvent.CTRL_MASK));
+    redoMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Y, InputEvent.CTRL_MASK));
     redoMenuItem.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent arg0) {
@@ -393,8 +372,7 @@ public class MainWindow implements constants, Observer {
 
     editMenu.add(new JSeparator());
 
-    JMenuItem metaInfoMenuItem = new JMenuItem(locale.getString("MI_FunctionName"),
-            iconMetaInfo);
+    JMenuItem metaInfoMenuItem = new JMenuItem(locale.getString("MI_FunctionName"), iconMetaInfo);
     metaInfoMenuItem.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent arg0) {
@@ -414,8 +392,7 @@ public class MainWindow implements constants, Observer {
     JMenu helpMenu = new JMenu(locale.getString("GUI_Help"));
     menuBar.add(helpMenu);
 
-    JMenuItem userGuideMenuItem = new JMenuItem(
-            locale.getString("GUI_UserGuide"), iconHelp);
+    JMenuItem userGuideMenuItem = new JMenuItem(locale.getString("GUI_UserGuide"), iconHelp);
     userGuideMenuItem.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -426,8 +403,7 @@ public class MainWindow implements constants, Observer {
     // userGuideMenuItem.setEnabled(false);
     helpMenu.add(userGuideMenuItem);
 
-    JMenuItem aboutMenuItem = new JMenuItem(locale.getString("GUI_About"),
-            iconAbout);
+    JMenuItem aboutMenuItem = new JMenuItem(locale.getString("GUI_About"), iconAbout);
     aboutMenuItem.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -442,15 +418,13 @@ public class MainWindow implements constants, Observer {
     JHelp helpViewer = null;
     try {
       ClassLoader cl = MainWindow.class.getClassLoader();
-      URL url = HelpSet.findHelpSet(cl, "jhelpset_"
-              + Options.getInstance().getLanguage() + ".hs");
+      URL url = HelpSet.findHelpSet(cl, "jhelpset_" + Options.getInstance().getLanguage() + ".hs");
       if (url == null) {
         url = HelpSet.findHelpSet(cl, "jhelpset_en.hs");
       }
       helpViewer = new JHelp(new HelpSet(cl, url));
     } catch (Exception ex) {
-      feedbackbarPanel.showFeedback(locale.getString("FB_LoadHelpFailed"),
-              FeedbackEnum.FAILED);
+      feedbackbarPanel.showFeedback(locale.getString("FB_LoadHelpFailed"), FeedbackEnum.FAILED);
     }
 
     JFrame frame = new JFrame();
@@ -466,8 +440,7 @@ public class MainWindow implements constants, Observer {
     JMenu extrasMenu = new JMenu(locale.getString("GUI_Extras"));
     menuBar.add(extrasMenu);
 
-    JMenuItem optionsMenuItem = new JMenuItem(locale.getString("GUI_Options"),
-            iconOptions);
+    JMenuItem optionsMenuItem = new JMenuItem(locale.getString("GUI_Options"), iconOptions);
     optionsMenuItem.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -476,20 +449,15 @@ public class MainWindow implements constants, Observer {
         optionsMenu.setVisible(true);
       }
     });
-    optionsMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,
-            InputEvent.CTRL_MASK));
+    optionsMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_MASK));
     extrasMenu.add(optionsMenuItem);
   }
 
   private void checkDirtyStateBeforeExiting() {
     int result = JOptionPane.NO_OPTION;
     if (TimeLine.getInstance().getCurrentElement().isDirty()) {
-      Object[] options = {locale.getString("GUI_Yes"),
-              locale.getString("GUI_No"), locale.getString("TREE_Cancel")};
-      result = JOptionPane.showOptionDialog(frame,
-              locale.getString("TREE_ExitMsg"), locale.getString("TREE_ExitTitle"),
-              JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-              options, options[2]);
+      Object[] options = {locale.getString("GUI_Yes"), locale.getString("GUI_No"), locale.getString("TREE_Cancel")};
+      result = JOptionPane.showOptionDialog(frame, locale.getString("TREE_ExitMsg"), locale.getString("TREE_ExitTitle"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
     }
     switch (result) {
       case JOptionPane.YES_OPTION:
@@ -507,10 +475,8 @@ public class MainWindow implements constants, Observer {
   }
 
   private void enableOptimizeButtons() {
-    NormalForm currentNF = checker.getNF(dbTreePanel.getTree().getRelation(),
-            new ArrayList<FunctionalDependency>());
-    if (currentNF != NormalForm.SECOND && currentNF != NormalForm.THIRD
-            && currentNF != NormalForm.BOYCECODD) {
+    NormalForm currentNF = checker.getNF(dbTreePanel.getTree().getRelation(), new ArrayList<FunctionalDependency>());
+    if (currentNF != NormalForm.SECOND && currentNF != NormalForm.THIRD && currentNF != NormalForm.BOYCECODD) {
       toolBarRelation.setEnabledOpti2NF(true);
     } else {
       toolBarRelation.setEnabledOpti2NF(false);

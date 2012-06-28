@@ -62,8 +62,7 @@ public class GuiLogic {
     //freemaker init
     cfg = new Configuration();
     try {
-      cfg.setClassForTemplateLoading(this.getClass(),
-              "/res/templates/" + Options.getInstance().getLanguage());
+      cfg.setClassForTemplateLoading(this.getClass(), "/res/templates/" + Options.getInstance().getLanguage());
 
     } catch (Exception e) {
       //TODO FILL me (catch)!
@@ -81,12 +80,8 @@ public class GuiLogic {
   public FeedbackEnum open() {
     int result;
     if (TimeLine.getInstance().getCurrentElement().isDirty()) {
-      Object[] options = {locale.getString("GUI_Yes"),
-              locale.getString("GUI_No"), locale.getString("TREE_Cancel")};
-      result = JOptionPane.showOptionDialog(null,
-              locale.getString("TREE_NewMsg"), locale.getString("TREE_NewTitle"),
-              JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-              options, options[2]);
+      Object[] options = {locale.getString("GUI_Yes"), locale.getString("GUI_No"), locale.getString("TREE_Cancel")};
+      result = JOptionPane.showOptionDialog(null, locale.getString("TREE_NewMsg"), locale.getString("TREE_NewTitle"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
       switch (result) {
         case JOptionPane.YES_OPTION:
           save();
@@ -204,13 +199,8 @@ public class GuiLogic {
     }
 
     if (outputFile.exists()) {
-      Object[] options = {locale.getString("GUI_Yes"),
-              locale.getString("GUI_No")};
-      int result = JOptionPane.showOptionDialog(null,
-              locale.getString("GUI_TheFile") + " " + outputFile.getName() + " "
-                      + locale.getString("GUI_AlreadyExisting"),
-              locale.getString("GUI_SaveTitle"), JOptionPane.YES_NO_OPTION,
-              JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+      Object[] options = {locale.getString("GUI_Yes"), locale.getString("GUI_No")};
+      int result = JOptionPane.showOptionDialog(null, locale.getString("GUI_TheFile") + " " + outputFile.getName() + " " + locale.getString("GUI_AlreadyExisting"), locale.getString("GUI_SaveTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 
       switch (result) {
         case JOptionPane.YES_OPTION:
@@ -242,12 +232,8 @@ public class GuiLogic {
   public FeedbackEnum newDatabase() {
     int result;
     if (TimeLine.getInstance().getCurrentElement().isDirty()) {
-      Object[] options = {locale.getString("GUI_Yes"),
-              locale.getString("GUI_No"), locale.getString("TREE_Cancel")};
-      result = JOptionPane.showOptionDialog(null,
-              locale.getString("TREE_NewMsg"), locale.getString("TREE_NewTitle"),
-              JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-              options, options[2]);
+      Object[] options = {locale.getString("GUI_Yes"), locale.getString("GUI_No"), locale.getString("TREE_Cancel")};
+      result = JOptionPane.showOptionDialog(null, locale.getString("TREE_NewMsg"), locale.getString("TREE_NewTitle"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
       switch (result) {
         case JOptionPane.YES_OPTION:
           save();
@@ -332,13 +318,8 @@ public class GuiLogic {
     }
 
     if (outputFile.exists()) {
-      Object[] options = {locale.getString("GUI_Yes"),
-              locale.getString("GUI_No")};
-      int result = JOptionPane.showOptionDialog(null,
-              locale.getString("GUI_TheFile") + " " + outputFile.getName() + " "
-                      + locale.getString("GUI_AlreadyExisting"), "Export",
-              JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-              options, options[1]);
+      Object[] options = {locale.getString("GUI_Yes"), locale.getString("GUI_No")};
+      int result = JOptionPane.showOptionDialog(null, locale.getString("GUI_TheFile") + " " + outputFile.getName() + " " + locale.getString("GUI_AlreadyExisting"), "Export", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 
       switch (result) {
         case JOptionPane.YES_OPTION:
@@ -361,13 +342,8 @@ public class GuiLogic {
     }
 
     if (outputFile.exists()) {
-      Object[] options = {locale.getString("GUI_Yes"),
-              locale.getString("GUI_No")};
-      int result = JOptionPane.showOptionDialog(null,
-              locale.getString("GUI_TheFile") + " " + outputFile.getName() + " "
-                      + locale.getString("GUI_AlreadyExisting"), "Export",
-              JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-              options, options[1]);
+      Object[] options = {locale.getString("GUI_Yes"), locale.getString("GUI_No")};
+      int result = JOptionPane.showOptionDialog(null, locale.getString("GUI_TheFile") + " " + outputFile.getName() + " " + locale.getString("GUI_AlreadyExisting"), "Export", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 
       switch (result) {
         case JOptionPane.YES_OPTION:
@@ -421,8 +397,7 @@ public class GuiLogic {
       }
       String path = file.getAbsolutePath();
       for (String ext : extensions) {
-        if (path.endsWith(ext)
-                && path.charAt(path.length() - ext.length()) == '.') {
+        if (path.endsWith(ext) && path.charAt(path.length() - ext.length()) == '.') {
           return true;
         }
       }
@@ -458,16 +433,14 @@ public class GuiLogic {
 
   public void undo() {
     if (!TimeLine.getInstance().travelBackward()) {
-      FeedbackbarPanel.getInstance().showFeedback(
-              locale.getString("FB_UndoFailed"), FeedbackEnum.FAILED);
+      FeedbackbarPanel.getInstance().showFeedback(locale.getString("FB_UndoFailed"), FeedbackEnum.FAILED);
     }
     tree.setSelectedItem(0);
   }
 
   public void redo() {
     if (!TimeLine.getInstance().travelForward()) {
-      FeedbackbarPanel.getInstance().showFeedback(
-              locale.getString("FB_RedoFailed"), FeedbackEnum.FAILED);
+      FeedbackbarPanel.getInstance().showFeedback(locale.getString("FB_RedoFailed"), FeedbackEnum.FAILED);
     }
     tree.setSelectedItem(0);
   }
@@ -479,12 +452,9 @@ public class GuiLogic {
    */
   private FeedbackEnum writeHtml(String path) {
     String folder;
-    boolean writeNotes = !CustomTree.getInstance().getDatabase().getNotes()
-            .isEmpty();
-    boolean writeContacts = !CustomTree.getInstance().getDatabase()
-            .getPersons().isEmpty();
-    boolean writeRelations = !CustomTree.getInstance().getDatabase()
-            .getDatabase().isEmpty();
+    boolean writeNotes = !CustomTree.getInstance().getDatabase().getNotes().isEmpty();
+    boolean writeContacts = !CustomTree.getInstance().getDatabase().getPersons().isEmpty();
+    boolean writeRelations = !CustomTree.getInstance().getDatabase().getDatabase().isEmpty();
 
     path = RemoveExtension.removeExtension(path, ".html");
 
@@ -542,7 +512,7 @@ public class GuiLogic {
     return FeedbackEnum.SUCCESSFUL;
   }
 
-  public boolean deleteDir(File dir) {
+  private boolean deleteDir(File dir) {
     if (dir.isDirectory()) {
       String[] children = dir.list();
       for (int i = 0; i < children.length; i++) {
@@ -560,11 +530,9 @@ public class GuiLogic {
 
     Map root = new HashMap();
 
-    String company = CustomTree.getInstance().getDatabase()
-            .getCustCompany();
+    String company = CustomTree.getInstance().getDatabase().getCustCompany();
     company = company.replace("\n", "<br>");
-    String address = CustomTree.getInstance().getDatabase()
-            .getCustAdress();
+    String address = CustomTree.getInstance().getDatabase().getCustAdress();
     address = address.replace("\n", "<br>");
 
     if (!company.isEmpty()) {
@@ -619,8 +587,7 @@ public class GuiLogic {
     }
 
     try {
-      Writer out = new OutputStreamWriter(new FileOutputStream
-              (folder + "/Notes.html"));
+      Writer out = new OutputStreamWriter(new FileOutputStream(folder + "/Notes.html"));
       temp.process(root, out);
       out.flush();
       out.close();
@@ -651,8 +618,7 @@ public class GuiLogic {
     }
 
     try {
-      Writer out = new OutputStreamWriter(new FileOutputStream
-              (folder + "/Contacts.html"));
+      Writer out = new OutputStreamWriter(new FileOutputStream(folder + "/Contacts.html"));
       temp.process(root, out);
       out.flush();
       out.close();
@@ -674,8 +640,7 @@ public class GuiLogic {
     }
 
     try {
-      Writer out = new OutputStreamWriter(new FileOutputStream
-              (folder + "/Relations.html"));
+      Writer out = new OutputStreamWriter(new FileOutputStream(folder + "/Relations.html"));
       temp.process(root, out);
       out.flush();
       out.close();
@@ -690,8 +655,7 @@ public class GuiLogic {
     }
 
     try {
-      Writer out = new OutputStreamWriter(new FileOutputStream
-              (folder + "/FDs.html"));
+      Writer out = new OutputStreamWriter(new FileOutputStream(folder + "/FDs.html"));
       temp.process(root, out);
       out.flush();
       out.close();
@@ -724,8 +688,7 @@ public class GuiLogic {
     }
 
     try {
-      Writer out = new OutputStreamWriter(new FileOutputStream
-              (folder + "/txtDescription.html"));
+      Writer out = new OutputStreamWriter(new FileOutputStream(folder + "/txtDescription.html"));
       temp.process(root, out);
       out.flush();
       out.close();

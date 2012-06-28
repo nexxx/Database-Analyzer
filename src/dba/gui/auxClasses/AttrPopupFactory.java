@@ -63,10 +63,8 @@ public class AttrPopupFactory implements constants {
     ImageIcon iconPk = getIcons.getPopupPK();
     ImageIcon iconFk = getIcons.getPopupFK();
 
-    primaryKeyAttributeMenuItem = new JCheckBoxMenuItem(
-            locale.getString("TREE_AttrChkBoxPK"), iconPk);
-    foreignKeyAttributeMenuItem = new JCheckBoxMenuItem(
-            locale.getString("TREE_AttrChkBoxFK"), iconFk);
+    primaryKeyAttributeMenuItem = new JCheckBoxMenuItem(locale.getString("TREE_AttrChkBoxPK"), iconPk);
+    foreignKeyAttributeMenuItem = new JCheckBoxMenuItem(locale.getString("TREE_AttrChkBoxFK"), iconFk);
   }
 
   /**
@@ -78,8 +76,7 @@ public class AttrPopupFactory implements constants {
 
     JPopupMenu attrPopUpMenu = new JPopupMenu();
 
-    JMenuItem deleteAttributeMenuItem = new JMenuItem(
-            locale.getString("TREE_AttrDelete"), iconDelete);
+    JMenuItem deleteAttributeMenuItem = new JMenuItem(locale.getString("TREE_AttrDelete"), iconDelete);
     // deleteAttributeMenuItem.setHorizontalAlignment(JMenuItem.RIGHT);
     deleteAttributeMenuItem.addActionListener(new ActionListener() {
       @Override
@@ -91,8 +88,7 @@ public class AttrPopupFactory implements constants {
     });
     attrPopUpMenu.add(deleteAttributeMenuItem);
 
-    JMenuItem renameAttributeMenuItem = new JMenuItem(
-            locale.getString("TREE_AttrRename"), iconRename);
+    JMenuItem renameAttributeMenuItem = new JMenuItem(locale.getString("TREE_AttrRename"), iconRename);
     renameAttributeMenuItem.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent arg0) {

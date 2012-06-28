@@ -102,8 +102,7 @@ public class RelationInspectorGui implements constants {
       sane = false;
     } else {
       for (FunctionalDependency fd : schema.getFunctionalDependencies()) {
-        if (fd.getSourceAttributes().isEmpty()
-                || fd.getTargetAttributes().isEmpty()) {
+        if (fd.getSourceAttributes().isEmpty() || fd.getTargetAttributes().isEmpty()) {
           addToResult(locale.getString("RI_EmptyFDSide"));
           sane = false;
           break;
@@ -118,8 +117,7 @@ public class RelationInspectorGui implements constants {
     } else if (!checker.isKeyDeterminingEverything(schema, primaryKey)) {
       addToResult(locale.getString("RI_PkNotAllAttr"));
       sane = false;
-    } else if (!checker.isCandidateKey(primaryKey.getAttributes(),
-            candidateKeys)) {
+    } else if (!checker.isCandidateKey(primaryKey.getAttributes(), candidateKeys)) {
       addToResult(locale.getString("RI_PkNoCk"));
       tellCandidateKeys(candidateKeys);
     }

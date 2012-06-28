@@ -127,20 +127,19 @@ public class RelationView extends JGraphView implements Observer {
       }
     });
 
-    graph.getSelectionModel().addListener(mxEvent.CHANGE,
-            new mxIEventListener() {
+    graph.getSelectionModel().addListener(mxEvent.CHANGE, new mxIEventListener() {
 
-              @Override
-              public void invoke(Object arg0, mxEventObject arg1) {
-                selectedCell = (mxCell) graph.getSelectionCell();
+      @Override
+      public void invoke(Object arg0, mxEventObject arg1) {
+        selectedCell = (mxCell) graph.getSelectionCell();
 
-                if (selectedCell != null) {
-                  CustomTree.getInstance().setSelectedNode(selectedCell.getValue());
-                } else {
-                  CustomTree.getInstance().setSelectedItem(0);
-                }
-              }
-            });
+        if (selectedCell != null) {
+          CustomTree.getInstance().setSelectedNode(selectedCell.getValue());
+        } else {
+          CustomTree.getInstance().setSelectedItem(0);
+        }
+      }
+    });
 
     add(graphComponent, BorderLayout.CENTER);
 
@@ -160,11 +159,9 @@ public class RelationView extends JGraphView implements Observer {
    *
    * @param relations Arraylist containing all relations
    */
-  public void display(ArrayList<RelationSchema> relations,
-                      ArrayList<ForeignKeyConstraint> foreignKeys) {
+  public void display(ArrayList<RelationSchema> relations, ArrayList<ForeignKeyConstraint> foreignKeys) {
 
-    RelationGraphUpdater updater = new RelationGraphUpdater(graph,
-            graphComponent, relations, foreignKeys);
+    RelationGraphUpdater updater = new RelationGraphUpdater(graph, graphComponent, relations, foreignKeys);
     updater.run();
   }
 
@@ -194,8 +191,7 @@ public class RelationView extends JGraphView implements Observer {
    */
   private void exportToPng(String path) {
     Dimension d = graphComponent.getGraphControl().getSize();
-    BufferedImage image = new BufferedImage(d.width, d.height,
-            BufferedImage.TYPE_INT_ARGB);
+    BufferedImage image = new BufferedImage(d.width, d.height, BufferedImage.TYPE_INT_ARGB);
     Graphics2D g = image.createGraphics();
     graphComponent.getGraphControl().paint(g);
     final File outputfile = new File(path.replace(".png", "_export.png"));

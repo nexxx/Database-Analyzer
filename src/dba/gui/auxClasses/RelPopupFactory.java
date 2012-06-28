@@ -86,8 +86,7 @@ public class RelPopupFactory implements constants {
     JMenu addRelationMenu = new JMenu(locale.getString("TREE_RelAdd"));
     relPopUpMenu.add(addRelationMenu);
 
-    JMenuItem attributeRelationMenuItem = new JMenuItem(
-            locale.getString("TREE_RelAttr"), iconAddAttr);
+    JMenuItem attributeRelationMenuItem = new JMenuItem(locale.getString("TREE_RelAttr"), iconAddAttr);
     attributeRelationMenuItem.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent arg0) {
@@ -98,8 +97,7 @@ public class RelPopupFactory implements constants {
     });
     addRelationMenu.add(attributeRelationMenuItem);
 
-    functionalDependencyMenuItem = new JMenuItem(
-            locale.getString("TREE_RelFD"), iconAddFd);
+    functionalDependencyMenuItem = new JMenuItem(locale.getString("TREE_RelFD"), iconAddFd);
     functionalDependencyMenuItem.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent arg0) {
@@ -110,8 +108,7 @@ public class RelPopupFactory implements constants {
     });
     addRelationMenu.add(functionalDependencyMenuItem);
 
-    JMenuItem wizardRelationMenuItem = new JMenuItem(
-            locale.getString("TREE_RelEditWizard"), iconEdit);
+    JMenuItem wizardRelationMenuItem = new JMenuItem(locale.getString("TREE_RelEditWizard"), iconEdit);
     wizardRelationMenuItem.addActionListener(new ActionListener() {
 
       @Override
@@ -123,8 +120,7 @@ public class RelPopupFactory implements constants {
     });
     relPopUpMenu.add(wizardRelationMenuItem);
 
-    JMenuItem deleteRelationMenuItem = new JMenuItem(
-            locale.getString("TREE_RelDel"), iconDelete);
+    JMenuItem deleteRelationMenuItem = new JMenuItem(locale.getString("TREE_RelDel"), iconDelete);
     deleteRelationMenuItem.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent arg0) {
@@ -135,8 +131,7 @@ public class RelPopupFactory implements constants {
     });
     relPopUpMenu.add(deleteRelationMenuItem);
 
-    JMenuItem renameRelationMenuItem = new JMenuItem(
-            locale.getString("TREE_RelRen"), iconRename);
+    JMenuItem renameRelationMenuItem = new JMenuItem(locale.getString("TREE_RelRen"), iconRename);
     renameRelationMenuItem.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent arg0) {
@@ -147,8 +142,7 @@ public class RelPopupFactory implements constants {
     });
     relPopUpMenu.add(renameRelationMenuItem);
 
-    JMenuItem inspectRelationMenuItem = new JMenuItem(
-            locale.getString("TREE_RelInspect"), iconInspect);
+    JMenuItem inspectRelationMenuItem = new JMenuItem(locale.getString("TREE_RelInspect"), iconInspect);
     inspectRelationMenuItem.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent arg0) {
@@ -162,8 +156,7 @@ public class RelPopupFactory implements constants {
     optimizeRelationMenu = new JMenu(locale.getString("TREE_RelOptimize"));
     relPopUpMenu.add(optimizeRelationMenu);
 
-    secondNormalFormRelationMenuItem = new JMenuItem(
-            locale.getString("TREE_Rel2NF"), icon2NF);
+    secondNormalFormRelationMenuItem = new JMenuItem(locale.getString("TREE_Rel2NF"), icon2NF);
     secondNormalFormRelationMenuItem.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent arg0) {
@@ -174,8 +167,7 @@ public class RelPopupFactory implements constants {
     });
     optimizeRelationMenu.add(secondNormalFormRelationMenuItem);
 
-    thirdNormalFormRelationMenuItem = new JMenuItem(
-            locale.getString("TREE_Rel3NF"), icon3NF);
+    thirdNormalFormRelationMenuItem = new JMenuItem(locale.getString("TREE_Rel3NF"), icon3NF);
     thirdNormalFormRelationMenuItem.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent arg0) {
@@ -186,8 +178,7 @@ public class RelPopupFactory implements constants {
     });
     optimizeRelationMenu.add(thirdNormalFormRelationMenuItem);
 
-    JMenuItem boyceCoddNormalFormRelationMenuItem = new JMenuItem(
-            locale.getString("TREE_RelBCNF"), iconBCNF);
+    JMenuItem boyceCoddNormalFormRelationMenuItem = new JMenuItem(locale.getString("TREE_RelBCNF"), iconBCNF);
     boyceCoddNormalFormRelationMenuItem.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent arg0) {

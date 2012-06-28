@@ -86,10 +86,8 @@ public class RelationWizard extends JDialog implements constants {
     relationChanged = false;
 
     relation = rel;
-    AddRelationNameAttributePanel addRelationNameAttributePanel = new AddRelationNameAttributePanel(relation,
-            database, type);
-    addRelationFunctionalDependencyPanel = new AddRelationFunctionalDependencyPanel(
-            relation);
+    AddRelationNameAttributePanel addRelationNameAttributePanel = new AddRelationNameAttributePanel(relation, database, type);
+    addRelationFunctionalDependencyPanel = new AddRelationFunctionalDependencyPanel(relation);
     card = new CardLayout(0, 0);
     btnFinish = new JButton(locale.getString("WIZ_Finish"), iconFinish);
     btnFinish.setEnabled(false);

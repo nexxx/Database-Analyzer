@@ -83,8 +83,7 @@ public class About extends JDialog {
 
     Properties prop = new Properties();
     try {
-      InputStream is = this.getClass().getClassLoader()
-              .getResourceAsStream("res/version_num.properties");
+      InputStream is = this.getClass().getClassLoader().getResourceAsStream("res/version_num.properties");
       prop.load(is);
       is.close();
     } catch (NullPointerException | IOException e) {
@@ -92,13 +91,13 @@ public class About extends JDialog {
     }
 
     String version_number = "v" + prop.getProperty("versionnumber") +
-            " " + prop.getProperty("state");
+      " " + prop.getProperty("state");
 
     String text = "<html><FONT FACE=Courier New>Database " +
-            "Analyzer<br>" + version_number + "<br><br>Authors: " +
-            "Andreas Freitag, Sebastian Theuermann<br><br>DBA is " +
-            "licensed under the GPL v3 license.<br>For more informations " +
-            "visit: " + "<br>http://www.gnu.org/licenses/</html>";
+      "Analyzer<br>" + version_number + "<br><br>Authors: " +
+      "Andreas Freitag, Sebastian Theuermann<br><br>DBA is " +
+      "licensed under the GPL v3 license.<br>For more informations " +
+      "visit: " + "<br>http://www.gnu.org/licenses/</html>";
     JLabel lblText = new JLabel(text);
     lblText.setBackground(Color.white);
     lblText.setOpaque(true);

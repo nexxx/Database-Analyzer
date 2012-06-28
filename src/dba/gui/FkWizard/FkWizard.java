@@ -85,8 +85,7 @@ public class FkWizard extends JDialog implements constants {
     setIconImage(getIcons.getTbFK().getImage());
     setModal(true);
     JPanel contentPane = new JPanel();
-    JPanel pnlMain = new JPanel(new MigLayout("wrap 3",
-            "[fill, grow][grow,fill,32:32:32][fill, grow]"));
+    JPanel pnlMain = new JPanel(new MigLayout("wrap 3", "[fill, grow][grow,fill,32:32:32][fill, grow]"));
     contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
     setContentPane(contentPane);
     setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -221,8 +220,7 @@ public class FkWizard extends JDialog implements constants {
    * enables the "finish"-Button when all critera are met
    */
   private void checkForButton() {
-    if (listRelation.getSelectedIndices().length != 0
-            && listAttribute.getSelectedIndices().length != 0) {
+    if (listRelation.getSelectedIndices().length != 0 && listAttribute.getSelectedIndices().length != 0) {
       btnFinish.setEnabled(true);
     } else {
       btnFinish.setEnabled(false);

@@ -64,12 +64,8 @@ public class FdLogic {
     RelationSchema relation = CustomTree.getInstance().getParentRelation();
     FunctionalDependency fd = CustomTree.getInstance().getFd();
 
-    Object[] options = {locale.getString("TREE_Yes"),
-            locale.getString("TREE_No")};
-    int n = JOptionPane.showOptionDialog(null,
-            locale.getString("TREE_FDDelMsg") + " '" + fd.toString() + "'",
-            locale.getString("TREE_FDDelTitle"), JOptionPane.YES_NO_OPTION,
-            JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+    Object[] options = {locale.getString("TREE_Yes"), locale.getString("TREE_No")};
+    int n = JOptionPane.showOptionDialog(null, locale.getString("TREE_FDDelMsg") + " '" + fd.toString() + "'", locale.getString("TREE_FDDelTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
     if (n == 0) {
       relation.removeFunctionalDependency(fd);
     }

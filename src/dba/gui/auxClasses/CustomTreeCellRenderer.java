@@ -35,8 +35,7 @@ import java.awt.*;
  *
  * @author Andreas Freitag
  */
-public class CustomTreeCellRenderer extends DefaultTreeCellRenderer implements
-        constants {
+public class CustomTreeCellRenderer extends DefaultTreeCellRenderer implements constants {
 
   private GetIcons getIcons;
   /**
@@ -50,12 +49,9 @@ public class CustomTreeCellRenderer extends DefaultTreeCellRenderer implements
   }
 
   @Override
-  public Component getTreeCellRendererComponent(JTree tree, Object value,
-                                                boolean selected, boolean expanded, boolean leaf, int row,
-                                                boolean hasFocus) {
+  public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
 
-    super.getTreeCellRendererComponent(tree, value, selected, expanded, leaf,
-            row, hasFocus);
+    super.getTreeCellRendererComponent(tree, value, selected, expanded, leaf, row, hasFocus);
 
     ImageIcon icon;
     if (value instanceof AttributeNode) {

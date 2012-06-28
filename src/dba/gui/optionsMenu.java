@@ -74,9 +74,7 @@ public class optionsMenu extends JDialog {
 
       @Override
       public void actionPerformed(ActionEvent e) {
-        String selectedLang = options.getKeyByLanguage(
-                options.getAvailableLocale(),
-                (String) comboBobxLocale.getSelectedItem());
+        String selectedLang = options.getKeyByLanguage(options.getAvailableLocale(), (String) comboBobxLocale.getSelectedItem());
         options.setLanguage(selectedLang);
         if (!currentLocale.equalsIgnoreCase(options.getLanguage())) {
           JOptionPane.showMessageDialog(null, locale.getString("OPT_Restart"));
@@ -106,8 +104,7 @@ public class optionsMenu extends JDialog {
     initComponentsStatus();
     contentPanel.add(new JLabel(locale.getString("OPT_Language")), "growx");
     contentPanel.add(comboBobxLocale, "alignx right, wrap");
-    contentPanel.add(new JLabel(locale.getString("OPT_ShowTOD")),
-            "alignx left, growx");
+    contentPanel.add(new JLabel(locale.getString("OPT_ShowTOD")), "alignx left, growx");
     contentPanel.add(checkBoxTipOfTheDay, "alignx right, wrap");
 
     setLocationRelativeTo(null);
@@ -119,7 +116,6 @@ public class optionsMenu extends JDialog {
     for (String locale : options.getAvailableLocale().values()) {
       comboBobxLocale.addItem(locale);
     }
-    comboBobxLocale.setSelectedItem(options.getAvailableLocale().get(
-            options.getLanguage()));
+    comboBobxLocale.setSelectedItem(options.getAvailableLocale().get(options.getLanguage()));
   }
 }

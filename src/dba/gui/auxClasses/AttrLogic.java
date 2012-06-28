@@ -48,12 +48,8 @@ public class AttrLogic {
   public void deleteAttribute() {
     RelationSchema relation = tree.getParentRelation();
     Attribute attribute = tree.getAttribute();
-    Object[] options = {locale.getString("TREE_Yes"),
-            locale.getString("TREE_No")};
-    int n = JOptionPane.showOptionDialog(null,
-            locale.getString("TREE_AttrDelMsg") + " '" + attribute.getName() + "'",
-            locale.getString("TREE_AttrDelTitle"), JOptionPane.YES_NO_OPTION,
-            JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+    Object[] options = {locale.getString("TREE_Yes"), locale.getString("TREE_No")};
+    int n = JOptionPane.showOptionDialog(null, locale.getString("TREE_AttrDelMsg") + " '" + attribute.getName() + "'", locale.getString("TREE_AttrDelTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
     if (n == 0) {
       relation.removeAttribute(attribute);
     }
@@ -64,17 +60,11 @@ public class AttrLogic {
    */
   public void renameAttribute() {
     Attribute attribute = tree.getAttribute();
-    String name = (String) JOptionPane.showInputDialog(null,
-            locale.getString("TREE_AttrNewAttrName"),
-            locale.getString("TREE_AttrRenAttrTitle"),
-            JOptionPane.QUESTION_MESSAGE, null, null, attribute.getName());
-    if (name != null && !name.isEmpty()
-            && !tree.checkIfAttrExists(name, tree.getParentRelation())) {
-      tree.getDatabase().renameAttribute(tree.getParentRelation(), attribute,
-              name);
+    String name = (String) JOptionPane.showInputDialog(null, locale.getString("TREE_AttrNewAttrName"), locale.getString("TREE_AttrRenAttrTitle"), JOptionPane.QUESTION_MESSAGE, null, null, attribute.getName());
+    if (name != null && !name.isEmpty() && !tree.checkIfAttrExists(name, tree.getParentRelation())) {
+      tree.getDatabase().renameAttribute(tree.getParentRelation(), attribute, name);
     } else {
-      FeedbackbarPanel.getInstance().showFeedback(
-              locale.getString("FB_RenameFailed"), FeedbackEnum.FAILED);
+      FeedbackbarPanel.getInstance().showFeedback(locale.getString("FB_RenameFailed"), FeedbackEnum.FAILED);
     }
   }
 
@@ -100,8 +90,7 @@ public class AttrLogic {
       attribute.setIsForeignKey(false);
     } else {
 
-      FkWizard wizard = new FkWizard(tree.getDatabase(),
-              tree.getParentRelation(), attribute);
+      FkWizard wizard = new FkWizard(tree.getDatabase(), tree.getParentRelation(), attribute);
       wizard.setVisible(true);
 
       if (wizard.isDataBaseChanged()) {
@@ -114,8 +103,7 @@ public class AttrLogic {
    * Removes a existent ForeignKey associated with this attribute
    */
   private void removeForeignKey() {
-    tree.getDatabase().removeForeignKey(tree.getParentRelation().getName(),
-            tree.getAttribute().getName());
+    tree.getDatabase().removeForeignKey(tree.getParentRelation().getName(), tree.getAttribute().getName());
   }
 
   /**

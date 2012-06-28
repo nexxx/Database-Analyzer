@@ -135,8 +135,7 @@ public class Options extends Observable {
       prop.store(new FileOutputStream(optionsFile), "DBA options file");
 
     } catch (IOException ex) {
-      super.notifyObservers(new Feedback("Unable to save options file",
-              FeedbackEnum.FAILED));
+      super.notifyObservers(new Feedback("Unable to save options file", FeedbackEnum.FAILED));
     }
 
   }
@@ -154,8 +153,7 @@ public class Options extends Observable {
       showTippsOnStartup = Boolean.valueOf(prop.getProperty("showTipOnStartup"));
 
     } catch (Exception ex) {
-      super.notifyObservers(new Feedback("Unable to load options file",
-              FeedbackEnum.FAILED));
+      super.notifyObservers(new Feedback("Unable to load options file", FeedbackEnum.FAILED));
     }
   }
 

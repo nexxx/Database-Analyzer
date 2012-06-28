@@ -89,15 +89,13 @@ public class OptimizeFrame extends JDialog {
     Optimizer optimizer = new Optimizer();
 
     GeneralRelationCheck checker = new GeneralRelationCheck();
-    NormalForm currentNF = checker.getNF(relation,
-            new ArrayList<FunctionalDependency>());
+    NormalForm currentNF = checker.getNF(relation, new ArrayList<FunctionalDependency>());
 
     normalizationResult = optimizer.normalize(relation, currentNF, nf);
 
     RelationView relationView = new RelationView();
     JScrollPane scrollPaneRel = new JScrollPane(relationView);
-    relationView.display(normalizationResult.getRelations(),
-            normalizationResult.getForeignKeys());
+    relationView.display(normalizationResult.getRelations(), normalizationResult.getForeignKeys());
 
     RelationDetailsView relationDetailsView = new RelationDetailsView();
     JScrollPane scrollPaneFd = new JScrollPane(relationDetailsView);
@@ -108,20 +106,16 @@ public class OptimizeFrame extends JDialog {
     tabbedPane.addTab(locale.getString("GUI_RelationDetails"), scrollPaneFd);
 
     contentPanel.add(tabbedPane, BorderLayout.CENTER);
-    contentPanel.add(new JLabel(locale.getString("OPTI_Result")),
-            BorderLayout.NORTH);
+    contentPanel.add(new JLabel(locale.getString("OPTI_Result")), BorderLayout.NORTH);
     switch (nf) {
       case SECOND:
-        contentPanel.add(new JLabel(locale.getString("OPTI_Question2")),
-                BorderLayout.SOUTH);
+        contentPanel.add(new JLabel(locale.getString("OPTI_Question2")), BorderLayout.SOUTH);
         break;
       case THIRD:
-        contentPanel.add(new JLabel(locale.getString("OPTI_Question3")),
-                BorderLayout.SOUTH);
+        contentPanel.add(new JLabel(locale.getString("OPTI_Question3")), BorderLayout.SOUTH);
         break;
       case BOYCECODD:
-        contentPanel.add(new JLabel(locale.getString("OPTI_QuestionB")),
-                BorderLayout.SOUTH);
+        contentPanel.add(new JLabel(locale.getString("OPTI_QuestionB")), BorderLayout.SOUTH);
         break;
       default:
         throw new IllegalArgumentException();
