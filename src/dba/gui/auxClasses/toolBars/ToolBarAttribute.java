@@ -144,6 +144,10 @@ public class ToolBarAttribute extends ToolBar {
 
     cbType.setSelectedItem(attr.getType());
 
+    if (CustomTree.getInstance().getDatabase().getDatabase().size() >= 2) {
+      btnFK.setEnabled(true);
+    } else {
+      btnFK.setEnabled(false);
+    }
   }
-
 }

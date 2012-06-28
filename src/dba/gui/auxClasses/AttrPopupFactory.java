@@ -165,5 +165,13 @@ public class AttrPopupFactory implements constants {
         b.setSelected(true);
       }
     }
+
+
+    if (CustomTree.getInstance().getDatabase().getDatabase().size() >= 2) {
+      foreignKeyAttributeMenuItem.setEnabled(true);
+    } else {
+      foreignKeyAttributeMenuItem.setEnabled(false);
+    }
+
   }
 }
