@@ -24,6 +24,7 @@ import dba.gui.auxClasses.feedback.FeedbackbarPanel;
 import dba.options.FeedbackEnum;
 import dba.options.Options;
 import dba.utils.Localization;
+import dba.utils.RemoveExtension;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
@@ -65,6 +66,7 @@ public class GuiLogic {
               "/res/templates/" + Options.getInstance().getLanguage());
 
     } catch (Exception e) {
+      //TODO FILL me (catch)!
     }
     cfg.setObjectWrapper(new DefaultObjectWrapper());
   }
@@ -364,7 +366,7 @@ public class GuiLogic {
 
       switch (result) {
         case JOptionPane.YES_OPTION:
-          return writeText(path);
+          return writeHtml(path);
         case JOptionPane.NO_OPTION:
           return export();
         default:
@@ -472,32 +474,42 @@ public class GuiLogic {
    */
   private FeedbackEnum writeHtml(String path) {
     String folder;
+    boolean writeNotes = !CustomTree.getInstance().getDatabase().getNotes()
+            .isEmpty();
+    boolean writeContacts = !CustomTree.getInstance().getDatabase()
+            .getPersons().isEmpty();
+    boolean writeRelations = !CustomTree.getInstance().getDatabase()
+            .getDatabase().isEmpty();
+
+    path = RemoveExtension.removeExtension(path, ".html");
 
     folder = path;
     if (!path.endsWith(".html")) {
       path = path + ".html";
     }
 
-    if (makeDirs(folder) == FeedbackEnum.FAILED) {
-      return FeedbackEnum.FAILED;
+    if (writeContacts || writeNotes || writeRelations) {
+      if (makeDirs(folder) == FeedbackEnum.FAILED) {
+        return FeedbackEnum.FAILED;
+      }
     }
 
     if (writeIndex(folder, path) == FeedbackEnum.FAILED) {
       return FeedbackEnum.FAILED;
     }
 
-    if (!CustomTree.getInstance().getDatabase().getNotes().isEmpty()) {
+    if (writeNotes) {
       if (writeNotes(folder) == FeedbackEnum.FAILED) {
         return FeedbackEnum.FAILED;
       }
     }
 
-    if (!CustomTree.getInstance().getDatabase().getPersons().isEmpty()) {
+    if (writeContacts) {
       if (writeContacts(folder) == FeedbackEnum.FAILED) {
         return FeedbackEnum.FAILED;
       }
     }
-    if (!CustomTree.getInstance().getDatabase().getDatabase().isEmpty()) {
+    if (writeRelations) {
       if (writeImages(folder) == FeedbackEnum.FAILED) {
         return FeedbackEnum.FAILED;
       }
@@ -511,12 +523,31 @@ public class GuiLogic {
   }
 
   private FeedbackEnum makeDirs(String folder) {
-    boolean success = (
-            new File(folder)).mkdir();
+    File dir = new File(folder);
+
+    boolean success = true;
+    if (dir.exists()) {
+      success = deleteDir(dir);
+    }
+
+    success = success && (dir.mkdir());
     if (!success) {
       return FeedbackEnum.FAILED;
     }
     return FeedbackEnum.SUCCESSFUL;
+  }
+
+  public boolean deleteDir(File dir) {
+    if (dir.isDirectory()) {
+      String[] children = dir.list();
+      for (int i = 0; i < children.length; i++) {
+        boolean success = deleteDir(new File(dir, children[i]));
+        if (!success) {
+          return false;
+        }
+      }
+    }
+    return dir.delete();
   }
 
   private FeedbackEnum writeIndex(String folder, String path) {
