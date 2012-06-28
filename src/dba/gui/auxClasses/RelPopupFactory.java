@@ -83,10 +83,10 @@ public class RelPopupFactory implements constants {
 
     JPopupMenu relPopUpMenu = new JPopupMenu();
 
-    JMenu addRelationMenu = new JMenu(locale.getString("TREE_RelAdd"));
+    JMenu addRelationMenu = new JMenu(locale.getString("Add"));
     relPopUpMenu.add(addRelationMenu);
 
-    JMenuItem attributeRelationMenuItem = new JMenuItem(locale.getString("TREE_RelAttr"), iconAddAttr);
+    JMenuItem attributeRelationMenuItem = new JMenuItem(locale.getString("Attribute"), iconAddAttr);
     attributeRelationMenuItem.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent arg0) {
@@ -97,7 +97,7 @@ public class RelPopupFactory implements constants {
     });
     addRelationMenu.add(attributeRelationMenuItem);
 
-    functionalDependencyMenuItem = new JMenuItem(locale.getString("TREE_RelFD"), iconAddFd);
+    functionalDependencyMenuItem = new JMenuItem(locale.getString("FunctionalDependency"), iconAddFd);
     functionalDependencyMenuItem.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent arg0) {
@@ -120,7 +120,7 @@ public class RelPopupFactory implements constants {
     });
     relPopUpMenu.add(wizardRelationMenuItem);
 
-    JMenuItem deleteRelationMenuItem = new JMenuItem(locale.getString("TREE_RelDel"), iconDelete);
+    JMenuItem deleteRelationMenuItem = new JMenuItem(locale.getString("Delete"), iconDelete);
     deleteRelationMenuItem.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent arg0) {
@@ -131,7 +131,7 @@ public class RelPopupFactory implements constants {
     });
     relPopUpMenu.add(deleteRelationMenuItem);
 
-    JMenuItem renameRelationMenuItem = new JMenuItem(locale.getString("TREE_RelRen"), iconRename);
+    JMenuItem renameRelationMenuItem = new JMenuItem(locale.getString("Rename"), iconRename);
     renameRelationMenuItem.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent arg0) {
@@ -153,7 +153,7 @@ public class RelPopupFactory implements constants {
     });
     relPopUpMenu.add(inspectRelationMenuItem);
 
-    optimizeRelationMenu = new JMenu(locale.getString("TREE_RelOptimize"));
+    optimizeRelationMenu = new JMenu(locale.getString("Optimize"));
     relPopUpMenu.add(optimizeRelationMenu);
 
     secondNormalFormRelationMenuItem = new JMenuItem(locale.getString("TREE_Rel2NF"), icon2NF);

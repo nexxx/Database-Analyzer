@@ -76,7 +76,7 @@ public class AttrPopupFactory implements constants {
 
     JPopupMenu attrPopUpMenu = new JPopupMenu();
 
-    JMenuItem deleteAttributeMenuItem = new JMenuItem(locale.getString("TREE_AttrDelete"), iconDelete);
+    JMenuItem deleteAttributeMenuItem = new JMenuItem(locale.getString("Delete"), iconDelete);
     // deleteAttributeMenuItem.setHorizontalAlignment(JMenuItem.RIGHT);
     deleteAttributeMenuItem.addActionListener(new ActionListener() {
       @Override
@@ -88,7 +88,7 @@ public class AttrPopupFactory implements constants {
     });
     attrPopUpMenu.add(deleteAttributeMenuItem);
 
-    JMenuItem renameAttributeMenuItem = new JMenuItem(locale.getString("TREE_AttrRename"), iconRename);
+    JMenuItem renameAttributeMenuItem = new JMenuItem(locale.getString("Rename"), iconRename);
     renameAttributeMenuItem.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent arg0) {
@@ -119,7 +119,7 @@ public class AttrPopupFactory implements constants {
     });
     attrPopUpMenu.add(foreignKeyAttributeMenuItem);
 
-    JMenu typeRelationMenu = new JMenu(locale.getString("TREE_AttrType"));
+    JMenu typeRelationMenu = new JMenu(locale.getString("DataType"));
     attrPopUpMenu.add(typeRelationMenu);
     grp = new ButtonGroup();
     for (String s : mySql.getInstance().getTypes()) {

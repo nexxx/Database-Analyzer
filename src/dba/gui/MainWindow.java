@@ -223,7 +223,7 @@ public class MainWindow implements constants, Observer {
     pnlRight.add(feedbackbarPanel, BorderLayout.SOUTH);
 
     // RelationView
-    displayTab.addTab(locale.getString("GUI_Relations"), relationView);
+    displayTab.addTab(locale.getString("Relations"), relationView);
 
     // RelationDetails
     displayTab.addTab(locale.getString("GUI_RelationDetails"), relationDetailsView);
@@ -372,7 +372,7 @@ public class MainWindow implements constants, Observer {
 
     editMenu.add(new JSeparator());
 
-    JMenuItem metaInfoMenuItem = new JMenuItem(locale.getString("MI_FunctionName"), iconMetaInfo);
+    JMenuItem metaInfoMenuItem = new JMenuItem(locale.getString("MI_CustInfo"), iconMetaInfo);
     metaInfoMenuItem.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent arg0) {
@@ -456,8 +456,8 @@ public class MainWindow implements constants, Observer {
   private void checkDirtyStateBeforeExiting() {
     int result = JOptionPane.NO_OPTION;
     if (TimeLine.getInstance().getCurrentElement().isDirty()) {
-      Object[] options = {locale.getString("GUI_Yes"), locale.getString("GUI_No"), locale.getString("TREE_Cancel")};
-      result = JOptionPane.showOptionDialog(frame, locale.getString("TREE_ExitMsg"), locale.getString("TREE_ExitTitle"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
+      Object[] options = {locale.getString("Yes"), locale.getString("No"), locale.getString("Cancel")};
+      result = JOptionPane.showOptionDialog(frame, locale.getString("TREE_ExitMsg"), locale.getString("Confirm"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
     }
     switch (result) {
       case JOptionPane.YES_OPTION:

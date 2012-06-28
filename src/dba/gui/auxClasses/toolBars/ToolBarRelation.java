@@ -58,15 +58,15 @@ public class ToolBarRelation extends ToolBar {
     btn3NF = new JButton(super.getIcons.getTb3NF());
     btnBCNF = new JButton(super.getIcons.getTbBCNF());
 
-    btnNewAttribute.setToolTipText(super.locale.getString("TREE_RelAttr"));
-    btnNewFd.setToolTipText(super.locale.getString("TREE_RelFD"));
+    btnNewAttribute.setToolTipText(super.locale.getString("Attribute"));
+    btnNewFd.setToolTipText(super.locale.getString("FunctionalDependency"));
     btnEdit.setToolTipText(super.locale.getString("TREE_RelEditWizard"));
-    btnDelete.setToolTipText(super.locale.getString("TREE_RelDel"));
-    btnRename.setToolTipText(super.locale.getString("TREE_RelRen"));
+    btnDelete.setToolTipText(super.locale.getString("Delete"));
+    btnRename.setToolTipText(super.locale.getString("Rename"));
     btnInspect.setToolTipText(super.locale.getString("TREE_RelInspect"));
-    btn2NF.setToolTipText(super.locale.getString("TREE_RelOptimize") + " - " + super.locale.getString("TREE_Rel2NF"));
-    btn3NF.setToolTipText(super.locale.getString("TREE_RelOptimize") + " - " + super.locale.getString("TREE_Rel3NF"));
-    btnBCNF.setToolTipText(super.locale.getString("TREE_RelOptimize") + " - " + super.locale.getString("TREE_RelBCNF"));
+    btn2NF.setToolTipText(super.locale.getString("Optimize") + " - " + super.locale.getString("TREE_Rel2NF"));
+    btn3NF.setToolTipText(super.locale.getString("Optimize") + " - " + super.locale.getString("TREE_Rel3NF"));
+    btnBCNF.setToolTipText(super.locale.getString("Optimize") + " - " + super.locale.getString("TREE_RelBCNF"));
 
     btnNewAttribute.addActionListener(new ActionListener() {
 

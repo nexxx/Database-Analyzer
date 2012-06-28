@@ -48,7 +48,7 @@ public class ToolBarDatabase extends ToolBar {
     JButton btnEmptyRelation = new JButton(super.getIcons.getTbRelation());
     btnInspect = new JButton(super.getIcons.getTbInspect());
 
-    btnNewRelation.setToolTipText(super.locale.getString("TREE_DBNewRelWiz"));
+    btnNewRelation.setToolTipText(super.locale.getString("NewRelWiz"));
     btnEmptyRelation.setToolTipText(super.locale.getString("TREE_DBAddEmptyRel"));
     btnInspect.setToolTipText(super.locale.getString("TREE_DBInspect"));
 

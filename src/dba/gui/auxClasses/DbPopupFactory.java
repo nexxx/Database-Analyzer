@@ -68,7 +68,7 @@ public class DbPopupFactory implements constants {
   public JPopupMenu getDbPopupMenu() {
     JPopupMenu dbPopUpMenu = new JPopupMenu();
 
-    JMenuItem wizardDatabaseMenuItem = new JMenuItem(locale.getString("TREE_DBNewRelWiz"), iconWizard);
+    JMenuItem wizardDatabaseMenuItem = new JMenuItem(locale.getString("NewRelWiz"), iconWizard);
     wizardDatabaseMenuItem.addActionListener(new ActionListener() {
 
       @Override

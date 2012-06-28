@@ -56,11 +56,11 @@ public class ToolBarAttribute extends ToolBar {
 
     cbType = new JComboBox<>(mySql.getInstance().getTypes());
 
-    btnDelete.setToolTipText(super.locale.getString("TREE_AttrDelete"));
-    btnRename.setToolTipText(super.locale.getString("TREE_AttrRename"));
+    btnDelete.setToolTipText(super.locale.getString("Delete"));
+    btnRename.setToolTipText(super.locale.getString("Rename"));
     btnPK.setToolTipText(super.locale.getString("TREE_AttrChkBoxPK"));
     btnFK.setToolTipText(super.locale.getString("TREE_AttrChkBoxFK"));
-    cbType.setToolTipText(super.locale.getString("TREE_AttrType"));
+    cbType.setToolTipText(super.locale.getString("DataType"));
     cbType.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
 
     btnDelete.addActionListener(new ActionListener() {

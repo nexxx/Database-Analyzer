@@ -48,8 +48,8 @@ public class ToolBarFd extends ToolBar {
     JButton btnDelete = new JButton(super.getIcons.getTbDelete());
     JButton btnEdit = new JButton(super.getIcons.getTbEdit());
 
-    btnDelete.setToolTipText(super.locale.getString("TREE_FDDelete"));
-    btnEdit.setToolTipText(super.locale.getString("TREE_FDEdit"));
+    btnDelete.setToolTipText(super.locale.getString("Delete"));
+    btnEdit.setToolTipText(super.locale.getString("Edit"));
 
     btnDelete.addActionListener(new ActionListener() {
 

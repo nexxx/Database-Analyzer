@@ -47,7 +47,7 @@ public class OptimizeFrame extends JDialog {
   public OptimizeFrame(RelationSchema relation, NormalForm nf) {
     super();
     Localization locale = Localization.getInstance();
-    this.setTitle(locale.getString("OPTI_FrameTitle"));
+    this.setTitle(locale.getString("Optimize"));
     GetIcons getIcons = GetIcons.getInstance();
     ImageIcon iconFrame = getIcons.getIconOptimizeFrame();
     this.setIconImage(iconFrame.getImage());
@@ -64,7 +64,7 @@ public class OptimizeFrame extends JDialog {
     buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
     getContentPane().add(buttonPane, BorderLayout.SOUTH);
 
-    JButton okButton = new JButton(locale.getString("OPTI_Ok"));
+    JButton okButton = new JButton(locale.getString("Ok"));
     buttonPane.add(okButton);
     getRootPane().setDefaultButton(okButton);
     okButton.addActionListener(new ActionListener() {
@@ -76,7 +76,7 @@ public class OptimizeFrame extends JDialog {
       }
     });
 
-    JButton cancelButton = new JButton(locale.getString("OPTI_Cancel"));
+    JButton cancelButton = new JButton(locale.getString("Cancel"));
     buttonPane.add(cancelButton);
     cancelButton.addActionListener(new ActionListener() {
 
@@ -102,7 +102,7 @@ public class OptimizeFrame extends JDialog {
     relationDetailsView.display(normalizationResult.getRelations());
 
     JTabbedPane tabbedPane = new JTabbedPane();
-    tabbedPane.addTab(locale.getString("GUI_Relations"), scrollPaneRel);
+    tabbedPane.addTab(locale.getString("Relations"), scrollPaneRel);
     tabbedPane.addTab(locale.getString("GUI_RelationDetails"), scrollPaneFd);
 
     contentPanel.add(tabbedPane, BorderLayout.CENTER);

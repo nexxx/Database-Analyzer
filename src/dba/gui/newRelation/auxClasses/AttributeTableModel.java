@@ -46,7 +46,7 @@ public class AttributeTableModel extends AbstractTableModel {
   private AttributeTableModel() {
     super();
     Localization locale = Localization.getInstance();
-    columnNames = new String[]{locale.getString("WIZ_ColAttrName"), locale.getString("WIZ_ColType"), "PK", "FK"};
+    columnNames = new String[]{locale.getString("Attr Name"), locale.getString("DataType"), "PK", "FK"};
     data = new ArrayList<>();
   }
 
@@ -114,10 +114,7 @@ public class AttributeTableModel extends AbstractTableModel {
     if (CustomTree.getInstance().getDatabase().getDatabase().size() >= 1) {
       return true;
     }
-    if (col == 3) {
-      return false;
-    }
-    return true;
+    return col != 3;
   }
 
   @Override

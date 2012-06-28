@@ -270,7 +270,7 @@ public class DatabaseTreePanel extends JPanel {
     } else {
       return "";
     }
-    return locale.getString("TREE_Relation") + ": " + normalForm;
+    return locale.getString("Relation") + ": " + normalForm;
   }
 
   private String getNFStringDb() {

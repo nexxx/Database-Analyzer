@@ -64,13 +64,13 @@ public class RelationWizard extends JDialog implements constants {
     this.setModal(true);
     Localization locale = Localization.getInstance();
 
-    Attributes = locale.getString("WIZ_Attributes");
+    Attributes = locale.getString("Attributes");
     FDs = locale.getString("WIZ_FDs");
 
     if (type == WizardEnum.NEW) {
-      this.setTitle(locale.getString("WIZ_NewTitle"));
+      this.setTitle(locale.getString("NewRelWiz"));
     } else if (type == WizardEnum.EDIT) {
-      this.setTitle(locale.getString("WIZ_EditTitle"));
+      this.setTitle(locale.getString("EditRelWiz"));
     }
 
     GetIcons getIcons = GetIcons.getInstance();
@@ -89,7 +89,7 @@ public class RelationWizard extends JDialog implements constants {
     AddRelationNameAttributePanel addRelationNameAttributePanel = new AddRelationNameAttributePanel(relation, database, type);
     addRelationFunctionalDependencyPanel = new AddRelationFunctionalDependencyPanel(relation);
     card = new CardLayout(0, 0);
-    btnFinish = new JButton(locale.getString("WIZ_Finish"), iconFinish);
+    btnFinish = new JButton(locale.getString("Finish"), iconFinish);
     btnFinish.setEnabled(false);
     PropertyChangeListener changeListener = new PropertyChangeListener() {
 
@@ -119,7 +119,7 @@ public class RelationWizard extends JDialog implements constants {
     gbcCancel.fill = GridBagConstraints.HORIZONTAL;
     gbcCancel.gridx = 0;
     gbcCancel.gridy = 0;
-    JButton btnCancel = new JButton(locale.getString("WIZ_Cancel"), iconCancel);
+    JButton btnCancel = new JButton(locale.getString("Cancel"), iconCancel);
     btnCancel.addActionListener(new cancelButtonListener());
     pnlButtons.add(btnCancel, gbcCancel);
 

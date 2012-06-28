@@ -64,7 +64,7 @@ public class FdPopupFactory implements constants {
   public JPopupMenu getFdPopupMenu() {
     JPopupMenu fdPopUpMenu = new JPopupMenu();
 
-    JMenuItem editFunctionalDependencyMenuItem = new JMenuItem(locale.getString("TREE_FDEdit"), iconEdit);
+    JMenuItem editFunctionalDependencyMenuItem = new JMenuItem(locale.getString("Edit"), iconEdit);
     editFunctionalDependencyMenuItem.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent arg0) {
@@ -75,7 +75,7 @@ public class FdPopupFactory implements constants {
     });
     fdPopUpMenu.add(editFunctionalDependencyMenuItem);
 
-    JMenuItem deleteFunctionalDependencyMenuItem = new JMenuItem(locale.getString("TREE_FDDelete"), iconDelete);
+    JMenuItem deleteFunctionalDependencyMenuItem = new JMenuItem(locale.getString("Delete"), iconDelete);
     deleteFunctionalDependencyMenuItem.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent arg0) {

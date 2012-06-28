@@ -105,8 +105,8 @@ public class CustomerInfosFrame extends JDialog implements Observable {
   private JPanel createButtonPanel() {
     JPanel buttonPane = new JPanel();
     buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-    JButton okButton = new JButton(locale.getString("MI_Ok"));
-    okButton.setActionCommand(locale.getString("MI_Ok"));
+    JButton okButton = new JButton(locale.getString("Ok"));
+    okButton.setActionCommand(locale.getString("Ok"));
     buttonPane.add(okButton);
     getRootPane().setDefaultButton(okButton);
     okButton.addActionListener(new ActionListener() {
@@ -119,8 +119,8 @@ public class CustomerInfosFrame extends JDialog implements Observable {
         database.setNotes(txtNotes.getText());
       }
     });
-    JButton cancelButton = new JButton(locale.getString("MI_Cancel"));
-    cancelButton.setActionCommand(locale.getString("MI_Cancel"));
+    JButton cancelButton = new JButton(locale.getString("Cancel"));
+    cancelButton.setActionCommand(locale.getString("Cancel"));
     buttonPane.add(cancelButton);
     cancelButton.addActionListener(new ActionListener() {
 
@@ -287,7 +287,7 @@ public class CustomerInfosFrame extends JDialog implements Observable {
 
   private void fillRelationCombobox() {
     cbRelations.removeAllItems();
-    cbRelations.addItem(locale.getString("MI_Relations"));
+    cbRelations.addItem(locale.getString("Relations"));
     for (RelationSchema d : database.getDatabase()) {
       cbRelations.addItem(d.getName());
     }
@@ -334,8 +334,8 @@ public class CustomerInfosFrame extends JDialog implements Observable {
     }
 
     if (outputFile.exists()) {
-      Object[] options = {locale.getString("GUI_Yes"), locale.getString("GUI_No")};
-      int result = JOptionPane.showOptionDialog(null, locale.getString("GUI_TheFile") + " " + outputFile.getName() + " " + locale.getString("GUI_AlreadyExisting"), locale.getString("GUI_SaveTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+      Object[] options = {locale.getString("Yes"), locale.getString("No")};
+      int result = JOptionPane.showOptionDialog(null, locale.getString("GUI_TheFile") + " " + outputFile.getName() + " " + locale.getString("GUI_AlreadyExisting"), locale.getString("Confirm"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 
       switch (result) {
         case JOptionPane.YES_OPTION:

@@ -74,13 +74,13 @@ public class AddRelationFunctionalDependencyPanel extends JPanel implements cons
     setLayout(new MigLayout("wrap 5", "[fill, grow][grow,fill,32:32:32][fill, grow][grow,fill,130:130:130][fill, grow]"));
 
     tmpRelation = relation;
-    btnAdd = new JButton(locale.getString("WIZ_Add"), iconAdd);
+    btnAdd = new JButton(locale.getString("Add"), iconAdd);
     btnAdd.setHorizontalAlignment(SwingConstants.LEFT);
     btnAdd.setEnabled(false);
-    btnEdit = new JButton(locale.getString("WIZ_FdEdit"), iconEdit);
+    btnEdit = new JButton(locale.getString("Edit"), iconEdit);
     btnEdit.setHorizontalAlignment(SwingConstants.LEFT);
     btnEdit.setEnabled(false);
-    btnDelete = new JButton(locale.getString("WIZ_Delete"), iconDelete);
+    btnDelete = new JButton(locale.getString("Delete"), iconDelete);
     btnDelete.setHorizontalAlignment(SwingConstants.LEFT);
     btnDelete.setEnabled(false);
     lstMSource = new DefaultListModel<>();

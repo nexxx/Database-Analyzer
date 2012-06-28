@@ -105,7 +105,7 @@ public class RelationLogic {
 
     RelationSchema relation = tree.getRelation();
 
-    Object[] options = {locale.getString("TREE_Yes"), locale.getString("TREE_No")};
+    Object[] options = {locale.getString("Yes"), locale.getString("No")};
     int n = JOptionPane.showOptionDialog(null, locale.getString("TREE_RelDelMsg") + " '" + relation.getName() + "'", locale.getString("TREE_RelDelTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
     if (n == 0) {
       database.removeRelationSchema(relation);

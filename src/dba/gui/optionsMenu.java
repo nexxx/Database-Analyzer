@@ -69,7 +69,7 @@ public class optionsMenu extends JDialog {
     buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
     getContentPane().add(buttonPane, BorderLayout.SOUTH);
 
-    JButton okButton = new JButton(locale.getString("OPT_OK"));
+    JButton okButton = new JButton(locale.getString("Ok"));
     okButton.addActionListener(new ActionListener() {
 
       @Override
@@ -87,7 +87,7 @@ public class optionsMenu extends JDialog {
     buttonPane.add(okButton);
     getRootPane().setDefaultButton(okButton);
 
-    JButton cancelButton = new JButton(locale.getString("OPT_Cancel"));
+    JButton cancelButton = new JButton(locale.getString("Cancel"));
     cancelButton.addActionListener(new ActionListener() {
 
       @Override

@@ -48,7 +48,7 @@ public class AttrLogic {
   public void deleteAttribute() {
     RelationSchema relation = tree.getParentRelation();
     Attribute attribute = tree.getAttribute();
-    Object[] options = {locale.getString("TREE_Yes"), locale.getString("TREE_No")};
+    Object[] options = {locale.getString("Yes"), locale.getString("No")};
     int n = JOptionPane.showOptionDialog(null, locale.getString("TREE_AttrDelMsg") + " '" + attribute.getName() + "'", locale.getString("TREE_AttrDelTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
     if (n == 0) {
       relation.removeAttribute(attribute);

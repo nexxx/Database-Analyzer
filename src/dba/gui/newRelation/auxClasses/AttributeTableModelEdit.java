@@ -41,10 +41,7 @@ public class AttributeTableModelEdit extends AttributeTableModel {
     if (CustomTree.getInstance().getDatabase().getDatabase().size() >= 2) {
       return true;
     }
-    if (col == 3) {
-      return false;
-    }
-    return true;
+    return col != 3;
 
   }
 }

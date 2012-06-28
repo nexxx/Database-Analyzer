@@ -126,7 +126,7 @@ public class tippOfTheDayFrame extends JDialog {
         pane.setText(text);
       }
     });
-    JButton close = new JButton(locale.getString("TIP_Close"));
+    JButton close = new JButton(locale.getString("Close"));
 
     close.addActionListener(new ActionListener() {
 

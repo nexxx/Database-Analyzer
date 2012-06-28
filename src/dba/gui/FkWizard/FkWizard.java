@@ -101,15 +101,15 @@ public class FkWizard extends JDialog implements constants {
     listAttribute.setVisibleRowCount(100);
     JScrollPane spSource = new JScrollPane(listRelation);
     JScrollPane spTarget = new JScrollPane(listAttribute);
-    btnFinish = new JButton(locale.getString("WIZ_Finish"), iconFinish);
-    JButton btnCancel = new JButton(locale.getString("WIZ_Cancel"), iconCancel);
+    btnFinish = new JButton(locale.getString("Finish"), iconFinish);
+    JButton btnCancel = new JButton(locale.getString("Cancel"), iconCancel);
 
     // Label FDs
     JLabel lblFd = new JLabel(locale.getString("WIZ_FKTarget"));
     pnlMain.add(lblFd, "spanx");
 
     // Label Relation
-    JLabel lblRelation = new JLabel(locale.getString("WIZ_FKRelation"));
+    JLabel lblRelation = new JLabel(locale.getString("Relation"));
     lblRelation.setIcon(getIcons.getTbRelation());
     pnlMain.add(lblRelation, "growx");
 

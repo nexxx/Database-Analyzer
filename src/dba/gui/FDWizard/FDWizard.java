@@ -99,12 +99,12 @@ public class FDWizard extends JDialog implements constants {
     listTarget.setVisibleRowCount(100);
     JScrollPane spSource = new JScrollPane(listSource);
     JScrollPane spTarget = new JScrollPane(listTarget);
-    btnFinish = new JButton(locale.getString("WIZ_Finish"), iconFinish);
-    JButton btnCancel = new JButton(locale.getString("WIZ_Cancel"), iconCancel);
+    btnFinish = new JButton(locale.getString("Finish"), iconFinish);
+    JButton btnCancel = new JButton(locale.getString("Cancel"), iconCancel);
     relation = rel;
 
     // Label FDs
-    JLabel lblFd = new JLabel(locale.getString("WIZ_FDLabel"));
+    JLabel lblFd = new JLabel(locale.getString("FunctionalDependency"));
     pnlMain.add(lblFd, "spanx");
 
     // Label Source

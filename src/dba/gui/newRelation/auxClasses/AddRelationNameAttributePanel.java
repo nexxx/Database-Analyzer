@@ -80,10 +80,10 @@ public class AddRelationNameAttributePanel extends JPanel implements constants {
     tmpRelation = relation;
     setLayout(new MigLayout("wrap 2, fillx", "[grow][grow, 160:160:160]"));
     lblAlreadyExisting = new JLabel(locale.getString("WIZ_AttrExisting"));
-    JButton btnAdd = new JButton(locale.getString("WIZ_Add"), iconAdd);
+    JButton btnAdd = new JButton(locale.getString("Add"), iconAdd);
     btnAdd.setEnabled(false);
     btnAdd.setHorizontalAlignment(SwingConstants.LEFT);
-    btnDelete = new JButton(locale.getString("WIZ_Delete"), iconDelete);
+    btnDelete = new JButton(locale.getString("Delete"), iconDelete);
     btnDelete.setEnabled(false);
     btnDelete.setHorizontalAlignment(SwingConstants.LEFT);
     btnDelete.addActionListener(new ActionListener() {
@@ -154,7 +154,7 @@ public class AddRelationNameAttributePanel extends JPanel implements constants {
     lblAlreadyExisting.setVisible(false);
 
     // Label Attribute Name
-    JLabel lblAttributeName = new JLabel(locale.getString("WIZ_AttrName"));
+    JLabel lblAttributeName = new JLabel(locale.getString("AttrName"));
     add(lblAttributeName, "spanx, growx");
 
     // Textfield Attribute Name
@@ -217,7 +217,7 @@ public class AddRelationNameAttributePanel extends JPanel implements constants {
       return;
     }
     if (!tmpRelation.addAttribute(txtAttrName.getText())) {
-      JOptionPane.showMessageDialog(this, locale.getString("WIZ_Attr") + " '" + txtAttrName.getText() + "' " + locale.getString("WIZ_AttrDialogExisting"));
+      JOptionPane.showMessageDialog(this, locale.getString("Attribute") + " '" + txtAttrName.getText() + "' " + locale.getString("WIZ_AttrDialogExisting"));
       txtAttrName.selectAll();
       return;
     }
