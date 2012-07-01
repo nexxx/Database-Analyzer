@@ -20,6 +20,7 @@ package dba.gui;
 import data.Database;
 import data.dBTypes.TypeEnum;
 import dba.gui.auxClasses.GuiLogic;
+import dba.options.FeedbackEnum;
 import dba.utils.GetIcons;
 import dba.utils.Localization;
 import net.miginfocom.swing.MigLayout;
@@ -43,6 +44,7 @@ public class WelcomeScreen extends JDialog {
   private JComboBox<String> cb;
   private Database database;
   private boolean open;
+  private FeedbackEnum retVal;
 
 
   /**
@@ -105,7 +107,7 @@ public class WelcomeScreen extends JDialog {
     btnOpen.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
-        guiLogic.open();
+        retVal = guiLogic.open();
         open = true;
         jDialog.dispose();
       }
@@ -136,6 +138,10 @@ public class WelcomeScreen extends JDialog {
 
   public boolean openClicked() {
     return open;
+  }
+
+  public FeedbackEnum getRetVal() {
+    return retVal;
   }
 
 }

@@ -134,13 +134,26 @@ public class MainWindow implements constants, Observer {
 
     //guiLogic.showDbQuestion();
     WelcomeScreen wcs = new WelcomeScreen(guiLogic, database);
-    wcs.showScreen();
+    FeedbackEnum retVal;
+    do {
+      wcs.showScreen();
+      retVal = wcs.getRetVal();
+    } while (retVal != FeedbackEnum.SUCCESSFUL);
+
     if (wcs.openClicked()) {
       database = (Database) TimeLine.getInstance().getCurrentElement();
       dbTreePanel.setDatabase(database);
       dbTreePanel.updateTree();
       relationView.display(database);
       relationDetailsView.display(database);
+
+      if (guiLogic.getLastFileName() != null) {
+        frame.setTitle(locale.getString("GUI_FrameTitle") + " - " +
+          guiLogic.getLastFileName());
+      } else {
+        frame.setTitle(locale.getString("GUI_FrameTitle") + " - " +
+          locale.getString("GUI_FrameTitleNotSaved"));
+      }
     }
 
 
