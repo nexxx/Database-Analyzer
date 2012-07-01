@@ -106,7 +106,6 @@ public class WelcomeScreen extends JDialog {
         jDialog.dispose();
       }
     });
-    btnOpen.setEnabled(false);
     panel.add(btnOpen, "spanx, growx");
 
     panel.add(new JSeparator(JSeparator.VERTICAL), "growx, spanx");
