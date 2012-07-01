@@ -62,7 +62,7 @@ public class ToolBarAttribute extends ToolBar {
 
     dbType = (new DbTypeFactory(CustomTree.getInstance().getDatabase())).getType();
 
-    cbType = new JComboBox<>(dbType.getTypes());
+    cbType = dbType.getCombobox();
     cbType.setSelectedIndex(0);
 
     btnDelete.setToolTipText(super.locale.getString("Delete"));

@@ -107,7 +107,7 @@ public class AddRelationNameAttributePanel extends JPanel implements constants {
 
     DbType dbType = (new DbTypeFactory(CustomTree.getInstance().getDatabase())).getType();
 
-    JComboBox<String> comboBox = new JComboBox<>(dbType.getTypes());
+    JComboBox<String> comboBox = new JComboBox<String>(dbType.getTypes()); //dbType.getCombobox();
 
     TableColumn col = table.getColumnModel().getColumn(1);
     col.setCellEditor(new DefaultCellEditor(comboBox));
