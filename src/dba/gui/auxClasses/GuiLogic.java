@@ -81,7 +81,7 @@ public class GuiLogic {
    */
   public FeedbackEnum open() {
     int result;
-    if (TimeLine.getInstance().getCurrentElement().isDirty()) {
+    if (TimeLine.getInstance().isDirty()) {
       Object[] options = {locale.getString("Yes"), locale.getString("No"), locale.getString("Cancel")};
       result = JOptionPane.showOptionDialog(null, locale.getString("TREE_NewMsg"), locale.getString("Confirm"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
       switch (result) {
@@ -233,7 +233,7 @@ public class GuiLogic {
 
   public FeedbackEnum newDatabase() {
     int result;
-    if (TimeLine.getInstance().getCurrentElement().isDirty()) {
+    if (TimeLine.getInstance().isDirty()) {
       Object[] options = {locale.getString("Yes"), locale.getString("No"), locale.getString("Cancel")};
       result = JOptionPane.showOptionDialog(null, locale.getString("TREE_NewMsg"), locale.getString("Confirm"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
       switch (result) {
