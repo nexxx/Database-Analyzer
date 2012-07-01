@@ -42,6 +42,7 @@ public class WelcomeScreen extends JDialog {
   private GuiLogic guiLogic;
   private JComboBox<String> cb;
   private Database database;
+  private boolean open;
 
 
   /**
@@ -49,6 +50,7 @@ public class WelcomeScreen extends JDialog {
    */
   public WelcomeScreen(GuiLogic gL, Database db) {
     super();
+    open = true;
     guiLogic = gL;
     database = db;
     Localization locale = Localization.getInstance();
@@ -75,6 +77,7 @@ public class WelcomeScreen extends JDialog {
       @Override
       public void actionPerformed(ActionEvent arg0) {
         database.setType(TypeEnum.getEnumByValue((String) cb.getSelectedItem()));
+        open = false;
         jDialog.dispose();
       }
     });
@@ -103,6 +106,7 @@ public class WelcomeScreen extends JDialog {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
         guiLogic.open();
+        open = true;
         jDialog.dispose();
       }
     });
@@ -128,6 +132,10 @@ public class WelcomeScreen extends JDialog {
 
   public void showScreen() {
     jDialog.setVisible(true);
+  }
+
+  public boolean openClicked() {
+    return open;
   }
 
 }

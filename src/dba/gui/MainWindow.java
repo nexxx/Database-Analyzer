@@ -135,11 +135,14 @@ public class MainWindow implements constants, Observer {
     //guiLogic.showDbQuestion();
     WelcomeScreen wcs = new WelcomeScreen(guiLogic, database);
     wcs.showScreen();
-    database = (Database) TimeLine.getInstance().getCurrentElement();
-    dbTreePanel.setDatabase(database);
-    dbTreePanel.updateTree();
-    relationView.display(database);
-    relationDetailsView.display(database);
+    if (wcs.openClicked()) {
+      database = (Database) TimeLine.getInstance().getCurrentElement();
+      dbTreePanel.setDatabase(database);
+      dbTreePanel.updateTree();
+      relationView.display(database);
+      relationDetailsView.display(database);
+    }
+
 
     JTabbedPane displayTab = new JTabbedPane(SwingConstants.TOP);
 
