@@ -46,7 +46,7 @@ public class AttributeTableModel extends AbstractTableModel {
   private AttributeTableModel() {
     super();
     Localization locale = Localization.getInstance();
-    columnNames = new String[]{locale.getString("Attr Name"), locale.getString("DataType"), "PK", "FK"};
+    columnNames = new String[]{locale.getString("WIZ_AttrName"), locale.getString("DataType"), "PK", "FK"};
     data = new ArrayList<>();
   }
 

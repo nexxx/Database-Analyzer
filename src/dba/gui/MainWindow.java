@@ -25,7 +25,10 @@ import data.TimeLine;
 import data.events.Change;
 import data.events.ChangeListener;
 import data.events.Time;
-import dba.gui.auxClasses.*;
+import dba.gui.auxClasses.DatabaseTreePanel;
+import dba.gui.auxClasses.GuiLogic;
+import dba.gui.auxClasses.RelationDetailsView;
+import dba.gui.auxClasses.RelationView;
 import dba.gui.auxClasses.feedback.FeedbackbarPanel;
 import dba.gui.auxClasses.toolBars.*;
 import dba.gui.metaInfoFrame.CustomerInfosFrame;
@@ -123,8 +126,10 @@ public class MainWindow implements constants, Observer {
     frame.setContentPane(contentPane);
 
     database = new Database();
+
     dbTreePanel = new DatabaseTreePanel(database);
     guiLogic = new GuiLogic(dbTreePanel);
+    guiLogic.showDbQuestion();
     relationView = new RelationView(guiLogic);
     relationDetailsView = new RelationDetailsView(guiLogic);
     JTabbedPane displayTab = new JTabbedPane(SwingConstants.TOP);

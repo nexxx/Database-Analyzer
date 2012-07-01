@@ -18,7 +18,8 @@
 package dba.gui.auxClasses;
 
 import data.Attribute;
-import data.dBTypes.mySql;
+import data.dBTypes.DbTypeFactory;
+import data.dBTypes.types.DbType;
 import dba.gui.CustomTree;
 import dba.utils.GetIcons;
 import dba.utils.Localization;
@@ -46,6 +47,7 @@ public class AttrPopupFactory implements constants {
   private ImageIcon iconRename;
   private AttrLogic attrLogic;
   private ButtonGroup grp;
+  private JMenu typeRelationMenu;
 
   /**
    * Defaultconstructor
@@ -120,10 +122,12 @@ public class AttrPopupFactory implements constants {
     });
     attrPopUpMenu.add(foreignKeyAttributeMenuItem);
 
-    JMenu typeRelationMenu = new JMenu(locale.getString("DataType"));
+    typeRelationMenu = new JMenu(locale.getString("DataType"));
     attrPopUpMenu.add(typeRelationMenu);
     grp = new ButtonGroup();
-    for (String s : mySql.getInstance().getTypes()) {
+    DbType dbType = (new DbTypeFactory(CustomTree.getInstance().getDatabase())).getType();
+
+    for (String s : dbType.getTypes()) {
       JMenuItem menuItem = new JRadioButtonMenuItem(s);
       menuItem.addActionListener(new ActionListener() {
 

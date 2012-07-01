@@ -19,7 +19,8 @@ package dba.gui.auxClasses;
 
 import data.Attribute;
 import data.RelationSchema;
-import data.dBTypes.mySql;
+import data.dBTypes.DbTypeFactory;
+import data.dBTypes.types.DbType;
 import dba.gui.CustomTree;
 import dba.gui.FkWizard.FkWizard;
 import dba.gui.auxClasses.feedback.FeedbackbarPanel;
@@ -113,12 +114,14 @@ public class AttrLogic {
    * @param type Attribute Type
    */
   public void setType(String type) {
-    for (String s : mySql.getInstance().getTypes()) {
+    DbType dbType = (new DbTypeFactory(CustomTree.getInstance().getDatabase())).getType();
+
+    for (String s : dbType.getTypes()) {
       if (s.equalsIgnoreCase(type)) {
         tree.getAttribute().setType(type);
         return;
       }
     }
-    throw new IllegalArgumentException();
+    //throw new IllegalArgumentException();
   }
 }

@@ -18,7 +18,8 @@
 package dba.gui.auxClasses.toolBars;
 
 import data.Attribute;
-import data.dBTypes.mySql;
+import data.dBTypes.DbTypeFactory;
+import data.dBTypes.types.DbType;
 import dba.gui.CustomTree;
 import dba.gui.auxClasses.AttrLogic;
 import dba.gui.auxClasses.DatabaseTreePanel;
@@ -39,6 +40,7 @@ import java.awt.event.ActionListener;
 public class ToolBarAttribute extends ToolBar {
   private AttrLogic attrLogic;
   private CustomTree tree;
+  private DbType dbType;
   /**
    *
    */
@@ -58,7 +60,10 @@ public class ToolBarAttribute extends ToolBar {
     btnPK = new JToggleButton(super.getIcons.getTbPK());
     btnFK = new JToggleButton(super.getIcons.getTbFK());
 
-    cbType = new JComboBox<>(mySql.getInstance().getTypes());
+    dbType = (new DbTypeFactory(CustomTree.getInstance().getDatabase())).getType();
+
+    cbType = new JComboBox<>(dbType.getTypes());
+    cbType.setSelectedIndex(0);
 
     btnDelete.setToolTipText(super.locale.getString("Delete"));
     btnRename.setToolTipText(super.locale.getString("Rename"));
@@ -146,6 +151,12 @@ public class ToolBarAttribute extends ToolBar {
       btnFK.setSelected(false);
     }
 
+    //    cbType.removeAllItems();
+    //    dbType = (new DbTypeFactory(CustomTree.getInstance().getDatabase())).getType();
+    //    System.out.println(CustomTree.getInstance().getDatabase().getType());
+    //    for(String s : dbType.getTypes()){
+    //      cbType.addItem(s);
+    //    }
     cbType.setSelectedItem(attr.getType());
 
     if (CustomTree.getInstance().getDatabase().getDatabase().size() >= 2) {
@@ -153,5 +164,7 @@ public class ToolBarAttribute extends ToolBar {
     } else {
       btnFK.setEnabled(false);
     }
+
+
   }
 }

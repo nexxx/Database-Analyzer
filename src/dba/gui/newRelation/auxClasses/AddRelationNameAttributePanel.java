@@ -19,7 +19,9 @@ package dba.gui.newRelation.auxClasses;
 
 import data.Database;
 import data.RelationSchema;
-import data.dBTypes.mySql;
+import data.dBTypes.DbTypeFactory;
+import data.dBTypes.types.DbType;
+import dba.gui.CustomTree;
 import dba.utils.GetIcons;
 import dba.utils.Localization;
 import dba.utils.WizardEnum;
@@ -103,7 +105,9 @@ public class AddRelationNameAttributePanel extends JPanel implements constants {
     }
     table = new JTable(tableModel);
 
-    JComboBox<String> comboBox = new JComboBox<>(mySql.getInstance().getTypes());
+    DbType dbType = (new DbTypeFactory(CustomTree.getInstance().getDatabase())).getType();
+
+    JComboBox<String> comboBox = new JComboBox<>(dbType.getTypes());
 
     TableColumn col = table.getColumnModel().getColumn(1);
     col.setCellEditor(new DefaultCellEditor(comboBox));

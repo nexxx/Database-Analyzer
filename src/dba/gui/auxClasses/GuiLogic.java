@@ -18,6 +18,7 @@
 package dba.gui.auxClasses;
 
 import data.*;
+import data.dBTypes.TypeEnum;
 import dba.data.fileIO.ReadFromXML;
 import dba.data.fileIO.SaveToXml;
 import dba.gui.CustomTree;
@@ -238,25 +239,28 @@ public class GuiLogic {
       switch (result) {
         case JOptionPane.YES_OPTION:
           save();
-          createNewDb();
-          return FeedbackEnum.SUCCESSFUL;
+          return createNewDb();
         case JOptionPane.NO_OPTION:
-          createNewDb();
-          return FeedbackEnum.SUCCESSFUL;
+          return createNewDb();
         case JOptionPane.CANCEL_OPTION:
           break;
       }
     } else {
-      createNewDb();
+      FeedbackEnum retVal = createNewDb();
       lastFileName = null;
-      return FeedbackEnum.SUCCESSFUL;
+      return retVal;
     }
     return FeedbackEnum.CANCEL;
 
   }
 
-  private void createNewDb() {
+  private FeedbackEnum createNewDb() {
+    Database dbBack = database;
     database = new Database();
+    if (showDbQuestion() == FeedbackEnum.CANCEL) {
+      database = dbBack;
+      return FeedbackEnum.CANCEL;
+    }
     dbTree.setDatabase(database);
     database.initPropertyChangeListeners();
     database.setDirty(false);
@@ -264,6 +268,24 @@ public class GuiLogic {
     TimeLine.getInstance().initialize(database);
     //TimeLine.getInstance().addHistoricObject(database);
     tree.setSelectedItem(0);
+    return FeedbackEnum.SUCCESSFUL;
+  }
+
+  public FeedbackEnum showDbQuestion() {
+    ArrayList<String> types = new ArrayList<>();
+    for (TypeEnum e : TypeEnum.values()) {
+      types.add(e.getName());
+    }
+    Object[] possibilities = types.toArray();
+    String s = (String) JOptionPane.showInputDialog(null, "Please Select the correct Database type", "Data Type", JOptionPane.PLAIN_MESSAGE, null, possibilities, TypeEnum.MYSQL.getName());
+
+    if (s != null) {
+      database.setType(TypeEnum.getEnumByValue(s));
+      return FeedbackEnum.SUCCESSFUL;
+    } else {
+      return FeedbackEnum.CANCEL;
+    }
+
   }
 
   public FeedbackEnum export() {
