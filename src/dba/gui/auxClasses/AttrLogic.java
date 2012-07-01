@@ -20,6 +20,7 @@ package dba.gui.auxClasses;
 import data.Attribute;
 import data.RelationSchema;
 import data.dBTypes.mySql;
+import dba.gui.CustomTree;
 import dba.gui.FkWizard.FkWizard;
 import dba.gui.auxClasses.feedback.FeedbackbarPanel;
 import dba.options.FeedbackEnum;

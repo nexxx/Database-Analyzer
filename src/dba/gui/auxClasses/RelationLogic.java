@@ -21,6 +21,7 @@ import data.Attribute;
 import data.Database;
 import data.NormalForm;
 import data.RelationSchema;
+import dba.gui.CustomTree;
 import dba.gui.FDWizard.FDWizard;
 import dba.gui.auxClasses.feedback.FeedbackbarPanel;
 import dba.gui.inspectFrame.inspectFrame;

@@ -20,8 +20,8 @@ package dba.gui.newRelation.auxClasses;
 import data.Attribute;
 import data.Database;
 import data.RelationSchema;
+import dba.gui.CustomTree;
 import dba.gui.FkWizard.FkWizard;
-import dba.gui.auxClasses.CustomTree;
 import dba.utils.Localization;
 
 import javax.swing.table.AbstractTableModel;

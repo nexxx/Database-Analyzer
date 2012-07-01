@@ -19,6 +19,7 @@ package dba.gui.auxClasses;
 
 import data.Database;
 import data.RelationSchema;
+import dba.gui.CustomTree;
 import dba.gui.inspectFrame.inspectFrame;
 import dba.gui.newRelation.RelationWizard;
 import dba.utils.WizardEnum;

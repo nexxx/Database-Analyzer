@@ -20,6 +20,7 @@ package dba.gui.auxClasses;
 import data.Database;
 import data.FunctionalDependency;
 import data.RelationSchema;
+import dba.gui.CustomTree;
 import dba.gui.FDWizard.FDWizard;
 import dba.utils.Localization;
 

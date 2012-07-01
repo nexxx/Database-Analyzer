@@ -19,7 +19,11 @@ package dba.gui.auxClasses.toolBars;
 
 import data.Attribute;
 import data.dBTypes.mySql;
-import dba.gui.auxClasses.*;
+import dba.gui.CustomTree;
+import dba.gui.auxClasses.AttrLogic;
+import dba.gui.auxClasses.DatabaseTreePanel;
+import dba.gui.auxClasses.RelationDetailsView;
+import dba.gui.auxClasses.RelationView;
 import dba.utils.TreeEnum;
 
 import javax.swing.*;

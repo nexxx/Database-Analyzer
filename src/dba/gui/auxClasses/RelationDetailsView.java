@@ -27,6 +27,7 @@ import com.mxgraph.view.mxGraph;
 import com.mxgraph.view.mxStylesheet;
 import data.Database;
 import data.RelationSchema;
+import dba.gui.CustomTree;
 import dba.gui.auxClasses.jGraph.JGraphView;
 import dba.gui.auxClasses.jGraph.RelationDetailsGraphUpdater;
 import dba.gui.auxClasses.jGraph.XGraph;

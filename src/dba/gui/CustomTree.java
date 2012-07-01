@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.      *
  ******************************************************************************/
 
-package dba.gui.auxClasses;
+package dba.gui;
 
 import data.Attribute;
 import data.Database;

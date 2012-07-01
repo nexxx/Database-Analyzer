@@ -18,6 +18,7 @@
 package dba.gui.auxClasses;
 
 import data.NormalForm;
+import dba.gui.CustomTree;
 import dba.utils.GetIcons;
 import dba.utils.Localization;
 import dba.utils.TreeEnum;

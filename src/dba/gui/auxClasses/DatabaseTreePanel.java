@@ -18,6 +18,7 @@
 package dba.gui.auxClasses;
 
 import data.*;
+import dba.gui.CustomTree;
 import dba.gui.auxClasses.nodes.AttributeNode;
 import dba.gui.auxClasses.nodes.DatabaseNode;
 import dba.gui.auxClasses.nodes.FunctionalDependencyNode;
