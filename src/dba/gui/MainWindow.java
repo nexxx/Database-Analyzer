@@ -455,7 +455,7 @@ public class MainWindow implements constants, Observer {
 
   private void checkDirtyStateBeforeExiting() {
     int result = JOptionPane.NO_OPTION;
-    if (TimeLine.getInstance().getCurrentElement().isDirty()) {
+    if (TimeLine.getInstance().isDirty()) {
       Object[] options = {locale.getString("Yes"), locale.getString("No"), locale.getString("Cancel")};
       result = JOptionPane.showOptionDialog(frame, locale.getString("TREE_ExitMsg"), locale.getString("Confirm"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
     }

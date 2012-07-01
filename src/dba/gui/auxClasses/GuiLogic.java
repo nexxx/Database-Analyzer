@@ -80,7 +80,7 @@ public class GuiLogic {
    */
   public FeedbackEnum open() {
     int result;
-    if (TimeLine.getInstance().getCurrentElement().isDirty()) {
+    if (TimeLine.getInstance().isDirty()) {
       Object[] options = {locale.getString("Yes"), locale.getString("No"), locale.getString("Cancel")};
       result = JOptionPane.showOptionDialog(null, locale.getString("TREE_NewMsg"), locale.getString("Confirm"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
       switch (result) {
@@ -118,7 +118,7 @@ public class GuiLogic {
           database = reader.ReadDbNow(inputFile);
           dbTree.setDatabase(database);
           database.initPropertyChangeListeners();
-          database.setDirty(false);
+          TimeLine.getInstance().setDirty(false);
           lastFileName = path;
           lastFileNameBackup = path;
           TimeLine.getInstance().initialize(database);
@@ -184,7 +184,7 @@ public class GuiLogic {
     SaveToXml saveToXML = new SaveToXml();
     try {
       saveToXML.SaveDbNow(database, outputFile);
-      database.setDirty(false);
+      TimeLine.getInstance().setDirty(false);
       return FeedbackEnum.SUCCESSFUL;
     } catch (Exception e) {
       return FeedbackEnum.FAILED;
@@ -226,13 +226,13 @@ public class GuiLogic {
         returnVal = FeedbackEnum.FAILED;
       }
     }
-    database.setDirty(false);
+    TimeLine.getInstance().setDirty(false);
     return returnVal;
   }
 
   public FeedbackEnum newDatabase() {
     int result;
-    if (TimeLine.getInstance().getCurrentElement().isDirty()) {
+    if (TimeLine.getInstance().isDirty()) {
       Object[] options = {locale.getString("Yes"), locale.getString("No"), locale.getString("Cancel")};
       result = JOptionPane.showOptionDialog(null, locale.getString("TREE_NewMsg"), locale.getString("Confirm"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
       switch (result) {
@@ -259,7 +259,7 @@ public class GuiLogic {
     database = new Database();
     dbTree.setDatabase(database);
     database.initPropertyChangeListeners();
-    database.setDirty(false);
+    TimeLine.getInstance().setDirty(false);
     lastFileName = null;
     TimeLine.getInstance().initialize(database);
     //TimeLine.getInstance().addHistoricObject(database);
