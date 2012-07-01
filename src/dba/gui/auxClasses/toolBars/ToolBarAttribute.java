@@ -157,6 +157,11 @@ public class ToolBarAttribute extends ToolBar {
     //    for(String s : dbType.getTypes()){
     //      cbType.addItem(s);
     //    }
+
+    dbType = (new DbTypeFactory(CustomTree.getInstance().getDatabase())).getType();
+    remove(cbType);
+    cbType = dbType.getCombobox();
+    add(cbType);
     cbType.setSelectedItem(attr.getType());
 
     if (CustomTree.getInstance().getDatabase().getDatabase().size() >= 2) {

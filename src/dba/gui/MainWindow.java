@@ -129,9 +129,17 @@ public class MainWindow implements constants, Observer {
 
     dbTreePanel = new DatabaseTreePanel(database);
     guiLogic = new GuiLogic(dbTreePanel);
-    guiLogic.showDbQuestion();
     relationView = new RelationView(guiLogic);
     relationDetailsView = new RelationDetailsView(guiLogic);
+
+    //guiLogic.showDbQuestion();
+    WelcomeScreen wcs = new WelcomeScreen(guiLogic, database);
+    wcs.showScreen();
+    //    dbTreePanel.setDatabase(database);
+    //    dbTreePanel.updateTree();
+    //    relationView.display(database);
+    //    relationDetailsView.display(database);
+
     JTabbedPane displayTab = new JTabbedPane(SwingConstants.TOP);
 
     pnlToolBar = new JPanel(new BorderLayout());
