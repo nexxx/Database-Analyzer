@@ -38,13 +38,13 @@ import java.awt.event.ActionListener;
  */
 public class WelcomeScreen extends JDialog {
 
-  private static final long serialVersionUID = 3804928181363080738L;
   private JDialog jDialog;
   private GuiLogic guiLogic;
   private JComboBox<String> cb;
   private Database database;
   private boolean open;
   private FeedbackEnum retVal;
+  private Localization locale;
 
 
   /**
@@ -53,10 +53,11 @@ public class WelcomeScreen extends JDialog {
   public WelcomeScreen(GuiLogic gL, Database db) {
     super();
     open = true;
+    locale = Localization.getInstance();
     guiLogic = gL;
     database = db;
     Localization locale = Localization.getInstance();
-    this.setTitle("Welcome to Database Analyzer");
+    this.setTitle(locale.getString("WSC_Title"));
     GetIcons getIcons = GetIcons.getInstance();
     ImageIcon iconFrame = getIcons.getIconFrame();
     this.setIconImage(iconFrame.getImage());
@@ -71,7 +72,7 @@ public class WelcomeScreen extends JDialog {
     buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
     getContentPane().add(buttonPane, BorderLayout.SOUTH);
 
-    JButton okButton = new JButton(locale.getString("Ok"));
+    JButton okButton = new JButton(locale.getString(locale.getString("Ok")));
     buttonPane.add(okButton);
     getRootPane().setDefaultButton(okButton);
     okButton.addActionListener(new ActionListener() {
@@ -80,11 +81,12 @@ public class WelcomeScreen extends JDialog {
       public void actionPerformed(ActionEvent arg0) {
         database.setType(TypeEnum.getEnumByValue((String) cb.getSelectedItem()));
         open = false;
+        retVal = FeedbackEnum.SUCCESSFUL;
         jDialog.dispose();
       }
     });
 
-    JButton cancelButton = new JButton(locale.getString("Cancel"));
+    JButton cancelButton = new JButton(locale.getString(locale.getString("Cancel")));
     buttonPane.add(cancelButton);
     cancelButton.addActionListener(new ActionListener() {
 
@@ -97,13 +99,13 @@ public class WelcomeScreen extends JDialog {
     JPanel panel = new JPanel(new MigLayout("fillx"));
     contentPanel.add(panel, BorderLayout.CENTER);
 
-    JLabel lblWelcome = new JLabel("Welcome to");
+    JLabel lblWelcome = new JLabel(locale.getString("WSC_WelcomeTo"));
     lblWelcome.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
     JLabel lblDba = new JLabel("Database Analyzer");
     lblDba.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
     panel.add(lblWelcome, "spanx, growx");
     panel.add(lblDba, "spanx, growx");
-    JButton btnOpen = new JButton("Open Existing Project");
+    JButton btnOpen = new JButton(locale.getString("WSC_Open"));
     btnOpen.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
@@ -116,7 +118,7 @@ public class WelcomeScreen extends JDialog {
 
     panel.add(new JSeparator(JSeparator.VERTICAL), "growx, spanx");
 
-    JLabel lblType = new JLabel("Please select the Database type:");
+    JLabel lblType = new JLabel(locale.getString("WSC_Type"));
     panel.add(lblType, "growx, spanx");
 
     cb = new JComboBox<>();

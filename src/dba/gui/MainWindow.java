@@ -141,21 +141,8 @@ public class MainWindow implements constants, Observer {
     } while (retVal != FeedbackEnum.SUCCESSFUL);
 
     if (wcs.openClicked()) {
-      database = (Database) TimeLine.getInstance().getCurrentElement();
-      dbTreePanel.setDatabase(database);
-      dbTreePanel.updateTree();
-      relationView.display(database);
-      relationDetailsView.display(database);
-
-      if (guiLogic.getLastFileName() != null) {
-        frame.setTitle(locale.getString("GUI_FrameTitle") + " - " +
-          guiLogic.getLastFileName());
-      } else {
-        frame.setTitle(locale.getString("GUI_FrameTitle") + " - " +
-          locale.getString("GUI_FrameTitleNotSaved"));
-      }
+      updateDBAfterChange();
     }
-
 
     JTabbedPane displayTab = new JTabbedPane(SwingConstants.TOP);
 
@@ -213,24 +200,9 @@ public class MainWindow implements constants, Observer {
       @Override
       public void Change(Change change) {
         if (change.getTime() == Time.AFTERCHANGE) {
-          database = (Database) TimeLine.getInstance().getCurrentElement();
-          dbTreePanel.setDatabase(database);
-          dbTreePanel.updateTree();
-
+          updateDBAfterChange();
           undoMenuItem.setEnabled(TimeLine.getInstance().getBackwardPossible());
           redoMenuItem.setEnabled(TimeLine.getInstance().getForwardPossible());
-
-          relationView.display(database);
-          relationDetailsView.display(database);
-
-          if (guiLogic.getLastFileName() != null) {
-            frame.setTitle(locale.getString("GUI_FrameTitle") + " - " +
-              guiLogic.getLastFileName());
-          } else {
-            frame.setTitle(locale.getString("GUI_FrameTitle") + " - " +
-              locale.getString("GUI_FrameTitleNotSaved"));
-          }
-
         }
       }
     });
@@ -253,7 +225,7 @@ public class MainWindow implements constants, Observer {
     pnlRight.add(feedbackbarPanel, BorderLayout.SOUTH);
 
     // RelationView
-    displayTab.addTab(locale.getString("Relations"), relationView);
+    displayTab.addTab(locale.getString(locale.getString("Relations")), relationView);
 
     // RelationDetails
     displayTab.addTab(locale.getString("GUI_RelationDetails"), relationDetailsView);
@@ -536,6 +508,23 @@ public class MainWindow implements constants, Observer {
     if (arg instanceof Feedback) {
       Feedback feedback = (Feedback) arg;
       feedbackbarPanel.showFeedback(feedback.getText(), feedback.getFeedback());
+    }
+  }
+
+  private void updateDBAfterChange() {
+    database = (Database) TimeLine.getInstance().getCurrentElement();
+    dbTreePanel.setDatabase(database);
+    dbTreePanel.updateTree();
+
+    relationView.display(database);
+    relationDetailsView.display(database);
+
+    if (guiLogic.getLastFileName() != null) {
+      frame.setTitle(locale.getString("GUI_FrameTitle") + " - " +
+        guiLogic.getLastFileName());
+    } else {
+      frame.setTitle(locale.getString("GUI_FrameTitle") + " - " +
+        locale.getString("GUI_FrameTitleNotSaved"));
     }
   }
 }

@@ -44,8 +44,8 @@ public class GuiLogic {
   private DatabaseTreePanel dbTree;
   private Localization locale;
   private Options options;
-  private static String lastFileName;
-  private static String lastFileNameBackup;
+  private static String lastFileName = null;
+  private static String lastFileNameBackup = null;
   private CustomTree tree;
   private static ArrayList<Observer> observers = new ArrayList<>();
   private Configuration cfg;
@@ -57,8 +57,8 @@ public class GuiLogic {
     database = tree.getDatabase();
     dbTree = dbTreePanel;
     locale = Localization.getInstance();
-    lastFileName = null;
-    lastFileNameBackup = null;
+    //lastFileName = null;
+    //lastFileNameBackup = null;
     options = Options.getInstance();
 
     //freemaker init
@@ -246,9 +246,7 @@ public class GuiLogic {
           break;
       }
     } else {
-      FeedbackEnum retVal = createNewDb();
-      lastFileName = null;
-      return retVal;
+      return createNewDb();
     }
     return FeedbackEnum.CANCEL;
 
