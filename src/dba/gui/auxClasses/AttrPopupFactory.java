@@ -18,8 +18,6 @@
 package dba.gui.auxClasses;
 
 import data.Attribute;
-import data.dBTypes.DbTypeFactory;
-import data.dBTypes.types.DbType;
 import dba.gui.CustomTree;
 import dba.utils.GetIcons;
 import dba.utils.Localization;
@@ -29,7 +27,6 @@ import dba.utils.constants;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Enumeration;
 
 /**
  * Class which provides the PopupContextmenu for the JTree, inlcuding
@@ -46,8 +43,8 @@ public class AttrPopupFactory implements constants {
   private ImageIcon iconDelete;
   private ImageIcon iconRename;
   private AttrLogic attrLogic;
-  private ButtonGroup grp;
-  private JMenu typeRelationMenu;
+  //private ButtonGroup grp;
+  //private JMenu typeRelationMenu;
 
   /**
    * Defaultconstructor
@@ -122,25 +119,25 @@ public class AttrPopupFactory implements constants {
     });
     attrPopUpMenu.add(foreignKeyAttributeMenuItem);
 
-    typeRelationMenu = new JMenu(locale.getString("DataType"));
-    attrPopUpMenu.add(typeRelationMenu);
-    grp = new ButtonGroup();
-    DbType dbType = (new DbTypeFactory(CustomTree.getInstance().getDatabase())).getType();
-
-    for (String s : dbType.getTypes()) {
-      JMenuItem menuItem = new JRadioButtonMenuItem(s);
-      menuItem.addActionListener(new ActionListener() {
-
-        @Override
-        public void actionPerformed(ActionEvent arg0) {
-          int x = tree.getNewSelectedItem(TreeEnum.SwitchType);
-          attrLogic.setType(GetSelectedRadioButton.getSelection(grp).getText());
-          tree.setSelectedItem(x);
-        }
-      });
-      grp.add(menuItem);
-      typeRelationMenu.add(menuItem);
-    }
+    //    typeRelationMenu = new JMenu(locale.getString("DataType"));
+    //    attrPopUpMenu.add(typeRelationMenu);
+    //    grp = new ButtonGroup();
+    //    DbType dbType = (new DbTypeFactory(CustomTree.getInstance().getDatabase())).getType();
+    //
+    //    for (String s : dbType.getTypes()) {
+    //      JMenuItem menuItem = new JRadioButtonMenuItem(s);
+    //      menuItem.addActionListener(new ActionListener() {
+    //
+    //        @Override
+    //        public void actionPerformed(ActionEvent arg0) {
+    //          int x = tree.getNewSelectedItem(TreeEnum.SwitchType);
+    //          attrLogic.setType(GetSelectedRadioButton.getSelection(grp).getText());
+    //          tree.setSelectedItem(x);
+    //        }
+    //      });
+    //      grp.add(menuItem);
+    //      typeRelationMenu.add(menuItem);
+    //    }
 
     return attrPopUpMenu;
 
@@ -163,13 +160,13 @@ public class AttrPopupFactory implements constants {
     } else {
       foreignKeyAttributeMenuItem.setSelected(false);
     }
-
-    for (Enumeration<AbstractButton> e = grp.getElements(); e.hasMoreElements(); ) {
-      JRadioButtonMenuItem b = (JRadioButtonMenuItem) e.nextElement();
-      if (b.getText().equalsIgnoreCase(attr.getType())) {
-        b.setSelected(true);
-      }
-    }
+    //
+    //    for (Enumeration<AbstractButton> e = grp.getElements(); e.hasMoreElements(); ) {
+    //      JRadioButtonMenuItem b = (JRadioButtonMenuItem) e.nextElement();
+    //      if (b.getText().equalsIgnoreCase(attr.getType())) {
+    //        b.setSelected(true);
+    //      }
+    //    }
 
 
     if (CustomTree.getInstance().getDatabase().getDatabase().size() >= 2) {
