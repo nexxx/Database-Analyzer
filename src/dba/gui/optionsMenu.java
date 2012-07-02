@@ -118,4 +118,12 @@ public class optionsMenu extends JDialog {
     }
     comboBobxLocale.setSelectedItem(options.getAvailableLocale().get(options.getLanguage()));
   }
+
+  private JPanel createGeneralPanel() {
+    return null;
+  }
+
+  private JPanel createThemePanel() {
+    return null;
+  }
 }

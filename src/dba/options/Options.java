@@ -45,6 +45,10 @@ public class Options extends Observable {
   final private File exportFolder;
   private Boolean showTippsOnStartup;
   private HashMap<String, String> availableLocale;
+  private String attributeColor;
+  private String relationColor;
+  private String backgroundColor;
+  private String fontColor;
 
   /**
    * Constructor for the options class
@@ -70,6 +74,11 @@ public class Options extends Observable {
     optionsFile = new File(optionsFolder + "/dba.properties");
     saveFolder = new File(homeFolder + "/Save");
     exportFolder = new File(homeFolder + "/Export");
+
+    attributeColor = "#00FF00";
+    relationColor = "#00CD00";
+    backgroundColor = "#A7E2FF";
+    fontColor = "#000000";
   }
 
   /**
@@ -131,6 +140,11 @@ public class Options extends Observable {
 
       prop.setProperty("showTipOnStartup", showTippsOnStartup.toString());
 
+      prop.setProperty("attributeColor", attributeColor);
+      prop.setProperty("relationColor", relationColor);
+      prop.setProperty("backgroundColor", backgroundColor);
+      prop.setProperty("fontColor", fontColor);
+
       // Save properties to DBN options folder
       prop.store(new FileOutputStream(optionsFile), "DBA options file");
 
@@ -151,6 +165,12 @@ public class Options extends Observable {
       language = prop.getProperty("language");
 
       showTippsOnStartup = Boolean.valueOf(prop.getProperty("showTipOnStartup"));
+
+      attributeColor = prop.getProperty("attributeColor");
+      relationColor = prop.getProperty("relationColor");
+      backgroundColor = prop.getProperty("backgroundColor");
+      fontColor = prop.getProperty("fontColor");
+
 
     } catch (Exception ex) {
       super.notifyObservers(new Feedback("Unable to load options file", FeedbackEnum.FAILED));
@@ -215,4 +235,59 @@ public class Options extends Observable {
     return null;
   }
 
+  /**
+   * @return Attribute Color
+   */
+  public String getAttributeColor() {
+    return attributeColor;
+  }
+
+  /**
+   * @param attributeColor Attributecolor (e.g. #00FF00)
+   */
+  public void setAttributeColor(String attributeColor) {
+    this.attributeColor = attributeColor;
+  }
+
+  /**
+   * @return Relation Color
+   */
+  public String getRelationColor() {
+    return relationColor;
+  }
+
+  /**
+   * @param relationColor Relationcolor (e.g. #00FF00)
+   */
+  public void setRelationColor(String relationColor) {
+    this.relationColor = relationColor;
+  }
+
+  /**
+   * @return Background Color
+   */
+  public String getBackgroundColor() {
+    return backgroundColor;
+  }
+
+  /**
+   * @param backgroundColor Backgroundcolor (e.g. #00FF00)
+   */
+  public void setBackgroundColor(String backgroundColor) {
+    this.backgroundColor = backgroundColor;
+  }
+
+  /**
+   * @return Font Color
+   */
+  public String getFontColor() {
+    return fontColor;
+  }
+
+  /**
+   * @param fontColor Fontcolor (e.g. #00FF00)
+   */
+  public void setFontColor(String fontColor) {
+    this.fontColor = fontColor;
+  }
 }

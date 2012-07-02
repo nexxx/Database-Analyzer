@@ -32,6 +32,7 @@ import dba.gui.CustomTree;
 import dba.gui.auxClasses.jGraph.JGraphView;
 import dba.gui.auxClasses.jGraph.RelationGraphUpdater;
 import dba.gui.auxClasses.jGraph.XGraph;
+import dba.options.Options;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -51,9 +52,6 @@ public class RelationView extends JGraphView implements Observer {
    */
   private static final long serialVersionUID = -6169070587706507110L;
   // constants
-  private final static String ATTRIBUTECOLOR = "#00FF00";
-  private final static String RELATIONCOLOR = "#00CD00";
-  private final static String BACKGROUNDCOLOR = "#A7E2FF";
 
   private mxCell selectedCell;
   private mxGraph graph;
@@ -98,7 +96,7 @@ public class RelationView extends JGraphView implements Observer {
     graph.setDropEnabled(false);
 
     graphComponent = new mxGraphComponent(graph);
-    graphComponent.getViewport().setBackground(Color.decode(BACKGROUNDCOLOR));
+    graphComponent.getViewport().setBackground(Color.decode(Options.getInstance().getBackgroundColor()));
 
     // Disable the user's ability to draw own connections
     graphComponent.setConnectable(false);
@@ -216,8 +214,8 @@ public class RelationView extends JGraphView implements Observer {
     style.put(mxConstants.STYLE_VERTICAL_ALIGN, mxConstants.ALIGN_BOTTOM);
     style.put(mxConstants.STYLE_ALIGN, mxConstants.ALIGN_LEFT);
     style.put(mxConstants.STYLE_AUTOSIZE, true);
-    style.put(mxConstants.STYLE_FILLCOLOR, ATTRIBUTECOLOR);
-    style.put(mxConstants.STYLE_FONTCOLOR, "black");
+    style.put(mxConstants.STYLE_FILLCOLOR, Options.getInstance().getAttributeColor());
+    style.put(mxConstants.STYLE_FONTCOLOR, Options.getInstance().getFontColor());
     style.put(mxConstants.STYLE_FONTSIZE, 15);
     style.put(mxConstants.STYLE_MOVABLE, false);
     style.put(mxConstants.STYLE_EDITABLE, false);
@@ -250,9 +248,9 @@ public class RelationView extends JGraphView implements Observer {
     style.put(mxConstants.STYLE_ALIGN, mxConstants.ALIGN_CENTER);
     style.put(mxConstants.STYLE_VERTICAL_ALIGN, mxConstants.ALIGN_MIDDLE);
     // style.put(mxConstants.STYLE_AUTOSIZE, true);
-    style.put(mxConstants.STYLE_FONTCOLOR, "black");
+    style.put(mxConstants.STYLE_FONTCOLOR, Options.getInstance().getFontColor());
     style.put(mxConstants.STYLE_FONTSIZE, 20);
-    style.put(mxConstants.STYLE_FILLCOLOR, RELATIONCOLOR);
+    style.put(mxConstants.STYLE_FILLCOLOR, Options.getInstance().getRelationColor());
     style.put(mxConstants.STYLE_FONTSTYLE, mxConstants.FONT_BOLD);
     style.put(mxConstants.STYLE_EDITABLE, false);
     style.put(mxConstants.STYLE_RESIZABLE, false);
