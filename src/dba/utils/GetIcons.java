@@ -53,6 +53,7 @@ public class GetIcons implements constants {
   private ImageIcon menuEditInfos;
   private ImageIcon menuAbout;
   private ImageIcon menuHelp;
+  private ImageIcon menuDonate;
   private ImageIcon popupDelete;
   private ImageIcon popupRename;
   private ImageIcon popupPK;
@@ -119,6 +120,7 @@ public class GetIcons implements constants {
     menuEditInfos = getIcon("editInfos.png", popupIconSize);
     menuAbout = getIcon("about.png", constants.popupIconSize);
     menuHelp = getIcon("help.png", constants.popupIconSize);
+    menuDonate = getIcon("donate.png", constants.popupIconSize);
     popupDelete = getIcon("delete.png", constants.popupIconSize);
     popupRename = getIcon("rename.png", constants.popupIconSize);
     popupPK = getIcon("pk.png", constants.popupIconSize);
@@ -641,4 +643,10 @@ public class GetIcons implements constants {
     return dbaLogo;
   }
 
+  /**
+   * @return the menuDonate
+   */
+  public ImageIcon getMenuDonate() {
+    return menuDonate;
+  }
 }

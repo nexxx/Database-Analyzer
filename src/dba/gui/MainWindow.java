@@ -38,6 +38,7 @@ import dba.options.FeedbackEnum;
 import dba.options.Options;
 import dba.utils.GetIcons;
 import dba.utils.Localization;
+import dba.utils.OpenUrl;
 import dba.utils.constants;
 import logic.Analysis.GeneralRelationCheck;
 
@@ -75,6 +76,7 @@ public class MainWindow implements constants, Observer {
   private ImageIcon iconOptions;
   private ImageIcon iconAbout;
   private ImageIcon iconHelp;
+  private ImageIcon iconDonate;
   private Localization locale;
   private JPanel pnlToolBar;
   private ToolBar toolBar;
@@ -107,6 +109,7 @@ public class MainWindow implements constants, Observer {
     iconOptions = getIcon.getMenuOptions();
     iconAbout = getIcon.getMenuAbout();
     iconHelp = getIcon.getMenuHelp();
+    iconDonate = getIcon.getMenuDonate();
 
     locale = Localization.getInstance();
     feedbackbarPanel = FeedbackbarPanel.getInstance();
@@ -414,6 +417,16 @@ public class MainWindow implements constants, Observer {
       }
     });
     helpMenu.add(aboutMenuItem);
+
+    JMenuItem donateMenuItem = new JMenuItem(locale.getString("GUI_Donate"), iconDonate);
+    donateMenuItem.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        OpenUrl.openURL("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BJFK5BZUN89TG");
+      }
+    });
+    helpMenu.add(donateMenuItem);
+
   }
 
   private void showHelp() {
