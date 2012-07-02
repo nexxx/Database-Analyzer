@@ -205,7 +205,7 @@ public class RelationView extends JGraphView implements Observer {
    * Adds the Styles for Attributes and Relations
    */
   @SuppressWarnings("unchecked")
-  private void initStyle() {
+  public void initStyle() {
     mxStylesheet stylesheet = graph.getStylesheet();
 
     // Define Style for Attribute with no Key
@@ -270,5 +270,10 @@ public class RelationView extends JGraphView implements Observer {
     if (arg instanceof String) {
       exportToPng((String) arg);
     }
+  }
+
+  public void updateTheme() {
+    graphComponent.getViewport().setBackground(Color.decode(Options.getInstance().getBackgroundColor()));
+    initStyle();
   }
 }

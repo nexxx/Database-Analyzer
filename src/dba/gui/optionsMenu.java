@@ -42,7 +42,19 @@ public class optionsMenu extends JDialog {
   private JComboBox<String> comboBobxLocale;
   private JCheckBox checkBoxTipOfTheDay;
   private String currentLocale;
+  private String currentBgColor;
+  private String currentAttrColor;
+  private String currentRelColor;
+  private String currentFontColor;
   private Localization locale;
+  private String colorBG;
+  private String colorAttr;
+  private String colorRel;
+  private String colorFont;
+  private JPanel pnlBG;
+  private JPanel pnlAttr;
+  private JPanel pnlRel;
+  private JPanel pnlFont;
 
   /**
    * Create the dialog.
@@ -52,17 +64,20 @@ public class optionsMenu extends JDialog {
     locale = Localization.getInstance();
     options = Options.getInstance();
     currentLocale = options.getLanguage();
+    currentAttrColor = options.getAttributeColor();
+    currentBgColor = options.getBackgroundColor();
+    currentFontColor = options.getFontColor();
+    currentRelColor = options.getRelationColor();
     frame = this;
+    setResizable(false);
     this.setModal(true);
     frame.setTitle(locale.getString("OPT_FrameTitle"));
     GetIcons getIcons = GetIcons.getInstance();
     frame.setIconImage(getIcons.getIconOptionsFrame().getImage());
     setMinimumSize(new Dimension(450, 150));
-    setSize(350, 150);
     getContentPane().setLayout(new BorderLayout());
     JPanel contentPanel = new JPanel();
-    contentPanel.setLayout(new MigLayout("fillx"));
-    // contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+    contentPanel.setLayout(new BorderLayout());
     getContentPane().add(contentPanel, BorderLayout.CENTER);
 
     JPanel buttonPane = new JPanel();
@@ -76,10 +91,20 @@ public class optionsMenu extends JDialog {
       public void actionPerformed(ActionEvent e) {
         String selectedLang = options.getKeyByLanguage(options.getAvailableLocale(), (String) comboBobxLocale.getSelectedItem());
         options.setLanguage(selectedLang);
-        if (!currentLocale.equalsIgnoreCase(options.getLanguage())) {
+        options.setShowTippsOnStartup(checkBoxTipOfTheDay.isSelected());
+        options.setAttributeColor(colorAttr);
+        options.setBackgroundColor(colorBG);
+        options.setFontColor(colorFont);
+        options.setRelationColor(colorRel);
+
+        boolean needToRestart = !currentLocale.equalsIgnoreCase(options.getLanguage());
+        needToRestart = needToRestart || !currentAttrColor.equalsIgnoreCase(options.getAttributeColor());
+        needToRestart = needToRestart || !currentBgColor.equalsIgnoreCase(options.getBackgroundColor());
+        needToRestart = needToRestart || !currentRelColor.equalsIgnoreCase(options.getRelationColor());
+        needToRestart = needToRestart || !currentFontColor.equalsIgnoreCase(options.getFontColor());
+        if (needToRestart) {
           JOptionPane.showMessageDialog(null, locale.getString("OPT_Restart"));
         }
-        options.setShowTippsOnStartup(checkBoxTipOfTheDay.isSelected());
         options.writeOptions();
         frame.dispose();
       }
@@ -97,33 +122,139 @@ public class optionsMenu extends JDialog {
     });
     buttonPane.add(cancelButton);
 
-    comboBobxLocale = new JComboBox<>();
+    JTabbedPane tabbedPane = new JTabbedPane();
 
-    checkBoxTipOfTheDay = new JCheckBox();
+    contentPanel.add(tabbedPane, BorderLayout.CENTER);
+    tabbedPane.addTab(locale.getString("OPT_GeneralTab"), createGeneralPanel());
+    tabbedPane.addTab(locale.getString("OPT_ThemeTab"), createThemePanel());
 
-    initComponentsStatus();
-    contentPanel.add(new JLabel(locale.getString("OPT_Language")), "growx");
-    contentPanel.add(comboBobxLocale, "alignx right, wrap");
-    contentPanel.add(new JLabel(locale.getString("OPT_ShowTOD")), "alignx left, growx");
-    contentPanel.add(checkBoxTipOfTheDay, "alignx right, wrap");
-
+    pack();
     setLocationRelativeTo(null);
   }
 
-  private void initComponentsStatus() {
-    checkBoxTipOfTheDay.setSelected(options.getShowTippsOnStartup());
+  private JPanel createGeneralPanel() {
+    JPanel panel = new JPanel(new MigLayout("fillx"));
+    comboBobxLocale = new JComboBox<>();
+    checkBoxTipOfTheDay = new JCheckBox();
 
+    checkBoxTipOfTheDay.setSelected(options.getShowTippsOnStartup());
     for (String locale : options.getAvailableLocale().values()) {
       comboBobxLocale.addItem(locale);
     }
     comboBobxLocale.setSelectedItem(options.getAvailableLocale().get(options.getLanguage()));
-  }
 
-  private JPanel createGeneralPanel() {
-    return null;
+    panel.add(new JLabel(locale.getString("OPT_Language")), "growx");
+    panel.add(comboBobxLocale, "alignx right, wrap");
+    panel.add(new JLabel(locale.getString("OPT_ShowTOD")), "alignx left, growx");
+    panel.add(checkBoxTipOfTheDay, "alignx right, wrap");
+
+    return panel;
   }
 
   private JPanel createThemePanel() {
-    return null;
+    colorBG = options.getBackgroundColor();
+    colorAttr = options.getAttributeColor();
+    colorFont = options.getFontColor();
+    colorRel = options.getRelationColor();
+
+    JPanel panel = new JPanel(new BorderLayout());
+    JPanel panelLeft = new JPanel(new GridLayout(0, 2));
+    panel.add(panelLeft, BorderLayout.CENTER);
+
+    pnlBG = new JPanel();
+    pnlBG.setBackground(Color.decode(options.getBackgroundColor()));
+    JButton btnBG = new JButton("Background");
+    btnBG.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent actionEvent) {
+        Color tmpColor = JColorChooser.showDialog(null, "Background Color", Color.decode(options.getBackgroundColor()));
+        if (tmpColor != null) {
+          colorBG = "#" + (Integer.toHexString(tmpColor.getRGB())).substring(2);
+          pnlBG.setBackground(Color.decode(colorBG));
+          pnlBG.revalidate();
+        }
+      }
+    });
+    panelLeft.add(btnBG);
+    panelLeft.add(pnlBG);
+
+    pnlAttr = new JPanel();
+    pnlAttr.setBackground(Color.decode(options.getAttributeColor()));
+    JButton btnAttr = new JButton("Attribute");
+    btnAttr.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent actionEvent) {
+        Color tmpColor = JColorChooser.showDialog(null, "Attribute Color", Color.decode(options.getAttributeColor()));
+        if (tmpColor != null) {
+          colorAttr = "#" + (Integer.toHexString(tmpColor.getRGB())).substring(2);
+          pnlAttr.setBackground(Color.decode(colorAttr));
+          pnlAttr.revalidate();
+        }
+      }
+    });
+    panelLeft.add(btnAttr);
+    panelLeft.add(pnlAttr);
+
+    pnlRel = new JPanel();
+    pnlRel.setBackground(Color.decode(options.getRelationColor()));
+    JButton btnRel = new JButton("Relation");
+    btnRel.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent actionEvent) {
+        Color tmpColor = JColorChooser.showDialog(null, "Relation Color", Color.decode(options.getRelationColor()));
+        if (tmpColor != null) {
+          colorRel = "#" + (Integer.toHexString(tmpColor.getRGB())).substring(2);
+          pnlRel.setBackground(Color.decode(colorRel));
+          pnlRel.revalidate();
+        }
+      }
+    });
+    panelLeft.add(btnRel);
+    panelLeft.add(pnlRel);
+
+    pnlFont = new JPanel();
+    pnlFont.setBackground(Color.decode(options.getFontColor()));
+    JButton btnFont = new JButton("Font");
+    btnFont.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent actionEvent) {
+        Color tmpColor = JColorChooser.showDialog(null, "Font Color", Color.decode(options.getFontColor()));
+        if (tmpColor != null) {
+          colorFont = "#" + (Integer.toHexString(tmpColor.getRGB())).substring(2);
+          pnlFont.setBackground(Color.decode(colorFont));
+          pnlFont.revalidate();
+        }
+      }
+    });
+    panelLeft.add(btnFont);
+    panelLeft.add(pnlFont);
+
+    JButton btnDefault = new JButton("Reset Theme");
+    btnDefault.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent actionEvent) {
+        int n = JOptionPane.showConfirmDialog(null, locale.getString("OPT_Confirm"), locale.getString("OPT_ConfirmTitle"), JOptionPane.YES_NO_OPTION);
+        if (n == JOptionPane.YES_OPTION) {
+          colorBG = "#A7E2FF";
+          pnlBG.setBackground(Color.decode(colorBG));
+          pnlBG.revalidate();
+
+          colorAttr = "#00FF00";
+          pnlAttr.setBackground(Color.decode(colorAttr));
+          pnlAttr.revalidate();
+
+          colorRel = "#00CD00";
+          pnlRel.setBackground(Color.decode(colorRel));
+          pnlRel.revalidate();
+
+          colorFont = "#000000";
+          pnlFont.setBackground(Color.decode(colorFont));
+          pnlFont.revalidate();
+        }
+      }
+    });
+    panelLeft.add(btnDefault);
+
+    return panel;
   }
 }
