@@ -92,6 +92,7 @@ public class GetIcons implements constants {
   private ImageIcon tb2NF;
   private ImageIcon tb3NF;
   private ImageIcon tbBCNF;
+  private ImageIcon dbaLogo;
 
   private GetIcons() {
     super();
@@ -104,7 +105,7 @@ public class GetIcons implements constants {
     menuSave = getIcon("save.png", constants.popupIconSize);
     menuExport = getIcon("export.png", constants.popupIconSize);
     menuClose = getIcon("close.png", constants.popupIconSize);
-    iconFrame = getIcon("frameIcon.png", 32);
+    iconFrame = getIcon("dba.png", 32);
     iconInspectFrame = getIcon("inspect.png", 32);
     iconWizardFrame = getIcon("newWizard.png", 32);
     iconFDWizardFrame = getIcon("fd.png", 32);
@@ -158,6 +159,7 @@ public class GetIcons implements constants {
     tb3NF = getIcon("3nf.png", toolBarIconSize);
     tbBCNF = getIcon("bcnf.png", toolBarIconSize);
     iconOptionsFrame = getIcon("options.png", 32);
+    dbaLogo = getIcon("dba.png", 300);
   }
 
   /**
@@ -630,6 +632,13 @@ public class GetIcons implements constants {
    */
   public ImageIcon getMenuEditInfos() {
     return menuEditInfos;
+  }
+
+  /**
+   * @return the dbaLogo
+   */
+  public ImageIcon getDbaLogo() {
+    return dbaLogo;
   }
 
 }

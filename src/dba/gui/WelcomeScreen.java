@@ -29,6 +29,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 
 /**
@@ -44,7 +46,6 @@ public class WelcomeScreen extends JDialog {
   private Database database;
   private boolean open;
   private FeedbackEnum retVal;
-  private Localization locale;
 
 
   /**
@@ -53,7 +54,6 @@ public class WelcomeScreen extends JDialog {
   public WelcomeScreen(GuiLogic gL, Database db) {
     super();
     open = true;
-    locale = Localization.getInstance();
     guiLogic = gL;
     database = db;
     Localization locale = Localization.getInstance();
@@ -66,13 +66,18 @@ public class WelcomeScreen extends JDialog {
     getContentPane().setLayout(new BorderLayout());
     JPanel contentPanel = new JPanel();
     contentPanel.setLayout(new BorderLayout());
-    setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    addWindowListener(new WindowAdapter() {
+      @Override
+      public void windowClosing(WindowEvent e) {
+        System.exit(0);
+      }
+    });
     getContentPane().add(contentPanel, BorderLayout.CENTER);
     JPanel buttonPane = new JPanel();
     buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
     getContentPane().add(buttonPane, BorderLayout.SOUTH);
 
-    JButton okButton = new JButton(locale.getString("Ok"));
+    JButton okButton = new JButton(locale.getString("WSC_New"));
     buttonPane.add(okButton);
     getRootPane().setDefaultButton(okButton);
     okButton.addActionListener(new ActionListener() {
@@ -86,7 +91,7 @@ public class WelcomeScreen extends JDialog {
       }
     });
 
-    JButton cancelButton = new JButton(locale.getString("Cancel"));
+    JButton cancelButton = new JButton(locale.getString("Close"));
     buttonPane.add(cancelButton);
     cancelButton.addActionListener(new ActionListener() {
 
@@ -99,12 +104,10 @@ public class WelcomeScreen extends JDialog {
     JPanel panel = new JPanel(new MigLayout("fillx"));
     contentPanel.add(panel, BorderLayout.CENTER);
 
-    JLabel lblWelcome = new JLabel(locale.getString("WSC_WelcomeTo"));
-    lblWelcome.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
-    JLabel lblDba = new JLabel("Database Analyzer");
+    JLabel lblDba = new JLabel(GetIcons.getInstance().getDbaLogo());
     lblDba.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
-    panel.add(lblWelcome, "spanx, growx");
     panel.add(lblDba, "spanx, growx");
+
     JButton btnOpen = new JButton(locale.getString("WSC_Open"));
     btnOpen.addActionListener(new ActionListener() {
       @Override
@@ -116,7 +119,7 @@ public class WelcomeScreen extends JDialog {
     });
     panel.add(btnOpen, "spanx, growx");
 
-    panel.add(new JSeparator(JSeparator.VERTICAL), "growx, spanx");
+    panel.add(new JSeparator(JSeparator.HORIZONTAL), "growx, spanx");
 
     JLabel lblType = new JLabel(locale.getString("WSC_Type"));
     panel.add(lblType, "growx, spanx");
@@ -127,7 +130,6 @@ public class WelcomeScreen extends JDialog {
     }
 
     panel.add(cb, "growx, spanx");
-
 
     pack();
     setLocationRelativeTo(null);
