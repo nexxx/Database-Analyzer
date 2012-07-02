@@ -72,7 +72,7 @@ public class WelcomeScreen extends JDialog {
     buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
     getContentPane().add(buttonPane, BorderLayout.SOUTH);
 
-    JButton okButton = new JButton(locale.getString(locale.getString("Ok")));
+    JButton okButton = new JButton(locale.getString("Ok"));
     buttonPane.add(okButton);
     getRootPane().setDefaultButton(okButton);
     okButton.addActionListener(new ActionListener() {
@@ -86,7 +86,7 @@ public class WelcomeScreen extends JDialog {
       }
     });
 
-    JButton cancelButton = new JButton(locale.getString(locale.getString("Cancel")));
+    JButton cancelButton = new JButton(locale.getString("Cancel"));
     buttonPane.add(cancelButton);
     cancelButton.addActionListener(new ActionListener() {
 

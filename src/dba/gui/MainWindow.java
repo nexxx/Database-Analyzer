@@ -225,7 +225,7 @@ public class MainWindow implements constants, Observer {
     pnlRight.add(feedbackbarPanel, BorderLayout.SOUTH);
 
     // RelationView
-    displayTab.addTab(locale.getString(locale.getString("Relations")), relationView);
+    displayTab.addTab(locale.getString("Relations"), relationView);
 
     // RelationDetails
     displayTab.addTab(locale.getString("GUI_RelationDetails"), relationDetailsView);
