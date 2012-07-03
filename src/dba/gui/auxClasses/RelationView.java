@@ -205,7 +205,7 @@ public class RelationView extends JGraphView implements Observer {
    * Adds the Styles for Attributes and Relations
    */
   @SuppressWarnings("unchecked")
-  public void initStyle() {
+  private void initStyle() {
     mxStylesheet stylesheet = graph.getStylesheet();
 
     // Define Style for Attribute with no Key
@@ -262,6 +262,14 @@ public class RelationView extends JGraphView implements Observer {
     style = new Hashtable<>();
     style.put(mxConstants.STYLE_OPACITY, 0);
     stylesheet.putCellStyle("INVISIBLE_EDGE", style);
+
+    // Define Invisibility-Style for Edges
+    style = new Hashtable<>();
+    style.put(mxConstants.STYLE_MOVABLE, false);
+    style.put(mxConstants.STYLE_EDITABLE, false);
+    style.put(mxConstants.STYLE_RESIZABLE, false);
+    style.put(mxConstants.STYLE_STROKECOLOR, Options.getInstance().getArrowFKColor());
+    stylesheet.putCellStyle("FK_ARROW", style);
   }
 
   // Observer methods
@@ -270,10 +278,5 @@ public class RelationView extends JGraphView implements Observer {
     if (arg instanceof String) {
       exportToPng((String) arg);
     }
-  }
-
-  public void updateTheme() {
-    graphComponent.getViewport().setBackground(Color.decode(Options.getInstance().getBackgroundColor()));
-    initStyle();
   }
 }

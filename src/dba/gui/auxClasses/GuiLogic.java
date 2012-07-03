@@ -269,7 +269,7 @@ public class GuiLogic {
     return FeedbackEnum.SUCCESSFUL;
   }
 
-  public FeedbackEnum showDbQuestion() {
+  private FeedbackEnum showDbQuestion() {
     ArrayList<String> types = new ArrayList<>();
     for (TypeEnum e : TypeEnum.values()) {
       types.add(e.getName());

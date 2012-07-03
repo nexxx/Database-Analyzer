@@ -49,6 +49,8 @@ public class Options extends Observable {
   private String relationColor;
   private String backgroundColor;
   private String fontColor;
+  private String arrowFKColor;
+  private String arrowFDColor;
   private String lookAndFeel;
   private HashMap<String, String> availLAF;
 
@@ -87,6 +89,8 @@ public class Options extends Observable {
     relationColor = "#00CD00";
     backgroundColor = "#A7E2FF";
     fontColor = "#000000";
+    arrowFDColor = "#000000";
+    arrowFKColor = "#0095C7";
 
     lookAndFeel = "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel";
   }
@@ -154,6 +158,8 @@ public class Options extends Observable {
       prop.setProperty("relationColor", relationColor);
       prop.setProperty("backgroundColor", backgroundColor);
       prop.setProperty("fontColor", fontColor);
+      prop.setProperty("arrowFKColor", arrowFKColor);
+      prop.setProperty("arrowFDColor", arrowFDColor);
 
       prop.setProperty("lookAndFeed", lookAndFeel);
 
@@ -182,6 +188,8 @@ public class Options extends Observable {
       relationColor = prop.getProperty("relationColor");
       backgroundColor = prop.getProperty("backgroundColor");
       fontColor = prop.getProperty("fontColor");
+      arrowFKColor = prop.getProperty("arrowFKColor");
+      arrowFDColor = prop.getProperty("arrowFDColor");
 
       lookAndFeel = prop.getProperty("lookAndFeed");
 
@@ -302,6 +310,34 @@ public class Options extends Observable {
    */
   public void setFontColor(String fontColor) {
     this.fontColor = fontColor;
+  }
+
+  /**
+   * @return Arrow Color FK
+   */
+  public String getArrowFKColor() {
+    return arrowFKColor;
+  }
+
+  /**
+   * @param arrowFKColor Arrowcolor FK(e.g. #000000)
+   */
+  public void setArrowFKColor(String arrowFKColor) {
+    this.arrowFKColor = arrowFKColor;
+  }
+
+  /**
+   * @return Arrow Color FD
+   */
+  public String getArrowFDColor() {
+    return arrowFDColor;
+  }
+
+  /**
+   * @param arrowFDColor Arrowcolor FD(e.g. #000000)
+   */
+  public void setArrowFDColor(String arrowFDColor) {
+    this.arrowFDColor = arrowFDColor;
   }
 
   /**

@@ -256,7 +256,7 @@ public class RelationGraphUpdater implements Runnable {
 
     if (fkCells.size() == 2) {
       if (visible) {
-        graph.insertEdge(parentPane, null, "", fkCells.get(0), fkCells.get(1));
+        graph.insertEdge(parentPane, null, "", fkCells.get(0), fkCells.get(1), "FK_ARROW");
       } else {
         graph.insertEdge(parentPane, null, "", fkCells.get(0), fkCells.get(1), "INVISIBLE_EDGE");
       }

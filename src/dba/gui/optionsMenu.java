@@ -46,16 +46,22 @@ public class optionsMenu extends JDialog {
   private String currentAttrColor;
   private String currentRelColor;
   private String currentFontColor;
+  private String currentArrowFkColor;
+  private String currentArrowFdColor;
   private String currentLAF;
   private Localization locale;
   private String colorBG;
   private String colorAttr;
   private String colorRel;
   private String colorFont;
+  private String colorArrowFk;
+  private String colorArrowFd;
   private JPanel pnlBG;
   private JPanel pnlAttr;
   private JPanel pnlRel;
   private JPanel pnlFont;
+  private JPanel pnlArrowFk;
+  private JPanel pnlArrowFd;
   private JComboBox<String> cbLaf;
 
   /**
@@ -70,6 +76,8 @@ public class optionsMenu extends JDialog {
     currentBgColor = options.getBackgroundColor();
     currentFontColor = options.getFontColor();
     currentRelColor = options.getRelationColor();
+    currentArrowFkColor = options.getArrowFKColor();
+    currentArrowFdColor = options.getArrowFDColor();
     currentLAF = options.getLookAndFeel();
     frame = this;
     setResizable(false);
@@ -100,12 +108,16 @@ public class optionsMenu extends JDialog {
         options.setBackgroundColor(colorBG);
         options.setFontColor(colorFont);
         options.setRelationColor(colorRel);
+        options.setArrowFKColor(colorArrowFk);
+        options.setArrowFDColor(colorArrowFd);
         options.setLookAndFeel(selectedLAF);
 
         boolean needToRestart = !currentLocale.equalsIgnoreCase(options.getLanguage());
         needToRestart = needToRestart || !currentAttrColor.equalsIgnoreCase(options.getAttributeColor());
         needToRestart = needToRestart || !currentBgColor.equalsIgnoreCase(options.getBackgroundColor());
         needToRestart = needToRestart || !currentRelColor.equalsIgnoreCase(options.getRelationColor());
+        needToRestart = needToRestart || !currentArrowFkColor.equalsIgnoreCase(options.getArrowFKColor());
+        needToRestart = needToRestart || !currentArrowFdColor.equalsIgnoreCase(options.getArrowFDColor());
         needToRestart = needToRestart || !currentFontColor.equalsIgnoreCase(options.getFontColor());
         needToRestart = needToRestart || !currentLAF.equalsIgnoreCase(options.getLookAndFeel());
         if (needToRestart) {
@@ -171,6 +183,8 @@ public class optionsMenu extends JDialog {
     colorAttr = options.getAttributeColor();
     colorFont = options.getFontColor();
     colorRel = options.getRelationColor();
+    colorArrowFk = options.getArrowFKColor();
+    colorArrowFd = options.getArrowFDColor();
 
     JPanel panel = new JPanel(new BorderLayout());
     JPanel panelLeft = new JPanel(new GridLayout(0, 2));
@@ -178,11 +192,11 @@ public class optionsMenu extends JDialog {
 
     pnlBG = new JPanel();
     pnlBG.setBackground(Color.decode(options.getBackgroundColor()));
-    JButton btnBG = new JButton("Background");
+    JButton btnBG = new JButton(locale.getString("OPT_Background"));
     btnBG.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
-        Color tmpColor = JColorChooser.showDialog(null, "Background Color", Color.decode(options.getBackgroundColor()));
+        Color tmpColor = JColorChooser.showDialog(null, locale.getString("OPT_BackgroundColor"), Color.decode(options.getBackgroundColor()));
         if (tmpColor != null) {
           colorBG = "#" + (Integer.toHexString(tmpColor.getRGB())).substring(2);
           pnlBG.setBackground(Color.decode(colorBG));
@@ -195,11 +209,11 @@ public class optionsMenu extends JDialog {
 
     pnlAttr = new JPanel();
     pnlAttr.setBackground(Color.decode(options.getAttributeColor()));
-    JButton btnAttr = new JButton("Attribute");
+    JButton btnAttr = new JButton(locale.getString("Attribute"));
     btnAttr.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
-        Color tmpColor = JColorChooser.showDialog(null, "Attribute Color", Color.decode(options.getAttributeColor()));
+        Color tmpColor = JColorChooser.showDialog(null, locale.getString("OPT_AttributeColor"), Color.decode(options.getAttributeColor()));
         if (tmpColor != null) {
           colorAttr = "#" + (Integer.toHexString(tmpColor.getRGB())).substring(2);
           pnlAttr.setBackground(Color.decode(colorAttr));
@@ -212,11 +226,11 @@ public class optionsMenu extends JDialog {
 
     pnlRel = new JPanel();
     pnlRel.setBackground(Color.decode(options.getRelationColor()));
-    JButton btnRel = new JButton("Relation");
+    JButton btnRel = new JButton(locale.getString("Relation"));
     btnRel.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
-        Color tmpColor = JColorChooser.showDialog(null, "Relation Color", Color.decode(options.getRelationColor()));
+        Color tmpColor = JColorChooser.showDialog(null, locale.getString("OPT_RelationColor"), Color.decode(options.getRelationColor()));
         if (tmpColor != null) {
           colorRel = "#" + (Integer.toHexString(tmpColor.getRGB())).substring(2);
           pnlRel.setBackground(Color.decode(colorRel));
@@ -229,11 +243,11 @@ public class optionsMenu extends JDialog {
 
     pnlFont = new JPanel();
     pnlFont.setBackground(Color.decode(options.getFontColor()));
-    JButton btnFont = new JButton("Font");
+    JButton btnFont = new JButton(locale.getString("OPT_Font"));
     btnFont.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
-        Color tmpColor = JColorChooser.showDialog(null, "Font Color", Color.decode(options.getFontColor()));
+        Color tmpColor = JColorChooser.showDialog(null, locale.getString("OPT_FontColor"), Color.decode(options.getFontColor()));
         if (tmpColor != null) {
           colorFont = "#" + (Integer.toHexString(tmpColor.getRGB())).substring(2);
           pnlFont.setBackground(Color.decode(colorFont));
@@ -244,7 +258,41 @@ public class optionsMenu extends JDialog {
     panelLeft.add(btnFont);
     panelLeft.add(pnlFont);
 
-    JButton btnDefault = new JButton("Reset Theme");
+    pnlArrowFk = new JPanel();
+    pnlArrowFk.setBackground(Color.decode(options.getArrowFKColor()));
+    JButton btnArrowFk = new JButton(locale.getString("OPT_ArrowFk"));
+    btnArrowFk.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent actionEvent) {
+        Color tmpColor = JColorChooser.showDialog(null, locale.getString("OPT_ArrowFkColor"), Color.decode(options.getArrowFKColor()));
+        if (tmpColor != null) {
+          colorArrowFk = "#" + (Integer.toHexString(tmpColor.getRGB())).substring(2);
+          pnlArrowFk.setBackground(Color.decode(colorArrowFk));
+          pnlArrowFk.revalidate();
+        }
+      }
+    });
+    panelLeft.add(btnArrowFk);
+    panelLeft.add(pnlArrowFk);
+
+    pnlArrowFd = new JPanel();
+    pnlArrowFd.setBackground(Color.decode(options.getArrowFDColor()));
+    JButton btnArrowFd = new JButton(locale.getString("OPT_ArrowFd"));
+    btnArrowFd.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent actionEvent) {
+        Color tmpColor = JColorChooser.showDialog(null, locale.getString("OPT_ArrowFdColor"), Color.decode(options.getArrowFDColor()));
+        if (tmpColor != null) {
+          colorArrowFd = "#" + (Integer.toHexString(tmpColor.getRGB())).substring(2);
+          pnlArrowFd.setBackground(Color.decode(colorArrowFd));
+          pnlArrowFd.revalidate();
+        }
+      }
+    });
+    panelLeft.add(btnArrowFd);
+    panelLeft.add(pnlArrowFd);
+
+    JButton btnDefault = new JButton(locale.getString("OPT_ResetTheme"));
     btnDefault.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
@@ -265,6 +313,14 @@ public class optionsMenu extends JDialog {
           colorFont = "#000000";
           pnlFont.setBackground(Color.decode(colorFont));
           pnlFont.revalidate();
+
+          colorArrowFk = "#0095C7";
+          pnlArrowFk.setBackground(Color.decode(colorArrowFk));
+          pnlArrowFk.revalidate();
+
+          colorArrowFd = "#000000";
+          pnlArrowFd.setBackground(Color.decode(colorArrowFd));
+          pnlArrowFd.revalidate();
         }
       }
     });
