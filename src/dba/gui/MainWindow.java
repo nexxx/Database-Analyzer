@@ -73,6 +73,7 @@ public class MainWindow implements constants, Observer {
   private ImageIcon iconAbout;
   private ImageIcon iconHelp;
   private ImageIcon iconDonate;
+  private ImageIcon iconGithib;
   private Localization locale;
   private JPanel pnlToolBar;
   private ToolBar toolBar;
@@ -106,6 +107,7 @@ public class MainWindow implements constants, Observer {
     iconAbout = getIcon.getMenuAbout();
     iconHelp = getIcon.getMenuHelp();
     iconDonate = getIcon.getMenuDonate();
+    iconGithib = getIcon.getMenuGithub();
 
     locale = Localization.getInstance();
     feedbackbarPanel = FeedbackbarPanel.getInstance();
@@ -403,6 +405,24 @@ public class MainWindow implements constants, Observer {
     userGuideMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
     helpMenu.add(userGuideMenuItem);
 
+    JMenuItem donateMenuItem = new JMenuItem(locale.getString("GUI_Donate"), iconDonate);
+    donateMenuItem.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        OpenUrl.openURL("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BJFK5BZUN89TG");
+      }
+    });
+    helpMenu.add(donateMenuItem);
+
+    JMenuItem gitHubMenuItem = new JMenuItem(locale.getString("GUI_Github"), iconGithib);
+    gitHubMenuItem.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        OpenUrl.openURL("https://github.com/nexxx/Database-Analyzer");
+      }
+    });
+    helpMenu.add(gitHubMenuItem);
+
     JMenuItem aboutMenuItem = new JMenuItem(locale.getString("GUI_About"), iconAbout);
     aboutMenuItem.addActionListener(new ActionListener() {
       @Override
@@ -412,15 +432,6 @@ public class MainWindow implements constants, Observer {
       }
     });
     helpMenu.add(aboutMenuItem);
-
-    JMenuItem donateMenuItem = new JMenuItem(locale.getString("GUI_Donate"), iconDonate);
-    donateMenuItem.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        OpenUrl.openURL("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BJFK5BZUN89TG");
-      }
-    });
-    helpMenu.add(donateMenuItem);
 
   }
 

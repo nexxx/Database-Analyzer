@@ -54,6 +54,7 @@ public class GetIcons implements constants {
   private ImageIcon menuAbout;
   private ImageIcon menuHelp;
   private ImageIcon menuDonate;
+  private ImageIcon menuGithub;
   private ImageIcon popupDelete;
   private ImageIcon popupRename;
   private ImageIcon popupPK;
@@ -121,6 +122,7 @@ public class GetIcons implements constants {
     menuAbout = getIcon("about.png", constants.popupIconSize);
     menuHelp = getIcon("help.png", constants.popupIconSize);
     menuDonate = getIcon("donate.png", constants.popupIconSize);
+    menuGithub = getIcon("github.png", constants.popupIconSize);
     popupDelete = getIcon("delete.png", constants.popupIconSize);
     popupRename = getIcon("rename.png", constants.popupIconSize);
     popupPK = getIcon("pk.png", constants.popupIconSize);
@@ -648,5 +650,12 @@ public class GetIcons implements constants {
    */
   public ImageIcon getMenuDonate() {
     return menuDonate;
+  }
+
+  /**
+   * @return the gitHub
+   */
+  public ImageIcon getMenuGithub() {
+    return menuGithub;
   }
 }
