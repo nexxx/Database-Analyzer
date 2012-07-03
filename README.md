@@ -5,7 +5,7 @@ A java Swing based Database Management Tool, to create a basic layout of your da
 
 Changelog:
 ----------
-v0.5 bXXX
+v0.5 b4
 * Disallow setting of FK when only 1 relation is available - #11
 * Make dirtystate global - #9
 * Database name in titlebar - #8
