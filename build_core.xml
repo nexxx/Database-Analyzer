@@ -1,0 +1,67 @@
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright: GPL v3                                                         ~
+  ~                                                                           ~
+  ~ This program is free software: you can redistribute it and/or modify      ~
+  ~ it under the terms of the GNU General Public License as published by      ~
+  ~ the Free Software Foundation, either version 3 of the License, or         ~
+  ~ (at your option) any later version.                                       ~
+  ~                                                                           ~
+  ~ This program is distributed in the hope that it will be useful,           ~
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of            ~
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the             ~
+  ~ GNU General Public License for more details.                              ~
+  ~                                                                           ~
+  ~ You should have received a copy of the GNU General Public License         ~
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.     ~
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+<!--
+###############################################################################
+# Ant build file for DBA-Core                                                      #
+# Author: Andreas Freitag                                                     #
+# Targets: Clean.....Cleanup build directory                                  #
+#          compile...Compile all classes                                      #                  
+#          dist......Distribute a runable JAR file and a lib folder           #
+#                    with all needed external libs                            #
+#          run-gui...Run DBA with GUI                                         #          
+###############################################################################
+-->
+<project name="DB-Analyzer_core" basedir="." default="dist">
+
+    <!--Define all properties-->
+    <property name="build.dir" value="build"/>
+    <property name="src.dir" value="src/dbaCore"/>
+    <property name="classes.dir" value="${build.dir}/core/classes"/>
+    <property name="jar.dir" value="${build.dir}/core/jar"/>
+    <property name="jar.filename" value="${ant.project.name}.jar"/>
+
+    <!--Create Timestamp for Manifest-->
+    <tstamp>
+        <format property="TODAY" pattern="yyyy-MM-dd HH:mm:ss"/>
+    </tstamp>
+
+    <!--Cleanup target: remove build folder-->
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <!--Compile core target: compile all java core classes and store them into the build/core/classes folder-->
+    <target name="compile" depends="clean">
+        <mkdir dir="${classes.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="true"/>
+    </target>
+
+    <!--Distribute core target: Create MANIFEST and package all needed files into the JAR-->
+    <target name="dist" depends="compile">
+        <mkdir dir="${jar.dir}"/>
+        <jar destfile="${jar.dir}/${jar.filename}" basedir="${classes.dir}"
+             filesetmanifest="mergewithoutmain">
+            <manifest>
+                <attribute name="Built-By" value="${user.name}"/>
+                <attribute name="Built-Date" value="${TODAY}"/>
+            </manifest>
+        </jar>
+    </target>
+</project>
+
+

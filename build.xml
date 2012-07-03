@@ -31,8 +31,8 @@
     <!--Define all properties-->
     <property name="src.dir" value="src"/>
     <property name="build.dir" value="build"/>
-    <property name="classes.dir" value="${build.dir}/classes"/>
-    <property name="jar.dir" value="${build.dir}/jar"/>
+    <property name="classes.dir" value="${build.dir}/dba/classes"/>
+    <property name="jar.dir" value="${build.dir}/dba/jar"/>
     <property name="main-class" value="dba/Main"/>
     <property name="lib.dir" value="lib"/>
     <property name="ext.lib.dir" value="lib"/>
