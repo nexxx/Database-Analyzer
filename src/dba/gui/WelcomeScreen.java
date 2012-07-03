@@ -17,12 +17,12 @@
 
 package dba.gui;
 
-import data.Database;
-import data.dBTypes.TypeEnum;
 import dba.gui.auxClasses.GuiLogic;
 import dba.options.FeedbackEnum;
 import dba.utils.GetIcons;
 import dba.utils.Localization;
+import dbaCore.data.Database;
+import dbaCore.data.dBTypes.TypeEnum;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;

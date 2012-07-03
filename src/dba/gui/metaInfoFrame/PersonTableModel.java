@@ -17,8 +17,8 @@
 
 package dba.gui.metaInfoFrame;
 
-import data.Person;
 import dba.utils.Localization;
+import dbaCore.data.Person;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
@@ -40,7 +40,8 @@ public class PersonTableModel extends AbstractTableModel {
   private PersonTableModel() {
     super();
     Localization locale = Localization.getInstance();
-    columnNames = new String[]{locale.getString("MI_Name"), locale.getString("MI_Title"), locale.getString("MI_Mail"), locale.getString("MI_Tel"), locale.getString("MI_Fax")};
+    columnNames = new String[]{locale.getString("MI_Name"), locale.getString("MI_Title"),
+      locale.getString("MI_Mail"), locale.getString("MI_Tel"), locale.getString("MI_Fax")};
     data = new ArrayList<>();
   }
 

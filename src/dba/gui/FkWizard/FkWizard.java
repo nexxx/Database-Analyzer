@@ -17,13 +17,13 @@
 
 package dba.gui.FkWizard;
 
-import data.Attribute;
-import data.Database;
-import data.ForeignKeyConstraint;
-import data.RelationSchema;
 import dba.utils.GetIcons;
 import dba.utils.Localization;
 import dba.utils.constants;
+import dbaCore.data.Attribute;
+import dbaCore.data.Database;
+import dbaCore.data.ForeignKeyConstraint;
+import dbaCore.data.RelationSchema;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;

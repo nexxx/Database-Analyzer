@@ -18,13 +18,6 @@
 package dba.gui;
 
 
-import data.Database;
-import data.FunctionalDependency;
-import data.NormalForm;
-import data.TimeLine;
-import data.events.Change;
-import data.events.ChangeListener;
-import data.events.Time;
 import dba.gui.auxClasses.DatabaseTreePanel;
 import dba.gui.auxClasses.GuiLogic;
 import dba.gui.auxClasses.RelationDetailsView;
@@ -39,7 +32,14 @@ import dba.utils.GetIcons;
 import dba.utils.Localization;
 import dba.utils.OpenUrl;
 import dba.utils.constants;
-import logic.Analysis.GeneralRelationCheck;
+import dbaCore.data.Database;
+import dbaCore.data.FunctionalDependency;
+import dbaCore.data.NormalForm;
+import dbaCore.data.TimeLine;
+import dbaCore.data.events.Change;
+import dbaCore.data.events.ChangeListener;
+import dbaCore.data.events.Time;
+import dbaCore.logic.Analysis.GeneralRelationCheck;
 
 import javax.swing.*;
 import java.awt.*;
@@ -457,7 +457,8 @@ public class MainWindow implements constants, Observer {
     int result = JOptionPane.NO_OPTION;
     if (TimeLine.getInstance().isDirty()) {
       Object[] options = {locale.getString("Yes"), locale.getString("No"), locale.getString("Cancel")};
-      result = JOptionPane.showOptionDialog(frame, locale.getString("TREE_ExitMsg"), locale.getString("Confirm"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
+      result = JOptionPane.showOptionDialog(frame, locale.getString("TREE_ExitMsg"), locale.getString("Confirm"),
+        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
     }
     switch (result) {
       case JOptionPane.YES_OPTION:

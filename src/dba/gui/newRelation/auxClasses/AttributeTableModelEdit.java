@@ -17,10 +17,10 @@
 
 package dba.gui.newRelation.auxClasses;
 
-import data.Attribute;
-import data.Database;
-import data.RelationSchema;
 import dba.gui.CustomTree;
+import dbaCore.data.Attribute;
+import dbaCore.data.Database;
+import dbaCore.data.RelationSchema;
 
 import java.util.ArrayList;
 

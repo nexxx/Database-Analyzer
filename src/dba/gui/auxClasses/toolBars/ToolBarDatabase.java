@@ -44,7 +44,8 @@ public class ToolBarDatabase extends ToolBar {
    */
   private static final long serialVersionUID = -3843390455939145286L;
 
-  public ToolBarDatabase(DatabaseTreePanel dbTreePanel, RelationView relationView, RelationDetailsView relationDetailsView) {
+  public ToolBarDatabase(DatabaseTreePanel dbTreePanel, RelationView relationView,
+                         RelationDetailsView relationDetailsView) {
     super(relationView, relationDetailsView, dbTreePanel);
 
     tree = dbTreePanel.getTree();

@@ -17,8 +17,6 @@
 
 package dba.gui.newRelation;
 
-import data.Database;
-import data.RelationSchema;
 import dba.gui.newRelation.auxClasses.AddRelationFunctionalDependencyPanel;
 import dba.gui.newRelation.auxClasses.AddRelationNameAttributePanel;
 import dba.gui.newRelation.auxClasses.ToggleControl;
@@ -26,6 +24,8 @@ import dba.utils.GetIcons;
 import dba.utils.Localization;
 import dba.utils.WizardEnum;
 import dba.utils.constants;
+import dbaCore.data.Database;
+import dbaCore.data.RelationSchema;
 
 import javax.swing.*;
 import java.awt.*;
@@ -86,7 +86,8 @@ public class RelationWizard extends JDialog implements constants {
     relationChanged = false;
 
     relation = rel;
-    AddRelationNameAttributePanel addRelationNameAttributePanel = new AddRelationNameAttributePanel(relation, database, type);
+    AddRelationNameAttributePanel addRelationNameAttributePanel = new AddRelationNameAttributePanel(relation,
+      database, type);
     addRelationFunctionalDependencyPanel = new AddRelationFunctionalDependencyPanel(relation);
     card = new CardLayout(0, 0);
     btnFinish = new JButton(locale.getString("Finish"), iconFinish);

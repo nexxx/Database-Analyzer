@@ -17,12 +17,12 @@
 
 package dba.gui.auxClasses;
 
-import data.Database;
-import data.FunctionalDependency;
-import data.RelationSchema;
 import dba.gui.CustomTree;
 import dba.gui.FDWizard.FDWizard;
 import dba.utils.Localization;
+import dbaCore.data.Database;
+import dbaCore.data.FunctionalDependency;
+import dbaCore.data.RelationSchema;
 
 import javax.swing.*;
 
@@ -66,7 +66,9 @@ public class FdLogic {
     FunctionalDependency fd = CustomTree.getInstance().getFd();
 
     Object[] options = {locale.getString("Yes"), locale.getString("No")};
-    int n = JOptionPane.showOptionDialog(null, locale.getString("TREE_FDDelMsg") + " '" + fd.toString() + "'", locale.getString("TREE_FDDelTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+    int n = JOptionPane.showOptionDialog(null, locale.getString("TREE_FDDelMsg") + " '" + fd.toString() + "'",
+      locale.getString("TREE_FDDelTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
+      options[1]);
     if (n == 0) {
       relation.removeFunctionalDependency(fd);
     }

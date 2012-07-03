@@ -17,16 +17,16 @@
 
 package dba.gui.auxClasses;
 
-import data.*;
-import data.dBTypes.TypeEnum;
-import dba.data.fileIO.ReadFromXML;
-import dba.data.fileIO.SaveToXml;
+import dba.fileIO.ReadFromXML;
+import dba.fileIO.SaveToXml;
 import dba.gui.CustomTree;
 import dba.gui.auxClasses.feedback.FeedbackbarPanel;
 import dba.options.FeedbackEnum;
 import dba.options.Options;
 import dba.utils.Localization;
 import dba.utils.RemoveExtension;
+import dbaCore.data.*;
+import dbaCore.data.dBTypes.TypeEnum;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
@@ -83,7 +83,8 @@ public class GuiLogic {
     int result;
     if (TimeLine.getInstance().isDirty()) {
       Object[] options = {locale.getString("Yes"), locale.getString("No"), locale.getString("Cancel")};
-      result = JOptionPane.showOptionDialog(null, locale.getString("TREE_NewMsg"), locale.getString("Confirm"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
+      result = JOptionPane.showOptionDialog(null, locale.getString("TREE_NewMsg"), locale.getString("Confirm"),
+        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
       switch (result) {
         case JOptionPane.YES_OPTION:
           save();
@@ -202,7 +203,9 @@ public class GuiLogic {
 
     if (outputFile.exists()) {
       Object[] options = {locale.getString("Yes"), locale.getString("No")};
-      int result = JOptionPane.showOptionDialog(null, locale.getString("GUI_TheFile") + " " + outputFile.getName() + " " + locale.getString("GUI_AlreadyExisting"), locale.getString("Confirm"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+      int result = JOptionPane.showOptionDialog(null, locale.getString("GUI_TheFile") + " " + outputFile.getName() +
+        " " + locale.getString("GUI_AlreadyExisting"), locale.getString("Confirm"), JOptionPane.YES_NO_OPTION,
+        JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 
       switch (result) {
         case JOptionPane.YES_OPTION:
@@ -235,7 +238,8 @@ public class GuiLogic {
     int result;
     if (TimeLine.getInstance().isDirty()) {
       Object[] options = {locale.getString("Yes"), locale.getString("No"), locale.getString("Cancel")};
-      result = JOptionPane.showOptionDialog(null, locale.getString("TREE_NewMsg"), locale.getString("Confirm"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
+      result = JOptionPane.showOptionDialog(null, locale.getString("TREE_NewMsg"), locale.getString("Confirm"),
+        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
       switch (result) {
         case JOptionPane.YES_OPTION:
           save();
@@ -275,7 +279,8 @@ public class GuiLogic {
       types.add(e.getName());
     }
     Object[] possibilities = types.toArray();
-    String s = (String) JOptionPane.showInputDialog(null, "Please Select the correct Database type", "Data Type", JOptionPane.PLAIN_MESSAGE, null, possibilities, TypeEnum.MYSQL.getName());
+    String s = (String) JOptionPane.showInputDialog(null, "Please Select the correct Database type", "Data Type",
+      JOptionPane.PLAIN_MESSAGE, null, possibilities, TypeEnum.MYSQL.getName());
 
     if (s != null) {
       database.setType(TypeEnum.getEnumByValue(s));
@@ -340,7 +345,9 @@ public class GuiLogic {
 
     if (outputFile.exists()) {
       Object[] options = {locale.getString("Yes"), locale.getString("No")};
-      int result = JOptionPane.showOptionDialog(null, locale.getString("GUI_TheFile") + " " + outputFile.getName() + " " + locale.getString("GUI_AlreadyExisting"), "Export", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+      int result = JOptionPane.showOptionDialog(null, locale.getString("GUI_TheFile") + " " + outputFile.getName() +
+        " " + locale.getString("GUI_AlreadyExisting"), "Export", JOptionPane.YES_NO_OPTION,
+        JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 
       switch (result) {
         case JOptionPane.YES_OPTION:
@@ -364,7 +371,9 @@ public class GuiLogic {
 
     if (outputFile.exists()) {
       Object[] options = {locale.getString("Yes"), locale.getString("No")};
-      int result = JOptionPane.showOptionDialog(null, locale.getString("GUI_TheFile") + " " + outputFile.getName() + " " + locale.getString("GUI_AlreadyExisting"), "Export", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+      int result = JOptionPane.showOptionDialog(null, locale.getString("GUI_TheFile") + " " + outputFile.getName() +
+        " " + locale.getString("GUI_AlreadyExisting"), "Export", JOptionPane.YES_NO_OPTION,
+        JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 
       switch (result) {
         case JOptionPane.YES_OPTION:

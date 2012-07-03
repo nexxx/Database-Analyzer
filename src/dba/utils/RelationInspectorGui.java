@@ -17,11 +17,11 @@
 
 package dba.utils;
 
-import data.FunctionalDependency;
-import data.Key;
-import data.RelationSchema;
-import logic.Analysis.GeneralRelationCheck;
-import logic.Analysis.RelationInformation;
+import dbaCore.data.FunctionalDependency;
+import dbaCore.data.Key;
+import dbaCore.data.RelationSchema;
+import dbaCore.logic.Analysis.GeneralRelationCheck;
+import dbaCore.logic.Analysis.RelationInformation;
 
 import java.util.ArrayList;
 

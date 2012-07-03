@@ -17,12 +17,12 @@
 
 package dba.gui.newRelation.auxClasses;
 
-import data.Attribute;
-import data.FunctionalDependency;
-import data.RelationSchema;
 import dba.utils.GetIcons;
 import dba.utils.Localization;
 import dba.utils.constants;
+import dbaCore.data.Attribute;
+import dbaCore.data.FunctionalDependency;
+import dbaCore.data.RelationSchema;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -71,7 +71,8 @@ public class AddRelationFunctionalDependencyPanel extends JPanel implements cons
     ImageIcon iconDelete = getIcons.getButtonDelete();
     ImageIcon iconFdArrow = getIcons.getFdArrow();
 
-    setLayout(new MigLayout("wrap 5", "[fill, grow][grow,fill,32:32:32][fill, grow][grow,fill,130:130:130][fill, grow]"));
+    setLayout(new MigLayout("wrap 5", "[fill, grow][grow,fill,32:32:32][fill, grow][grow,fill,130:130:130][fill, " +
+      "" + "grow]"));
 
     tmpRelation = relation;
     btnAdd = new JButton(locale.getString("Add"), iconAdd);

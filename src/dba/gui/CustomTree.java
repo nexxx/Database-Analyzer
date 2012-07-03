@@ -17,15 +17,15 @@
 
 package dba.gui;
 
-import data.Attribute;
-import data.Database;
-import data.FunctionalDependency;
-import data.RelationSchema;
 import dba.gui.auxClasses.nodes.AttributeNode;
 import dba.gui.auxClasses.nodes.DatabaseNode;
 import dba.gui.auxClasses.nodes.FunctionalDependencyNode;
 import dba.gui.auxClasses.nodes.RelationNode;
 import dba.utils.TreeEnum;
+import dbaCore.data.Attribute;
+import dbaCore.data.Database;
+import dbaCore.data.FunctionalDependency;
+import dbaCore.data.RelationSchema;
 
 import javax.swing.*;
 import javax.swing.event.TreeExpansionEvent;
@@ -102,7 +102,8 @@ public class CustomTree extends JTree {
    * @return parent relation
    */
   public RelationSchema getParentRelation() {
-    RelationSchema relation = (RelationSchema) ((RelationNode) ((DefaultMutableTreeNode) this.getSelectionPath().getLastPathComponent()).getParent()).getUserObject();
+    RelationSchema relation = (RelationSchema) ((RelationNode) ((DefaultMutableTreeNode) this.getSelectionPath()
+      .getLastPathComponent()).getParent()).getUserObject();
     if (relation == null) {
       return (RelationSchema) ((RelationNode) lastSelectedNode.getParent()).getUserObject();
     }
@@ -157,7 +158,8 @@ public class CustomTree extends JTree {
    * @return Marked FD
    */
   public FunctionalDependency getFd() {
-    FunctionalDependency fd = (FunctionalDependency) ((FunctionalDependencyNode) this.getSelectionPath().getLastPathComponent()).getUserObject();
+    FunctionalDependency fd = (FunctionalDependency) ((FunctionalDependencyNode) this.getSelectionPath()
+      .getLastPathComponent()).getUserObject();
     if (fd == null) {
       return (FunctionalDependency) lastSelectedNode.getUserObject();
     }
@@ -170,7 +172,8 @@ public class CustomTree extends JTree {
    * @return current marked relation
    */
   public RelationSchema getRelation() {
-    RelationSchema relation = (RelationSchema) ((RelationNode) this.getSelectionPath().getLastPathComponent()).getUserObject();
+    RelationSchema relation = (RelationSchema) ((RelationNode) this.getSelectionPath().getLastPathComponent())
+      .getUserObject();
     if (relation == null) {
       return (RelationSchema) lastSelectedNode.getUserObject();
     }
@@ -190,7 +193,8 @@ public class CustomTree extends JTree {
       case DelAttribute:
       case DelFD:
         // Parent Relation
-        rowNr = tree.getRowForPath(new TreePath(((RelationNode) ((DefaultMutableTreeNode) this.getSelectionPath().getLastPathComponent()).getParent()).getPath()));
+        rowNr = tree.getRowForPath(new TreePath(((RelationNode) ((DefaultMutableTreeNode) this.getSelectionPath()
+          .getLastPathComponent()).getParent()).getPath()));
         break;
       case AddRelation:
       case DelRelation:
@@ -206,7 +210,8 @@ public class CustomTree extends JTree {
       case AddFD:
       case AddAttribute:
         // Relation
-        rowNr = tree.getRowForPath(new TreePath(((RelationNode) this.getSelectionPath().getLastPathComponent()).getPath()));
+        rowNr = tree.getRowForPath(new TreePath(((RelationNode) this.getSelectionPath().getLastPathComponent())
+          .getPath()));
         break;
       case RenameAttr:
       case EditAttr:
@@ -214,11 +219,13 @@ public class CustomTree extends JTree {
       case ToggleFk:
       case SwitchType:
         // Attribute
-        rowNr = tree.getRowForPath(new TreePath(((AttributeNode) this.getSelectionPath().getLastPathComponent()).getPath()));
+        rowNr = tree.getRowForPath(new TreePath(((AttributeNode) this.getSelectionPath().getLastPathComponent())
+          .getPath()));
         break;
       case EditFd:
         // FD
-        rowNr = tree.getRowForPath(new TreePath(((FunctionalDependencyNode) this.getSelectionPath().getLastPathComponent()).getPath()));
+        rowNr = tree.getRowForPath(new TreePath(((FunctionalDependencyNode) this.getSelectionPath()
+          .getLastPathComponent()).getPath()));
         break;
 
     }

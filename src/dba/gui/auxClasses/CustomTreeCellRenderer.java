@@ -49,7 +49,8 @@ public class CustomTreeCellRenderer extends DefaultTreeCellRenderer implements c
   }
 
   @Override
-  public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
+  public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded,
+                                                boolean leaf, int row, boolean hasFocus) {
 
     super.getTreeCellRendererComponent(tree, value, selected, expanded, leaf, row, hasFocus);
 

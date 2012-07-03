@@ -17,15 +17,15 @@
 
 package dba.gui.auxClasses;
 
-import data.*;
 import dba.gui.CustomTree;
 import dba.gui.auxClasses.nodes.AttributeNode;
 import dba.gui.auxClasses.nodes.DatabaseNode;
 import dba.gui.auxClasses.nodes.FunctionalDependencyNode;
 import dba.gui.auxClasses.nodes.RelationNode;
 import dba.utils.Localization;
-import logic.Analysis.GeneralRelationCheck;
-import logic.Analysis.RelationUtils;
+import dbaCore.data.*;
+import dbaCore.logic.Analysis.GeneralRelationCheck;
+import dbaCore.logic.Analysis.RelationUtils;
 
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
@@ -261,13 +261,15 @@ public class DatabaseTreePanel extends JPanel {
       if (relation.getAttributes().isEmpty()) {
         return "";
       }
-      normalForm = RelationUtils.getInstance().getNormalFormText(checker.getNF(relation, new ArrayList<FunctionalDependency>()));
+      normalForm = RelationUtils.getInstance().getNormalFormText(checker.getNF(relation,
+        new ArrayList<FunctionalDependency>()));
     } else if (node instanceof AttributeNode || node instanceof FunctionalDependencyNode) {
       RelationSchema relation = tree.getParentRelation();
       if (relation.getAttributes().isEmpty()) {
         return "";
       }
-      normalForm = RelationUtils.getInstance().getNormalFormText(checker.getNF(relation, new ArrayList<FunctionalDependency>()));
+      normalForm = RelationUtils.getInstance().getNormalFormText(checker.getNF(relation,
+        new ArrayList<FunctionalDependency>()));
     } else {
       return "";
     }

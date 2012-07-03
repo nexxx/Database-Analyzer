@@ -1,5 +1,5 @@
 dba
-dba.data.fileIO
+dba.fileIO
 dba.gui
 dba.gui.FDWizard
 dba.gui.FkWizard
@@ -15,3 +15,10 @@ dba.gui.newRelation.auxClasses
 dba.init
 dba.options
 dba.utils
+dbaCore.data
+dbaCore.data.dBTypes
+dbaCore.data.dBTypes.types
+dbaCore.data.events
+dbaCore.logic.Analysis
+dbaCore.logic.normalization
+dbaCore.utils

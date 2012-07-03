@@ -17,15 +17,15 @@
 
 package dba.gui.auxClasses.toolBars;
 
-import data.Attribute;
-import data.dBTypes.DbTypeFactory;
-import data.dBTypes.types.DbType;
 import dba.gui.CustomTree;
 import dba.gui.auxClasses.AttrLogic;
 import dba.gui.auxClasses.DatabaseTreePanel;
 import dba.gui.auxClasses.RelationDetailsView;
 import dba.gui.auxClasses.RelationView;
 import dba.utils.TreeEnum;
+import dbaCore.data.Attribute;
+import dbaCore.data.dBTypes.DbTypeFactory;
+import dbaCore.data.dBTypes.types.DbType;
 
 import javax.swing.*;
 import java.awt.*;
@@ -49,7 +49,8 @@ public class ToolBarAttribute extends ToolBar {
   private JToggleButton btnFK;
   private JComboBox<String> cbType;
 
-  public ToolBarAttribute(DatabaseTreePanel dbTreePanel, RelationView relationView, RelationDetailsView relationDetailsView) {
+  public ToolBarAttribute(DatabaseTreePanel dbTreePanel, RelationView relationView,
+                          RelationDetailsView relationDetailsView) {
     super(relationView, relationDetailsView, dbTreePanel);
 
     attrLogic = new AttrLogic();

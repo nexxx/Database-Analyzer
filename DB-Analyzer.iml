@@ -17,6 +17,8 @@
     <exclude-output />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/tests" isTestSource="true" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="jdk" jdkName="1.7" jdkType="JavaSDK" />
@@ -38,52 +40,8 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library">
-      <library name="Help.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/Help.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="Hilfe.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/Hilfe.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="hsviewer.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/hsviewer.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="jh.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/jh.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="dba-core.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/dba-core.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
     <orderEntry type="library" name="freemarker" level="project" />
+    <orderEntry type="library" name="junit-4.10" level="project" />
     <javadoc-paths>
       <root url="file://$MODULE_DIR$/doc" />
     </javadoc-paths>

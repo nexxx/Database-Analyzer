@@ -17,10 +17,6 @@
 
 package dba.gui.auxClasses;
 
-import data.Attribute;
-import data.Database;
-import data.NormalForm;
-import data.RelationSchema;
 import dba.gui.CustomTree;
 import dba.gui.FDWizard.FDWizard;
 import dba.gui.auxClasses.feedback.FeedbackbarPanel;
@@ -29,6 +25,10 @@ import dba.gui.newRelation.RelationWizard;
 import dba.options.FeedbackEnum;
 import dba.utils.Localization;
 import dba.utils.WizardEnum;
+import dbaCore.data.Attribute;
+import dbaCore.data.Database;
+import dbaCore.data.NormalForm;
+import dbaCore.data.RelationSchema;
 
 import javax.swing.*;
 
@@ -107,7 +107,9 @@ public class RelationLogic {
     RelationSchema relation = tree.getRelation();
 
     Object[] options = {locale.getString("Yes"), locale.getString("No")};
-    int n = JOptionPane.showOptionDialog(null, locale.getString("TREE_RelDelMsg") + " '" + relation.getName() + "'", locale.getString("TREE_RelDelTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+    int n = JOptionPane.showOptionDialog(null, locale.getString("TREE_RelDelMsg") + " '" + relation.getName() + "'",
+      locale.getString("TREE_RelDelTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
+      options[1]);
     if (n == 0) {
       database.removeRelationSchema(relation);
     }
@@ -118,7 +120,8 @@ public class RelationLogic {
    */
   public void renameRelation() {
     RelationSchema relation = tree.getRelation();
-    String name = (String) JOptionPane.showInputDialog(null, locale.getString("TREE_RelRenMsg"), locale.getString("TREE_RelRenTitle"), JOptionPane.QUESTION_MESSAGE, null, null, relation.getName());
+    String name = (String) JOptionPane.showInputDialog(null, locale.getString("TREE_RelRenMsg"),
+      locale.getString("TREE_RelRenTitle"), JOptionPane.QUESTION_MESSAGE, null, null, relation.getName());
     if (name != null && !name.isEmpty() && !tree.checkIfRelationExists(name)) {
       tree.getDatabase().renameRelationSchema(relation, name);
     } else {
@@ -163,7 +166,8 @@ public class RelationLogic {
     OptimizeFrame optimizeFrame = new OptimizeFrame(relation, NormalForm.SECOND);
     optimizeFrame.setVisible(true);
     if (optimizeFrame.isModified()) {
-      database.insertNormalizationResult(relation, optimizeFrame.getNormalizedRelations(), optimizeFrame.getForeignKeys());
+      database.insertNormalizationResult(relation, optimizeFrame.getNormalizedRelations(),
+        optimizeFrame.getForeignKeys());
     }
   }
 
@@ -174,7 +178,8 @@ public class RelationLogic {
     OptimizeFrame optimizeFrame = new OptimizeFrame(relation, NormalForm.THIRD);
     optimizeFrame.setVisible(true);
     if (optimizeFrame.isModified()) {
-      database.insertNormalizationResult(relation, optimizeFrame.getNormalizedRelations(), optimizeFrame.getForeignKeys());
+      database.insertNormalizationResult(relation, optimizeFrame.getNormalizedRelations(),
+        optimizeFrame.getForeignKeys());
     }
   }
 

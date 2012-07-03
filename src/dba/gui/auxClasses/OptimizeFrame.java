@@ -17,11 +17,11 @@
 
 package dba.gui.auxClasses;
 
-import data.*;
 import dba.utils.GetIcons;
 import dba.utils.Localization;
-import logic.Analysis.GeneralRelationCheck;
-import logic.normalization.Optimizer;
+import dbaCore.data.*;
+import dbaCore.logic.Analysis.GeneralRelationCheck;
+import dbaCore.logic.normalization.Optimizer;
 
 import javax.swing.*;
 import java.awt.*;

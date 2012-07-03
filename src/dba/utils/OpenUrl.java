@@ -39,7 +39,8 @@ public class OpenUrl {
         Runtime.getRuntime().exec(new String[]{browser, url});
       }
     } catch (Exception e) {
-      JOptionPane.showMessageDialog(null, Localization.getInstance().getString("OU_Error") + ":\n" + e.getLocalizedMessage());
+      JOptionPane.showMessageDialog(null, Localization.getInstance().getString("OU_Error") + ":\n" + e
+        .getLocalizedMessage());
     }
   }
 }

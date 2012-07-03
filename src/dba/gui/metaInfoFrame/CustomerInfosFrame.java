@@ -17,15 +17,15 @@
 
 package dba.gui.metaInfoFrame;
 
-import data.Database;
-import data.Person;
-import data.RelationSchema;
 import dba.options.Feedback;
 import dba.options.FeedbackEnum;
 import dba.options.Options;
 import dba.utils.GetIcons;
 import dba.utils.Localization;
 import dba.utils.Observable;
+import dbaCore.data.Database;
+import dbaCore.data.Person;
+import dbaCore.data.RelationSchema;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -335,7 +335,9 @@ public class CustomerInfosFrame extends JDialog implements Observable {
 
     if (outputFile.exists()) {
       Object[] options = {locale.getString("Yes"), locale.getString("No")};
-      int result = JOptionPane.showOptionDialog(null, locale.getString("GUI_TheFile") + " " + outputFile.getName() + " " + locale.getString("GUI_AlreadyExisting"), locale.getString("Confirm"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+      int result = JOptionPane.showOptionDialog(null, locale.getString("GUI_TheFile") + " " + outputFile.getName() +
+        " " + locale.getString("GUI_AlreadyExisting"), locale.getString("Confirm"), JOptionPane.YES_NO_OPTION,
+        JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 
       switch (result) {
         case JOptionPane.YES_OPTION:

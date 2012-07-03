@@ -17,12 +17,12 @@
 
 package dba.gui.newRelation.auxClasses;
 
-import data.Attribute;
-import data.Database;
-import data.RelationSchema;
 import dba.gui.CustomTree;
 import dba.gui.FkWizard.FkWizard;
 import dba.utils.Localization;
+import dbaCore.data.Attribute;
+import dbaCore.data.Database;
+import dbaCore.data.RelationSchema;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;

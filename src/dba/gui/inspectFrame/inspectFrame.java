@@ -17,11 +17,11 @@
 
 package dba.gui.inspectFrame;
 
-import data.Database;
-import data.RelationSchema;
 import dba.utils.GetIcons;
 import dba.utils.Localization;
 import dba.utils.RelationInspectorGui;
+import dbaCore.data.Database;
+import dbaCore.data.RelationSchema;
 
 import javax.swing.*;
 import java.awt.*;

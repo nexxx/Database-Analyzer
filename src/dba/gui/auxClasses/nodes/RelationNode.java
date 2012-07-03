@@ -17,7 +17,7 @@
 
 package dba.gui.auxClasses.nodes;
 
-import data.RelationSchema;
+import dbaCore.data.RelationSchema;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 

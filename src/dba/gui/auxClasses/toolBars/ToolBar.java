@@ -17,9 +17,6 @@
 
 package dba.gui.auxClasses.toolBars;
 
-import data.TimeLine;
-import data.events.ChangeListener;
-import data.events.Time;
 import dba.gui.auxClasses.DatabaseTreePanel;
 import dba.gui.auxClasses.GuiLogic;
 import dba.gui.auxClasses.RelationDetailsView;
@@ -28,6 +25,9 @@ import dba.gui.auxClasses.feedback.FeedbackbarPanel;
 import dba.options.FeedbackEnum;
 import dba.utils.GetIcons;
 import dba.utils.Localization;
+import dbaCore.data.TimeLine;
+import dbaCore.data.events.ChangeListener;
+import dbaCore.data.events.Time;
 
 import javax.swing.*;
 import java.awt.*;
@@ -76,7 +76,7 @@ public class ToolBar extends JToolBar implements Observer {
 
     TimeLine.getInstance().addChangeListener(new ChangeListener() {
       @Override
-      public void Change(data.events.Change change) {
+      public void Change(dbaCore.data.events.Change change) {
         if (change.getTime() == Time.AFTERCHANGE) {
           btnUndo.setEnabled(TimeLine.getInstance().getBackwardPossible());
           btnRedo.setEnabled(TimeLine.getInstance().getForwardPossible());

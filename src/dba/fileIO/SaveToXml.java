@@ -18,9 +18,9 @@
 /**
  *
  */
-package dba.data.fileIO;
+package dba.fileIO;
 
-import data.Database;
+import dbaCore.data.Database;
 
 import javax.xml.bind.JAXB;
 import java.io.File;

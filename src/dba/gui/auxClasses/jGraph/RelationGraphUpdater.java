@@ -21,9 +21,9 @@ import com.mxgraph.layout.hierarchical.mxHierarchicalLayout;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
-import data.Attribute;
-import data.ForeignKeyConstraint;
-import data.RelationSchema;
+import dbaCore.data.Attribute;
+import dbaCore.data.ForeignKeyConstraint;
+import dbaCore.data.RelationSchema;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -39,7 +39,8 @@ public class RelationGraphUpdater implements Runnable {
   private ArrayList<RelationSchema> dbRelations;
   private ArrayList<ForeignKeyConstraint> foreignKeys;
 
-  public RelationGraphUpdater(mxGraph graph, mxGraphComponent graphComponent, ArrayList<RelationSchema> relations, ArrayList<ForeignKeyConstraint> foreignKeys) {
+  public RelationGraphUpdater(mxGraph graph, mxGraphComponent graphComponent, ArrayList<RelationSchema> relations,
+                              ArrayList<ForeignKeyConstraint> foreignKeys) {
     super();
     dbRelations = relations;
     this.foreignKeys = foreignKeys;
@@ -158,11 +159,13 @@ public class RelationGraphUpdater implements Runnable {
     int attributeOffset = 40;
     int width = getRequiredWidth(relation);
 
-    mxCell relationVertex = (mxCell) graph.insertVertex(parentPane, relation.getName(), relation, 0, offset, width, 40 + 1 + relation.getAttributes().size() * 25, "RELATION");
+    mxCell relationVertex = (mxCell) graph.insertVertex(parentPane, relation.getName(), relation, 0, offset, width,
+      40 + 1 + relation.getAttributes().size() * 25, "RELATION");
 
     // Add attributes
     for (Attribute attr : relation.getAttributes()) {
-      graph.insertVertex(relationVertex, attr.getName(), attr, 1, attributeOffset, width - 2, 25, getAttributeStyle(attr));
+      graph.insertVertex(relationVertex, attr.getName(), attr, 1, attributeOffset, width - 2, 25,
+        getAttributeStyle(attr));
       attributeOffset += 25;
 
     }

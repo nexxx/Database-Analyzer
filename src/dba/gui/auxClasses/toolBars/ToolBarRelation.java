@@ -17,13 +17,13 @@
 
 package dba.gui.auxClasses.toolBars;
 
-import data.NormalForm;
 import dba.gui.CustomTree;
 import dba.gui.auxClasses.DatabaseTreePanel;
 import dba.gui.auxClasses.RelationDetailsView;
 import dba.gui.auxClasses.RelationLogic;
 import dba.gui.auxClasses.RelationView;
 import dba.utils.TreeEnum;
+import dbaCore.data.NormalForm;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -47,7 +47,8 @@ public class ToolBarRelation extends ToolBar {
    */
   private static final long serialVersionUID = -3843390455939145286L;
 
-  public ToolBarRelation(DatabaseTreePanel dbTreePanel, RelationView relationView, RelationDetailsView relationDetailsView) {
+  public ToolBarRelation(DatabaseTreePanel dbTreePanel, RelationView relationView,
+                         RelationDetailsView relationDetailsView) {
     super(relationView, relationDetailsView, dbTreePanel);
 
     tree = dbTreePanel.getTree();

@@ -17,7 +17,7 @@
 
 package dba.gui.auxClasses.nodes;
 
-import data.Database;
+import dbaCore.data.Database;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 

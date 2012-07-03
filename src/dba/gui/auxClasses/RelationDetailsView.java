@@ -25,13 +25,13 @@ import com.mxgraph.util.mxEventObject;
 import com.mxgraph.util.mxEventSource.mxIEventListener;
 import com.mxgraph.view.mxGraph;
 import com.mxgraph.view.mxStylesheet;
-import data.Database;
-import data.RelationSchema;
 import dba.gui.CustomTree;
 import dba.gui.auxClasses.jGraph.JGraphView;
 import dba.gui.auxClasses.jGraph.RelationDetailsGraphUpdater;
 import dba.gui.auxClasses.jGraph.XGraph;
 import dba.options.Options;
+import dbaCore.data.Database;
+import dbaCore.data.RelationSchema;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

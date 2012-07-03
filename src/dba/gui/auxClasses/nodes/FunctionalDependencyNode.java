@@ -17,7 +17,7 @@
 
 package dba.gui.auxClasses.nodes;
 
-import data.FunctionalDependency;
+import dbaCore.data.FunctionalDependency;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 

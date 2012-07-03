@@ -100,7 +100,8 @@ public class optionsMenu extends JDialog {
 
       @Override
       public void actionPerformed(ActionEvent e) {
-        String selectedLang = options.getKeyByValue(options.getAvailableLocale(), (String) comboBobxLocale.getSelectedItem());
+        String selectedLang = options.getKeyByValue(options.getAvailableLocale(),
+          (String) comboBobxLocale.getSelectedItem());
         String selectedLAF = options.getKeyByValue(options.getAvailLAF(), (String) cbLaf.getSelectedItem());
         options.setLanguage(selectedLang);
         options.setShowTippsOnStartup(checkBoxTipOfTheDay.isSelected());
@@ -196,7 +197,8 @@ public class optionsMenu extends JDialog {
     btnBG.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
-        Color tmpColor = JColorChooser.showDialog(null, locale.getString("OPT_BackgroundColor"), Color.decode(options.getBackgroundColor()));
+        Color tmpColor = JColorChooser.showDialog(null, locale.getString("OPT_BackgroundColor"),
+          Color.decode(options.getBackgroundColor()));
         if (tmpColor != null) {
           colorBG = "#" + (Integer.toHexString(tmpColor.getRGB())).substring(2);
           pnlBG.setBackground(Color.decode(colorBG));
@@ -213,7 +215,8 @@ public class optionsMenu extends JDialog {
     btnAttr.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
-        Color tmpColor = JColorChooser.showDialog(null, locale.getString("OPT_AttributeColor"), Color.decode(options.getAttributeColor()));
+        Color tmpColor = JColorChooser.showDialog(null, locale.getString("OPT_AttributeColor"),
+          Color.decode(options.getAttributeColor()));
         if (tmpColor != null) {
           colorAttr = "#" + (Integer.toHexString(tmpColor.getRGB())).substring(2);
           pnlAttr.setBackground(Color.decode(colorAttr));
@@ -230,7 +233,8 @@ public class optionsMenu extends JDialog {
     btnRel.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
-        Color tmpColor = JColorChooser.showDialog(null, locale.getString("OPT_RelationColor"), Color.decode(options.getRelationColor()));
+        Color tmpColor = JColorChooser.showDialog(null, locale.getString("OPT_RelationColor"),
+          Color.decode(options.getRelationColor()));
         if (tmpColor != null) {
           colorRel = "#" + (Integer.toHexString(tmpColor.getRGB())).substring(2);
           pnlRel.setBackground(Color.decode(colorRel));
@@ -247,7 +251,8 @@ public class optionsMenu extends JDialog {
     btnFont.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
-        Color tmpColor = JColorChooser.showDialog(null, locale.getString("OPT_FontColor"), Color.decode(options.getFontColor()));
+        Color tmpColor = JColorChooser.showDialog(null, locale.getString("OPT_FontColor"),
+          Color.decode(options.getFontColor()));
         if (tmpColor != null) {
           colorFont = "#" + (Integer.toHexString(tmpColor.getRGB())).substring(2);
           pnlFont.setBackground(Color.decode(colorFont));
@@ -264,7 +269,8 @@ public class optionsMenu extends JDialog {
     btnArrowFk.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
-        Color tmpColor = JColorChooser.showDialog(null, locale.getString("OPT_ArrowFkColor"), Color.decode(options.getArrowFKColor()));
+        Color tmpColor = JColorChooser.showDialog(null, locale.getString("OPT_ArrowFkColor"),
+          Color.decode(options.getArrowFKColor()));
         if (tmpColor != null) {
           colorArrowFk = "#" + (Integer.toHexString(tmpColor.getRGB())).substring(2);
           pnlArrowFk.setBackground(Color.decode(colorArrowFk));
@@ -281,7 +287,8 @@ public class optionsMenu extends JDialog {
     btnArrowFd.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
-        Color tmpColor = JColorChooser.showDialog(null, locale.getString("OPT_ArrowFdColor"), Color.decode(options.getArrowFDColor()));
+        Color tmpColor = JColorChooser.showDialog(null, locale.getString("OPT_ArrowFdColor"),
+          Color.decode(options.getArrowFDColor()));
         if (tmpColor != null) {
           colorArrowFd = "#" + (Integer.toHexString(tmpColor.getRGB())).substring(2);
           pnlArrowFd.setBackground(Color.decode(colorArrowFd));
@@ -296,7 +303,8 @@ public class optionsMenu extends JDialog {
     btnDefault.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
-        int n = JOptionPane.showConfirmDialog(null, locale.getString("OPT_Confirm"), locale.getString("OPT_ConfirmTitle"), JOptionPane.YES_NO_OPTION);
+        int n = JOptionPane.showConfirmDialog(null, locale.getString("OPT_Confirm"),
+          locale.getString("OPT_ConfirmTitle"), JOptionPane.YES_NO_OPTION);
         if (n == JOptionPane.YES_OPTION) {
           colorBG = "#A7E2FF";
           pnlBG.setBackground(Color.decode(colorBG));

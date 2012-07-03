@@ -19,9 +19,9 @@ package dba.gui.auxClasses.jGraph;
 
 import com.mxgraph.model.mxCell;
 import com.mxgraph.view.mxGraph;
-import data.Attribute;
-import data.FunctionalDependency;
-import data.RelationSchema;
+import dbaCore.data.Attribute;
+import dbaCore.data.FunctionalDependency;
+import dbaCore.data.RelationSchema;
 
 import java.util.ArrayList;
 
@@ -90,14 +90,16 @@ public class RelationDetailsGraphUpdater implements Runnable {
     int attributeWidth;
     ArrayList<mxCell> attributeCells = new ArrayList<>();
 
-    mxCell relationVertex = (mxCell) graph.insertVertex(parentPane, relation.getName(), relation, horizontalOffset, verticalOffset, getRequiredWidth(relation), 25, "RELATION_HEADER");
+    mxCell relationVertex = (mxCell) graph.insertVertex(parentPane, relation.getName(), relation, horizontalOffset,
+      verticalOffset, getRequiredWidth(relation), 25, "RELATION_HEADER");
 
     attributeOffset = (int) (relationVertex.getGeometry().getY() + 25);
 
     // Add attributes
     for (Attribute attr : relation.getAttributes()) {
       attributeWidth = getRequiredWidth(attr);
-      attributeCells.add((mxCell) graph.insertVertex(parentPane, attr.getName(), attr, horizontalOffset, attributeOffset, attributeWidth, 25, getAttributeStyle(attr)));
+      attributeCells.add((mxCell) graph.insertVertex(parentPane, attr.getName(), attr, horizontalOffset,
+        attributeOffset, attributeWidth, 25, getAttributeStyle(attr)));
       horizontalOffset += attributeWidth;
     }
 
@@ -152,7 +154,8 @@ public class RelationDetailsGraphUpdater implements Runnable {
    * @param attributeCells the mxCells containing the attributes
    * @param fds            the functionalDependencies to display
    */
-  private void drawFunctionalDependencies(ArrayList<Attribute> attributes, ArrayList<mxCell> attributeCells, ArrayList<FunctionalDependency> fds) {
+  private void drawFunctionalDependencies(ArrayList<Attribute> attributes, ArrayList<mxCell> attributeCells,
+                                          ArrayList<FunctionalDependency> fds) {
     int offset = 2;
 
     for (FunctionalDependency fd : fds) {
@@ -170,7 +173,8 @@ public class RelationDetailsGraphUpdater implements Runnable {
    * @param fd             the functionalDependency to display
    * @param verticalOffset the offset between two functionalDependencies
    */
-  private void drawFunctionalDependency(ArrayList<Attribute> attributes, ArrayList<mxCell> attributeCells, FunctionalDependency fd, int verticalOffset) {
+  private void drawFunctionalDependency(ArrayList<Attribute> attributes, ArrayList<mxCell> attributeCells,
+                                        FunctionalDependency fd, int verticalOffset) {
     // draws all the near nodes
     ArrayList<mxCell> nearNodes = drawNodes(attributeCells, verticalOffset + 2);
 
@@ -192,7 +196,8 @@ public class RelationDetailsGraphUpdater implements Runnable {
     ArrayList<mxCell> nodes = new ArrayList<>();
 
     for (mxCell cell : attributes) {
-      nodes.add((mxCell) graph.insertVertex(parentPane, null, null, cell.getGeometry().getCenterX(), getCellLowestYPoint(cell) + offset, 1, 1, "NODE"));
+      nodes.add((mxCell) graph.insertVertex(parentPane, null, null, cell.getGeometry().getCenterX(),
+        getCellLowestYPoint(cell) + offset, 1, 1, "NODE"));
     }
 
     return nodes;
@@ -218,7 +223,8 @@ public class RelationDetailsGraphUpdater implements Runnable {
    * @param farNodes   the Array of Nodes which are further away of the
    *                   attribute-Nodes
    */
-  private void drawAttributeArrows(ArrayList<Attribute> attributes, FunctionalDependency fd, ArrayList<mxCell> nearNodes, ArrayList<mxCell> farNodes) {
+  private void drawAttributeArrows(ArrayList<Attribute> attributes, FunctionalDependency fd,
+                                   ArrayList<mxCell> nearNodes, ArrayList<mxCell> farNodes) {
     int index;
     ArrayList<Integer> indices = new ArrayList<>();
 

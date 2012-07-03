@@ -17,13 +17,13 @@
 
 package dba.gui.FDWizard;
 
-import data.Attribute;
-import data.FunctionalDependency;
-import data.RelationSchema;
 import dba.gui.newRelation.auxClasses.MultiListSelectionModel;
 import dba.utils.GetIcons;
 import dba.utils.Localization;
 import dba.utils.constants;
+import dbaCore.data.Attribute;
+import dbaCore.data.FunctionalDependency;
+import dbaCore.data.RelationSchema;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;

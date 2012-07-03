@@ -17,15 +17,15 @@
 
 package dba.gui.auxClasses;
 
-import data.Attribute;
-import data.RelationSchema;
-import data.dBTypes.DbTypeFactory;
-import data.dBTypes.types.DbType;
 import dba.gui.CustomTree;
 import dba.gui.FkWizard.FkWizard;
 import dba.gui.auxClasses.feedback.FeedbackbarPanel;
 import dba.options.FeedbackEnum;
 import dba.utils.Localization;
+import dbaCore.data.Attribute;
+import dbaCore.data.RelationSchema;
+import dbaCore.data.dBTypes.DbTypeFactory;
+import dbaCore.data.dBTypes.types.DbType;
 
 import javax.swing.*;
 
@@ -51,7 +51,9 @@ public class AttrLogic {
     RelationSchema relation = tree.getParentRelation();
     Attribute attribute = tree.getAttribute();
     Object[] options = {locale.getString("Yes"), locale.getString("No")};
-    int n = JOptionPane.showOptionDialog(null, locale.getString("TREE_AttrDelMsg") + " '" + attribute.getName() + "'", locale.getString("TREE_AttrDelTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+    int n = JOptionPane.showOptionDialog(null, locale.getString("TREE_AttrDelMsg") + " '" + attribute.getName() +
+      "'", locale.getString("TREE_AttrDelTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+      options, options[1]);
     if (n == 0) {
       relation.removeAttribute(attribute);
     }
@@ -62,7 +64,8 @@ public class AttrLogic {
    */
   public void renameAttribute() {
     Attribute attribute = tree.getAttribute();
-    String name = (String) JOptionPane.showInputDialog(null, locale.getString("TREE_AttrNewAttrName"), locale.getString("TREE_AttrRenAttrTitle"), JOptionPane.QUESTION_MESSAGE, null, null, attribute.getName());
+    String name = (String) JOptionPane.showInputDialog(null, locale.getString("TREE_AttrNewAttrName"),
+      locale.getString("TREE_AttrRenAttrTitle"), JOptionPane.QUESTION_MESSAGE, null, null, attribute.getName());
     if (name != null && !name.isEmpty() && !tree.checkIfAttrExists(name, tree.getParentRelation())) {
       tree.getDatabase().renameAttribute(tree.getParentRelation(), attribute, name);
     } else {

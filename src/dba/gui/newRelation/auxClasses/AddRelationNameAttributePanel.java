@@ -17,15 +17,15 @@
 
 package dba.gui.newRelation.auxClasses;
 
-import data.Database;
-import data.RelationSchema;
-import data.dBTypes.DbTypeFactory;
-import data.dBTypes.types.DbType;
 import dba.gui.CustomTree;
 import dba.utils.GetIcons;
 import dba.utils.Localization;
 import dba.utils.WizardEnum;
 import dba.utils.constants;
+import dbaCore.data.Database;
+import dbaCore.data.RelationSchema;
+import dbaCore.data.dBTypes.DbTypeFactory;
+import dbaCore.data.dBTypes.types.DbType;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -138,7 +138,8 @@ public class AddRelationNameAttributePanel extends JPanel implements constants {
           oldName = tmpRelation.getName();
         }
 
-        if (checkIfRelationExists(txtRelName.getText(), oldName) || txtRelName.getText().isEmpty() || txtRelName.getText().equals(locale.getString("WIZ_AttrNameQuestion"))) {
+        if (checkIfRelationExists(txtRelName.getText(), oldName) || txtRelName.getText().isEmpty() || txtRelName
+          .getText().equals(locale.getString("WIZ_AttrNameQuestion"))) {
           lblAlreadyExisting.setVisible(true);
           AddRelationNameAttributePanel.this.firePropertyChange("RelName", null, false);
         } else {
@@ -221,7 +222,8 @@ public class AddRelationNameAttributePanel extends JPanel implements constants {
       return;
     }
     if (!tmpRelation.addAttribute(txtAttrName.getText())) {
-      JOptionPane.showMessageDialog(this, locale.getString("Attribute") + " '" + txtAttrName.getText() + "' " + locale.getString("WIZ_AttrDialogExisting"));
+      JOptionPane.showMessageDialog(this, locale.getString("Attribute") + " '" + txtAttrName.getText() + "' " +
+        locale.getString("WIZ_AttrDialogExisting"));
       txtAttrName.selectAll();
       return;
     }

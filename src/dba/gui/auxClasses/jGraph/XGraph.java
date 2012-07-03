@@ -19,8 +19,8 @@ package dba.gui.auxClasses.jGraph;
 
 import com.mxgraph.model.mxCell;
 import com.mxgraph.view.mxGraph;
-import data.Attribute;
-import data.RelationSchema;
+import dbaCore.data.Attribute;
+import dbaCore.data.RelationSchema;
 
 /**
  * mxGraph-extension to provide custom behaviour
