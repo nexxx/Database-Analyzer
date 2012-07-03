@@ -35,21 +35,17 @@ import dba.gui.metaInfoFrame.CustomerInfosFrame;
 import dba.init.Initialize;
 import dba.options.Feedback;
 import dba.options.FeedbackEnum;
-import dba.options.Options;
 import dba.utils.GetIcons;
 import dba.utils.Localization;
 import dba.utils.OpenUrl;
 import dba.utils.constants;
 import logic.Analysis.GeneralRelationCheck;
 
-import javax.help.HelpSet;
-import javax.help.JHelp;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -401,11 +397,10 @@ public class MainWindow implements constants, Observer {
     userGuideMenuItem.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        showHelp();
+        OpenUrl.openURL("https://github.com/nexxx/Database-Analyzer/wiki/UserManual");
       }
     });
     userGuideMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
-    // userGuideMenuItem.setEnabled(false);
     helpMenu.add(userGuideMenuItem);
 
     JMenuItem aboutMenuItem = new JMenuItem(locale.getString("GUI_About"), iconAbout);
@@ -429,27 +424,6 @@ public class MainWindow implements constants, Observer {
 
   }
 
-  private void showHelp() {
-    JHelp helpViewer = null;
-    try {
-      ClassLoader cl = MainWindow.class.getClassLoader();
-      URL url = HelpSet.findHelpSet(cl, "jhelpset_" + Options.getInstance().getLanguage() + ".hs");
-      if (url == null) {
-        url = HelpSet.findHelpSet(cl, "jhelpset_en.hs");
-      }
-      helpViewer = new JHelp(new HelpSet(cl, url));
-    } catch (Exception ex) {
-      feedbackbarPanel.showFeedback(locale.getString("FB_LoadHelpFailed"), FeedbackEnum.FAILED);
-    }
-
-    JFrame frame = new JFrame();
-    frame.setTitle(locale.getString("HE_FrameTitle"));
-    frame.setSize(600, 500);
-    frame.getContentPane().add(helpViewer);
-    frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-    frame.setLocationRelativeTo(null);
-    frame.setVisible(true);
-  }
 
   private void createExtrasMenu(JMenuBar menuBar) {
     JMenu extrasMenu = new JMenu(locale.getString("GUI_Extras"));

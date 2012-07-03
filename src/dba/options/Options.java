@@ -49,6 +49,8 @@ public class Options extends Observable {
   private String relationColor;
   private String backgroundColor;
   private String fontColor;
+  private String lookAndFeel;
+  private HashMap<String, String> availLAF;
 
   /**
    * Constructor for the options class
@@ -58,6 +60,12 @@ public class Options extends Observable {
     availableLocale = new HashMap<>();
     availableLocale.put("de", "Deutsch");
     availableLocale.put("en", "English");
+
+    availLAF = new HashMap<>();
+    availLAF.put("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel", "Nimbus LAF");
+    availLAF.put("SYSTEMLAF", "System LAF");
+    availLAF.put("javax.swing.plaf.metal.MetalLookAndFeel", "Metal LAF");
+
 
     prop = new Properties();
 
@@ -79,6 +87,8 @@ public class Options extends Observable {
     relationColor = "#00CD00";
     backgroundColor = "#A7E2FF";
     fontColor = "#000000";
+
+    lookAndFeel = "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel";
   }
 
   /**
@@ -145,6 +155,8 @@ public class Options extends Observable {
       prop.setProperty("backgroundColor", backgroundColor);
       prop.setProperty("fontColor", fontColor);
 
+      prop.setProperty("lookAndFeed", lookAndFeel);
+
       // Save properties to DBN options folder
       prop.store(new FileOutputStream(optionsFile), "DBA options file");
 
@@ -170,6 +182,8 @@ public class Options extends Observable {
       relationColor = prop.getProperty("relationColor");
       backgroundColor = prop.getProperty("backgroundColor");
       fontColor = prop.getProperty("fontColor");
+
+      lookAndFeel = prop.getProperty("lookAndFeed");
 
 
     } catch (Exception ex) {
@@ -219,14 +233,13 @@ public class Options extends Observable {
   }
 
   /**
-   * Get the locale String (de/en/..) by full Locale
-   * (Deutsch/English/...)
+   * Get the key by value
    *
    * @param map   Hashmap
-   * @param value String with Locale (Deutsch/English/...)
-   * @return short Locale string (de/en/...)
+   * @param value Value to search for
+   * @return Key or null if not found
    */
-  public <T, E> T getKeyByLanguage(HashMap<T, E> map, E value) {
+  public <T, E> T getKeyByValue(HashMap<T, E> map, E value) {
     for (Entry<T, E> entry : map.entrySet()) {
       if (value.equals(entry.getValue())) {
         return entry.getKey();
@@ -289,5 +302,26 @@ public class Options extends Observable {
    */
   public void setFontColor(String fontColor) {
     this.fontColor = fontColor;
+  }
+
+  /**
+   * @return the lookAndFeed
+   */
+  public String getLookAndFeel() {
+    return lookAndFeel;
+  }
+
+  /**
+   * @param lookAndFeel LAF String
+   */
+  public void setLookAndFeel(String lookAndFeel) {
+    this.lookAndFeel = lookAndFeel;
+  }
+
+  /**
+   * @return Available LAFs
+   */
+  public HashMap<String, String> getAvailLAF() {
+    return availLAF;
   }
 }

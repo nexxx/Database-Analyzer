@@ -73,12 +73,16 @@ public class Initialize {
   }
 
   private void setLookAndFeel() {
+
     // Set LookAndFeel
     try {
-      // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-      UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+      if (options.getLookAndFeel().equalsIgnoreCase("SYSTEMLAF")) {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+      } else {
+        UIManager.setLookAndFeel(options.getLookAndFeel());
+      }
     } catch (Exception e) {
-      System.out.println("Nimbus LookAndFeel not found. Using standard LookAndFeel instead");
+      System.out.println("LookAndFeel not found. Using standard LookAndFeel instead");
       e.printStackTrace();
     }
   }

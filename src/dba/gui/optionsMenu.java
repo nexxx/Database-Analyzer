@@ -46,6 +46,7 @@ public class optionsMenu extends JDialog {
   private String currentAttrColor;
   private String currentRelColor;
   private String currentFontColor;
+  private String currentLAF;
   private Localization locale;
   private String colorBG;
   private String colorAttr;
@@ -55,6 +56,7 @@ public class optionsMenu extends JDialog {
   private JPanel pnlAttr;
   private JPanel pnlRel;
   private JPanel pnlFont;
+  private JComboBox<String> cbLaf;
 
   /**
    * Create the dialog.
@@ -68,6 +70,7 @@ public class optionsMenu extends JDialog {
     currentBgColor = options.getBackgroundColor();
     currentFontColor = options.getFontColor();
     currentRelColor = options.getRelationColor();
+    currentLAF = options.getLookAndFeel();
     frame = this;
     setResizable(false);
     this.setModal(true);
@@ -89,19 +92,22 @@ public class optionsMenu extends JDialog {
 
       @Override
       public void actionPerformed(ActionEvent e) {
-        String selectedLang = options.getKeyByLanguage(options.getAvailableLocale(), (String) comboBobxLocale.getSelectedItem());
+        String selectedLang = options.getKeyByValue(options.getAvailableLocale(), (String) comboBobxLocale.getSelectedItem());
+        String selectedLAF = options.getKeyByValue(options.getAvailLAF(), (String) cbLaf.getSelectedItem());
         options.setLanguage(selectedLang);
         options.setShowTippsOnStartup(checkBoxTipOfTheDay.isSelected());
         options.setAttributeColor(colorAttr);
         options.setBackgroundColor(colorBG);
         options.setFontColor(colorFont);
         options.setRelationColor(colorRel);
+        options.setLookAndFeel(selectedLAF);
 
         boolean needToRestart = !currentLocale.equalsIgnoreCase(options.getLanguage());
         needToRestart = needToRestart || !currentAttrColor.equalsIgnoreCase(options.getAttributeColor());
         needToRestart = needToRestart || !currentBgColor.equalsIgnoreCase(options.getBackgroundColor());
         needToRestart = needToRestart || !currentRelColor.equalsIgnoreCase(options.getRelationColor());
         needToRestart = needToRestart || !currentFontColor.equalsIgnoreCase(options.getFontColor());
+        needToRestart = needToRestart || !currentLAF.equalsIgnoreCase(options.getLookAndFeel());
         if (needToRestart) {
           JOptionPane.showMessageDialog(null, locale.getString("OPT_Restart"));
         }
@@ -134,10 +140,17 @@ public class optionsMenu extends JDialog {
 
   private JPanel createGeneralPanel() {
     JPanel panel = new JPanel(new MigLayout("fillx"));
-    comboBobxLocale = new JComboBox<>();
-    checkBoxTipOfTheDay = new JCheckBox();
 
+    checkBoxTipOfTheDay = new JCheckBox();
     checkBoxTipOfTheDay.setSelected(options.getShowTippsOnStartup());
+
+    cbLaf = new JComboBox<>();
+    for (String laf : options.getAvailLAF().values()) {
+      cbLaf.addItem(laf);
+    }
+    cbLaf.setSelectedItem(options.getAvailLAF().get(options.getLookAndFeel()));
+
+    comboBobxLocale = new JComboBox<>();
     for (String locale : options.getAvailableLocale().values()) {
       comboBobxLocale.addItem(locale);
     }
@@ -147,6 +160,8 @@ public class optionsMenu extends JDialog {
     panel.add(comboBobxLocale, "alignx right, wrap");
     panel.add(new JLabel(locale.getString("OPT_ShowTOD")), "alignx left, growx");
     panel.add(checkBoxTipOfTheDay, "alignx right, wrap");
+    panel.add(new JLabel("LookAndFeel"), "growx");
+    panel.add(cbLaf, "alignx right, wrap");
 
     return panel;
   }
