@@ -51,19 +51,28 @@ public class XGraph extends mxGraph {
   }
 
   /**
-   * Disallow selection of Edges
+   * Disallow selection of invisible Cells
    */
   @Override
   public boolean isCellSelectable(Object cell) {
     if (cell != null) {
       if (cell instanceof mxCell) {
-        mxCell myCell = (mxCell) cell;
-        if (myCell.isEdge()) {
+        if(((mxCell)cell).getStyle().contains("INVISIBLE")){
           return false;
         }
       }
     }
     return super.isCellSelectable(cell);
+  }
+
+  @Override
+  public boolean  isValidSource(Object cell){
+    return false;
+  }
+
+  @Override
+  public boolean  isValidTarget(Object cell){
+    return false;
   }
 
 }
