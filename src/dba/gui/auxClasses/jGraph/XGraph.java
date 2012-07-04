@@ -20,6 +20,7 @@ package dba.gui.auxClasses.jGraph;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.view.mxGraph;
 import dbaCore.data.Attribute;
+import dbaCore.data.FunctionalDependency;
 import dbaCore.data.RelationSchema;
 
 /**
@@ -44,6 +45,8 @@ public class XGraph extends mxGraph {
 
         result += ((Attribute) value).getName();
         return result;
+      } else if(value instanceof FunctionalDependency){
+        return "";
       }
     }
 

@@ -231,19 +231,19 @@ public class RelationDetailsGraphUpdater implements Runnable {
     // draw arrows for the SourceAttributes
     for (Attribute sourceAttr : fd.getSourceAttributes()) {
       index = attributes.indexOf(sourceAttr);
-      graph.insertEdge(parentPane, null, "", nearNodes.get(index), farNodes.get(index), "EDGE_PLAIN");
+      graph.insertEdge(parentPane, null, fd, nearNodes.get(index), farNodes.get(index), "EDGE_PLAIN");
       indices.add(index);
     }
 
     // draw arrows for the TargetAttributes
     for (Attribute targetAttr : fd.getTargetAttributes()) {
       index = attributes.indexOf(targetAttr);
-      graph.insertEdge(parentPane, null, "", farNodes.get(index), nearNodes.get(index), "EDGE_ARROW");
+      graph.insertEdge(parentPane, null, fd, farNodes.get(index), nearNodes.get(index), "EDGE_ARROW");
       indices.add(index);
     }
 
     // Connect arrows
     java.util.Collections.sort(indices);
-    graph.insertEdge(parentPane, null, "", farNodes.get(indices.get(0)), farNodes.get(indices.get(indices.size() - 1)), "EDGE_PLAIN");
+    graph.insertEdge(parentPane, null, fd, farNodes.get(indices.get(0)), farNodes.get(indices.get(indices.size() - 1)), "EDGE_PLAIN");
   }
 }
