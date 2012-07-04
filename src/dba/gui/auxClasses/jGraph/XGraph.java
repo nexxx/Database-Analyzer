@@ -39,12 +39,19 @@ public class XGraph extends mxGraph {
         // return only the name of the relation
         return ((RelationSchema) value).getName();
       } else if (value instanceof Attribute) {
-        // return a space (for pk/fk icons) and the name of the
-        // attribute
-        String result = "         ";
 
-        result += ((Attribute) value).getName();
-        return result;
+        if(xCell.isVertex()){
+          // return a space (for pk/fk icons) and the name of the
+          // attribute
+          String result = "         ";
+
+          result += ((Attribute) value).getName();
+          return result;
+        }
+        else{
+          return "";
+        }
+
       } else if(value instanceof FunctionalDependency){
         return "";
       }
