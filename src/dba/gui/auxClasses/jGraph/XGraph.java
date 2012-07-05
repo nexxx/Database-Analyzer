@@ -20,6 +20,7 @@ package dba.gui.auxClasses.jGraph;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.view.mxGraph;
 import dbaCore.data.Attribute;
+import dbaCore.data.FunctionalDependency;
 import dbaCore.data.RelationSchema;
 
 /**
@@ -38,12 +39,21 @@ public class XGraph extends mxGraph {
         // return only the name of the relation
         return ((RelationSchema) value).getName();
       } else if (value instanceof Attribute) {
-        // return a space (for pk/fk icons) and the name of the
-        // attribute
-        String result = "         ";
 
-        result += ((Attribute) value).getName();
-        return result;
+        if(xCell.isVertex()){
+          // return a space (for pk/fk icons) and the name of the
+          // attribute
+          String result = "         ";
+
+          result += ((Attribute) value).getName();
+          return result;
+        }
+        else{
+          return "";
+        }
+
+      } else if(value instanceof FunctionalDependency){
+        return "";
       }
     }
 
@@ -51,19 +61,28 @@ public class XGraph extends mxGraph {
   }
 
   /**
-   * Disallow selection of Edges
+   * Disallow selection of invisible Cells
    */
   @Override
   public boolean isCellSelectable(Object cell) {
     if (cell != null) {
       if (cell instanceof mxCell) {
-        mxCell myCell = (mxCell) cell;
-        if (myCell.isEdge()) {
+        if(((mxCell)cell).getStyle().contains("INVISIBLE")){
           return false;
         }
       }
     }
     return super.isCellSelectable(cell);
+  }
+
+  @Override
+  public boolean  isValidSource(Object cell){
+    return false;
+  }
+
+  @Override
+  public boolean  isValidTarget(Object cell){
+    return false;
   }
 
 }

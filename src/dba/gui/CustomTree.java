@@ -278,6 +278,7 @@ public class CustomTree extends JTree {
         TreeNode[] pathWithNodes = child.getPath();
         TreePath path = new TreePath(pathWithNodes);
         tree.setSelectionPath(path);
+        tree.scrollPathToVisible(path);
         break;
       } else {
         selectNode(child, target);

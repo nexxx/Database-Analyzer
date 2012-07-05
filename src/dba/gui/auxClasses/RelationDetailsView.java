@@ -93,6 +93,7 @@ public class RelationDetailsView extends JGraphView implements Observer {
     // Configure Graph
     graph.setCellsEditable(false);
     graph.setDropEnabled(false);
+    graph.setAllowDanglingEdges(false);
 
     graphComponent = new mxGraphComponent(graph);
     graphComponent.getViewport().setBackground(Color.decode(Options.getInstance().getBackgroundColor()));
