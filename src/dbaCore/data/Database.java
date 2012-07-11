@@ -233,6 +233,8 @@ public class Database extends HistoricObject {
       } else if (!targetAttribute.getIsPrimaryKey()) {
         sourceAttribute.setIsForeignKeyWithoutFiring(false);
         fksToDelete.add(fk);
+      }else if(!sourceAttribute.getIsForeignKey()){
+        fksToDelete.add(fk);
       }
 
     }

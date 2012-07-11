@@ -91,7 +91,6 @@ public class AttrLogic {
   public void toggleFK() {
     Attribute attribute = tree.getAttribute();
     if (attribute.getIsForeignKey()) {
-      removeForeignKey();
       attribute.setIsForeignKey(false);
     } else {
 
