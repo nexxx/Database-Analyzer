@@ -104,13 +104,6 @@ public class AttrLogic {
   }
 
   /**
-   * Removes a existent ForeignKey associated with this attribute
-   */
-  private void removeForeignKey() {
-    tree.getDatabase().removeForeignKey(tree.getParentRelation().getName(), tree.getAttribute().getName());
-  }
-
-  /**
    * Set the Attribute type (as given in class mySql)
    *
    * @param type Attribute Type

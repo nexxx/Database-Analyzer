@@ -232,9 +232,7 @@ public class RelationSchema extends HistoricObject implements Serializable {
       }
     }
 
-    for (FunctionalDependency fd : toDelete) {
-      removeFunctionalDependency(fd);
-    }
+    functionalDependencies.removeAll(toDelete);
   }
 
   /**
