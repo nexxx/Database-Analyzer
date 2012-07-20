@@ -161,7 +161,8 @@ public class AttributeTableModel extends AbstractTableModel {
    * @param row Row to delete ( 0 until n )
    */
   public void removeRow(int row) {
-    data.remove(row); // delete record from file fireTableRowsDeleted(row, row);
+    relation.removeAttribute(data.get(row));
+    fireTableDataChanged();
   }
 
 }
