@@ -76,6 +76,12 @@ public class GuiLogic {
     return lastFileName;
   }
 
+  public void setLastFileName(String fileName){
+    lastFileName=fileName;
+    notifyObservers(lastFileName);
+  }
+
+
   /**
    * Loads the database from the xml file
    */
@@ -158,14 +164,13 @@ public class GuiLogic {
         try {
           String path = fc.getSelectedFile().getCanonicalPath();
           FeedbackEnum ret = saveWithFilePicker(path);
-          lastFileName = path;
-          TimeLine.getInstance().notifyAboutChange();
+          setLastFileName(path);
           return ret;
         } catch (IOException ex) {
           return FeedbackEnum.FAILED;
         }
       } else {
-        lastFileName = lastFileNameBackup;
+        setLastFileName(lastFileNameBackup);
         return FeedbackEnum.CANCEL;
       }
     } else {
@@ -174,7 +179,7 @@ public class GuiLogic {
   }
 
   public FeedbackEnum saveAs() {
-    lastFileName = null;
+    setLastFileName(null);
     return save();
   }
 

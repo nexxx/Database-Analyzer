@@ -21,6 +21,9 @@ import dbaCore.data.events.Change;
 import dbaCore.data.events.ChangeListener;
 import dbaCore.data.events.Time;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
 /**
  * Class representing the Undo/Redo History
  *
@@ -29,6 +32,7 @@ import dbaCore.data.events.Time;
 public final class TimeLine extends HistoricObject {
   private static TimeLine instance;
   private static History history;
+  private PropertyChangeSupport changes = new PropertyChangeSupport( this );
 
   private TimeLine() {
     super();
@@ -108,7 +112,9 @@ public final class TimeLine extends HistoricObject {
 
   @Override
   public void setDirty(boolean dirty) {
+    boolean oldValue=history.isDirty();
     history.setDirty(dirty);
+    changes.firePropertyChange("isDirty",oldValue,dirty);
   }
 
   /**
@@ -141,6 +147,16 @@ public final class TimeLine extends HistoricObject {
   @Override
   public Object getClone() {
     return null;
+  }
+
+  public void addPropertyChangeListener( PropertyChangeListener listener )
+  {
+    changes.addPropertyChangeListener( listener );
+  }
+
+  public void removePropertyChangeListener( PropertyChangeListener listener )
+  {
+    changes.removePropertyChangeListener( listener );
   }
 
 }

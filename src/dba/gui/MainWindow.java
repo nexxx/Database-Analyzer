@@ -130,6 +130,7 @@ public class MainWindow implements constants, Observer {
 
     dbTreePanel = new DatabaseTreePanel(database);
     guiLogic = new GuiLogic(dbTreePanel);
+    guiLogic.addObserver(this);
     relationView = new RelationView(guiLogic);
     relationDetailsView = new RelationDetailsView(guiLogic);
 
@@ -207,6 +208,16 @@ public class MainWindow implements constants, Observer {
         }
       }
     });
+
+    TimeLine.getInstance().addPropertyChangeListener(new PropertyChangeListener()
+    {
+      @Override public void propertyChange( PropertyChangeEvent e )
+      {
+        if(e.getPropertyName().equals("isDirty")){
+          updateFrameTitle();
+          }
+      }
+    } );
 
     frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     frame.setSize(1024, 600);
@@ -507,6 +518,22 @@ public class MainWindow implements constants, Observer {
     if (arg instanceof Feedback) {
       Feedback feedback = (Feedback) arg;
       feedbackbarPanel.showFeedback(feedback.getText(), feedback.getFeedback());
+
+    }else if(arg instanceof String){
+      updateFrameTitle();
+    }
+  }
+
+  private void updateFrameTitle(){
+    if (guiLogic.getLastFileName() != null) {
+      frame.setTitle(locale.getString("GUI_FrameTitle") + " - " +
+        guiLogic.getLastFileName());
+    } else {
+      frame.setTitle(locale.getString("GUI_FrameTitle") + " - " +
+        locale.getString("GUI_FrameTitleNotSaved"));
+    }
+    if(TimeLine.getInstance().isDirty()){
+      frame.setTitle(frame.getTitle()+"*");
     }
   }
 
@@ -515,15 +542,9 @@ public class MainWindow implements constants, Observer {
     dbTreePanel.setDatabase(database);
     dbTreePanel.updateTree();
 
+    updateFrameTitle();
+
     relationView.display(database);
     relationDetailsView.display(database);
-
-    if (guiLogic.getLastFileName() != null) {
-      frame.setTitle(locale.getString("GUI_FrameTitle") + " - " +
-        guiLogic.getLastFileName());
-    } else {
-      frame.setTitle(locale.getString("GUI_FrameTitle") + " - " +
-        locale.getString("GUI_FrameTitleNotSaved"));
-    }
   }
 }
