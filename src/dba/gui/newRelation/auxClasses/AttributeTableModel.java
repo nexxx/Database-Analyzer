@@ -146,15 +146,8 @@ public class AttributeTableModel extends AbstractTableModel {
           if ((Boolean) value) {
             FkWizard wizard = new FkWizard(database, relation, attr);
             wizard.setVisible(true);
-
-            if (wizard.isDataBaseChanged()) {
-              attr.setIsForeignKey((Boolean) value);
-            }
-          } else {
-            database.removeForeignKey(relation.getName(), attr.getName());
-            attr.setIsForeignKey((Boolean) value);
           }
-
+          attr.setIsForeignKey((Boolean) value);
           return;
         }
       default:

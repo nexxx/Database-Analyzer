@@ -76,6 +76,14 @@ public class Database extends HistoricObject {
   }
 
   /**
+   * Cleans up invalid FK-References and fires the afterChange-event
+   */
+  private void fireAfterChange(){
+    removeInvalidForeignKeyReferences();
+    changeSupport.fireAfterChange();
+  }
+
+  /**
    * Adds a RelationSchema to the database and adds
    * PropertyChangedListener
    *
@@ -87,7 +95,7 @@ public class Database extends HistoricObject {
     changeSupport.fireBeforeChange();
     added = database.add(schema);
     schema.addChangeListener(changeListener);
-    changeSupport.fireAfterChange();
+    fireAfterChange();
     return added;
 
   }
@@ -103,7 +111,7 @@ public class Database extends HistoricObject {
       changeSupport.fireBeforeChange();
       updateFkRelationNames(relation.getName(), newName);
       relation.setNameWithoutFiring(newName);
-      changeSupport.fireAfterChange();
+      fireAfterChange();
     }
   }
 
@@ -120,7 +128,7 @@ public class Database extends HistoricObject {
         changeSupport.fireBeforeChange();
         updateFkAttributeNames(parentRelation.getName(), attribute.getName(), newName);
         parentRelation.renameAttributeWithoutFiring(attribute, newName);
-        changeSupport.fireAfterChange();
+        fireAfterChange();
       }
     }
   }
@@ -138,7 +146,7 @@ public class Database extends HistoricObject {
       targetRelation.removeChangeListener(changeListener);
       sourceRelation.addChangeListener(changeListener);
       database.set(database.indexOf(targetRelation), sourceRelation);
-      changeSupport.fireAfterChange();
+      fireAfterChange();
       return true;
     }
     return false;
@@ -163,7 +171,7 @@ public class Database extends HistoricObject {
         rel.addChangeListener(changeListener);
       }
       database.addAll(index, sourceRelations);
-      changeSupport.fireAfterChange();
+      fireAfterChange();
       return true;
     }
     return false;
@@ -187,7 +195,7 @@ public class Database extends HistoricObject {
       replaceRangeOfRelationsWithoutFiring(targetRelation, sourceRelations);
       this.foreignKeys.addAll(foreignKeys);
       updateForeignKeyReferences(targetRelation, sourceRelations);
-      changeSupport.fireAfterChange();
+      fireAfterChange();
       return true;
     }
 
@@ -311,7 +319,7 @@ public class Database extends HistoricObject {
     changeSupport.fireBeforeChange();
     schema.removeChangeListener(changeListener);
     boolean returnVal = database.remove(schema);
-    changeSupport.fireAfterChange();
+    fireAfterChange();
     return returnVal;
   }
 
@@ -420,15 +428,6 @@ public class Database extends HistoricObject {
   @XmlElement(name = "foreignKey")
   public ArrayList<ForeignKeyConstraint> getForeignKeys() {
     return foreignKeys;
-  }
-
-  /**
-   * @param foreignKeys the foreignKeys to set
-   */
-  public void setForeignKeys(ArrayList<ForeignKeyConstraint> foreignKeys) {
-    changeSupport.fireBeforeChange();
-    this.foreignKeys = foreignKeys;
-    changeSupport.fireAfterChange();
   }
 
   /**
