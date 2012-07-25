@@ -29,7 +29,7 @@ public class Oracle extends DbType {
     "BINARY_DOUBLE", "TIMESTAMP", "INTERVAL YEAR", "INTERVAL DAY", "RAW", "LONG RAW", "ROWID", "UROWID", "CHAR",
     "NCHAR", "CLOB", "NCLOB", "BLOB", "BFILE"};
   private static Oracle instance = null;
-  public JComboBox<String> combobox;
+  private JComboBox<String> combobox;
 
   @Override
   public String[] getTypes() {

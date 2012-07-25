@@ -43,7 +43,7 @@ public enum TypeEnum {
    */
   public static TypeEnum getEnumByValue(String value) {
     for (TypeEnum e : values()) {
-      if (e.getName().endsWith(value)) {
+      if (e.name.endsWith(value)) {
         return e;
       }
     }

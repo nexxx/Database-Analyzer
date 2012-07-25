@@ -73,14 +73,26 @@ public class WelcomeScreen extends JDialog {
       }
     });
     getContentPane().add(contentPanel, BorderLayout.CENTER);
-    JPanel buttonPane = new JPanel();
-    buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-    getContentPane().add(buttonPane, BorderLayout.SOUTH);
 
-    JButton okButton = new JButton(locale.getString("WSC_New"));
-    buttonPane.add(okButton);
-    getRootPane().setDefaultButton(okButton);
-    okButton.addActionListener(new ActionListener() {
+    JPanel pnlButtons = new JPanel(new MigLayout("fillx"));
+    contentPanel.add(pnlButtons, BorderLayout.CENTER);
+
+
+    JLabel lblDba = new JLabel(GetIcons.getInstance().getDbaLogo());
+    lblDba.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
+    pnlButtons.add(lblDba, "spanx, growx");
+
+    //New DB
+    cb = new JComboBox<>();
+    for (TypeEnum e : TypeEnum.values()) {
+      cb.addItem(e.getName());
+    }
+    cb.setToolTipText(locale.getString("WSC_Type"));
+    pnlButtons.add(cb, "growx");
+
+    JButton btnNew = new JButton(locale.getString("WSC_New"));
+    getRootPane().setDefaultButton(btnNew);
+    btnNew.addActionListener(new ActionListener() {
 
       @Override
       public void actionPerformed(ActionEvent arg0) {
@@ -90,24 +102,10 @@ public class WelcomeScreen extends JDialog {
         jDialog.dispose();
       }
     });
+    pnlButtons.add(btnNew, "spanx, growx");
+    pnlButtons.add(new JSeparator(JSeparator.HORIZONTAL), "growx, spanx");
 
-    JButton cancelButton = new JButton(locale.getString("Close"));
-    buttonPane.add(cancelButton);
-    cancelButton.addActionListener(new ActionListener() {
-
-      @Override
-      public void actionPerformed(ActionEvent arg0) {
-        System.exit(0);
-      }
-    });
-
-    JPanel panel = new JPanel(new MigLayout("fillx"));
-    contentPanel.add(panel, BorderLayout.CENTER);
-
-    JLabel lblDba = new JLabel(GetIcons.getInstance().getDbaLogo());
-    lblDba.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
-    panel.add(lblDba, "spanx, growx");
-
+    //Open DB
     JButton btnOpen = new JButton(locale.getString("WSC_Open"));
     btnOpen.addActionListener(new ActionListener() {
       @Override
@@ -117,19 +115,36 @@ public class WelcomeScreen extends JDialog {
         jDialog.dispose();
       }
     });
-    panel.add(btnOpen, "spanx, growx");
+    pnlButtons.add(btnOpen, "spanx, growx");
 
-    panel.add(new JSeparator(JSeparator.HORIZONTAL), "growx, spanx");
+    pnlButtons.add(new JSeparator(JSeparator.HORIZONTAL), "growx, spanx");
 
-    JLabel lblType = new JLabel(locale.getString("WSC_Type"));
-    panel.add(lblType, "growx, spanx");
+    //Import DB
+    JButton btnImport = new JButton(locale.getString("WSC_ImportDb"));
+    btnImport.addActionListener(new ActionListener() {
 
-    cb = new JComboBox<>();
-    for (TypeEnum e : TypeEnum.values()) {
-      cb.addItem(e.getName());
-    }
+      @Override
+      public void actionPerformed(ActionEvent arg0) {
+        ImportDbFrame frame = new ImportDbFrame(guiLogic);
+        frame.setVisible(true);
+        retVal = frame.getRetVal();
+        open = true;
+        jDialog.dispose();
+      }
+    });
+    pnlButtons.add(btnImport, "spanx, growx");
+    pnlButtons.add(new JSeparator(JSeparator.HORIZONTAL), "growx, spanx");
 
-    panel.add(cb, "growx, spanx");
+    //Close
+    JButton btnClose = new JButton(locale.getString("Close"));
+    btnClose.addActionListener(new ActionListener() {
+
+      @Override
+      public void actionPerformed(ActionEvent arg0) {
+        System.exit(0);
+      }
+    });
+    pnlButtons.add(btnClose, "spanx, growx");
 
     pack();
     setLocationRelativeTo(null);

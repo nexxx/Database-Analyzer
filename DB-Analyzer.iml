@@ -42,6 +42,8 @@
     </orderEntry>
     <orderEntry type="library" name="freemarker" level="project" />
     <orderEntry type="library" name="junit-4.10" level="project" />
+    <orderEntry type="library" name="mysql-connector-java-5.1.21-bin" level="project" />
+    <orderEntry type="library" name="sqlitejdbc-v056" level="project" />
     <javadoc-paths>
       <root url="file://$MODULE_DIR$/doc" />
     </javadoc-paths>

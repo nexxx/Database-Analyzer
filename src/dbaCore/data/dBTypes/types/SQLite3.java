@@ -30,7 +30,7 @@ public class SQLite3 extends DbType {
     "NVARCHAR", "TEXT", "CLOB", "BLOB", "REAL", "DOUBLE", "DOUBLE PRECISION", "FLOAT", "NUMBERIC", "DECIMAL",
     "BOOLEAN", "DATE", "DATETIME"};
   private static SQLite3 instance = null;
-  public JComboBox<String> combobox;
+  private JComboBox<String> combobox;
 
   @Override
   public String[] getTypes() {

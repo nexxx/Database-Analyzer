@@ -29,7 +29,7 @@ public class MySql extends DbType {
     "LONGTEXT", "LONGBLOB", "TINYINT", "SMALLINT", "MEDIUMINT", "INT", "BIGINT", "FLOAT", "DOUBLE", "DECIMAL",
     "DATE", "DATETIME", "TIMESTAMP", "TIME", "ENUM", "SET"};
   private static MySql instance = null;
-  public JComboBox<String> combobox;
+  private JComboBox<String> combobox;
 
   @Override
   public String[] getTypes() {

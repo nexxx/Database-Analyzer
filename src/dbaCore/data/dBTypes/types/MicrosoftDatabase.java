@@ -30,7 +30,7 @@ public class MicrosoftDatabase extends DbType {
     "NVARCHAR", "NTEXT", "BINARY", "VARBINARY", "IMAGE", "CURSOR", "SQL_VARIANT", "TABLE", "TIMESTAMP",
     "UNIQUEIDENTIFIER"};
   private static MicrosoftDatabase instance = null;
-  public JComboBox<String> combobox;
+  private JComboBox<String> combobox;
 
   @Override
   public String[] getTypes() {

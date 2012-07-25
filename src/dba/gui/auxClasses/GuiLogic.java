@@ -76,8 +76,8 @@ public class GuiLogic {
     return lastFileName;
   }
 
-  public void setLastFileName(String fileName){
-    lastFileName=fileName;
+  private void setLastFileName(String fileName) {
+    lastFileName = fileName;
     notifyObservers(lastFileName);
   }
 
@@ -731,5 +731,9 @@ public class GuiLogic {
       return FeedbackEnum.FAILED;
     }
     return FeedbackEnum.SUCCESSFUL;
+  }
+
+  public void setDatabase(Database db) {
+    dbTree.setDatabase(db);
   }
 }

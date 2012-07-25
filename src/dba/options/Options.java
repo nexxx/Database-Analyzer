@@ -52,6 +52,9 @@ public class Options extends Observable {
   private String arrowFKColor;
   private String arrowFDColor;
   private String lookAndFeel;
+  private String lastAdress;
+  private String lastUser;
+  private String lastType;
   private HashMap<String, String> availLAF;
 
   /**
@@ -67,7 +70,6 @@ public class Options extends Observable {
     availLAF.put("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel", "Nimbus LAF");
     availLAF.put("SYSTEMLAF", "System LAF");
     availLAF.put("javax.swing.plaf.metal.MetalLookAndFeel", "Metal LAF");
-
 
     prop = new Properties();
 
@@ -93,6 +95,10 @@ public class Options extends Observable {
     arrowFKColor = "#0095C7";
 
     lookAndFeel = "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel";
+
+    lastAdress = "localhost/dba";
+    lastUser = "username";
+    lastType = "MYSQL";
   }
 
   /**
@@ -160,8 +166,10 @@ public class Options extends Observable {
       prop.setProperty("fontColor", fontColor);
       prop.setProperty("arrowFKColor", arrowFKColor);
       prop.setProperty("arrowFDColor", arrowFDColor);
-
       prop.setProperty("lookAndFeed", lookAndFeel);
+      prop.setProperty("lastAdress", lastAdress);
+      prop.setProperty("lastUser", lastUser);
+      prop.setProperty("lastType", lastType);
 
       // Save properties to DBN options folder
       prop.store(new FileOutputStream(optionsFile), "DBA options file");
@@ -190,8 +198,10 @@ public class Options extends Observable {
       fontColor = prop.getProperty("fontColor");
       arrowFKColor = prop.getProperty("arrowFKColor");
       arrowFDColor = prop.getProperty("arrowFDColor");
-
       lookAndFeel = prop.getProperty("lookAndFeed");
+      lastAdress = prop.getProperty("lastAdress");
+      lastUser = prop.getProperty("lastUser");
+      lastType = prop.getProperty("lastType");
 
 
     } catch (Exception ex) {
@@ -359,5 +369,47 @@ public class Options extends Observable {
    */
   public HashMap<String, String> getAvailLAF() {
     return availLAF;
+  }
+
+  /**
+   * @return Last used Adress for DB Import
+   */
+  public String getLastAdress() {
+    return lastAdress;
+  }
+
+  /**
+   * @param lastAdress Last used Adress for DB Import
+   */
+  public void setLastAdress(String lastAdress) {
+    this.lastAdress = lastAdress;
+  }
+
+  /**
+   * @return Last used Username for DB Import
+   */
+  public String getLastUser() {
+    return lastUser;
+  }
+
+  /**
+   * @param lastUser Last used Username for DB Import
+   */
+  public void setLastUser(String lastUser) {
+    this.lastUser = lastUser;
+  }
+
+  /**
+   * @return Last used DB Type for DB Import
+   */
+  public String getLastType() {
+    return lastType;
+  }
+
+  /**
+   * @param lastType Last used DB Type for DB Import
+   */
+  public void setLastType(String lastType) {
+    this.lastType = lastType;
   }
 }
