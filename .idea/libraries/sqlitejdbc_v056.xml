@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="sqlitejdbc-v056">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/JDBCDriver/sqlitejdbc-v056.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/sqlitejdbc-v056.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
