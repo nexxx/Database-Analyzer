@@ -72,6 +72,7 @@ public class ImportDbFrame extends JDialog {
     addWindowListener(new WindowAdapter() {
       @Override
       public void windowClosing(WindowEvent e) {
+        retVal = FeedbackEnum.CANCEL;
         jDialog.dispose();
       }
     });
@@ -202,6 +203,7 @@ public class ImportDbFrame extends JDialog {
       //e.printStackTrace();
       JOptionPane.showMessageDialog(null, locale.getString("IF_ErrorMsg"), locale.getString("IF_ErrorTitle"),
         JOptionPane.ERROR_MESSAGE);
+      retVal = FeedbackEnum.FAILED;
       return;
     }
 
@@ -211,7 +213,6 @@ public class ImportDbFrame extends JDialog {
     database.initPropertyChangeListeners();
     TimeLine.getInstance().setDirty(false);
     TimeLine.getInstance().initialize(database);
-    retVal = FeedbackEnum.SUCCESSFUL;
 
     options.setLastAdress(txtAdress.getText());
     options.setLastUser(txtUser.getText());
@@ -219,5 +220,6 @@ public class ImportDbFrame extends JDialog {
     options.writeOptions();
 
     jDialog.dispose();
+    retVal = FeedbackEnum.SUCCESSFUL;
   }
 }

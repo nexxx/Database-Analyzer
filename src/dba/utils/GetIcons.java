@@ -37,6 +37,7 @@ public class GetIcons implements constants {
   private ImageIcon menuOpen;
   private ImageIcon menuSave;
   private ImageIcon menuExport;
+  private ImageIcon menuImport;
   private ImageIcon menuClose;
   private ImageIcon iconFrame;
   private ImageIcon iconInspectFrame;
@@ -106,6 +107,7 @@ public class GetIcons implements constants {
     menuOpen = getIcon("open.png", constants.popupIconSize);
     menuSave = getIcon("save.png", constants.popupIconSize);
     menuExport = getIcon("export.png", constants.popupIconSize);
+    menuImport = getIcon("import.png", constants.popupIconSize);
     menuClose = getIcon("close.png", constants.popupIconSize);
     iconFrame = getIcon("dba.png", 32);
     iconInspectFrame = getIcon("inspect.png", 32);
@@ -657,5 +659,12 @@ public class GetIcons implements constants {
    */
   public ImageIcon getMenuGithub() {
     return menuGithub;
+  }
+
+  /**
+   * @return the MenuImport
+   */
+  public ImageIcon getMenuImport() {
+    return menuImport;
   }
 }

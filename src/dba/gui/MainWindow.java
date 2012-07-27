@@ -65,6 +65,7 @@ public class MainWindow implements constants, Observer {
   private DatabaseTreePanel dbTreePanel;
   private ImageIcon iconNew;
   private ImageIcon iconOpen;
+  private ImageIcon iconImport;
   private ImageIcon iconSave;
   private ImageIcon iconExport;
   private ImageIcon iconClose;
@@ -97,6 +98,7 @@ public class MainWindow implements constants, Observer {
     ImageIcon iconFrame = getIcon.getIconFrame();
     iconNew = getIcon.getMenuNew();
     iconOpen = getIcon.getMenuOpen();
+    iconImport = getIcon.getMenuImport();
     iconSave = getIcon.getMenuSave();
     iconExport = getIcon.getMenuExport();
     iconClose = getIcon.getMenuClose();
@@ -209,15 +211,14 @@ public class MainWindow implements constants, Observer {
       }
     });
 
-    TimeLine.getInstance().addPropertyChangeListener(new PropertyChangeListener()
-    {
-      @Override public void propertyChange( PropertyChangeEvent e )
-      {
-        if(e.getPropertyName().equals("isDirty")){
+    TimeLine.getInstance().addPropertyChangeListener(new PropertyChangeListener() {
+      @Override
+      public void propertyChange(PropertyChangeEvent e) {
+        if (e.getPropertyName().equals("isDirty")) {
           updateFrameTitle();
-          }
+        }
       }
-    } );
+    });
 
     frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     frame.setSize(1024, 600);
@@ -334,6 +335,15 @@ public class MainWindow implements constants, Observer {
     fileMenu.add(saveAsMenuItem);
 
     fileMenu.add(new JSeparator());
+
+    JMenuItem importMenuItem = new JMenuItem(locale.getString("Import"), iconImport);
+    importMenuItem.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent arg0) {
+        guiLogic.importDb();
+      }
+    });
+    fileMenu.add(importMenuItem);
 
     JMenuItem exportMenuItem = new JMenuItem(locale.getString("GUI_Export"), iconExport);
     exportMenuItem.addActionListener(new ActionListener() {
@@ -519,12 +529,12 @@ public class MainWindow implements constants, Observer {
       Feedback feedback = (Feedback) arg;
       feedbackbarPanel.showFeedback(feedback.getText(), feedback.getFeedback());
 
-    }else if(arg instanceof String){
+    } else if (arg instanceof String) {
       updateFrameTitle();
     }
   }
 
-  private void updateFrameTitle(){
+  private void updateFrameTitle() {
     if (guiLogic.getLastFileName() != null) {
       frame.setTitle(locale.getString("GUI_FrameTitle") + " - " +
         guiLogic.getLastFileName());
@@ -532,8 +542,8 @@ public class MainWindow implements constants, Observer {
       frame.setTitle(locale.getString("GUI_FrameTitle") + " - " +
         locale.getString("GUI_FrameTitleNotSaved"));
     }
-    if(TimeLine.getInstance().isDirty()){
-      frame.setTitle(frame.getTitle()+"*");
+    if (TimeLine.getInstance().isDirty()) {
+      frame.setTitle(frame.getTitle() + "*");
     }
   }
 

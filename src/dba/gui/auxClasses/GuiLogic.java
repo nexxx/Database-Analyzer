@@ -20,6 +20,7 @@ package dba.gui.auxClasses;
 import dba.fileIO.ReadFromXML;
 import dba.fileIO.SaveToXml;
 import dba.gui.CustomTree;
+import dba.gui.ImportDbFrame;
 import dba.gui.auxClasses.feedback.FeedbackbarPanel;
 import dba.options.FeedbackEnum;
 import dba.options.Options;
@@ -733,7 +734,40 @@ public class GuiLogic {
     return FeedbackEnum.SUCCESSFUL;
   }
 
+  /**
+   * Set the Database
+   *
+   * @param db Database
+   */
   public void setDatabase(Database db) {
     dbTree.setDatabase(db);
   }
+
+  public FeedbackEnum importDb() {
+
+    int result;
+    ImportDbFrame frame = new ImportDbFrame(this);
+    if (TimeLine.getInstance().isDirty()) {
+      Object[] options = {locale.getString("Yes"), locale.getString("No"), locale.getString("Cancel")};
+      result = JOptionPane.showOptionDialog(null, locale.getString("TREE_NewMsg"), locale.getString("Confirm"),
+        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
+      switch (result) {
+        case JOptionPane.YES_OPTION:
+          save();
+          frame.setVisible(true);
+          return frame.getRetVal();
+        case JOptionPane.NO_OPTION:
+          frame.setVisible(true);
+          return frame.getRetVal();
+        case JOptionPane.CANCEL_OPTION:
+          break;
+      }
+    } else {
+      frame.setVisible(true);
+      return frame.getRetVal();
+    }
+    return FeedbackEnum.CANCEL;
+  }
+
+
 }
