@@ -17,6 +17,7 @@
 
 package dba.gui;
 
+import dba.init.Initialize;
 import dba.options.Options;
 import dba.utils.GetIcons;
 import dba.utils.Localization;
@@ -48,7 +49,6 @@ public class optionsMenu extends JDialog {
   private String currentFontColor;
   private String currentArrowFkColor;
   private String currentArrowFdColor;
-  private String currentLAF;
   private Localization locale;
   private String colorBG;
   private String colorAttr;
@@ -63,12 +63,14 @@ public class optionsMenu extends JDialog {
   private JPanel pnlArrowFk;
   private JPanel pnlArrowFd;
   private JComboBox<String> cbLaf;
+  private JFrame mainFrame;
 
   /**
    * Create the dialog.
    */
-  public optionsMenu() {
+  public optionsMenu(JFrame mFrame) {
     super();
+    mainFrame = mFrame;
     locale = Localization.getInstance();
     options = Options.getInstance();
     currentLocale = options.getLanguage();
@@ -78,7 +80,6 @@ public class optionsMenu extends JDialog {
     currentRelColor = options.getRelationColor();
     currentArrowFkColor = options.getArrowFKColor();
     currentArrowFdColor = options.getArrowFDColor();
-    currentLAF = options.getLookAndFeel();
     frame = this;
     setResizable(false);
     this.setModal(true);
@@ -120,11 +121,14 @@ public class optionsMenu extends JDialog {
         needToRestart = needToRestart || !currentArrowFkColor.equalsIgnoreCase(options.getArrowFKColor());
         needToRestart = needToRestart || !currentArrowFdColor.equalsIgnoreCase(options.getArrowFDColor());
         needToRestart = needToRestart || !currentFontColor.equalsIgnoreCase(options.getFontColor());
-        needToRestart = needToRestart || !currentLAF.equalsIgnoreCase(options.getLookAndFeel());
         if (needToRestart) {
           JOptionPane.showMessageDialog(null, locale.getString("OPT_Restart"));
         }
         options.writeOptions();
+
+        Initialize.getInstance().setLookAndFeel();
+        SwingUtilities.updateComponentTreeUI(mainFrame);
+
         frame.dispose();
       }
     });

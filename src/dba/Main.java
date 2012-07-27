@@ -32,7 +32,7 @@ public class Main {
   public static void main(String[] args) {
 
     // Initialize - Load options ETC
-    Initialize initialize = new Initialize();
+    Initialize initialize = Initialize.getInstance();
     initialize.init();
 
     MainWindow mainWindow = new MainWindow();

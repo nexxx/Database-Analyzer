@@ -190,6 +190,8 @@ public class MainWindow implements constants, Observer {
             pnlToolBar.add(toolBar, BorderLayout.CENTER);
           }
         }
+        SwingUtilities.updateComponentTreeUI(pnlToolBar);
+
       }
     };
 
@@ -225,7 +227,7 @@ public class MainWindow implements constants, Observer {
     frame.setMinimumSize(new Dimension(800, 480));
     frame.setLocationRelativeTo(null);
 
-    Initialize init = new Initialize();
+    Initialize init = Initialize.getInstance();
     init.init();
     Dimension minimumSizeSplitPane = new Dimension(100, 50);
 
@@ -466,7 +468,7 @@ public class MainWindow implements constants, Observer {
       @Override
       public void actionPerformed(ActionEvent e) {
 
-        optionsMenu optionsMenu = new optionsMenu();
+        optionsMenu optionsMenu = new optionsMenu(frame);
         optionsMenu.setVisible(true);
       }
     });

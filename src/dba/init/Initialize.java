@@ -30,10 +30,23 @@ import javax.swing.*;
 public class Initialize {
 
   private Options options;
+  private static Initialize instance = null;
 
-  public Initialize() {
+  private Initialize() {
     super();
     options = Options.getInstance();
+  }
+
+  /**
+   * Getter for the singelton inizialize (thread-save)
+   */
+  public synchronized static Initialize getInstance() {
+    if (instance == null) {
+      synchronized (Initialize.class) {
+        instance = new Initialize();
+      }
+    }
+    return instance;
   }
 
   /**
@@ -72,7 +85,7 @@ public class Initialize {
 
   }
 
-  private void setLookAndFeel() {
+  public void setLookAndFeel() {
 
     // Set LookAndFeel
     try {
@@ -83,7 +96,7 @@ public class Initialize {
       }
     } catch (Exception e) {
       System.out.println("LookAndFeel not found. Using standard LookAndFeel instead");
-      e.printStackTrace();
+      //e.printStackTrace();
     }
   }
 

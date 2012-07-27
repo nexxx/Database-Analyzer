@@ -31,12 +31,14 @@ import java.util.ResourceBundle;
  */
 public class Localization {
   private static Localization instance = null;
+  private Locale locale;
   private ResourceBundle captions;
+  private Options options;
 
   private Localization() {
     super();
-    Options options = Options.getInstance();
-    Locale locale = new Locale(options.getLanguage());
+    options = Options.getInstance();
+    locale = new Locale(options.getLanguage());
     Locale.setDefault(new Locale(options.getLanguage()));
     captions = ResourceBundle.getBundle("res.localization.localizationMessages", locale);
   }
@@ -62,5 +64,4 @@ public class Localization {
   public String getString(String name) {
     return captions.getString(name);
   }
-
 }
