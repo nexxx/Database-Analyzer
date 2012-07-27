@@ -110,7 +110,8 @@ public class ImportDbFrame extends JDialog {
 
     cb = new JComboBox<>();
     for (TypeEnum e : TypeEnum.values()) {
-      if (e.getName().equalsIgnoreCase("MYSQL") || e.getName().equalsIgnoreCase("SQLite3")) {
+      if (e.getName().equalsIgnoreCase("MYSQL") || e.getName().equalsIgnoreCase("SQLite3") || e.getName()
+        .equalsIgnoreCase("PostgreSQL")) {
         cb.addItem(e.getName());
       }
     }
@@ -187,6 +188,7 @@ public class ImportDbFrame extends JDialog {
         fullAdress = "jdbc:mysql://" + adress;
         break;
       case POSTGRES:
+        fullAdress = "jdbc:postgresql://" + adress;
         break;
       case MSDB:
         break;

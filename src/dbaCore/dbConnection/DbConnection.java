@@ -52,6 +52,7 @@ public class DbConnection {
         driver = "com.mysql.jdbc.Driver";
         break;
       case POSTGRES:
+        driver = "org.postgresql.Driver";
         break;
       case MSDB:
         break;
