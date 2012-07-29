@@ -52,7 +52,7 @@ public class WelcomeScreen extends JDialog {
    * Defaultconstructor to create the dialog.
    */
   public WelcomeScreen(GuiLogic gL, Database db) {
-    super();
+    super(null, Dialog.ModalityType.TOOLKIT_MODAL);
     open = true;
     guiLogic = gL;
     database = db;
@@ -62,6 +62,7 @@ public class WelcomeScreen extends JDialog {
     ImageIcon iconFrame = getIcons.getIconFrame();
     this.setIconImage(iconFrame.getImage());
     jDialog = this;
+    jDialog.setResizable(false);
     setModal(true);
     getContentPane().setLayout(new BorderLayout());
     JPanel contentPanel = new JPanel();
@@ -162,5 +163,4 @@ public class WelcomeScreen extends JDialog {
   public FeedbackEnum getRetVal() {
     return retVal;
   }
-
 }
