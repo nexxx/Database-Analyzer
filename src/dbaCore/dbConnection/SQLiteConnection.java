@@ -18,6 +18,7 @@
 package dbaCore.dbConnection;
 
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 /**
  * Create a connection to a Database and import Relations, Attributes and Keys
@@ -29,7 +30,7 @@ public class SQLiteConnection extends DbConnection {
   private String driver = null;
   private String DbUrl = null;
 
-  public SQLiteConnection(String url) throws Exception {
+  public SQLiteConnection(String url) throws SQLException {
     super();
     driver = "org.sqlite.JDBC";
     DbUrl = "jdbc:sqlite:" + url;
@@ -42,9 +43,11 @@ public class SQLiteConnection extends DbConnection {
       getAttributesFromDb();
       getForeignKeysFromDb();
 
-    } catch (Exception e) {
-      e.printStackTrace();
-      throw new Exception("DB Connection Failed");
+    } catch (SQLException e) {
+      //e.printStackTrace();
+      throw e;
+    } catch (ClassNotFoundException e) {
+      //e.printStackTrace();
     } finally {
       if (conn != null) {
         try {

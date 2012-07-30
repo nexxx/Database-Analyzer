@@ -18,6 +18,7 @@
 package dbaCore.dbConnection;
 
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 /**
  * Create a connection to a Database and import Relations, Attributes and Keys
@@ -31,7 +32,7 @@ public class MYSQLConnection extends DbConnection {
   private String driver = null;
   private String DbUrl = null;
 
-  public MYSQLConnection(String user, String pwd, String url) throws Exception {
+  public MYSQLConnection(String user, String pwd, String url) throws SQLException {
     super();
     userName = user;
     password = pwd;
@@ -46,9 +47,12 @@ public class MYSQLConnection extends DbConnection {
       getAttributesFromDb();
       getForeignKeysFromDb();
 
-    } catch (Exception e) {
+    } catch (SQLException e) {
+      //System.out.println(e.getMessage());
       //e.printStackTrace();
-      throw new Exception("DB Connection Failed");
+      throw e;
+    } catch (ClassNotFoundException e) {
+      //e.printStackTrace();
     } finally {
       if (conn != null) {
         try {

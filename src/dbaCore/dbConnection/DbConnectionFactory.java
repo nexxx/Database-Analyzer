@@ -19,6 +19,8 @@ package dbaCore.dbConnection;
 
 import dbaCore.data.dBTypes.TypeEnum;
 
+import java.sql.SQLException;
+
 /**
  * (Description)
  *
@@ -26,7 +28,7 @@ import dbaCore.data.dBTypes.TypeEnum;
  */
 public class DbConnectionFactory {
 
-  public static DbConnection getConnection(TypeEnum type, String user, String pwd, String address) throws Exception {
+  public static DbConnection getConnection(TypeEnum type, String user, String pwd, String address) throws SQLException {
     switch (type) {
       case MYSQL:
         return new MYSQLConnection(user, pwd, address);

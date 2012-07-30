@@ -19,6 +19,7 @@ dbaCore.data
 dbaCore.data.dBTypes
 dbaCore.data.dBTypes.types
 dbaCore.data.events
+dbaCore.dbConnection
 dbaCore.logic.Analysis
 dbaCore.logic.normalization
 dbaCore.utils

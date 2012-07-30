@@ -35,6 +35,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.SQLException;
 
 /**
  * (Description)
@@ -195,10 +196,10 @@ public class ImportDbFrame extends JDialog {
 
     try {
       dbc = DbConnectionFactory.getConnection(type, user, pwd, adress);
-    } catch (Exception e) {
+    } catch (SQLException e) {
       //e.printStackTrace();
-      JOptionPane.showMessageDialog(null, locale.getString("IF_ErrorMsg"), locale.getString("IF_ErrorTitle"),
-        JOptionPane.ERROR_MESSAGE);
+      JOptionPane.showMessageDialog(null, locale.getString("IF_ErrorMsg") + ":\n" + e.getLocalizedMessage(),
+        locale.getString("IF_ErrorTitle"), JOptionPane.ERROR_MESSAGE);
       retVal = FeedbackEnum.FAILED;
       return;
     }
