@@ -63,6 +63,7 @@ public class ImportDbFrame extends JDialog {
     this.setTitle(locale.getString("WSC_Title"));
     GetIcons getIcons = GetIcons.getInstance();
     ImageIcon iconFrame = getIcons.getIconFrame();
+    ImageIcon iconHelp = getIcons.getMenuHelp();
     this.setIconImage(iconFrame.getImage());
     jDialog = this;
     setModal(true);
@@ -102,7 +103,7 @@ public class ImportDbFrame extends JDialog {
       }
     });
 
-    JPanel panel = new JPanel(new MigLayout("wrap 2", "[fill, grow, 90:90:90][fill, grow]"));
+    JPanel panel = new JPanel(new MigLayout("wrap 3", "[fill, grow, 90:90:90][fill, grow][fill, grow, 28:28:28]"));
     contentPanel.add(panel, BorderLayout.CENTER);
 
     txtPassword = new JPasswordField("", 32);
@@ -134,7 +135,6 @@ public class ImportDbFrame extends JDialog {
     JLabel lblAdress = new JLabel(locale.getString("IF_Adress"));
     panel.add(lblAdress);
     txtAdress = new JTextField(options.getLastAdress(), 32);
-    txtAdress.setToolTipText(locale.getString("IF_AdressTooltip"));
     txtAdress.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
@@ -142,6 +142,10 @@ public class ImportDbFrame extends JDialog {
       }
     });
     panel.add(txtAdress);
+    JLabel lblHelpAdress = new JLabel(iconHelp);
+    lblHelpAdress.setToolTipText(locale.getString("IF_AdressTooltip"));
+    panel.add(lblHelpAdress);
+
 
     JLabel lblUser = new JLabel(locale.getString("IF_User"));
     panel.add(lblUser);
@@ -152,6 +156,9 @@ public class ImportDbFrame extends JDialog {
       }
     });
     panel.add(txtUser);
+    JLabel lblHelpUser = new JLabel(iconHelp);
+    lblHelpUser.setToolTipText(locale.getString("IF_UserTooltip"));
+    panel.add(lblHelpUser);
 
     JLabel lblPassword = new JLabel(locale.getString("IF_Pwd"));
     panel.add(lblPassword);
@@ -162,6 +169,9 @@ public class ImportDbFrame extends JDialog {
       }
     });
     panel.add(txtPassword);
+    JLabel lblHelpPwd = new JLabel(iconHelp);
+    lblHelpPwd.setToolTipText(locale.getString("IF_PwdTooltip"));
+    panel.add(lblHelpPwd);
 
     pack();
     setLocationRelativeTo(null);
@@ -224,4 +234,5 @@ public class ImportDbFrame extends JDialog {
     jDialog.dispose();
     retVal = FeedbackEnum.SUCCESSFUL;
   }
+
 }
