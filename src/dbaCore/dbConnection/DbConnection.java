@@ -20,7 +20,6 @@ package dbaCore.dbConnection;
 import dbaCore.data.Database;
 import dbaCore.data.ForeignKeyConstraint;
 import dbaCore.data.RelationSchema;
-import dbaCore.data.dBTypes.TypeEnum;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -30,73 +29,25 @@ import java.util.ArrayList;
  *
  * @author Andreas Freitag
  */
-public class DbConnection {
+public abstract class DbConnection {
 
-  private String userName = null;
-  private String password = null;
-  private String driver = null;
-  private String DbUrl = null;
-  private Connection conn = null;
+  Connection conn = null;
   private DatabaseMetaData dbm = null;
   private ArrayList<String> relationNames = null;
   private ResultSet tables = null;
   private Database database = null;
 
-
-  public DbConnection(String user, String pwd, dbaCore.data.dBTypes.TypeEnum type, String url) throws Exception {
+  protected DbConnection() {
     super();
-    userName = user;
-    password = pwd;
-    switch (type) {
-      case MYSQL:
-        driver = "com.mysql.jdbc.Driver";
-        break;
-      case POSTGRES:
-        driver = "org.postgresql.Driver";
-        break;
-      case MSDB:
-        break;
-      case ORACLE:
-        break;
-      case SQLITE:
-        driver = "org.sqlite.JDBC";
-        break;
-    }
-    DbUrl = url;
-    database = new Database();
     relationNames = new ArrayList<>();
-
-    try {
-      Class.forName(driver);
-      if (type == TypeEnum.SQLITE) {
-        conn = DriverManager.getConnection(DbUrl);
-      } else {
-        conn = DriverManager.getConnection(DbUrl, userName, password);
-      }
-
-      getRelationsFromDb();
-      getAttributesFromDb();
-      getForeignKeysFromDb();
-
-    } catch (Exception e) {
-      //e.printStackTrace();
-      throw new Exception("DB Connection Failed");
-    } finally {
-      if (conn != null) {
-        try {
-          conn.close();
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-      }
-    }
+    database = new Database();
   }
 
   public Database getDatabase() {
     return database;
   }
 
-  private void getRelationsFromDb() throws SQLException {
+  void getRelationsFromDb() throws SQLException {
     //Get Relation Names
     dbm = conn.getMetaData();
     String[] types = {"TABLE"};
@@ -107,7 +58,7 @@ public class DbConnection {
     }
   }
 
-  private void getAttributesFromDb() throws SQLException {
+  void getAttributesFromDb() throws SQLException {
     for (String relation : relationNames) {
       RelationSchema tmpRelation = new RelationSchema(relation);
 
@@ -128,7 +79,7 @@ public class DbConnection {
     }
   }
 
-  private void getForeignKeysFromDb() throws SQLException {
+  void getForeignKeysFromDb() throws SQLException {
     for (String relation : relationNames) {
       ResultSet fks = dbm.getExportedKeys(conn.getCatalog(), null, relation);
 

@@ -26,6 +26,7 @@ import dbaCore.data.Database;
 import dbaCore.data.TimeLine;
 import dbaCore.data.dBTypes.TypeEnum;
 import dbaCore.dbConnection.DbConnection;
+import dbaCore.dbConnection.DbConnectionFactory;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -192,25 +193,8 @@ public class ImportDbFrame extends JDialog {
     String pwd = txtPassword.getText();
     TypeEnum type = TypeEnum.getEnumByValue((String) cb.getSelectedItem());
 
-    String fullAdress = null;
-    switch (type) {
-      case MYSQL:
-        fullAdress = "jdbc:mysql://" + adress;
-        break;
-      case POSTGRES:
-        fullAdress = "jdbc:postgresql://" + adress;
-        break;
-      case MSDB:
-        break;
-      case ORACLE:
-        break;
-      case SQLITE:
-        fullAdress = "jdbc:sqlite:" + adress;
-        break;
-    }
-
     try {
-      dbc = new DbConnection(user, pwd, type, fullAdress);
+      dbc = DbConnectionFactory.getConnection(type, user, pwd, adress);
     } catch (Exception e) {
       //e.printStackTrace();
       JOptionPane.showMessageDialog(null, locale.getString("IF_ErrorMsg"), locale.getString("IF_ErrorTitle"),
