@@ -268,6 +268,9 @@ public class MainWindow implements constants, Observer {
       }
     });
 
+    //initial disabling of relationView that is not visible
+    relationDetailsView.setZoomEnabled(false);
+
     pnlRight = new JPanel(new BorderLayout());
     pnlRight.setMinimumSize(minimumSizeSplitPane);
     pnlRight.add(displayTab, BorderLayout.CENTER);
