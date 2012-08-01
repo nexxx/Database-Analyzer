@@ -176,13 +176,11 @@ public class ToolBar extends JToolBar implements Observer {
 
   }
 
-  private void updateZoom(Object observable) {
+  public void updateZoom(Object observable) {
     if (observable == relationView) {
       updateComboZoom(relationView.getZoomFactors());
-      relationDetailView.zoom(relationView.getZoomFactors()[0]);
     } else if (observable == relationDetailView) {
       updateComboZoom(relationDetailView.getZoomFactors());
-      relationView.zoom(relationDetailView.getZoomFactors()[0]);
     }
   }
 

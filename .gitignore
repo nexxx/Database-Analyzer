@@ -41,3 +41,7 @@ Thumbs.db
 # IntelliJ Settings #
 #####################
 workspace.xml
+
+# Binary-Folder #
+#################
+bin/
