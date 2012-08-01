@@ -17,6 +17,7 @@
 
 package dba.gui.auxClasses.jGraph;
 
+import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
 
 import javax.swing.*;
@@ -30,11 +31,14 @@ public abstract class JGraphView extends JPanel {
   private static final long serialVersionUID = -8564817921313692339L;
   private ArrayList<Observer> observers;
   private mxGraph graph;
+  protected boolean zoomEnabled;
+  protected mxGraphComponent graphComponent;
 
   protected JGraphView() {
     super();
     observers = new ArrayList<>();
     graph = new mxGraph();
+    zoomEnabled=true;
   }
 
   protected void setGraph(mxGraph graph) {
@@ -48,7 +52,7 @@ public abstract class JGraphView extends JPanel {
    */
   public String[] getZoomFactors() {
     ArrayList<String> factors = new ArrayList<>();
-    String[] fixedFactors = new String[]{"25%", "50%", "100%", "125%", "150%"};
+    String[] fixedFactors = new String[]{"25%", "50%", "75%", "100%", "125%", "150%"};
 
     factors.add((int) (graph.getView().getScale() * 100) + "%");
 
@@ -60,6 +64,36 @@ public abstract class JGraphView extends JPanel {
 
     return factors.toArray(new String[factors.size()]);
   }
+
+  public boolean isZoomEnabled() {
+    return zoomEnabled;
+  }
+
+  public void setZoomEnabled(boolean zoomEnabled) {
+    this.zoomEnabled = zoomEnabled;
+  }
+
+  /**
+   * Zooms to the given percentage
+   *
+   * @param factor the zoomFactor e.g. 100, 50%
+   */
+  public void zoom(String factor) {
+    if(isZoomEnabled()){
+    factor = factor.replace("%", "");
+
+    Double newScale = Double.parseDouble(factor);
+    if (newScale != null) {
+      newScale /= 100;
+      if (newScale != graph.getView().getScale()) {
+        graphComponent.zoomTo(newScale, false);
+        notifyObservers();
+      }
+
+    }
+    }
+  }
+
 
   // Observer methods
 

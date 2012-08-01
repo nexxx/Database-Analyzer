@@ -55,7 +55,6 @@ public class RelationView extends JGraphView implements Observer {
 
   private mxCell selectedCell;
   private mxGraph graph;
-  private mxGraphComponent graphComponent;
 
   // private Thread displayThread;
 
@@ -163,25 +162,6 @@ public class RelationView extends JGraphView implements Observer {
 
     RelationGraphUpdater updater = new RelationGraphUpdater(graph, graphComponent, relations, foreignKeys);
     updater.run();
-  }
-
-  /**
-   * Zooms to the given percentage
-   *
-   * @param factor the zoomFactor e.g. 100, 50%
-   */
-  public void zoom(String factor) {
-    factor = factor.replace("%", "");
-
-    Double newScale = Double.parseDouble(factor);
-    if (newScale != null) {
-      newScale /= 100;
-      if (newScale != graph.getView().getScale()) {
-        graphComponent.zoomTo(newScale, false);
-        notifyObservers();
-      }
-
-    }
   }
 
   /**

@@ -42,6 +42,7 @@ import dbaCore.data.events.Time;
 import dbaCore.logic.Analysis.GeneralRelationCheck;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
@@ -244,6 +245,28 @@ public class MainWindow implements constants, Observer {
 
     // RelationDetails
     displayTab.addTab(locale.getString("GUI_RelationDetails"), relationDetailsView);
+
+    displayTab.addChangeListener(new javax.swing.event.ChangeListener() {
+      @Override
+      public void stateChanged(ChangeEvent changeEvent) {
+        JTabbedPane tabPane=(JTabbedPane)changeEvent.getSource();
+        //User selected relationView
+        if(tabPane.getSelectedIndex()==0){
+          relationView.setZoomEnabled(true);
+          relationDetailsView.setZoomEnabled(false);
+          toolBarAttribute.updateZoom(relationView);
+          toolBarRelation.updateZoom(relationView);
+          toolBarDatabase.updateZoom(relationView);
+          //User selected relationDetailsView
+        }else if(tabPane.getSelectedIndex()==1){
+          relationView.setZoomEnabled(false);
+          relationDetailsView.setZoomEnabled(true);
+          toolBarAttribute.updateZoom(relationDetailsView);
+          toolBarRelation.updateZoom(relationDetailsView);
+          toolBarDatabase.updateZoom(relationDetailsView);
+        }
+      }
+    });
 
     pnlRight = new JPanel(new BorderLayout());
     pnlRight.setMinimumSize(minimumSizeSplitPane);
