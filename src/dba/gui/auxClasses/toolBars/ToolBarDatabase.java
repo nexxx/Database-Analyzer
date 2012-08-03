@@ -18,12 +18,12 @@
 package dba.gui.auxClasses.toolBars;
 
 import dba.gui.CustomTree;
-import dba.gui.auxClasses.DatabaseLogic;
-import dba.gui.auxClasses.DatabaseTreePanel;
-import dba.gui.auxClasses.RelationDetailsView;
-import dba.gui.auxClasses.RelationView;
+import dba.gui.DatatypeMappingFrame.DatatypeMappingFrame;
+import dba.gui.auxClasses.*;
+import dba.options.FeedbackEnum;
 import dba.utils.TreeEnum;
 import dbaCore.data.Attribute;
+import dbaCore.data.Database;
 import dbaCore.data.RelationSchema;
 import dbaCore.data.dBTypes.TypeEnum;
 
@@ -44,16 +44,18 @@ public class ToolBarDatabase extends ToolBar {
   private DatabaseLogic dbLogic;
   private JButton btnInspect;
   private JComboBox<String> cb;
+  private GuiLogic guiLogic;
   /**
    *
    */
   private static final long serialVersionUID = -3843390455939145286L;
 
   public ToolBarDatabase(DatabaseTreePanel dbTreePanel, RelationView relationView,
-                         RelationDetailsView relationDetailsView) {
+                         RelationDetailsView relationDetailsView, GuiLogic gL) {
     super(relationView, relationDetailsView, dbTreePanel);
 
     tree = dbTreePanel.getTree();
+    guiLogic = gL;
     JButton btnNewRelation = new JButton(super.getIcons.getTbWizard());
     JButton btnEmptyRelation = new JButton(super.getIcons.getTbRelation());
     btnInspect = new JButton(super.getIcons.getTbInspect());
@@ -102,8 +104,16 @@ public class ToolBarDatabase extends ToolBar {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
         if (!((String) cb.getSelectedItem()).equalsIgnoreCase(tree.getDatabase().getType().getName())) {
+          Database dbOld = tree.getDatabase().getClone();
           tree.getDatabase().setType(TypeEnum.getEnumByValue((String) cb.getSelectedItem()));
           resetAllDataTypes();
+
+          DatatypeMappingFrame frame = new DatatypeMappingFrame(tree.getDatabase(), dbOld);
+          frame.setVisible(true);
+          if (frame.getRetVal() == FeedbackEnum.CANCEL) {
+            guiLogic.setDatabase(dbOld);
+            cb.setSelectedItem(dbOld.getType().getName());
+          }
         }
       }
     });

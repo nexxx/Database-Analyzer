@@ -157,7 +157,7 @@ public class MainWindow implements constants, Observer {
     pnlToolBar.add(toolBar, BorderLayout.CENTER);
     contentPane.add(pnlToolBar, BorderLayout.PAGE_START);
 
-    toolBarDatabase = new ToolBarDatabase(dbTreePanel, relationView, relationDetailsView);
+    toolBarDatabase = new ToolBarDatabase(dbTreePanel, relationView, relationDetailsView, guiLogic);
     toolBarRelation = new ToolBarRelation(dbTreePanel, relationView, relationDetailsView);
     toolBarAttribute = new ToolBarAttribute(dbTreePanel, relationView, relationDetailsView);
     toolBarFd = new ToolBarFd(dbTreePanel, relationView, relationDetailsView);
@@ -249,16 +249,16 @@ public class MainWindow implements constants, Observer {
     displayTab.addChangeListener(new javax.swing.event.ChangeListener() {
       @Override
       public void stateChanged(ChangeEvent changeEvent) {
-        JTabbedPane tabPane=(JTabbedPane)changeEvent.getSource();
+        JTabbedPane tabPane = (JTabbedPane) changeEvent.getSource();
         //User selected relationView
-        if(tabPane.getSelectedIndex()==0){
+        if (tabPane.getSelectedIndex() == 0) {
           relationView.setZoomEnabled(true);
           relationDetailsView.setZoomEnabled(false);
           toolBarAttribute.updateZoom(relationView);
           toolBarRelation.updateZoom(relationView);
           toolBarDatabase.updateZoom(relationView);
           //User selected relationDetailsView
-        }else if(tabPane.getSelectedIndex()==1){
+        } else if (tabPane.getSelectedIndex() == 1) {
           relationView.setZoomEnabled(false);
           relationDetailsView.setZoomEnabled(true);
           toolBarAttribute.updateZoom(relationDetailsView);
