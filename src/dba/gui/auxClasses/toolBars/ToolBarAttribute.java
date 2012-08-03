@@ -71,8 +71,7 @@ public class ToolBarAttribute extends ToolBar {
     btnRename.setToolTipText(super.locale.getString("Rename"));
     btnPK.setToolTipText(super.locale.getString("TREE_AttrChkBoxPK"));
     btnFK.setToolTipText(super.locale.getString("TREE_AttrChkBoxFK"));
-    cbType.setToolTipText(super.locale.getString("DataType"));
-    cbType.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
+
 
     btnDelete.addActionListener(new ActionListener() {
 
@@ -115,7 +114,7 @@ public class ToolBarAttribute extends ToolBar {
       }
     });
 
-    updateCbTypeActionListener();
+    updateCbType();
 
     add(btnDelete);
     add(btnRename);
@@ -153,7 +152,7 @@ public class ToolBarAttribute extends ToolBar {
     dbType = (new DbTypeFactory(CustomTree.getInstance().getDatabase())).getType();
     remove(cbType);
     cbType = dbType.getCombobox();
-    updateCbTypeActionListener();
+    updateCbType();
     add(cbType);
     cbType.setSelectedItem(attr.getType());
 
@@ -166,7 +165,9 @@ public class ToolBarAttribute extends ToolBar {
 
   }
 
-  private void updateCbTypeActionListener() {
+  private void updateCbType() {
+    cbType.setToolTipText(super.locale.getString("DataType"));
+    cbType.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
     cbType.removeActionListener(cbTypeActionListener);
     cbTypeActionListener = new ActionListener() {
       @Override
