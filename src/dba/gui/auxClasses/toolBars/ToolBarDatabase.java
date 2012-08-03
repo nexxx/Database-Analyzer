@@ -25,6 +25,7 @@ import dba.utils.TreeEnum;
 import dbaCore.data.Attribute;
 import dbaCore.data.Database;
 import dbaCore.data.RelationSchema;
+import dbaCore.data.TimeLine;
 import dbaCore.data.dBTypes.TypeEnum;
 
 import javax.swing.*;
@@ -99,6 +100,7 @@ public class ToolBarDatabase extends ToolBar {
     for (TypeEnum e : TypeEnum.values()) {
       cb.addItem(e.getName());
     }
+    cb.setSelectedItem(tree.getDatabase().getType().getName());
     cb.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
     cb.addActionListener(new ActionListener() {
       @Override
@@ -112,6 +114,9 @@ public class ToolBarDatabase extends ToolBar {
           frame.setVisible(true);
           if (frame.getRetVal() == FeedbackEnum.CANCEL) {
             guiLogic.setDatabase(dbOld);
+            dbOld.initPropertyChangeListeners();
+            TimeLine.getInstance().initialize(dbOld);
+            tree.setSelectedItem(0);
             cb.setSelectedItem(dbOld.getType().getName());
           }
         }
@@ -142,5 +147,9 @@ public class ToolBarDatabase extends ToolBar {
 
     }
 
+  }
+
+  public void updateDatatype() {
+    cb.setSelectedItem(tree.getDatabase().getType().getName());
   }
 }

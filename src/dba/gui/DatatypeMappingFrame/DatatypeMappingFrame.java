@@ -17,12 +17,18 @@
 
 package dba.gui.DatatypeMappingFrame;
 
+import dba.gui.CustomTree;
 import dba.options.FeedbackEnum;
 import dba.utils.GetIcons;
 import dba.utils.Localization;
 import dbaCore.data.Database;
+import dbaCore.data.RelationSchema;
+import dbaCore.data.dBTypes.DbTypeFactory;
+import dbaCore.data.dBTypes.types.DbType;
+import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
+import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -61,6 +67,7 @@ public class DatatypeMappingFrame extends JDialog {
       @Override
       public void windowClosing(WindowEvent e) {
         retVal = FeedbackEnum.CANCEL;
+        CustomTree.getInstance().setSelectedItem(0);
         jDialog.dispose();
       }
     });
@@ -76,8 +83,8 @@ public class DatatypeMappingFrame extends JDialog {
 
       @Override
       public void actionPerformed(ActionEvent arg0) {
-        //DO SOMETHING
         retVal = FeedbackEnum.SUCCESSFUL;
+        CustomTree.getInstance().setSelectedItem(0);
         jDialog.dispose();
 
       }
@@ -90,21 +97,48 @@ public class DatatypeMappingFrame extends JDialog {
       @Override
       public void actionPerformed(ActionEvent arg0) {
         retVal = FeedbackEnum.CANCEL;
+        CustomTree.getInstance().setSelectedItem(0);
         jDialog.dispose();
       }
     });
 
-    JPanel panel = new JPanel(new BorderLayout());
-    contentPanel.add(panel, BorderLayout.CENTER);
+    JPanel panel = new JPanel(new MigLayout("fillx, wrap 1"));
+    JScrollPane scrollPane = new JScrollPane(panel);
+    contentPanel.add(scrollPane, BorderLayout.CENTER);
 
-    JTable table = new JTable();
+    for (RelationSchema relation : database.getDatabase()) {
+      panel.add(new JLabel(relation.getName()));
+      DTMTableModel tableModel = new DTMTableModel(relation.getAttributes(), databaseOld.getRelationSchemaByName
+        (relation.getName()).getAttributes());
+      JTable table = new JTable(tableModel);
 
+      DbType dbType = (new DbTypeFactory(CustomTree.getInstance().getDatabase())).getType();
+      JComboBox<String> comboBox = dbType.getCombobox();
+      TableColumn col = table.getColumnModel().getColumn(2);
+      col.setCellEditor(new DefaultCellEditor(comboBox));
 
-    setSize(400, 400);
+      JScrollPane scrollpane = new JScrollPane(table);
+      setVisibleRowCount(table, table.getRowCount());
+      table.getTableHeader().setResizingAllowed(false);
+      table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+      table.getTableHeader().setReorderingAllowed(false);
+      table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+      panel.add(scrollpane);
+    }
+
+    pack();
     setLocationRelativeTo(null);
   }
 
   public FeedbackEnum getRetVal() {
     return retVal;
+  }
+
+  private void setVisibleRowCount(JTable table, int rows) {
+    int height = 0;
+    for (int row = 0; row < rows; row++)
+      height += table.getRowHeight(row);
+
+    table.setPreferredScrollableViewportSize(new Dimension(table.getPreferredScrollableViewportSize().width, height));
   }
 }

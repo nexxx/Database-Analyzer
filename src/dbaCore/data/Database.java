@@ -352,6 +352,7 @@ public class Database extends HistoricObject {
     for (ForeignKeyConstraint fk : foreignKeys) {
       dbClone.getForeignKeys().add((ForeignKeyConstraint) fk.getClone());
     }
+    dbClone.setType(type);
 
     dbClone.restoreReferences();
 

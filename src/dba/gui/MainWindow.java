@@ -174,6 +174,7 @@ public class MainWindow implements constants, Observer {
             } else {
               toolBarDatabase.setEnabledInspect(true);
             }
+            toolBarDatabase.updateDatatype();
             pnlToolBar.add(toolBarDatabase, BorderLayout.CENTER);
           } else if (((String) evt.getNewValue()).equalsIgnoreCase("Relation")) {
             pnlToolBar.removeAll();
