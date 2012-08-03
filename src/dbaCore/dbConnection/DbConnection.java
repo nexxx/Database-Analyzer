@@ -17,6 +17,7 @@
 
 package dbaCore.dbConnection;
 
+import dbaCore.data.Attribute;
 import dbaCore.data.Database;
 import dbaCore.data.ForeignKeyConstraint;
 import dbaCore.data.RelationSchema;
@@ -68,7 +69,10 @@ public abstract class DbConnection {
       int col = md.getColumnCount();
       for (int i = 1; i <= col; i++) {
         String col_name = md.getColumnName(i);
-        tmpRelation.addAttribute(col_name);
+        String dataType = md.getColumnTypeName(i);
+        Attribute attr = new Attribute(col_name);
+        attr.setType(dataType.toUpperCase());
+        tmpRelation.addAttribute(attr);
       }
       ResultSet pks = dbm.getPrimaryKeys(null, null, relation);
       while (pks.next()) {
