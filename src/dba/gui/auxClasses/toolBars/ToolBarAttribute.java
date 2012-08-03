@@ -48,6 +48,7 @@ public class ToolBarAttribute extends ToolBar {
   private JToggleButton btnPK;
   private JToggleButton btnFK;
   private JComboBox<String> cbType;
+  private ActionListener cbTypeActionListener;
 
   public ToolBarAttribute(DatabaseTreePanel dbTreePanel, RelationView relationView,
                           RelationDetailsView relationDetailsView) {
@@ -114,17 +115,7 @@ public class ToolBarAttribute extends ToolBar {
       }
     });
 
-    cbType.addActionListener(new ActionListener() {
-
-      @Override
-      public void actionPerformed(ActionEvent arg0) {
-        if (!tree.getAttribute().getType().equalsIgnoreCase((String) cbType.getSelectedItem())) {
-          int x = tree.getNewSelectedItem(TreeEnum.SwitchType);
-          attrLogic.setType((String) cbType.getSelectedItem());
-          tree.setSelectedItem(x);
-        }
-      }
-    });
+    updateCbTypeActionListener();
 
     add(btnDelete);
     add(btnRename);
@@ -162,6 +153,7 @@ public class ToolBarAttribute extends ToolBar {
     dbType = (new DbTypeFactory(CustomTree.getInstance().getDatabase())).getType();
     remove(cbType);
     cbType = dbType.getCombobox();
+    updateCbTypeActionListener();
     add(cbType);
     cbType.setSelectedItem(attr.getType());
 
@@ -172,5 +164,20 @@ public class ToolBarAttribute extends ToolBar {
     }
 
 
+  }
+
+  private void updateCbTypeActionListener() {
+    cbType.removeActionListener(cbTypeActionListener);
+    cbTypeActionListener = new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent arg0) {
+        if (!tree.getAttribute().getType().equalsIgnoreCase((String) cbType.getSelectedItem())) {
+          int x = tree.getNewSelectedItem(TreeEnum.SwitchType);
+          attrLogic.setType((String) cbType.getSelectedItem());
+          tree.setSelectedItem(x);
+        }
+      }
+    };
+    cbType.addActionListener(cbTypeActionListener);
   }
 }

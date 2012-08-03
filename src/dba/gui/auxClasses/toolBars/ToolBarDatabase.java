@@ -23,8 +23,12 @@ import dba.gui.auxClasses.DatabaseTreePanel;
 import dba.gui.auxClasses.RelationDetailsView;
 import dba.gui.auxClasses.RelationView;
 import dba.utils.TreeEnum;
+import dbaCore.data.Attribute;
+import dbaCore.data.RelationSchema;
+import dbaCore.data.dBTypes.TypeEnum;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -39,6 +43,7 @@ public class ToolBarDatabase extends ToolBar {
   private CustomTree tree;
   private DatabaseLogic dbLogic;
   private JButton btnInspect;
+  private JComboBox<String> cb;
   /**
    *
    */
@@ -88,9 +93,25 @@ public class ToolBarDatabase extends ToolBar {
       }
     });
 
+    cb = new JComboBox<>();
+    for (TypeEnum e : TypeEnum.values()) {
+      cb.addItem(e.getName());
+    }
+    cb.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
+    cb.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent actionEvent) {
+        if (!((String) cb.getSelectedItem()).equalsIgnoreCase(tree.getDatabase().getType().getName())) {
+          tree.getDatabase().setType(TypeEnum.getEnumByValue((String) cb.getSelectedItem()));
+          resetAllDataTypes();
+        }
+      }
+    });
+
     add(btnNewRelation);
     add(btnEmptyRelation);
     add(btnInspect);
+    add(cb);
   }
 
   /**
@@ -102,4 +123,14 @@ public class ToolBarDatabase extends ToolBar {
     btnInspect.setEnabled(enabled);
   }
 
+
+  private void resetAllDataTypes() {
+    for (RelationSchema relationSchema : tree.getDatabase().getDatabase()) {
+      for (Attribute attribute : relationSchema.getAttributes()) {
+        attribute.setType("---");
+      }
+
+    }
+
+  }
 }
