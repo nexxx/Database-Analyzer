@@ -54,7 +54,7 @@ public class DatatypeMappingFrame extends JDialog {
     database = db;
     databaseOld = dbOld;
     locale = Localization.getInstance();
-    this.setTitle(locale.getString("WSC_Title"));
+    this.setTitle(locale.getString("DTM_Title"));
     GetIcons getIcons = GetIcons.getInstance();
     ImageIcon iconFrame = getIcons.getIconFrame();
     this.setIconImage(iconFrame.getImage());
@@ -106,24 +106,28 @@ public class DatatypeMappingFrame extends JDialog {
     JScrollPane scrollPane = new JScrollPane(panel);
     contentPanel.add(scrollPane, BorderLayout.CENTER);
 
-    for (RelationSchema relation : database.getDatabase()) {
-      panel.add(new JLabel(relation.getName()));
-      DTMTableModel tableModel = new DTMTableModel(relation.getAttributes(), databaseOld.getRelationSchemaByName
-        (relation.getName()).getAttributes());
-      JTable table = new JTable(tableModel);
+    if (database.getDatabase().size() == 0) {
+      panel.add(new JLabel(locale.getString("DTM_ReallyApply")));
+    } else {
+      for (RelationSchema relation : database.getDatabase()) {
+        panel.add(new JLabel(relation.getName()));
+        DTMTableModel tableModel = new DTMTableModel(relation.getAttributes(), databaseOld.getRelationSchemaByName
+          (relation.getName()).getAttributes());
+        JTable table = new JTable(tableModel);
 
-      DbType dbType = (new DbTypeFactory(CustomTree.getInstance().getDatabase())).getType();
-      JComboBox<String> comboBox = dbType.getCombobox();
-      TableColumn col = table.getColumnModel().getColumn(2);
-      col.setCellEditor(new DefaultCellEditor(comboBox));
+        DbType dbType = (new DbTypeFactory(CustomTree.getInstance().getDatabase())).getType();
+        JComboBox<String> comboBox = dbType.getCombobox();
+        TableColumn col = table.getColumnModel().getColumn(2);
+        col.setCellEditor(new DefaultCellEditor(comboBox));
 
-      JScrollPane scrollpane = new JScrollPane(table);
-      setVisibleRowCount(table, table.getRowCount());
-      table.getTableHeader().setResizingAllowed(false);
-      table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-      table.getTableHeader().setReorderingAllowed(false);
-      table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-      panel.add(scrollpane);
+        JScrollPane scrollpane = new JScrollPane(table);
+        setVisibleRowCount(table, table.getRowCount());
+        table.getTableHeader().setResizingAllowed(false);
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        table.getTableHeader().setReorderingAllowed(false);
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        panel.add(scrollpane);
+      }
     }
 
     pack();

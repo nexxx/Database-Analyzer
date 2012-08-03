@@ -412,13 +412,13 @@ public class GuiLogic {
         for (FunctionalDependency fd : relation.getFunctionalDependencies()) {
           out.write("|  |-> " + fd.toString() + "\n");
         }
-        out.write("|-> Primary Keys\n");
+        out.write("|-> Primary Key Attributes\n");
         for (Attribute attr : relation.getAttributes()) {
           if (attr.getIsPrimaryKey()) {
             out.write("|  |->" + attr.getName() + "\n");
           }
         }
-        out.write("|-> Foreign Keys\n");
+        out.write("|-> Foreign Key Attributes\n");
         for (Attribute attr : relation.getAttributes()) {
           if (attr.getIsForeignKey()) {
             String target = "";
@@ -757,13 +757,13 @@ public class GuiLogic {
       for (FunctionalDependency fd : relation.getFunctionalDependencies()) {
         text = text + "|  |-> " + fd.toString() + "<br>";
       }
-      text = text + "|-> Primary Keys<br>";
+      text = text + "|-> Primary Key Attributes<br>";
       for (Attribute attr : relation.getAttributes()) {
         if (attr.getIsPrimaryKey()) {
           text = text + "|  |->" + attr.getName() + "<br>";
         }
       }
-      text = text + "|-> Foreign Keys<br>";
+      text = text + "|-> Foreign Key Attributes<br>";
       for (Attribute attr : relation.getAttributes()) {
         if (attr.getIsForeignKey()) {
           String target = "";
