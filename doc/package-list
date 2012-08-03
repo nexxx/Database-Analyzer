@@ -22,4 +22,3 @@ dbaCore.data.events
 dbaCore.dbConnection
 dbaCore.logic.Analysis
 dbaCore.logic.normalization
-dbaCore.utils

@@ -394,13 +394,42 @@ public class GuiLogic {
     }
   }
 
+  @SuppressWarnings("ConstantConditions")
   private FeedbackEnum writeText(String path) {
     try {
       BufferedWriter out = new BufferedWriter(new FileWriter(path));
       for (RelationSchema relation : database.getDatabase()) {
-        out.write(relation.toString() + "\n");
+        out.write(relation.getName() + ":\n");
+        out.write("|-> Attributes\n");
+        for (Attribute attr : relation.getAttributes()) {
+          if (attr.getType().equalsIgnoreCase("---")) {
+            out.write("|  |-> " + attr.getName() + "\n");
+          } else {
+            out.write("|  |-> " + attr.getName() + " (" + attr.getType() + ")\n");
+          }
+        }
+        out.write("|-> Functional Dependencies\n");
         for (FunctionalDependency fd : relation.getFunctionalDependencies()) {
-          out.write("(" + fd.toString() + ")" + "\n");
+          out.write("|  |-> " + fd.toString() + "\n");
+        }
+        out.write("|-> Primary Keys\n");
+        for (Attribute attr : relation.getAttributes()) {
+          if (attr.getIsPrimaryKey()) {
+            out.write("|  |->" + attr.getName() + "\n");
+          }
+        }
+        out.write("|-> Foreign Keys\n");
+        for (Attribute attr : relation.getAttributes()) {
+          if (attr.getIsForeignKey()) {
+            String target = "";
+            for (ForeignKeyConstraint keyConstraint : database.getForeignKeys()) {
+              if (keyConstraint.getSourceRelationName().equalsIgnoreCase(relation.getName()) && keyConstraint
+                .getSourceAttributeName().equalsIgnoreCase(attr.getName())) {
+                target = keyConstraint.getTargetRelationName() + "(" + keyConstraint.getTargetAttributeName() + ")";
+              }
+            }
+            out.write("|  |->" + attr.getName() + " - Target: " + target + "\n");
+          }
         }
         out.write("\n");
       }
@@ -706,12 +735,48 @@ public class GuiLogic {
 
     String text = "";
 
-    for (RelationSchema relation : database.getDatabase()) {
+    /*for (RelationSchema relation : database.getDatabase()) {
       text = text + relation.toString() + "<br>";
       for (FunctionalDependency fd : relation.getFunctionalDependencies()) {
         text = text + "(" + fd.toString() + ")" + "<br>";
       }
       text = text + "<br><br>";
+    }*/
+
+    for (RelationSchema relation : database.getDatabase()) {
+      text = text + relation.getName() + "<br>";
+      text = text + "|-> Attributes<br>";
+      for (Attribute attr : relation.getAttributes()) {
+        if (attr.getType().equalsIgnoreCase("---")) {
+          text = text + "|  |-> " + attr.getName() + "<br>";
+        } else {
+          text = text + "|  |-> " + attr.getName() + " (" + attr.getType() + ")<br>";
+        }
+      }
+      text = text + "|-> Functional Dependencies<br>";
+      for (FunctionalDependency fd : relation.getFunctionalDependencies()) {
+        text = text + "|  |-> " + fd.toString() + "<br>";
+      }
+      text = text + "|-> Primary Keys<br>";
+      for (Attribute attr : relation.getAttributes()) {
+        if (attr.getIsPrimaryKey()) {
+          text = text + "|  |->" + attr.getName() + "<br>";
+        }
+      }
+      text = text + "|-> Foreign Keys<br>";
+      for (Attribute attr : relation.getAttributes()) {
+        if (attr.getIsForeignKey()) {
+          String target = "";
+          for (ForeignKeyConstraint keyConstraint : database.getForeignKeys()) {
+            if (keyConstraint.getSourceRelationName().equalsIgnoreCase(relation.getName()) && keyConstraint
+              .getSourceAttributeName().equalsIgnoreCase(attr.getName())) {
+              target = keyConstraint.getTargetRelationName() + "(" + keyConstraint.getTargetAttributeName() + ")";
+            }
+          }
+          text = text + "|  |->" + attr.getName() + " - Target: " + target + "<br>";
+        }
+      }
+      text = text + "<br>";
     }
 
     root.put("Text", text);

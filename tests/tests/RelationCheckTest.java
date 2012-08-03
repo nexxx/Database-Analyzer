@@ -15,12 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.      *
  ******************************************************************************/
 
-import dbaCore.data.Attribute;
-import dbaCore.data.FunctionalDependency;
-import dbaCore.data.Key;
-import dbaCore.data.RelationSchema;
+import dbaCore.data.*;
 import dbaCore.logic.Analysis.GeneralRelationCheck;
-import dbaCore.utils.Utilities;
 import org.junit.Test;
 
 import java.util.ArrayList;

@@ -16,7 +16,7 @@
  ******************************************************************************/
 
 import dbaCore.data.Attribute;
-import dbaCore.utils.Utilities;
+import dbaCore.data.Utilities;
 import org.junit.Test;
 
 import java.util.ArrayList;

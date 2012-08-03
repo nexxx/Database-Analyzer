@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.      *
  ******************************************************************************/
 
-package dbaCore.utils;
+package dbaCore.data;
 
 import java.util.ArrayList;
 
@@ -64,11 +64,21 @@ public class Utilities {
    */
   public static String getStringFromArrayList(ArrayList<?> arr) {
     String result = "";
+
     for (int i = 0; i < arr.size(); i++) {
-      if (i == 0) {
-        result = result + arr.get(i).toString();
+      if (arr.get(i) instanceof Attribute) {
+        Attribute attr = (Attribute) arr.get(i);
+        if (i == 0) {
+          result = result + attr.getName();
+        } else {
+          result = result + "," + attr.getName();
+        }
       } else {
-        result = result + "," + arr.get(i).toString();
+        if (i == 0) {
+          result = result + arr.get(i).toString();
+        } else {
+          result = result + "," + arr.get(i).toString();
+        }
       }
     }
 

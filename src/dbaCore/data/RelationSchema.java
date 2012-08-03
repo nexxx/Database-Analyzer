@@ -19,7 +19,6 @@ package dbaCore.data;
 
 import dbaCore.data.events.Change;
 import dbaCore.data.events.ChangeListener;
-import dbaCore.utils.Utilities;
 
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
