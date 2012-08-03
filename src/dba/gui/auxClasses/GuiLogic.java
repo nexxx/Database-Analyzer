@@ -428,7 +428,7 @@ public class GuiLogic {
                 target = keyConstraint.getTargetRelationName() + "(" + keyConstraint.getTargetAttributeName() + ")";
               }
             }
-            out.write("|  |->" + attr.getName() + " - Target: " + target + "\n");
+            out.write("   |->" + attr.getName() + " - Target: " + target + "\n");
           }
         }
         out.write("\n");
@@ -773,7 +773,7 @@ public class GuiLogic {
               target = keyConstraint.getTargetRelationName() + "(" + keyConstraint.getTargetAttributeName() + ")";
             }
           }
-          text = text + "|  |->" + attr.getName() + " - Target: " + target + "<br>";
+          text = text + "   |->" + attr.getName() + " - Target: " + target + "<br>";
         }
       }
       text = text + "<br>";
