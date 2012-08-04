@@ -21,6 +21,8 @@ import dba.fileIO.ReadFromXML;
 import dba.fileIO.SaveToXml;
 import dba.gui.CustomTree;
 import dba.gui.ImportDbFrame;
+import dba.gui.auxClasses.events.GraphicalExportRequested;
+import dba.gui.auxClasses.events.GraphicalExportRequestedListener;
 import dba.gui.auxClasses.feedback.FeedbackbarPanel;
 import dba.options.FeedbackEnum;
 import dba.options.Options;
@@ -35,12 +37,9 @@ import freemarker.template.Template;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Observer;
+import java.util.*;
 
-public class GuiLogic {
+public class GuiLogic extends Observable {
   private static Database database;
   private DatabaseTreePanel dbTree;
   private Localization locale;
@@ -48,8 +47,8 @@ public class GuiLogic {
   private static String lastFileName = null;
   private static String lastFileNameBackup = null;
   private CustomTree tree;
-  private static ArrayList<Observer> observers = new ArrayList<>();
   private Configuration cfg;
+  private ArrayList<GraphicalExportRequestedListener>listeners;
 
 
   public GuiLogic(DatabaseTreePanel dbTreePanel) {
@@ -58,9 +57,9 @@ public class GuiLogic {
     database = tree.getDatabase();
     dbTree = dbTreePanel;
     locale = Localization.getInstance();
-    //lastFileName = null;
-    //lastFileNameBackup = null;
     options = Options.getInstance();
+
+    listeners=new ArrayList<>();
 
     //freemaker init
     cfg = new Configuration();
@@ -79,7 +78,8 @@ public class GuiLogic {
 
   private void setLastFileName(String fileName) {
     lastFileName = fileName;
-    notifyObservers(lastFileName);
+    super.setChanged();
+    super.notifyObservers(lastFileName);
   }
 
 
@@ -131,7 +131,6 @@ public class GuiLogic {
           lastFileName = path;
           lastFileNameBackup = path;
           TimeLine.getInstance().initialize(database);
-          //TimeLine.getInstance().addHistoricObject(database);
 
           tree.setSelectionRow(0);
           return FeedbackEnum.SUCCESSFUL;
@@ -274,7 +273,6 @@ public class GuiLogic {
     TimeLine.getInstance().setDirty(false);
     lastFileName = null;
     TimeLine.getInstance().initialize(database);
-    //TimeLine.getInstance().addHistoricObject(database);
     tree.setSelectedItem(0);
     return FeedbackEnum.SUCCESSFUL;
   }
@@ -319,7 +317,7 @@ public class GuiLogic {
           if (!path.endsWith(".png")) {
             path = path + ".png";
           }
-          notifyObservers(path);
+          fireGraphicalExportRequested(path);
         } else if (fc.getFileFilter() == typeText) {
           if (!path.endsWith(".txt")) {
             path = path + ".txt";
@@ -446,26 +444,6 @@ public class GuiLogic {
     }
   }
 
-  // Observer methods
-
-  /**
-   * Add a Observer to the Collection
-   *
-   * @param observer the observer to add
-   * @return true/false
-   */
-  public boolean addObserver(Observer observer) {
-    return observers.add(observer);
-  }
-
-  /**
-   * Notifies Observers about change
-   */
-  private void notifyObservers(Object argument) {
-    for (Observer stalker : observers) {
-      stalker.update(null, argument);
-    }
-  }
 
   public void undo() {
     if (!TimeLine.getInstance().travelBackward()) {
@@ -666,7 +644,7 @@ public class GuiLogic {
 
   private FeedbackEnum writeImages(String folder) {
     Map root = new HashMap();
-    notifyObservers(folder + "/db.png");
+    fireGraphicalExportRequested(folder + "/db.png");
 
     Template temp;
     try {
@@ -769,5 +747,20 @@ public class GuiLogic {
     return FeedbackEnum.CANCEL;
   }
 
+  // GraphicalExportRequested-Methods
+  public void addGraphicalExportRequestedListener(GraphicalExportRequestedListener listener) {
+    listeners.add(listener);
+  }
+
+  /**
+   * Tells all listeners that a graphical export is requested
+   */
+  private void fireGraphicalExportRequested(String path) {
+    GraphicalExportRequested request = new GraphicalExportRequested(this,path);
+
+    for (GraphicalExportRequestedListener listener : listeners) {
+      listener.GraphicalExportRequested(request);
+    }
+  }
 
 }

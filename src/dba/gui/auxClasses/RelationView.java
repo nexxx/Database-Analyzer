@@ -26,6 +26,8 @@ import com.mxgraph.util.mxEventSource.mxIEventListener;
 import com.mxgraph.view.mxGraph;
 import com.mxgraph.view.mxStylesheet;
 import dba.gui.CustomTree;
+import dba.gui.auxClasses.events.GraphicalExportRequested;
+import dba.gui.auxClasses.events.GraphicalExportRequestedListener;
 import dba.gui.auxClasses.jGraph.JGraphView;
 import dba.gui.auxClasses.jGraph.RelationGraphUpdater;
 import dba.gui.auxClasses.jGraph.XGraph;
@@ -43,10 +45,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.Observable;
-import java.util.Observer;
 
-public class RelationView extends JGraphView implements Observer {
+public class RelationView extends JGraphView{
   /**
    *
    */
@@ -72,7 +72,13 @@ public class RelationView extends JGraphView implements Observer {
   public RelationView(GuiLogic logic) {
     super();
 
-    logic.addObserver(this);
+    //logic.addObserver(this);
+    logic.addGraphicalExportRequestedListener(new GraphicalExportRequestedListener() {
+      @Override
+      public void GraphicalExportRequested(GraphicalExportRequested exportRequest) {
+        exportToPng(exportRequest.getPath());
+      }
+    });
     initGraphics();
   }
 
@@ -251,13 +257,5 @@ public class RelationView extends JGraphView implements Observer {
     style.put(mxConstants.STYLE_RESIZABLE, false);
     style.put(mxConstants.STYLE_STROKECOLOR, Options.getInstance().getArrowFKColor());
     stylesheet.putCellStyle("FK_ARROW", style);
-  }
-
-  // Observer methods
-  @Override
-  public void update(Observable o, Object arg) {
-    if (arg instanceof String) {
-      exportToPng((String) arg);
-    }
   }
 }

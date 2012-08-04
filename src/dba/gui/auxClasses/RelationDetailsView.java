@@ -26,6 +26,8 @@ import com.mxgraph.util.mxEventSource.mxIEventListener;
 import com.mxgraph.view.mxGraph;
 import com.mxgraph.view.mxStylesheet;
 import dba.gui.CustomTree;
+import dba.gui.auxClasses.events.GraphicalExportRequested;
+import dba.gui.auxClasses.events.GraphicalExportRequestedListener;
 import dba.gui.auxClasses.jGraph.JGraphView;
 import dba.gui.auxClasses.jGraph.RelationDetailsGraphUpdater;
 import dba.gui.auxClasses.jGraph.XGraph;
@@ -42,13 +44,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.Observable;
-import java.util.Observer;
 
 /**
  * Displays the relations and their functional dependencies
  */
-public class RelationDetailsView extends JGraphView implements Observer {
+public class RelationDetailsView extends JGraphView{
   /**
    *
    */
@@ -71,7 +71,12 @@ public class RelationDetailsView extends JGraphView implements Observer {
   public RelationDetailsView(GuiLogic logic) {
     super();
 
-    logic.addObserver(this);
+    logic.addGraphicalExportRequestedListener(new GraphicalExportRequestedListener() {
+      @Override
+      public void GraphicalExportRequested(GraphicalExportRequested exportRequest) {
+        exportToPng(exportRequest.getPath());
+      }
+    });
     initGraphics();
   }
 
@@ -254,13 +259,5 @@ public class RelationDetailsView extends JGraphView implements Observer {
     style = (Hashtable<String, Object>) style.clone();
     style.put(mxConstants.STYLE_ENDARROW, mxConstants.NONE);
     stylesheet.putCellStyle("EDGE_PLAIN", style);
-  }
-
-  // Observer-Method
-  @Override
-  public void update(Observable o, Object arg) {
-    if (arg instanceof String) {
-      exportToPng((String) arg);
-    }
   }
 }
