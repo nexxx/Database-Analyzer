@@ -205,6 +205,7 @@ public class ImportDbFrame extends JDialog {
     }
 
     database = dbc.getDatabase();
+    database.setType(TypeEnum.getEnumByValue((String) cb.getSelectedItem()));
     guiLogic.setDatabase(database);
 
     database.initPropertyChangeListeners();
