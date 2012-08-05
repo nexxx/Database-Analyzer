@@ -17,7 +17,9 @@
 
 package dba.gui.DatatypeMappingFrame;
 
+import dba.utils.Localization;
 import dbaCore.data.Attribute;
+import dbaCore.data.dBTypes.TypeEnum;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
@@ -37,10 +39,12 @@ public class DTMTableModel extends AbstractTableModel {
   private ArrayList<Attribute> data;
   private ArrayList<Attribute> dataOld;
 
-  private DTMTableModel() {
+  private DTMTableModel(TypeEnum oldType, TypeEnum newType) {
     super();
     //Localization locale = Localization.getInstance();
-    columnNames = new String[]{"Name", "Old", "New"};
+    columnNames = new String[]{Localization.getInstance().getString("Attribute"),
+      Localization.getInstance().getString("DTM_Old") + ": " + oldType.getName(),
+      Localization.getInstance().getString("DTM_New") + ": " + newType.getName()};
     data = new ArrayList<>();
   }
 
@@ -49,8 +53,8 @@ public class DTMTableModel extends AbstractTableModel {
    *
    * @param data ArrayList with Attributes
    */
-  public DTMTableModel(ArrayList<Attribute> data, ArrayList<Attribute> dataOld) {
-    this();
+  public DTMTableModel(ArrayList<Attribute> data, ArrayList<Attribute> dataOld, TypeEnum oldType, TypeEnum newType) {
+    this(oldType, newType);
     this.data = data;
     this.dataOld = dataOld;
   }

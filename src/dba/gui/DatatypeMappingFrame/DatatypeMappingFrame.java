@@ -112,7 +112,7 @@ public class DatatypeMappingFrame extends JDialog {
       for (RelationSchema relation : database.getDatabase()) {
         panel.add(new JLabel(relation.getName()));
         DTMTableModel tableModel = new DTMTableModel(relation.getAttributes(), databaseOld.getRelationSchemaByName
-          (relation.getName()).getAttributes());
+          (relation.getName()).getAttributes(), databaseOld.getType(), database.getType());
         JTable table = new JTable(tableModel);
 
         DbType dbType = (new DbTypeFactory(CustomTree.getInstance().getDatabase())).getType();
