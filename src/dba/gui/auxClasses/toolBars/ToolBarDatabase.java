@@ -22,9 +22,7 @@ import dba.gui.DatatypeMappingFrame.DatatypeMappingFrame;
 import dba.gui.auxClasses.*;
 import dba.options.FeedbackEnum;
 import dba.utils.TreeEnum;
-import dbaCore.data.Attribute;
 import dbaCore.data.Database;
-import dbaCore.data.RelationSchema;
 import dbaCore.data.TimeLine;
 import dbaCore.data.dBTypes.TypeEnum;
 
@@ -108,7 +106,7 @@ public class ToolBarDatabase extends ToolBar {
         if (!((String) cb.getSelectedItem()).equalsIgnoreCase(tree.getDatabase().getType().getName())) {
           Database dbOld = tree.getDatabase().getClone();
           tree.getDatabase().setType(TypeEnum.getEnumByValue((String) cb.getSelectedItem()));
-          resetAllDataTypes();
+          tree.getDatabase().resetAllDataTypes(dbOld);
 
           DatatypeMappingFrame frame = new DatatypeMappingFrame(tree.getDatabase(), dbOld);
           frame.setVisible(true);
@@ -136,17 +134,6 @@ public class ToolBarDatabase extends ToolBar {
    */
   public void setEnabledInspect(boolean enabled) {
     btnInspect.setEnabled(enabled);
-  }
-
-
-  private void resetAllDataTypes() {
-    for (RelationSchema relationSchema : tree.getDatabase().getDatabase()) {
-      for (Attribute attribute : relationSchema.getAttributes()) {
-        attribute.setType("---");
-      }
-
-    }
-
   }
 
   public void updateDatatype() {

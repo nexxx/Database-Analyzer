@@ -39,12 +39,11 @@ public class DTMTableModel extends AbstractTableModel {
   private ArrayList<Attribute> data;
   private ArrayList<Attribute> dataOld;
 
-  private DTMTableModel(TypeEnum oldType, TypeEnum newType) {
+  private DTMTableModel(TypeEnum newType, TypeEnum oldType) {
     super();
-    //Localization locale = Localization.getInstance();
-    columnNames = new String[]{Localization.getInstance().getString("Attribute"),
-      Localization.getInstance().getString("DTM_Old") + ": " + oldType.getName(),
-      Localization.getInstance().getString("DTM_New") + ": " + newType.getName()};
+    Localization locale = Localization.getInstance();
+    columnNames = new String[]{locale.getString("Attribute"), locale.getString("DTM_Old") + ": " + oldType.getName(),
+      locale.getString("DTM_New") + ": " + newType.getName()};
     data = new ArrayList<>();
   }
 
@@ -53,7 +52,7 @@ public class DTMTableModel extends AbstractTableModel {
    *
    * @param data ArrayList with Attributes
    */
-  public DTMTableModel(ArrayList<Attribute> data, ArrayList<Attribute> dataOld, TypeEnum oldType, TypeEnum newType) {
+  public DTMTableModel(ArrayList<Attribute> data, ArrayList<Attribute> dataOld, TypeEnum newType, TypeEnum oldType) {
     this(oldType, newType);
     this.data = data;
     this.dataOld = dataOld;
