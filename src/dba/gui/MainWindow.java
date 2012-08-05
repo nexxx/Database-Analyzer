@@ -552,16 +552,6 @@ public class MainWindow implements constants, Observer {
     }
   }
 
-  @Override
-  public void update(Observable o, Object arg) {
-    if (arg instanceof Feedback) {
-      Feedback feedback = (Feedback) arg;
-      feedbackbarPanel.showFeedback(feedback.getText(), feedback.getFeedback());
-
-    } else if (arg instanceof String) {
-      updateFrameTitle();
-    }
-  }
 
   private void updateFrameTitle() {
     if (guiLogic.getLastFileName() != null) {
@@ -585,5 +575,15 @@ public class MainWindow implements constants, Observer {
 
     relationView.display(database);
     relationDetailsView.display(database);
+  }
+
+  @Override
+  public void update(Observable observable, Object o) {
+    if(observable instanceof GuiLogic){
+      updateFrameTitle();
+    } else if (o instanceof Feedback) {
+      Feedback feedback = (Feedback) o;
+      feedbackbarPanel.showFeedback(feedback.getText(), feedback.getFeedback());
+    }
   }
 }
