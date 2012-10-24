@@ -42,6 +42,7 @@ import dbaCore.data.events.Time;
 import dbaCore.logic.Analysis.GeneralRelationCheck;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import java.awt.*;
 import java.awt.event.*;
@@ -88,6 +89,13 @@ public class MainWindow implements constants, Observer {
   private RelationView relationView;
   private RelationDetailsView relationDetailsView;
   private FeedbackbarPanel feedbackbarPanel;
+  private JSplitPane splitPane;
+  private Dimension minimumSizeSplitPane;
+  private int lastSplitPaneLocation;
+  private JPanel pnlShowTree;
+  private JButton btnShowTree;
+  private int splitPaneDividerSize;
+
 
   /**
    * Create the frame.
@@ -231,7 +239,8 @@ public class MainWindow implements constants, Observer {
 
     Initialize init = Initialize.getInstance();
     init.init();
-    Dimension minimumSizeSplitPane = new Dimension(100, 50);
+
+    minimumSizeSplitPane = new Dimension(100, 50);
 
     dbTreePanel.addPropertyChangeListener(changeListener);
     // relationView.addPropertyChangeListener(changeListener);
@@ -277,8 +286,38 @@ public class MainWindow implements constants, Observer {
     pnlRight.add(displayTab, BorderLayout.CENTER);
     pnlRight.add(feedbackbarPanel, BorderLayout.SOUTH);
 
-    JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, dbTreePanel, pnlRight);
+    splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, dbTreePanel, pnlRight);
+    splitPaneDividerSize = 5;
+    splitPane.setDividerSize(splitPaneDividerSize);
     splitPane.setDividerLocation(250);
+
+    pnlShowTree = new JPanel(new BorderLayout());
+    btnShowTree = new JButton("<");
+    Border emptyBorder = BorderFactory.createEmptyBorder(4, 4, 4, 4);
+    btnShowTree.setBorder(emptyBorder);
+    pnlShowTree.add(btnShowTree, BorderLayout.CENTER);
+    contentPane.add(pnlShowTree, BorderLayout.WEST);
+
+    btnShowTree.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent actionEvent) {
+        if (splitPane.getDividerLocation() > minimumSizeSplitPane.width) {
+          dbTreePanel.setMinimumSize(new Dimension());
+          lastSplitPaneLocation = splitPane.getDividerLocation();
+          splitPane.setDividerLocation(0);
+          splitPane.setEnabled(false);
+          btnShowTree.setText(">");
+          splitPane.setDividerSize(0);
+        } else {
+          dbTreePanel.setMinimumSize(minimumSizeSplitPane);
+          splitPane.setDividerLocation(lastSplitPaneLocation);
+          splitPane.setEnabled(true);
+          btnShowTree.setText("<");
+          splitPane.setDividerSize(splitPaneDividerSize);
+        }
+      }
+    });
+
     dbTreePanel.setMinimumSize(minimumSizeSplitPane);
     frame.add(splitPane, BorderLayout.CENTER);
 
@@ -579,7 +618,7 @@ public class MainWindow implements constants, Observer {
 
   @Override
   public void update(Observable observable, Object o) {
-    if(observable instanceof GuiLogic){
+    if (observable instanceof GuiLogic) {
       updateFrameTitle();
     } else if (o instanceof Feedback) {
       Feedback feedback = (Feedback) o;
