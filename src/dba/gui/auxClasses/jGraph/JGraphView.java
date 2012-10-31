@@ -98,7 +98,7 @@ public abstract class JGraphView extends JPanel {
             graphComponent.zoomIn();
           }
         } else {
-          if (scale > 0.1) {
+          if (scale > 0.15) {
             graphComponent.zoomOut();
           }
         }
