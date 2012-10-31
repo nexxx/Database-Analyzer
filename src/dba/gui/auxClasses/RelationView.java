@@ -17,15 +17,9 @@
 
 package dba.gui.auxClasses;
 
-import com.mxgraph.model.mxCell;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.util.mxConstants;
-import com.mxgraph.util.mxEvent;
-import com.mxgraph.util.mxEventObject;
-import com.mxgraph.util.mxEventSource.mxIEventListener;
-import com.mxgraph.view.mxGraph;
 import com.mxgraph.view.mxStylesheet;
-import dba.gui.CustomTree;
 import dba.gui.auxClasses.events.GraphicalExportRequested;
 import dba.gui.auxClasses.events.GraphicalExportRequestedListener;
 import dba.gui.auxClasses.jGraph.JGraphView;
@@ -36,13 +30,7 @@ import dbaCore.data.Database;
 import dbaCore.data.ForeignKeyConstraint;
 import dbaCore.data.RelationSchema;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -51,10 +39,6 @@ public class RelationView extends JGraphView{
    *
    */
   private static final long serialVersionUID = -6169070587706507110L;
-  // constants
-
-  private mxCell selectedCell;
-  private mxGraph graph;
 
   // private Thread displayThread;
 
@@ -76,7 +60,7 @@ public class RelationView extends JGraphView{
     logic.addGraphicalExportRequestedListener(new GraphicalExportRequestedListener() {
       @Override
       public void GraphicalExportRequested(GraphicalExportRequested exportRequest) {
-        exportToPng(exportRequest.getPath());
+        exportToPng(exportRequest.getPath(), "_export");
       }
     });
     initGraphics();
@@ -86,7 +70,6 @@ public class RelationView extends JGraphView{
     setLayout(new BorderLayout());
 
     graph = new XGraph();
-    super.setGraph(graph);
 
     graph.getModel().beginUpdate();
     try {
@@ -102,49 +85,13 @@ public class RelationView extends JGraphView{
     graph.setAllowDanglingEdges(false);
 
     graphComponent = new mxGraphComponent(graph);
+    super.initListeners();
     graphComponent.getViewport().setBackground(Color.decode(Options.getInstance().getBackgroundColor()));
 
     // Disable the user's ability to draw own connections
     graphComponent.setConnectable(false);
 
-    graphComponent.addMouseWheelListener(new MouseWheelListener() {
-      @Override
-      public void mouseWheelMoved(MouseWheelEvent event) {
-        double scale = graph.getView().getScale();
 
-        // Only scroll when Control is pressed
-        if (!event.isControlDown()) {
-          return;
-        }
-
-        if (event.getWheelRotation() < 0) {
-          if (scale < 20) {
-            graphComponent.zoomIn();
-          }
-        } else {
-          if (scale > 0.1) {
-            graphComponent.zoomOut();
-          }
-        }
-
-        notifyObservers();
-
-      }
-    });
-
-    graph.getSelectionModel().addListener(mxEvent.CHANGE, new mxIEventListener() {
-
-      @Override
-      public void invoke(Object arg0, mxEventObject arg1) {
-        selectedCell = (mxCell) graph.getSelectionCell();
-
-        if (selectedCell != null) {
-          CustomTree.getInstance().setSelectedNode(selectedCell.getValue());
-        } else {
-          CustomTree.getInstance().setSelectedItem(0);
-        }
-      }
-    });
 
     add(graphComponent, BorderLayout.CENTER);
 
@@ -168,24 +115,6 @@ public class RelationView extends JGraphView{
 
     RelationGraphUpdater updater = new RelationGraphUpdater(graph, graphComponent, relations, foreignKeys);
     updater.run();
-  }
-
-  /**
-   * Exports the current graph to Png
-   *
-   * @param path the path + the fileName
-   */
-  private void exportToPng(String path) {
-    Dimension d = graphComponent.getGraphControl().getSize();
-    BufferedImage image = new BufferedImage(d.width, d.height, BufferedImage.TYPE_INT_ARGB);
-    Graphics2D g = image.createGraphics();
-    graphComponent.getGraphControl().paint(g);
-    final File outputfile = new File(path.replace(".png", "_export.png"));
-    try {
-      ImageIO.write(image, "png", outputfile);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
   }
 
   /**

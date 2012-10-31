@@ -17,10 +17,24 @@
 
 package dba.gui.auxClasses.jGraph;
 
+import com.mxgraph.model.mxCell;
 import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.util.mxEvent;
+import com.mxgraph.util.mxEventObject;
+import com.mxgraph.util.mxEventSource;
 import com.mxgraph.view.mxGraph;
+import dba.gui.CustomTree;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Observer;
 
@@ -30,9 +44,10 @@ public abstract class JGraphView extends JPanel {
    */
   private static final long serialVersionUID = -8564817921313692339L;
   private ArrayList<Observer> observers;
-  private mxGraph graph;
+  protected mxGraph graph;
   protected boolean zoomEnabled;
   protected mxGraphComponent graphComponent;
+  protected mxCell selectedCell;
 
   protected JGraphView() {
     super();
@@ -41,8 +56,57 @@ public abstract class JGraphView extends JPanel {
     zoomEnabled=true;
   }
 
-  protected void setGraph(mxGraph graph) {
-    this.graph = graph;
+  /**
+   * Initializes the Listeners for the graph and the graphcomponent
+   */
+  protected void initListeners() {
+
+    //Manages the click on the graphComponent when it has the focus
+    graph.getSelectionModel().addListener(mxEvent.CHANGE, new mxEventSource.mxIEventListener() {
+
+      @Override
+      public void invoke(Object arg0, mxEventObject arg1) {
+        updateSelectedCell();
+      }
+    });
+
+    //Manages the clicks on the graphComponent when it hasn't the focus
+    graphComponent.addFocusListener(new FocusListener() {
+      @Override
+      public void focusGained(FocusEvent focusEvent) {
+        updateSelectedCell();
+      }
+
+      @Override
+      public void focusLost(FocusEvent focusEvent) {
+      }
+    });
+
+    //Uses Mouswheel+Control to zoom zoom zoom
+    graphComponent.addMouseWheelListener(new MouseWheelListener() {
+      @Override
+      public void mouseWheelMoved(MouseWheelEvent event) {
+        double scale = graph.getView().getScale();
+
+        // Only scroll when Control is pressed
+        if (!event.isControlDown()) {
+          return;
+        }
+
+        if (event.getWheelRotation() < 0) {
+          if (scale < 20) {
+            graphComponent.zoomIn();
+          }
+        } else {
+          if (scale > 0.1) {
+            graphComponent.zoomOut();
+          }
+        }
+
+        notifyObservers();
+
+      }
+    });
   }
 
   /**
@@ -65,9 +129,6 @@ public abstract class JGraphView extends JPanel {
     return factors.toArray(new String[factors.size()]);
   }
 
-  public boolean isZoomEnabled() {
-    return zoomEnabled;
-  }
 
   public void setZoomEnabled(boolean zoomEnabled) {
     this.zoomEnabled = zoomEnabled;
@@ -79,7 +140,7 @@ public abstract class JGraphView extends JPanel {
    * @param factor the zoomFactor e.g. 100, 50%
    */
   public void zoom(String factor) {
-    if(isZoomEnabled()){
+    if(zoomEnabled){
     factor = factor.replace("%", "");
 
     Double newScale = Double.parseDouble(factor);
@@ -91,6 +152,37 @@ public abstract class JGraphView extends JPanel {
       }
 
     }
+    }
+  }
+
+  /**
+   * Updates the selected Item of the Tree when the user click on a Cell
+   */
+  private void updateSelectedCell(){
+    selectedCell = (mxCell) graph.getSelectionCell();
+
+    if (selectedCell != null) {
+      CustomTree.getInstance().setSelectedNode(selectedCell.getValue());
+    } else {
+      CustomTree.getInstance().setSelectedItem(0);
+    }
+  }
+
+  /**
+   * Exports the graph to a .png-file
+   * @param path the target-location for the .png-file
+   * @param name the name of the .png-file
+   */
+  public void exportToPng(String path,String name) {
+    Dimension d = graphComponent.getGraphControl().getSize();
+    BufferedImage image = new BufferedImage(d.width, d.height, BufferedImage.TYPE_INT_ARGB);
+    Graphics2D g = image.createGraphics();
+    graphComponent.getGraphControl().paint(g);
+    final File outputfile = new File(path.replace(".png", name+".png"));
+    try {
+      ImageIO.write(image, "png", outputfile);
+    } catch (IOException e) {
+      e.printStackTrace();
     }
   }
 
