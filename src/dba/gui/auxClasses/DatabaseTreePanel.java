@@ -23,7 +23,10 @@ import dba.gui.auxClasses.nodes.DatabaseNode;
 import dba.gui.auxClasses.nodes.FunctionalDependencyNode;
 import dba.gui.auxClasses.nodes.RelationNode;
 import dba.utils.Localization;
-import dbaCore.data.*;
+import dbaCore.data.Attribute;
+import dbaCore.data.Database;
+import dbaCore.data.FunctionalDependency;
+import dbaCore.data.RelationSchema;
 import dbaCore.logic.Analysis.GeneralRelationCheck;
 import dbaCore.logic.Analysis.RelationUtils;
 
@@ -55,18 +58,10 @@ public class DatabaseTreePanel extends JPanel {
   private Database database;
   private CustomTree tree;
   private DatabaseNode root;
-  private JPopupMenu dbPopUpMenu;
-  private JPopupMenu relPopUpMenu;
-  private JPopupMenu attrPopUpMenu;
-  private JPopupMenu fdPopUpMenu;
-  private DbPopupFactory dbPopupFactory;
-  private RelPopupFactory relPopupFactory;
-  private AttrPopupFactory attrPopupFactory;
 
   private JLabel lblNormalFormDb;
   private JLabel lblNormalFormRel;
   private Localization locale;
-  private GeneralRelationCheck checker;
 
   /**
    * Defaultconstructor to create the panel.
@@ -76,7 +71,6 @@ public class DatabaseTreePanel extends JPanel {
     locale = Localization.getInstance();
     setLayout(new BorderLayout());
     database = db;
-    checker = new GeneralRelationCheck();
 
     root = new DatabaseNode(database);
     DefaultTreeModel defaultTreeModel = new DefaultTreeModel(root);
@@ -100,18 +94,6 @@ public class DatabaseTreePanel extends JPanel {
 
     updateTree();
 
-    dbPopupFactory = new DbPopupFactory(tree);
-    dbPopUpMenu = dbPopupFactory.getDbPopupMenu();
-
-    relPopupFactory = new RelPopupFactory(tree);
-    relPopUpMenu = relPopupFactory.getRelPopupMenu();
-
-    attrPopupFactory = new AttrPopupFactory(tree);
-    attrPopUpMenu = attrPopupFactory.getAttrPopupMenu();
-
-    FdPopupFactory fdPopupFactory = new FdPopupFactory(tree);
-    fdPopUpMenu = fdPopupFactory.getFdPopupMenu();
-
     tree.addTreeSelectionListener(new TreeSelectionListener() {
 
       @Override
@@ -122,55 +104,22 @@ public class DatabaseTreePanel extends JPanel {
 
         if (node instanceof DatabaseNode) {
           DatabaseTreePanel.this.firePropertyChange("TreeClick", null, "Database");
-          if (tree.getDatabase().getDatabase().isEmpty()) {
-            dbPopupFactory.setEnabledInspect(false);
-          } else {
-            dbPopupFactory.setEnabledInspect(true);
-          }
-          addRightClickPopUpMenu(tree);
+          selectNodeWithRmb(tree);
         } else if (node instanceof RelationNode) {
           DatabaseTreePanel.this.firePropertyChange("TreeClick", null, "Relation");
-          enableOptimizeButtons();
-          if (tree.getRelation().getAttributes().size() < 2) {
-            relPopupFactory.setEnabledFD(false);
-          } else {
-            relPopupFactory.setEnabledFD(true);
-          }
-          addRightClickPopUpMenu(tree);
+          selectNodeWithRmb(tree);
         } else if (node instanceof AttributeNode) {
           DatabaseTreePanel.this.firePropertyChange("TreeClick", null, "Attribute");
-          attrPopupFactory.updateElements();
-          addRightClickPopUpMenu(tree);
+          selectNodeWithRmb(tree);
         } else if (node instanceof FunctionalDependencyNode) {
           DatabaseTreePanel.this.firePropertyChange("TreeClick", null, "FD");
-          addRightClickPopUpMenu(tree);
+          selectNodeWithRmb(tree);
         }
 
         updateInspectLabels();
 
       }
     });
-  }
-
-  private void enableOptimizeButtons() {
-    NormalForm currentNF = checker.getNF(tree.getRelation(), new ArrayList<FunctionalDependency>());
-    if (currentNF != NormalForm.SECOND && currentNF != NormalForm.THIRD && currentNF != NormalForm.BOYCECODD) {
-      relPopupFactory.setEnabledOpti2NF(true);
-    } else {
-      relPopupFactory.setEnabledOpti2NF(false);
-    }
-
-    if (currentNF != NormalForm.THIRD && currentNF != NormalForm.BOYCECODD) {
-      relPopupFactory.setEnabledOpti3NF(true);
-    } else {
-      relPopupFactory.setEnabledOpti3NF(false);
-    }
-
-    if (currentNF != NormalForm.BOYCECODD) {
-      relPopupFactory.setEnabledOpti(true);
-    } else {
-      relPopupFactory.setEnabledOpti(false);
-    }
   }
 
   private void updateInspectLabels() {
@@ -182,42 +131,20 @@ public class DatabaseTreePanel extends JPanel {
     lblNormalFormRel.setText(nfTextRel);
   }
 
-  private void addRightClickPopUpMenu(Component component) {
+  private void selectNodeWithRmb(Component component) {
     component.addMouseListener(new MouseAdapter() {
       @Override
       public void mousePressed(MouseEvent e) {
         int row = tree.getClosestRowForLocation(e.getX(), e.getY());
         tree.setSelectedItem(row);
-        if (e.isPopupTrigger()) {
-          showPopUpMenu(e);
-        }
       }
 
       @Override
       public void mouseReleased(MouseEvent e) {
         int row = tree.getClosestRowForLocation(e.getX(), e.getY());
         tree.setSelectedItem(row);
-        if (e.isPopupTrigger()) {
-          showPopUpMenu(e);
-        }
       }
 
-      private void showPopUpMenu(MouseEvent e) {
-        JPopupMenu popupMenu = new JPopupMenu();
-        if ((DefaultMutableTreeNode) tree.getLastSelectedPathComponent() instanceof DatabaseNode) {
-          popupMenu = dbPopUpMenu;
-        } else if ((DefaultMutableTreeNode) tree.getLastSelectedPathComponent() instanceof RelationNode) {
-          popupMenu = relPopUpMenu;
-        } else if ((DefaultMutableTreeNode) tree.getLastSelectedPathComponent() instanceof AttributeNode) {
-          attrPopupFactory.updateElements();
-          popupMenu = attrPopUpMenu;
-        } else if ((DefaultMutableTreeNode) tree.getLastSelectedPathComponent() instanceof FunctionalDependencyNode) {
-          popupMenu = fdPopUpMenu;
-        } else {
-          // Must not happen
-        }
-        popupMenu.show(e.getComponent(), e.getX(), e.getY());
-      }
     });
   }
 
