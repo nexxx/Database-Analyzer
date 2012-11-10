@@ -217,7 +217,7 @@ public class CustomTree extends JTree {
       case EditAttr:
       case TogglePk:
       case ToggleFk:
-      case SwitchType:
+      case SetConstraints:
         // Attribute
         rowNr = tree.getRowForPath(new TreePath(((AttributeNode) this.getSelectionPath().getLastPathComponent())
           .getPath()));

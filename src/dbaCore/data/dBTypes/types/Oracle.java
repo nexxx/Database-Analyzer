@@ -17,35 +17,13 @@
 
 package dbaCore.data.dBTypes.types;
 
-import javax.swing.*;
-
 /**
  * Singelton class with all available Attribute for a Oracle Database
  *
  * @author Andreas Freitag
  */
 public class Oracle extends DbType {
-  private final String[] types = {"---", "VARCHAR2", "NVARCHAR2", "NUMBER", "LONG", "DATE", "BINARY_FLOAT",
-    "BINARY_DOUBLE", "TIMESTAMP", "INTERVAL YEAR", "INTERVAL DAY", "RAW", "LONG RAW", "ROWID", "UROWID", "CHAR",
-    "NCHAR", "CLOB", "NCLOB", "BLOB", "BFILE"};
   private static Oracle instance = null;
-  private JComboBox<String> combobox;
-
-  @Override
-  public String[] getTypes() {
-    return types;
-  }
-
-  @Override
-  public JComboBox<String> getCombobox() {
-    return combobox;
-  }
-
-  private Oracle() {
-    super();
-    combobox = new JComboBox<>(types);
-
-  }
 
   /**
    * Getter for the singelton Oracle (thread-save)

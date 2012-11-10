@@ -17,16 +17,11 @@
 
 package dbaCore.data.dBTypes.types;
 
-import javax.swing.*;
-
 /**
  * Abstract class for factory pattern (dbaCore.data types)
  *
  * @author Andreas Freitag
  */
 public abstract class DbType {
-  public abstract String[] getTypes();
-
-  public abstract JComboBox<String> getCombobox();
 
 }

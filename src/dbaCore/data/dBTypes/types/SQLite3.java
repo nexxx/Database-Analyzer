@@ -17,36 +17,13 @@
 
 package dbaCore.data.dBTypes.types;
 
-import javax.swing.*;
-
 /**
  * Singelton class with all available Attribute for a SQLite Database
  *
  * @author Andreas Freitag
  */
 public class SQLite3 extends DbType {
-  private final String[] types = {"---", "INT", "INTEGER", "TINYINT", "SMALINT", "BIGINT", "MEDIUMINT",
-    "UNSIGNED BIG INT", "INT2", "INT2", "CHARACHTER", "VARCHAR", "VARYING CHARACTER", "NCHAR", "NATIVE CHARACTER",
-    "NVARCHAR", "TEXT", "CLOB", "BLOB", "REAL", "DOUBLE", "DOUBLE PRECISION", "FLOAT", "NUMBERIC", "DECIMAL",
-    "BOOLEAN", "DATE", "DATETIME"};
   private static SQLite3 instance = null;
-  private JComboBox<String> combobox;
-
-  @Override
-  public String[] getTypes() {
-    return types;
-  }
-
-  @Override
-  public JComboBox<String> getCombobox() {
-    return combobox;
-  }
-
-  private SQLite3() {
-    super();
-    combobox = new JComboBox<>(types);
-
-  }
 
   /**
    * Getter for the singelton SQLite (thread-save)

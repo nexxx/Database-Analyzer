@@ -24,8 +24,6 @@ import dba.options.FeedbackEnum;
 import dba.utils.Localization;
 import dbaCore.data.Attribute;
 import dbaCore.data.RelationSchema;
-import dbaCore.data.dBTypes.DbTypeFactory;
-import dbaCore.data.dBTypes.types.DbType;
 
 import javax.swing.*;
 
@@ -104,19 +102,12 @@ public class AttrLogic {
   }
 
   /**
-   * Set the Attribute type (as given in class mySql)
+   * Set the Attribute constraints (as given in class mySql)
    *
-   * @param type Attribute Type
+   * @param constraints Attribute constraints
    */
-  public void setType(String type) {
-    DbType dbType = (new DbTypeFactory(CustomTree.getInstance().getDatabase())).getType();
-
-    for (String s : dbType.getTypes()) {
-      if (s.equalsIgnoreCase(type)) {
-        tree.getAttribute().setType(type);
-        return;
-      }
-    }
-    //throw new IllegalArgumentException();
+  public void setConstraints(String constraints) {
+    tree.getAttribute().setConstraints(constraints);
   }
+
 }

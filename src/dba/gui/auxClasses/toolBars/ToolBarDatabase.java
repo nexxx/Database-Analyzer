@@ -106,7 +106,6 @@ public class ToolBarDatabase extends ToolBar {
         if (!((String) cb.getSelectedItem()).equalsIgnoreCase(tree.getDatabase().getType().getName())) {
           Database dbOld = tree.getDatabase().getClone();
           tree.getDatabase().setType(TypeEnum.getEnumByValue((String) cb.getSelectedItem()));
-          tree.getDatabase().resetAllDataTypes(dbOld);
 
           DatatypeMappingFrame frame = new DatatypeMappingFrame(tree.getDatabase(), dbOld);
           frame.setVisible(true);

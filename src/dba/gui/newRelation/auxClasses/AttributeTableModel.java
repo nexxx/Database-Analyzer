@@ -46,7 +46,7 @@ public class AttributeTableModel extends AbstractTableModel {
   private AttributeTableModel() {
     super();
     Localization locale = Localization.getInstance();
-    columnNames = new String[]{locale.getString("AttrName"), locale.getString("DataType"), "PK", "FK"};
+    columnNames = new String[]{locale.getString("AttrName"), locale.getString("AttrConst"), "PK", "FK"};
     data = new ArrayList<>();
   }
 
@@ -94,7 +94,7 @@ public class AttributeTableModel extends AbstractTableModel {
       case 0:
         return attr.getName();
       case 1:
-        return attr.getType().toUpperCase();
+        return attr.getConstraints().toUpperCase();
       case 2:
         return attr.getIsPrimaryKey();
       case 3:
@@ -133,7 +133,7 @@ public class AttributeTableModel extends AbstractTableModel {
         return;
       case 1:
         if (value instanceof String) {
-          attr.setType((String) value);
+          attr.setConstraints((String) value);
         }
         return;
       case 2:

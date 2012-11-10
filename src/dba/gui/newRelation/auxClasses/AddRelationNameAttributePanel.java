@@ -17,15 +17,12 @@
 
 package dba.gui.newRelation.auxClasses;
 
-import dba.gui.CustomTree;
 import dba.utils.GetIcons;
 import dba.utils.Localization;
 import dba.utils.WizardEnum;
 import dba.utils.constants;
 import dbaCore.data.Database;
 import dbaCore.data.RelationSchema;
-import dbaCore.data.dBTypes.DbTypeFactory;
-import dbaCore.data.dBTypes.types.DbType;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -105,13 +102,6 @@ public class AddRelationNameAttributePanel extends JPanel implements constants {
     }
     table = new JTable(tableModel);
 
-    DbType dbType = (new DbTypeFactory(CustomTree.getInstance().getDatabase())).getType();
-
-    JComboBox<String> comboBox = new JComboBox<>(dbType.getTypes());
-
-    TableColumn col = table.getColumnModel().getColumn(1);
-    col.setCellEditor(new DefaultCellEditor(comboBox));
-
     TableColumn colFk = table.getColumnModel().getColumn(3);
     colFk.setCellEditor(null);
 
@@ -189,9 +179,9 @@ public class AddRelationNameAttributePanel extends JPanel implements constants {
     table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     table.getTableHeader().setReorderingAllowed(false);
     table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
-    table.getColumnModel().getColumn(1).setPreferredWidth(120);
-    table.getColumnModel().getColumn(1).setMinWidth(120);
-    table.getColumnModel().getColumn(1).setMaxWidth(120);
+    table.getColumnModel().getColumn(1).setPreferredWidth(360);
+    table.getColumnModel().getColumn(1).setMinWidth(360);
+    table.getColumnModel().getColumn(1).setMaxWidth(360);
     table.getColumnModel().getColumn(2).setPreferredWidth(30);
     table.getColumnModel().getColumn(2).setMinWidth(30);
     table.getColumnModel().getColumn(2).setMaxWidth(30);

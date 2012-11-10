@@ -17,16 +17,13 @@
 
 package dbaCore.data;
 
-import dbaCore.data.dBTypes.DbTypeFactory;
 import dbaCore.data.dBTypes.TypeEnum;
-import dbaCore.data.dBTypes.types.DbType;
 import dbaCore.data.events.Change;
 import dbaCore.data.events.ChangeListener;
 import dbaCore.data.events.Time;
 
 import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Class representing a Database
@@ -559,31 +556,6 @@ public class Database extends HistoricObject {
    */
   public void setType(TypeEnum type) {
     this.type = type;
-  }
-
-  /**
-   * Map the Attributes (if possible) same as in old Database
-   *
-   * @param databaseOld
-   */
-  public void resetAllDataTypes(Database databaseOld) {
-    DbTypeFactory factory = new DbTypeFactory(this);
-
-    DbType dbType = factory.getType();
-    ArrayList<String> typeList = new ArrayList<>(Arrays.asList(dbType.getTypes()));
-
-    for (RelationSchema relationSchema : database) {
-
-      RelationSchema relationSchemaOld = databaseOld.getRelationSchemaByName(relationSchema.getName());
-
-      for (Attribute attribute : relationSchema.getAttributes()) {
-        String typeOld = relationSchemaOld.getAttributeByName(attribute.getName()).getType();
-        if (typeList.contains(typeOld)) {
-          attribute.setType(typeOld);
-        } else
-          attribute.setType("---");
-      }
-    }
   }
 }
 

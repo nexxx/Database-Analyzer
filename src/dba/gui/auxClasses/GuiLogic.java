@@ -37,7 +37,10 @@ import freemarker.template.Template;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Observable;
 
 public class GuiLogic extends Observable {
   private static Database database;
@@ -48,7 +51,7 @@ public class GuiLogic extends Observable {
   private static String lastFileNameBackup = null;
   private CustomTree tree;
   private Configuration cfg;
-  private ArrayList<GraphicalExportRequestedListener>listeners;
+  private ArrayList<GraphicalExportRequestedListener> listeners;
 
 
   public GuiLogic(DatabaseTreePanel dbTreePanel) {
@@ -59,7 +62,7 @@ public class GuiLogic extends Observable {
     locale = Localization.getInstance();
     options = Options.getInstance();
 
-    listeners=new ArrayList<>();
+    listeners = new ArrayList<>();
 
     //freemaker init
     cfg = new Configuration();
@@ -400,10 +403,10 @@ public class GuiLogic extends Observable {
         out.write(relation.getName() + ":\n");
         out.write("|-> Attributes\n");
         for (Attribute attr : relation.getAttributes()) {
-          if (attr.getType().equalsIgnoreCase("---")) {
+          if (attr.getConstraints().isEmpty()) {
             out.write("|  |-> " + attr.getName() + "\n");
           } else {
-            out.write("|  |-> " + attr.getName() + " (" + attr.getType() + ")\n");
+            out.write("|  |-> " + attr.getName() + " (" + attr.getConstraints() + ")\n");
           }
         }
         out.write("|-> Functional Dependencies\n");
@@ -725,10 +728,10 @@ public class GuiLogic extends Observable {
       text = text + relation.getName() + "<br>";
       text = text + "|-> Attributes<br>";
       for (Attribute attr : relation.getAttributes()) {
-        if (attr.getType().equalsIgnoreCase("---")) {
+        if (attr.getConstraints().isEmpty()) {
           text = text + "|  |-> " + attr.getName() + "<br>";
         } else {
-          text = text + "|  |-> " + attr.getName() + " (" + attr.getType() + ")<br>";
+          text = text + "|  |-> " + attr.getName() + " (" + attr.getConstraints() + ")<br>";
         }
       }
       text = text + "|-> Functional Dependencies<br>";
@@ -821,7 +824,7 @@ public class GuiLogic extends Observable {
    * Tells all listeners that a graphical export is requested
    */
   private void fireGraphicalExportRequested(String path) {
-    GraphicalExportRequested request = new GraphicalExportRequested(this,path);
+    GraphicalExportRequested request = new GraphicalExportRequested(this, path);
 
     for (GraphicalExportRequestedListener listener : listeners) {
       listener.GraphicalExportRequested(request);

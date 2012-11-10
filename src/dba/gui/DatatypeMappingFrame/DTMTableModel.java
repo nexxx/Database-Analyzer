@@ -91,7 +91,7 @@ public class DTMTableModel extends AbstractTableModel {
         return attribute.getName();
       case 1:
       case 2:
-        return attribute.getType();
+        return attribute.getConstraints();
       default:
         throw new IllegalArgumentException("ColumnIndex out of bounds");
     }
@@ -117,7 +117,7 @@ public class DTMTableModel extends AbstractTableModel {
     switch (column) {
       case 2:
         if (value instanceof String) {
-          attribute.setType((String) value);
+          attribute.setConstraints((String) value);
           return;
         }
       default:

@@ -17,36 +17,14 @@
 
 package dbaCore.data.dBTypes.types;
 
-import javax.swing.*;
-
 /**
  * Singelton class with all available Attribute for a MS Database
  *
  * @author Andreas Freitag
  */
 public class MicrosoftDatabase extends DbType {
-  private final String[] types = {"---", "BIGINT", "INT", "SMALLINT", "TINYINT", "BIT", "DECIMAL", "NUMERIC",
-    "MONEY", "SMALLMONEY", "FLOAT", "REAL", "DATETIME", "SMALLDATETIME", "CHAR", "VARCHAR", "TEXT", "NCHAR",
-    "NVARCHAR", "NTEXT", "BINARY", "VARBINARY", "IMAGE", "CURSOR", "SQL_VARIANT", "TABLE", "TIMESTAMP",
-    "UNIQUEIDENTIFIER"};
   private static MicrosoftDatabase instance = null;
-  private JComboBox<String> combobox;
 
-  @Override
-  public String[] getTypes() {
-    return types;
-  }
-
-  @Override
-  public JComboBox<String> getCombobox() {
-    return combobox;
-  }
-
-  private MicrosoftDatabase() {
-    super();
-    combobox = new JComboBox<>(types);
-
-  }
 
   /**
    * Getter for the singelton MSDatabase (thread-save)

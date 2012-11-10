@@ -24,11 +24,8 @@ import dba.gui.auxClasses.RelationDetailsView;
 import dba.gui.auxClasses.RelationView;
 import dba.utils.TreeEnum;
 import dbaCore.data.Attribute;
-import dbaCore.data.dBTypes.DbTypeFactory;
-import dbaCore.data.dBTypes.types.DbType;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -40,15 +37,10 @@ import java.awt.event.ActionListener;
 public class ToolBarAttribute extends ToolBar {
   private AttrLogic attrLogic;
   private CustomTree tree;
-  private DbType dbType;
-  /**
-   *
-   */
   private static final long serialVersionUID = -3843390455939145286L;
   private JToggleButton btnPK;
   private JToggleButton btnFK;
-  private JComboBox<String> cbType;
-  private ActionListener cbTypeActionListener;
+  private JTextField txtConstraints;
 
   public ToolBarAttribute(DatabaseTreePanel dbTreePanel, RelationView relationView,
                           RelationDetailsView relationDetailsView) {
@@ -61,11 +53,6 @@ public class ToolBarAttribute extends ToolBar {
     JButton btnRename = new JButton(super.getIcons.getTbRename());
     btnPK = new JToggleButton(super.getIcons.getTbPK());
     btnFK = new JToggleButton(super.getIcons.getTbFK());
-
-    dbType = (new DbTypeFactory(CustomTree.getInstance().getDatabase())).getType();
-
-    cbType = dbType.getCombobox();
-    cbType.setSelectedIndex(0);
 
     btnDelete.setToolTipText(super.locale.getString("Delete"));
     btnRename.setToolTipText(super.locale.getString("Rename"));
@@ -114,13 +101,21 @@ public class ToolBarAttribute extends ToolBar {
       }
     });
 
-    updateCbType();
-
+    txtConstraints = new JTextField("", 60);
+    txtConstraints.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent actionEvent) {
+        int x = tree.getNewSelectedItem(TreeEnum.SetConstraints);
+        attrLogic.setConstraints(txtConstraints.getText());
+        tree.setSelectedItem(x);
+      }
+    });
     add(btnDelete);
     add(btnRename);
     add(btnPK);
     add(btnFK);
-    add(cbType);
+    add(new JLabel(locale.getString("AttrConst") + ": "));
+    add(txtConstraints);
   }
 
   /**
@@ -142,43 +137,12 @@ public class ToolBarAttribute extends ToolBar {
       btnFK.setSelected(false);
     }
 
-    //    cbType.removeAllItems();
-    //    dbType = (new DbTypeFactory(CustomTree.getInstance().getDatabase())).getType();
-    //    System.out.println(CustomTree.getInstance().getDatabase().getType());
-    //    for(String s : dbType.getTypes()){
-    //      cbType.addItem(s);
-    //    }
-
-    dbType = (new DbTypeFactory(CustomTree.getInstance().getDatabase())).getType();
-    remove(cbType);
-    cbType = dbType.getCombobox();
-    updateCbType();
-    add(cbType);
-    cbType.setSelectedItem(attr.getType());
-
     if (CustomTree.getInstance().getDatabase().getDatabase().size() >= 2) {
       btnFK.setEnabled(true);
     } else {
       btnFK.setEnabled(false);
     }
 
-
-  }
-
-  private void updateCbType() {
-    cbType.setToolTipText(super.locale.getString("DataType"));
-    cbType.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
-    cbType.removeActionListener(cbTypeActionListener);
-    cbTypeActionListener = new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent arg0) {
-        if (!tree.getAttribute().getType().equalsIgnoreCase((String) cbType.getSelectedItem())) {
-          int x = tree.getNewSelectedItem(TreeEnum.SwitchType);
-          attrLogic.setType((String) cbType.getSelectedItem());
-          tree.setSelectedItem(x);
-        }
-      }
-    };
-    cbType.addActionListener(cbTypeActionListener);
+    txtConstraints.setText(attr.getConstraints());
   }
 }

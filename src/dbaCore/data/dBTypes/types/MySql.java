@@ -17,35 +17,13 @@
 
 package dbaCore.data.dBTypes.types;
 
-import javax.swing.*;
-
 /**
  * Singelton class with all available Attribute for a MYSQL Database
  *
  * @author Andreas Freitag
  */
 public class MySql extends DbType {
-  private final String[] types = {"---", "CHAR", "VARCHAR", "TINYTEXT", "TEXT", "BLOB", "MEDIUMTEXT", "MEDIUMBLOB",
-    "LONGTEXT", "LONGBLOB", "TINYINT", "SMALLINT", "MEDIUMINT", "INT", "BIGINT", "FLOAT", "DOUBLE", "DECIMAL",
-    "DATE", "DATETIME", "TIMESTAMP", "TIME", "ENUM", "SET"};
   private static MySql instance = null;
-  private JComboBox<String> combobox;
-
-  @Override
-  public String[] getTypes() {
-    return types;
-  }
-
-  @Override
-  public JComboBox<String> getCombobox() {
-    return combobox;
-  }
-
-  private MySql() {
-    super();
-    combobox = new JComboBox<>(types);
-
-  }
 
   /**
    * Getter for the singelton MySql (thread-save)

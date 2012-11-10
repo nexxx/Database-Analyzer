@@ -17,36 +17,13 @@
 
 package dbaCore.data.dBTypes.types;
 
-import javax.swing.*;
-
 /**
  * Singelton class with all available Attribute for a PostgreSQL Database
  *
  * @author Andreas Freitag
  */
 public class ProstgreSQL extends DbType {
-  private final String[] types = {"---", "INT8", "SERIAL8", "BIT", "VARBIT", "BOOL", "BOX", "BYTE", "VARCHAR",
-    "CHAR", "CIDR", "CIRCLE", "DATE", "FLOAT8", "INET", "INT4", "INTERCVAL", "LINE", "LESG", "MACADDR", "MONEY",
-    "NUMERIC", "PATH", "POINT", "POLYGON", "FLOAT24", "INT2", "SERIAL4", "TEXT", "TIME", "TIMETZ", "TIMESTAMP",
-    "TIMESTAMPTP", "TSQUERY", "TSVECTOR", "TXID_SNAPSHOT", "UUID", "XML"};
   private static ProstgreSQL instance = null;
-  private JComboBox<String> combobox;
-
-  @Override
-  public String[] getTypes() {
-    return types;
-  }
-
-  @Override
-  public JComboBox<String> getCombobox() {
-    return combobox;
-  }
-
-  private ProstgreSQL() {
-    super();
-    combobox = new JComboBox<>(types);
-  }
-
 
   /**
    * Getter for the singelton PostgreSQL (thread-save)

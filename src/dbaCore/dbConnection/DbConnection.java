@@ -66,12 +66,24 @@ public abstract class DbConnection {
       Statement st = conn.createStatement();
       ResultSet rs = st.executeQuery("SELECT * FROM " + relation);
       ResultSetMetaData md = rs.getMetaData();
+      DatabaseMetaData dbmd = conn.getMetaData();
       int col = md.getColumnCount();
       for (int i = 1; i <= col; i++) {
         String col_name = md.getColumnName(i);
         String dataType = md.getColumnTypeName(i);
+        int dataTypeSize = md.getPrecision(i);
+        int nullable = md.isNullable(i);
+        boolean autoIncrement = md.isAutoIncrement(i);
         Attribute attr = new Attribute(col_name);
-        attr.setType(dataType.toUpperCase());
+        String constraints = "";
+        if (nullable == 0) {
+          constraints = constraints + " NOT NULL";
+        }
+        if (autoIncrement) {
+          constraints = constraints + " AUTO_INCREMENT";
+        }
+        attr.setConstraints(dataType + ((this instanceof SQLiteConnection) ? "" : "(" + dataTypeSize + ")") +
+          constraints);
         tmpRelation.addAttribute(attr);
       }
       ResultSet pks = dbm.getPrimaryKeys(null, null, relation);

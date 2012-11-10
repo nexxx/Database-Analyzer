@@ -38,14 +38,14 @@ public class Attribute extends HistoricObject implements Serializable {
   private String name;
   private boolean isPrimaryKey;
   private boolean isForeignKey;
-  private String type;
+  private String constraints;
 
   public Attribute() {
     super();
     name = "newAttribute";
     isPrimaryKey = false;
     isForeignKey = false;
-    type = "---";
+    constraints = "";
   }
 
   public Attribute(String name) {
@@ -71,8 +71,8 @@ public class Attribute extends HistoricObject implements Serializable {
     if (isForeignKey) {
       returnString = returnString + "<fk>";
     }
-    if (!type.isEmpty() && !type.equalsIgnoreCase("---")) {
-      returnString = returnString + " [" + type + "]";
+    if (!constraints.isEmpty()) {
+      returnString = returnString + " [" + constraints + "]";
     }
     return returnString;
   }
@@ -127,7 +127,7 @@ public class Attribute extends HistoricObject implements Serializable {
   @Override
   public Object getClone() {
     Attribute clone = new Attribute(name);
-    clone.setType(type);
+    clone.setConstraints(constraints);
     clone.setIsPrimaryKey(isPrimaryKey);
     clone.setIsForeignKey(isForeignKey);
     return clone;
@@ -158,13 +158,13 @@ public class Attribute extends HistoricObject implements Serializable {
     return true;
   }
 
-  public String getType() {
-    return type;
+  public String getConstraints() {
+    return constraints;
   }
 
-  public void setType(String type) {
+  public void setConstraints(String constraints) {
     changeSupport.fireBeforeChange();
-    this.type = type;
+    this.constraints = constraints;
     changeSupport.fireAfterChange();
   }
 }

@@ -23,12 +23,9 @@ import dba.utils.GetIcons;
 import dba.utils.Localization;
 import dbaCore.data.Database;
 import dbaCore.data.RelationSchema;
-import dbaCore.data.dBTypes.DbTypeFactory;
-import dbaCore.data.dBTypes.types.DbType;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
-import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -106,7 +103,7 @@ public class DatatypeMappingFrame extends JDialog {
     JScrollPane scrollPane = new JScrollPane(panel);
     contentPanel.add(scrollPane, BorderLayout.CENTER);
 
-    if (database.getDatabase().size() == 0) {
+    if (database.getDatabase().isEmpty()) {
       panel.add(new JLabel(locale.getString("DTM_ReallyApply")));
     } else {
       for (RelationSchema relation : database.getDatabase()) {
@@ -115,10 +112,10 @@ public class DatatypeMappingFrame extends JDialog {
           (relation.getName()).getAttributes(), database.getType(), databaseOld.getType());
         JTable table = new JTable(tableModel);
 
-        DbType dbType = (new DbTypeFactory(CustomTree.getInstance().getDatabase())).getType();
-        JComboBox<String> comboBox = dbType.getCombobox();
-        TableColumn col = table.getColumnModel().getColumn(2);
-        col.setCellEditor(new DefaultCellEditor(comboBox));
+        //DbType dbType = (new DbTypeFactory(CustomTree.getInstance().getDatabase())).getType();
+        //JComboBox<String> comboBox = dbType.getCombobox();
+        //TableColumn col = table.getColumnModel().getColumn(2);
+        //col.setCellEditor(new DefaultCellEditor(comboBox));
 
         JScrollPane scrollpane = new JScrollPane(table);
         setVisibleRowCount(table, table.getRowCount());
