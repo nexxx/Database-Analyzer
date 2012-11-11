@@ -43,14 +43,14 @@ public class DbTypeFactory {
     switch (database.getType()) {
       case MYSQL:
         return MySql.getInstance();
-      case POSTGRES:
+      /*case POSTGRES:
         return ProstgreSQL.getInstance();
       case MSDB:
         return MicrosoftDatabase.getInstance();
       case ORACLE:
         return Oracle.getInstance();
       case SQLITE:
-        return SQLite3.getInstance();
+        return SQLite3.getInstance();  */
       default:
         throw new IllegalArgumentException();
     }

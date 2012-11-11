@@ -32,14 +32,14 @@ public class DbConnectionFactory {
     switch (type) {
       case MYSQL:
         return new MYSQLConnection(user, pwd, address);
-      case POSTGRES:
+      /*case POSTGRES:
         return new PostgresConnection(user, pwd, address);
       case MSDB:
         return null;
       case ORACLE:
         return null;
       case SQLITE:
-        return new SQLiteConnection(address);
+        return new SQLiteConnection(address);  */
       default:
         return null;
     }

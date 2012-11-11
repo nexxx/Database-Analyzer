@@ -17,6 +17,7 @@
 
 package dba.gui.auxClasses;
 
+import dba.createSqlDump.CreateSqlDump;
 import dba.fileIO.ReadFromXML;
 import dba.fileIO.SaveToXml;
 import dba.gui.CustomTree;
@@ -305,9 +306,11 @@ public class GuiLogic extends Observable {
     FileFilter typeImage = new ExtensionFilter(".png", ".png");
     FileFilter typeText = new ExtensionFilter(".txt", ".txt");
     FileFilter typeHtml = new ExtensionFilter(".html", ".html");
+    FileFilter typeSql = new ExtensionFilter(".sql", ".sql");
     fc.addChoosableFileFilter(typeImage);
     fc.addChoosableFileFilter(typeText);
     fc.addChoosableFileFilter(typeHtml);
+    fc.addChoosableFileFilter(typeSql);
     fc.setFileFilter(typeHtml);
     fc.setAcceptAllFileFilterUsed(false);
     int returnVal = fc.showSaveDialog(fc);
@@ -329,6 +332,11 @@ public class GuiLogic extends Observable {
         } else if (fc.getFileFilter() == typeHtml) {
 
           return exportHtml(path);
+        } else if (fc.getFileFilter() == typeSql) {
+          if (!path.endsWith(".sql")) {
+            path = path + ".sql";
+          }
+          return exportSqlDump(path);
         } else {
           // Should not happen
         }
@@ -828,6 +836,47 @@ public class GuiLogic extends Observable {
 
     for (GraphicalExportRequestedListener listener : listeners) {
       listener.GraphicalExportRequested(request);
+    }
+  }
+
+  /**
+   * Write SQL Dump to disk
+   */
+  public FeedbackEnum exportSqlDump(String path) {
+    File outputFile = new File(path);
+
+    if (!path.endsWith(".sql")) {
+      outputFile = new File(path + ".sql");
+    }
+
+    if (outputFile.exists()) {
+      Object[] options = {locale.getString("Yes"), locale.getString("No")};
+      int result = JOptionPane.showOptionDialog(null, locale.getString("GUI_TheFile") + " " + outputFile.getName() +
+        " " + locale.getString("GUI_AlreadyExisting"), "Export", JOptionPane.YES_NO_OPTION,
+        JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+
+      switch (result) {
+        case JOptionPane.YES_OPTION:
+          return writeSqlDump(path);
+        case JOptionPane.NO_OPTION:
+          return export();
+        default:
+          return FeedbackEnum.CANCEL;
+      }
+    } else {
+      return writeSqlDump(path);
+    }
+  }
+
+  private FeedbackEnum writeSqlDump(String path){
+    try {
+      BufferedWriter out = new BufferedWriter(new FileWriter(path));
+      CreateSqlDump createSqlDump = new CreateSqlDump();
+      out.write(createSqlDump.getDump());
+      out.close();
+      return FeedbackEnum.SUCCESSFUL;
+    } catch (Exception e) {
+      return FeedbackEnum.FAILED;
     }
   }
 

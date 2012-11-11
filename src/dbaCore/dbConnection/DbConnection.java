@@ -66,7 +66,6 @@ public abstract class DbConnection {
       Statement st = conn.createStatement();
       ResultSet rs = st.executeQuery("SELECT * FROM " + relation);
       ResultSetMetaData md = rs.getMetaData();
-      DatabaseMetaData dbmd = conn.getMetaData();
       int col = md.getColumnCount();
       for (int i = 1; i <= col; i++) {
         String col_name = md.getColumnName(i);
