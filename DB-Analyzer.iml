@@ -40,7 +40,9 @@
           <root url="jar://$MODULE_DIR$/lib/jgraphx.jar!/" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
+        <SOURCES>
+          <root url="file://$USER_HOME$/Downloads/jgraphx-1.10.4.0/src" />
+        </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="library" name="freemarker" level="project" />
@@ -48,6 +50,7 @@
     <orderEntry type="library" name="mysql-connector-java-5.1.21-bin" level="project" />
     <orderEntry type="library" name="sqlitejdbc-v056" level="project" />
     <orderEntry type="library" name="postgresql-9.1-902.jdbc4" level="project" />
+    <orderEntry type="library" name="jgraphx" level="project" />
   </component>
 </module>
 
