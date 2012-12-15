@@ -17,7 +17,6 @@
 
 package dba.gui.auxClasses.jGraph;
 
-import com.mxgraph.layout.hierarchical.mxHierarchicalLayout;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
@@ -220,7 +219,8 @@ public class RelationGraphUpdater implements Runnable {
    * @param graphComponent component
    */
   private void updateLayout(mxGraphComponent graphComponent) {
-    mxHierarchicalLayout layout = new mxHierarchicalLayout(graph, SwingConstants.WEST);
+    HierarchicalRelationLayout layout = new HierarchicalRelationLayout(graph, SwingConstants.WEST);
+    layout.setDisableEdgeStyle(false); //Use the specified EdgeStyle
 
     Object cell = graphComponent.getGraph().getDefaultParent();
     layout.execute(cell);

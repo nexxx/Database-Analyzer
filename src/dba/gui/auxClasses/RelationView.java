@@ -177,6 +177,7 @@ public class RelationView extends JGraphView{
     // Define Invisibility-Style for Edges
     style = new Hashtable<>();
     style.put(mxConstants.STYLE_OPACITY, 0);
+    style.put(mxConstants.STYLE_EDGE,mxConstants.EDGESTYLE_ELBOW);
     stylesheet.putCellStyle("INVISIBLE_EDGE", style);
 
     // Define Invisibility-Style for Edges
@@ -185,6 +186,7 @@ public class RelationView extends JGraphView{
     style.put(mxConstants.STYLE_EDITABLE, false);
     style.put(mxConstants.STYLE_RESIZABLE, false);
     style.put(mxConstants.STYLE_STROKECOLOR, Options.getInstance().getArrowFKColor());
+    style.put(mxConstants.STYLE_EDGE,mxConstants.EDGESTYLE_ELBOW);
     stylesheet.putCellStyle("FK_ARROW", style);
   }
 }
