@@ -45,7 +45,6 @@ public class FkWizard extends JDialog implements constants {
    *
    */
   private static final long serialVersionUID = 5047143456941921933L;
-  private RelationSchema relation;
   private DefaultListModel<String> listMRelation;
   private DefaultListModel<String> listMAttribute;
   private JList<String> listRelation;
@@ -65,7 +64,6 @@ public class FkWizard extends JDialog implements constants {
   public FkWizard(Database db, RelationSchema rel, Attribute attr) {
     super();
     foreignKey = new ForeignKeyConstraint();
-    relation = rel;
     this.db = db;
 
     dataBaseChanged = false;
@@ -146,7 +144,10 @@ public class FkWizard extends JDialog implements constants {
     listAttribute.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     pnlMain.add(spTarget, "grow, spany");
 
-    updateRelationList();
+    //garther selectable relations
+    for (String relationName : db.getAllRelationNames()) {
+      listMRelation.addElement(relationName);
+    }
     // Pre-Select first relation if existing
     if (!listMRelation.isEmpty()) {
       listRelation.setSelectedIndex(0);
@@ -184,18 +185,6 @@ public class FkWizard extends JDialog implements constants {
 
   private void addToDataBase() {
     db.getForeignKeys().add(foreignKey);
-  }
-
-  /**
-   * updates the selectable Relations
-   */
-  private void updateRelationList() {
-    listMRelation.clear();
-    for (RelationSchema relation : db.getDatabase()) {
-      if (!relation.equals(this.relation)) {
-        listMRelation.addElement(relation.getName());
-      }
-    }
   }
 
   /**

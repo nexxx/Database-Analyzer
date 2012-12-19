@@ -140,7 +140,6 @@ public class RelationView extends JGraphView{
     style.put(mxConstants.STYLE_IMAGE_WIDTH, 32);
     style.put(mxConstants.STYLE_IMAGE, "/res/icons/graph_nokey.png");
     style.put(mxConstants.STYLE_STROKEWIDTH, 1);
-
     stylesheet.putCellStyle("ATTRIBUTE_NOKEY", style);
 
     // Define Style for Primary-Key Attribute
