@@ -53,6 +53,7 @@ public class FkWizard extends JDialog implements constants {
   private boolean dataBaseChanged;
   private Database db;
   private ForeignKeyConstraint foreignKey;
+  private RelationSchema sourceRelation;
 
   /**
    * Constructor to create the frame.
@@ -66,12 +67,13 @@ public class FkWizard extends JDialog implements constants {
     foreignKey = new ForeignKeyConstraint();
     this.db = db;
 
+    this.sourceRelation = rel;
     dataBaseChanged = false;
 
     Localization locale = Localization.getInstance();
 
     foreignKey.setSourceAttributeName(attr.getName());
-    foreignKey.setSourceRelationName(rel.getName());
+    foreignKey.setSourceRelationName(sourceRelation.getName());
 
     GetIcons getIcons = GetIcons.getInstance();
     ImageIcon iconFdArrow = getIcons.getFdArrow();
@@ -148,6 +150,8 @@ public class FkWizard extends JDialog implements constants {
     for (String relationName : db.getAllRelationNames()) {
       listMRelation.addElement(relationName);
     }
+    if(listMRelation.isEmpty())listMRelation.addElement(sourceRelation.getName());
+
     // Pre-Select first relation if existing
     if (!listMRelation.isEmpty()) {
       listRelation.setSelectedIndex(0);
@@ -196,13 +200,13 @@ public class FkWizard extends JDialog implements constants {
   private void updateAttributeList(String relationName) {
     listMAttribute.clear();
     RelationSchema relation = db.getRelationSchemaByName(relationName);
-    if (relation != null) {
+    if(relation == null) relation = sourceRelation;
+
       for (Attribute attribute : relation.getAttributes()) {
         if (attribute.getIsPrimaryKey()) {
           listMAttribute.addElement(attribute.getName());
         }
       }
-    }
   }
 
   /**
