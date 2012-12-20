@@ -150,7 +150,7 @@ public class FkWizard extends JDialog implements constants {
     for (String relationName : db.getAllRelationNames()) {
       listMRelation.addElement(relationName);
     }
-    if(listMRelation.isEmpty())listMRelation.addElement(sourceRelation.getName());
+    if(!listMRelation.contains(sourceRelation.getName()))listMRelation.addElement(sourceRelation.getName());
 
     // Pre-Select first relation if existing
     if (!listMRelation.isEmpty()) {

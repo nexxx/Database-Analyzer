@@ -282,28 +282,14 @@ public class RelationGraphUpdater implements Runnable {
       if(points==null) points=new ArrayList<>();
 
       points.add(new mxPoint(edgeGeo.getX()+graph.getModel().getGeometry(firstCell).getWidth()+20,
-        getVerticalMidpoint(firstCell,secondCell)));
+        graph.getModel().getGeometry(firstCell).getCenterY()));
+
+      points.add(new mxPoint(edgeGeo.getX()+graph.getModel().getGeometry(firstCell).getWidth()+20,
+        graph.getModel().getGeometry(secondCell).getCenterY()));
 
       edgeGeo.setPoints(points);
       graph.getModel().setGeometry(edge,edgeGeo);
     }
-  }
-
-  /**
-   * Returns the midpoint between the vertical Centers of two mxCells
-   * @param cell1 the first cell to work with
-   * @param cell2 the second cell to work with
-   * @return  a double-value representing the midpoint
-   */
-  private double getVerticalMidpoint(mxCell cell1, mxCell cell2){
-      double firstCellYCenter = graph.getModel().getGeometry(cell1).getCenterY();
-      double secondCellYCenter = graph.getModel().getGeometry(cell2).getCenterY();
-
-      if(firstCellYCenter > secondCellYCenter)     {
-        return secondCellYCenter + (firstCellYCenter-secondCellYCenter)/2;
-      }else {
-        return firstCellYCenter + (secondCellYCenter-firstCellYCenter)/2;
-      }
   }
 
   /**
