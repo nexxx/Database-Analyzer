@@ -45,7 +45,6 @@ public class FkWizard extends JDialog implements constants {
    *
    */
   private static final long serialVersionUID = 5047143456941921933L;
-  private RelationSchema relation;
   private DefaultListModel<String> listMRelation;
   private DefaultListModel<String> listMAttribute;
   private JList<String> listRelation;
@@ -54,6 +53,7 @@ public class FkWizard extends JDialog implements constants {
   private boolean dataBaseChanged;
   private Database db;
   private ForeignKeyConstraint foreignKey;
+  private RelationSchema sourceRelation;
 
   /**
    * Constructor to create the frame.
@@ -65,15 +65,15 @@ public class FkWizard extends JDialog implements constants {
   public FkWizard(Database db, RelationSchema rel, Attribute attr) {
     super();
     foreignKey = new ForeignKeyConstraint();
-    relation = rel;
     this.db = db;
 
+    this.sourceRelation = rel;
     dataBaseChanged = false;
 
     Localization locale = Localization.getInstance();
 
     foreignKey.setSourceAttributeName(attr.getName());
-    foreignKey.setSourceRelationName(rel.getName());
+    foreignKey.setSourceRelationName(sourceRelation.getName());
 
     GetIcons getIcons = GetIcons.getInstance();
     ImageIcon iconFdArrow = getIcons.getFdArrow();
@@ -146,7 +146,12 @@ public class FkWizard extends JDialog implements constants {
     listAttribute.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     pnlMain.add(spTarget, "grow, spany");
 
-    updateRelationList();
+    //garther selectable relations
+    for (String relationName : db.getAllRelationNames()) {
+      listMRelation.addElement(relationName);
+    }
+    if(!listMRelation.contains(sourceRelation.getName()))listMRelation.addElement(sourceRelation.getName());
+
     // Pre-Select first relation if existing
     if (!listMRelation.isEmpty()) {
       listRelation.setSelectedIndex(0);
@@ -187,18 +192,6 @@ public class FkWizard extends JDialog implements constants {
   }
 
   /**
-   * updates the selectable Relations
-   */
-  private void updateRelationList() {
-    listMRelation.clear();
-    for (RelationSchema relation : db.getDatabase()) {
-      if (!relation.equals(this.relation)) {
-        listMRelation.addElement(relation.getName());
-      }
-    }
-  }
-
-  /**
    * updates the selectable Attributes according to the given
    * RelationName
    *
@@ -207,13 +200,13 @@ public class FkWizard extends JDialog implements constants {
   private void updateAttributeList(String relationName) {
     listMAttribute.clear();
     RelationSchema relation = db.getRelationSchemaByName(relationName);
-    if (relation != null) {
+    if(relation == null) relation = sourceRelation;
+
       for (Attribute attribute : relation.getAttributes()) {
         if (attribute.getIsPrimaryKey()) {
           listMAttribute.addElement(attribute.getName());
         }
       }
-    }
   }
 
   /**

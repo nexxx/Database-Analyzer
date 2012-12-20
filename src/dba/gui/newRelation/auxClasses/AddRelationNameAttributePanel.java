@@ -95,11 +95,7 @@ public class AddRelationNameAttributePanel extends JPanel implements constants {
       }
     });
 
-    if (wizardType == WizardEnum.NEW) {
-      tableModel = new AttributeTableModel(tmpRelation.getAttributes(), database, tmpRelation);
-    } else {
-      tableModel = new AttributeTableModelEdit(tmpRelation.getAttributes(), database, tmpRelation);
-    }
+    tableModel = new AttributeTableModel(tmpRelation.getAttributes(), database, tmpRelation);
     table = new JTable(tableModel);
 
     TableColumn colFk = table.getColumnModel().getColumn(3);

@@ -18,7 +18,9 @@
 package dba.gui.auxClasses.jGraph;
 
 import com.mxgraph.model.mxCell;
+import com.mxgraph.model.mxGeometry;
 import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.util.mxPoint;
 import com.mxgraph.view.mxGraph;
 import dbaCore.data.Attribute;
 import dbaCore.data.ForeignKeyConstraint;
@@ -26,6 +28,7 @@ import dbaCore.data.RelationSchema;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Updates / Draws a given RelationView-graph
@@ -221,7 +224,6 @@ public class RelationGraphUpdater implements Runnable {
   private void updateLayout(mxGraphComponent graphComponent) {
     HierarchicalRelationLayout layout = new HierarchicalRelationLayout(graph, SwingConstants.WEST);
     layout.setDisableEdgeStyle(false); //Use the specified EdgeStyle
-
     Object cell = graphComponent.getGraph().getDefaultParent();
     layout.execute(cell);
   }
@@ -259,10 +261,34 @@ public class RelationGraphUpdater implements Runnable {
 
     if (fkCells.size() == 2) {
       if (visible) {
-        graph.insertEdge(parentPane, null, fkCells.get(0).getValue(), fkCells.get(0), fkCells.get(1), "FK_ARROW");
+        mxCell cell = (mxCell)graph.insertEdge(parentPane, null, fkCells.get(0).getValue(), fkCells.get(0), fkCells.get(1), "FK_ARROW");
+        handleSelfReference(cell,fkCells.get(0),fkCells.get(1));
       } else {
         graph.insertEdge(parentPane, null, "", fkCells.get(0), fkCells.get(1), "INVISIBLE_EDGE");
       }
+    }
+  }
+
+  /**
+   * Moves a Edge that references the same Relation outside of the Relation-Area
+   * @param edge the ForeignKey-mxCell to work with
+   * @param firstCell  the first cell to work with
+   * @param secondCell the second cell to work with
+   */
+  private void handleSelfReference(mxCell edge,mxCell firstCell,mxCell secondCell){
+    if(firstCell.getParent() == secondCell.getParent()){
+      mxGeometry edgeGeo = graph.getModel().getGeometry(edge);
+      List<mxPoint> points = edgeGeo.getPoints();
+      if(points==null) points=new ArrayList<>();
+
+      points.add(new mxPoint(edgeGeo.getX()+graph.getModel().getGeometry(firstCell).getWidth()+20,
+        graph.getModel().getGeometry(firstCell).getCenterY()));
+
+      points.add(new mxPoint(edgeGeo.getX()+graph.getModel().getGeometry(firstCell).getWidth()+20,
+        graph.getModel().getGeometry(secondCell).getCenterY()));
+
+      edgeGeo.setPoints(points);
+      graph.getModel().setGeometry(edge,edgeGeo);
     }
   }
 
@@ -339,10 +365,9 @@ public class RelationGraphUpdater implements Runnable {
 
         if (relationName.equals(fk.getSourceRelationName())) {
           sourceCell = cell;
-        } else {
-          if (relationName.equals(fk.getTargetRelationName())) {
+        }
+        if (relationName.equals(fk.getTargetRelationName())) {
             targetCell = cell;
-          }
         }
       }
     }

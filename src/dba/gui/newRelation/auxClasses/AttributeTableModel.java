@@ -17,7 +17,6 @@
 
 package dba.gui.newRelation.auxClasses;
 
-import dba.gui.CustomTree;
 import dba.gui.FkWizard.FkWizard;
 import dba.utils.Localization;
 import dbaCore.data.Attribute;
@@ -111,10 +110,7 @@ public class AttributeTableModel extends AbstractTableModel {
 
   @Override
   public boolean isCellEditable(int row, int col) {
-    if (CustomTree.getInstance().getDatabase().getDatabase().size() >= 1) {
       return true;
-    }
-    return col != 3;
   }
 
   @Override
@@ -146,6 +142,8 @@ public class AttributeTableModel extends AbstractTableModel {
           if ((Boolean) value) {
             FkWizard wizard = new FkWizard(database, relation, attr);
             wizard.setVisible(true);
+          } else{
+            database.removeForeignKey(relation.getName(),attr.getName());
           }
           attr.setIsForeignKey((Boolean) value);
           return;

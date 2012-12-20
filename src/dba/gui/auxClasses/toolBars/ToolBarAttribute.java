@@ -137,12 +137,6 @@ public class ToolBarAttribute extends ToolBar {
       btnFK.setSelected(false);
     }
 
-    if (CustomTree.getInstance().getDatabase().getDatabase().size() >= 2) {
-      btnFK.setEnabled(true);
-    } else {
-      btnFK.setEnabled(false);
-    }
-
     txtConstraints.setText(attr.getConstraints());
   }
 }
