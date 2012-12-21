@@ -19,6 +19,7 @@ package dba.gui.auxClasses.jGraph;
 
 import com.mxgraph.model.mxCell;
 import com.mxgraph.view.mxGraph;
+import dba.utils.ImageSize;
 import dbaCore.data.Attribute;
 import dbaCore.data.FunctionalDependency;
 import dbaCore.data.RelationSchema;
@@ -28,7 +29,7 @@ import java.util.ArrayList;
 /**
  * Updates / Draws the RelationDetailsView
  */
-public class RelationDetailsGraphUpdater implements Runnable {
+public class RelationDetailsGraphUpdater extends RelationUpdater {
 
   private mxGraph graph;
   private Object parentPane;
@@ -42,7 +43,6 @@ public class RelationDetailsGraphUpdater implements Runnable {
 
   }
 
-  @Override
   public void run() {
     graph.getModel().beginUpdate();
     try {
@@ -88,6 +88,7 @@ public class RelationDetailsGraphUpdater implements Runnable {
     int attributeOffset;
     int horizontalOffset = 0;
     int attributeWidth;
+    ImageSize optimalImageSize =super.getImageSize(relation);
     ArrayList<mxCell> attributeCells = new ArrayList<>();
 
     mxCell relationVertex = (mxCell) graph.insertVertex(parentPane, relation.getName(), relation, horizontalOffset,
@@ -99,7 +100,7 @@ public class RelationDetailsGraphUpdater implements Runnable {
     for (Attribute attr : relation.getAttributes()) {
       attributeWidth = getRequiredWidth(attr);
       attributeCells.add((mxCell) graph.insertVertex(parentPane, attr.getName(), attr, horizontalOffset,
-        attributeOffset, attributeWidth, 25, getAttributeStyle(attr)));
+        attributeOffset, attributeWidth, 25, super.getAttributeStyle(attr,optimalImageSize)));
       horizontalOffset += attributeWidth;
     }
 
@@ -126,25 +127,6 @@ public class RelationDetailsGraphUpdater implements Runnable {
    */
   private int getRequiredWidth(RelationSchema relation) {
     return 80 + 12 * relation.getName().length();
-  }
-
-  /**
-   * Gets the right style for the pk/fk constallation
-   *
-   * @param attribute attribute to get the style for
-   * @return a String representing the Style for the attribute
-   */
-  private String getAttributeStyle(Attribute attribute) {
-
-    if (attribute.getIsPrimaryKey() && attribute.getIsForeignKey()) {
-      return "ATTRIBUTE_PKFK";
-    } else if (attribute.getIsPrimaryKey()) {
-      return "ATTRIBUTE_PK";
-    } else if (attribute.getIsForeignKey()) {
-      return "ATTRIBUTE_FK";
-    } else {
-      return "ATTRIBUTE_NOKEY";
-    }
   }
 
   /**

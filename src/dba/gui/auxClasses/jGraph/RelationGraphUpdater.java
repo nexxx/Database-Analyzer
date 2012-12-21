@@ -22,6 +22,7 @@ import com.mxgraph.model.mxGeometry;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.util.mxPoint;
 import com.mxgraph.view.mxGraph;
+import dba.utils.ImageSize;
 import dbaCore.data.Attribute;
 import dbaCore.data.ForeignKeyConstraint;
 import dbaCore.data.RelationSchema;
@@ -33,7 +34,7 @@ import java.util.List;
 /**
  * Updates / Draws a given RelationView-graph
  */
-public class RelationGraphUpdater implements Runnable {
+public class RelationGraphUpdater extends RelationUpdater {
 
   private mxGraph graph;
   private mxGraphComponent graphComponent;
@@ -52,7 +53,6 @@ public class RelationGraphUpdater implements Runnable {
 
   }
 
-  @Override
   public void run() {
     graph.getModel().beginUpdate();
     try {
@@ -160,6 +160,7 @@ public class RelationGraphUpdater implements Runnable {
     // Compensate big header
     int attributeOffset = 40;
     int width = getRequiredWidth(relation);
+    ImageSize optimalImageSize =super.getImageSize(relation);
 
     mxCell relationVertex = (mxCell) graph.insertVertex(parentPane, relation.getName(), relation, 0, offset, width,
       40 + 1 + relation.getAttributes().size() * 25, "RELATION");
@@ -167,7 +168,7 @@ public class RelationGraphUpdater implements Runnable {
     // Add attributes
     for (Attribute attr : relation.getAttributes()) {
       graph.insertVertex(relationVertex, attr.getName(), attr, 1, attributeOffset, width - 2, 25,
-        getAttributeStyle(attr));
+        getAttributeStyle(attr,optimalImageSize));
       attributeOffset += 25;
 
     }
@@ -197,24 +198,7 @@ public class RelationGraphUpdater implements Runnable {
 
   }
 
-  /**
-   * Gets the right style for the pk/fk constallation
-   *
-   * @param attribute attribute to get the style for
-   * @return a String representing the Style for the attribute
-   */
-  private String getAttributeStyle(Attribute attribute) {
 
-    if (attribute.getIsPrimaryKey() && attribute.getIsForeignKey()) {
-      return "ATTRIBUTE_PKFK";
-    } else if (attribute.getIsPrimaryKey()) {
-      return "ATTRIBUTE_PK";
-    } else if (attribute.getIsForeignKey()) {
-      return "ATTRIBUTE_FK";
-    } else {
-      return "ATTRIBUTE_NOKEY";
-    }
-  }
 
   /**
    * Resets the actual Layout of the graph

@@ -19,11 +19,14 @@ package dba.gui.auxClasses.jGraph;
 
 import com.mxgraph.model.mxCell;
 import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxEvent;
 import com.mxgraph.util.mxEventObject;
 import com.mxgraph.util.mxEventSource;
 import com.mxgraph.view.mxGraph;
+import com.mxgraph.view.mxStylesheet;
 import dba.gui.CustomTree;
+import dba.options.Options;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -36,6 +39,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.Observer;
 
 public abstract class JGraphView extends JPanel {
@@ -184,6 +188,73 @@ public abstract class JGraphView extends JPanel {
     } catch (IOException e) {
       e.printStackTrace();
     }
+  }
+
+
+  /**
+   * Defines Stylesheets for the Attributes
+   */
+  protected void initStyle() {
+    mxStylesheet stylesheet = graph.getStylesheet();
+
+    // Define Style for Attribute with no Image
+    Hashtable<String, Object> style = new Hashtable<>();
+    style.put(mxConstants.STYLE_SHAPE, mxConstants.SHAPE_LABEL);
+    style.put(mxConstants.STYLE_VERTICAL_ALIGN, mxConstants.ALIGN_BOTTOM);
+    style.put(mxConstants.STYLE_ALIGN, mxConstants.ALIGN_LEFT);
+    style.put(mxConstants.STYLE_AUTOSIZE, true);
+    style.put(mxConstants.STYLE_FILLCOLOR, Options.getInstance().getAttributeColor());
+    style.put(mxConstants.STYLE_FONTCOLOR, Options.getInstance().getFontColor());
+    style.put(mxConstants.STYLE_FONTSIZE, 15);
+    style.put(mxConstants.STYLE_MOVABLE, false);
+    style.put(mxConstants.STYLE_EDITABLE, false);
+    style.put(mxConstants.STYLE_RESIZABLE, false);
+    style.put(mxConstants.STYLE_STROKEWIDTH, 1);
+    style.put(mxConstants.STYLE_IMAGE_HEIGHT, 22);
+    //style.put(mxConstants.STYLE_IMAGE_WIDTH, 32);
+    stylesheet.putCellStyle("ATTRIBUTE_NOIMAGE", style);
+
+    // Define Style for Primary-Key Attribute represented by a big "space"-image
+    style=(Hashtable<String,Object>)style.clone();
+    style.put(mxConstants.STYLE_IMAGE_WIDTH, 33);
+    style.put(mxConstants.STYLE_IMAGE,"/res/icons/graph_space_big.png");
+    stylesheet.putCellStyle("ATTRIBUTE_SPACE_BIG",style);
+
+    // Define Style for Primary-Key Attribute represented by a small "space"-image
+    style=(Hashtable<String,Object>)style.clone();
+    style.put(mxConstants.STYLE_IMAGE_WIDTH, 16);
+    style.put(mxConstants.STYLE_IMAGE,"/res/icons/graph_space_small.png");
+    stylesheet.putCellStyle("ATTRIBUTE_SPACE_SMALL",style);
+
+    // Define Style for Primary-Key Attribute represented by a big image
+    style = (Hashtable<String, Object>) style.clone();
+    style.put(mxConstants.STYLE_IMAGE_WIDTH, 33);
+    style.put(mxConstants.STYLE_IMAGE, "/res/icons/graph_pk_big.png");
+    stylesheet.putCellStyle("ATTRIBUTE_PK_BIG", style);
+
+    // Define Style for Primary-Key Attribute represented by a small image
+    style = (Hashtable<String,Object>)style.clone();
+    style.put(mxConstants.STYLE_IMAGE_WIDTH, 16);
+    style.put(mxConstants.STYLE_IMAGE,"/res/icons/graph_pk_small.png");
+    stylesheet.putCellStyle("ATTRIBUTE_PK_SMALL",style);
+
+    // Define Style for Foreign-Key Attribute represented by a big image
+    style = (Hashtable<String, Object>) style.clone();
+    style.put(mxConstants.STYLE_IMAGE_WIDTH, 33);
+    style.put(mxConstants.STYLE_IMAGE, "/res/icons/graph_fk_big.png");
+    stylesheet.putCellStyle("ATTRIBUTE_FK_BIG", style);
+
+    // Define Style for Foreign-KEy Attribute represented by a small image
+    style=(Hashtable<String,Object>)style.clone();
+    style.put(mxConstants.STYLE_IMAGE_WIDTH, 16);
+    style.put(mxConstants.STYLE_IMAGE,"/res/icons/graph_fk_small.png");
+    stylesheet.putCellStyle("ATTRIBUTE_FK_SMALL",style);
+
+    // Define Style for Primary-Key/Foreign-Key Attribute
+    style = (Hashtable<String, Object>) style.clone();
+    style.put(mxConstants.STYLE_IMAGE_WIDTH, 33);
+    style.put(mxConstants.STYLE_IMAGE, "/res/icons/graph_pkfk.png");
+    stylesheet.putCellStyle("ATTRIBUTE_PKFK", style);
   }
 
 
