@@ -211,50 +211,49 @@ public abstract class JGraphView extends JPanel {
     style.put(mxConstants.STYLE_RESIZABLE, false);
     style.put(mxConstants.STYLE_STROKEWIDTH, 1);
     style.put(mxConstants.STYLE_IMAGE_HEIGHT, 22);
-    //style.put(mxConstants.STYLE_IMAGE_WIDTH, 32);
     stylesheet.putCellStyle("ATTRIBUTE_NOIMAGE", style);
 
+    //Define ALL the Attributes containing BIG-Images
     // Define Style for Primary-Key Attribute represented by a big "space"-image
     style=(Hashtable<String,Object>)style.clone();
     style.put(mxConstants.STYLE_IMAGE_WIDTH, 33);
+    style.put(mxConstants.STYLE_SPACING_LEFT,38);    //33 + 5 Pixel space
     style.put(mxConstants.STYLE_IMAGE,"/res/icons/graph_space_big.png");
     stylesheet.putCellStyle("ATTRIBUTE_SPACE_BIG",style);
 
-    // Define Style for Primary-Key Attribute represented by a small "space"-image
-    style=(Hashtable<String,Object>)style.clone();
-    style.put(mxConstants.STYLE_IMAGE_WIDTH, 16);
-    style.put(mxConstants.STYLE_IMAGE,"/res/icons/graph_space_small.png");
-    stylesheet.putCellStyle("ATTRIBUTE_SPACE_SMALL",style);
-
     // Define Style for Primary-Key Attribute represented by a big image
     style = (Hashtable<String, Object>) style.clone();
-    style.put(mxConstants.STYLE_IMAGE_WIDTH, 33);
     style.put(mxConstants.STYLE_IMAGE, "/res/icons/graph_pk_big.png");
     stylesheet.putCellStyle("ATTRIBUTE_PK_BIG", style);
 
-    // Define Style for Primary-Key Attribute represented by a small image
-    style = (Hashtable<String,Object>)style.clone();
-    style.put(mxConstants.STYLE_IMAGE_WIDTH, 16);
-    style.put(mxConstants.STYLE_IMAGE,"/res/icons/graph_pk_small.png");
-    stylesheet.putCellStyle("ATTRIBUTE_PK_SMALL",style);
-
     // Define Style for Foreign-Key Attribute represented by a big image
     style = (Hashtable<String, Object>) style.clone();
-    style.put(mxConstants.STYLE_IMAGE_WIDTH, 33);
     style.put(mxConstants.STYLE_IMAGE, "/res/icons/graph_fk_big.png");
     stylesheet.putCellStyle("ATTRIBUTE_FK_BIG", style);
 
-    // Define Style for Foreign-KEy Attribute represented by a small image
+    // Define Style for Primary-Key/Foreign-Key Attribute
+    style = (Hashtable<String, Object>) style.clone();
+    style.put(mxConstants.STYLE_IMAGE, "/res/icons/graph_pkfk.png");
+    stylesheet.putCellStyle("ATTRIBUTE_PKFK", style);
+
+    // Define ALL the Attributes containing a SMALL Image
+    // Define Style for Primary-Key Attribute represented by a small "space"-image
     style=(Hashtable<String,Object>)style.clone();
     style.put(mxConstants.STYLE_IMAGE_WIDTH, 16);
+    style.put(mxConstants.STYLE_SPACING_LEFT,21); //16 + 5 Pixel space
+    style.put(mxConstants.STYLE_IMAGE,"/res/icons/graph_space_small.png");
+    stylesheet.putCellStyle("ATTRIBUTE_SPACE_SMALL",style);
+
+    // Define Style for Primary-Key Attribute represented by a small image
+    style = (Hashtable<String,Object>)style.clone();
+    style.put(mxConstants.STYLE_IMAGE,"/res/icons/graph_pk_small.png");
+    stylesheet.putCellStyle("ATTRIBUTE_PK_SMALL",style);
+
+    // Define Style for Foreign-KEy Attribute represented by a small image
+    style=(Hashtable<String,Object>)style.clone();
     style.put(mxConstants.STYLE_IMAGE,"/res/icons/graph_fk_small.png");
     stylesheet.putCellStyle("ATTRIBUTE_FK_SMALL",style);
 
-    // Define Style for Primary-Key/Foreign-Key Attribute
-    style = (Hashtable<String, Object>) style.clone();
-    style.put(mxConstants.STYLE_IMAGE_WIDTH, 33);
-    style.put(mxConstants.STYLE_IMAGE, "/res/icons/graph_pkfk.png");
-    stylesheet.putCellStyle("ATTRIBUTE_PKFK", style);
   }
 
 
