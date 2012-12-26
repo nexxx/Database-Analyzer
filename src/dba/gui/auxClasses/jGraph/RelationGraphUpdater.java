@@ -160,7 +160,7 @@ public class RelationGraphUpdater extends RelationUpdater {
     // Compensate big header
     int attributeOffset = 40;
     int width = getRequiredWidth(relation);
-    ImageSize optimalImageSize =super.getImageSize(relation);
+    ImageSize optimalImageSize =getImageSize(relation);
 
     mxCell relationVertex = (mxCell) graph.insertVertex(parentPane, relation.getName(), relation, 0, offset, width,
       40 + 1 + relation.getAttributes().size() * 25, "RELATION");
@@ -183,19 +183,34 @@ public class RelationGraphUpdater extends RelationUpdater {
    * @return the with of relation to display
    */
   private int getRequiredWidth(RelationSchema schema) {
-    String longestString = "";
+    int maxWidth = 0,currentWidth;
+    int imgWidth  = super.getImageWidth(getImageSize(schema)) +15;
+
     for (Attribute attr : schema.getAttributes()) {
-      if (attr.getName().length() > longestString.length()) {
-        longestString = attr.getName();
+      currentWidth=imgWidth + (9 * attr.getName().length());
+      if (currentWidth > maxWidth) {
+        maxWidth = currentWidth;
       }
     }
-    if (schema.getName().length() >= longestString.length()) {
-      longestString = schema.getName();
-      return 80 + 12 * longestString.length();
-    } else {
-      return 80 + 8 * longestString.length();
+    if (schema.getName().length() * 15 >= maxWidth) {
+      maxWidth = schema.getName().length() * 15;
     }
 
+    return maxWidth;
+  }
+
+  protected ImageSize getImageSize(RelationSchema relation){
+    int pkANDfk=0;
+    int pkORfk=0;
+
+    for(Attribute attribute : relation.getAttributes()){
+      if(attribute.getIsPrimaryKey() && attribute.getIsForeignKey()) pkANDfk++;
+      else if(attribute.getIsPrimaryKey() || attribute.getIsForeignKey()) pkORfk++;
+    }
+
+    if(pkANDfk>0)return ImageSize.BIG;
+    else if(pkORfk>0)return ImageSize.SMALL;
+    else return ImageSize.NO;
   }
 
 

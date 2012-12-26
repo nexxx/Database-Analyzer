@@ -19,28 +19,11 @@ package dba.gui.auxClasses.jGraph;
 
 import dba.utils.ImageSize;
 import dbaCore.data.Attribute;
-import dbaCore.data.RelationSchema;
 
 /**
  * Base-Class for graph-updates
  */
 public class RelationUpdater {
-
-
-
-  protected ImageSize getImageSize(RelationSchema relation){
-    int pkANDfk=0;
-    int pkORfk=0;
-
-    for(Attribute attribute : relation.getAttributes()){
-      if(attribute.getIsPrimaryKey() && attribute.getIsForeignKey()) pkANDfk++;
-      else if(attribute.getIsPrimaryKey() || attribute.getIsForeignKey()) pkORfk++;
-    }
-
-    if(pkANDfk>0)return ImageSize.BIG;
-    else if(pkORfk>0)return ImageSize.SMALL;
-    else return ImageSize.NO;
-  }
 
   /**
    * Gets the right style for the pk/fk constallation
@@ -59,6 +42,27 @@ public class RelationUpdater {
       return "ATTRIBUTE_FK" + (optimalImageSize.equals(ImageSize.SMALL) ? "_SMALL" : "_BIG");
     } else {
       return "ATTRIBUTE_SPACE" + (optimalImageSize.equals(ImageSize.SMALL) ? "_SMALL" : "_BIG");
+    }
+  }
+
+  protected ImageSize getImageSizeClass(Attribute attribute){
+    if(attribute.getIsPrimaryKey() && attribute.getIsForeignKey()){
+      return ImageSize.BIG;
+    }else if(attribute.getIsPrimaryKey() || attribute.getIsForeignKey()){
+      return ImageSize.SMALL;
+    }else {
+      return ImageSize.NO;
+    }
+  }
+
+  protected int getImageWidth(ImageSize imgSize){
+    switch(imgSize){
+      case BIG:
+        return 38;
+      case SMALL:
+        return 21;
+      default:
+        return 0;
     }
   }
 }

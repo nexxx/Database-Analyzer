@@ -19,7 +19,6 @@ package dba.gui.auxClasses.jGraph;
 
 import com.mxgraph.model.mxCell;
 import com.mxgraph.view.mxGraph;
-import dba.utils.ImageSize;
 import dbaCore.data.Attribute;
 import dbaCore.data.FunctionalDependency;
 import dbaCore.data.RelationSchema;
@@ -88,7 +87,6 @@ public class RelationDetailsGraphUpdater extends RelationUpdater {
     int attributeOffset;
     int horizontalOffset = 0;
     int attributeWidth;
-    ImageSize optimalImageSize =super.getImageSize(relation);
     ArrayList<mxCell> attributeCells = new ArrayList<>();
 
     mxCell relationVertex = (mxCell) graph.insertVertex(parentPane, relation.getName(), relation, horizontalOffset,
@@ -100,7 +98,7 @@ public class RelationDetailsGraphUpdater extends RelationUpdater {
     for (Attribute attr : relation.getAttributes()) {
       attributeWidth = getRequiredWidth(attr);
       attributeCells.add((mxCell) graph.insertVertex(parentPane, attr.getName(), attr, horizontalOffset,
-        attributeOffset, attributeWidth, 25, super.getAttributeStyle(attr,optimalImageSize)));
+        attributeOffset, attributeWidth, 25, super.getAttributeStyle(attr, getImageSizeClass(attr))));
       horizontalOffset += attributeWidth;
     }
 
@@ -115,8 +113,8 @@ public class RelationDetailsGraphUpdater extends RelationUpdater {
    * @param attribute the attribute to work with
    * @return the required width
    */
-  private int getRequiredWidth(Attribute attribute) {
-    return 80 + 8 * attribute.getName().length();
+  protected int getRequiredWidth(Attribute attribute) {
+    return super.getImageWidth(getImageSizeClass(attribute)) + 15 + (9 * attribute.getName().length());
   }
 
   /**
