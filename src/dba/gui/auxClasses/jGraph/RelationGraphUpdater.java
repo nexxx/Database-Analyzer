@@ -51,6 +51,7 @@ public class RelationGraphUpdater extends RelationUpdater {
     this.graphComponent = graphComponent;
     this.graph = graph;
 
+    graph.setAutoSizeCells(true);
   }
 
   public void run() {
@@ -159,44 +160,43 @@ public class RelationGraphUpdater extends RelationUpdater {
   private Object insertRelation(mxGraph graph, RelationSchema relation, int offset) {
     // Compensate big header
     int attributeOffset = 40;
-    int width = getRequiredWidth(relation);
+    int width = relation.getName().length() * 15;
     ImageSize optimalImageSize =getImageSize(relation);
 
     mxCell relationVertex = (mxCell) graph.insertVertex(parentPane, relation.getName(), relation, 0, offset, width,
       40 + 1 + relation.getAttributes().size() * 25, "RELATION");
 
-    // Add attributes
-    for (Attribute attr : relation.getAttributes()) {
-      graph.insertVertex(relationVertex, attr.getName(), attr, 1, attributeOffset, width - 2, 25,
-        getAttributeStyle(attr,optimalImageSize));
-      attributeOffset += 25;
+    double maxWidth = width;
 
+    // Add attributes
+    mxGeometry geo;
+    for (Attribute attr : relation.getAttributes()) {
+      mxCell attributeCell = (mxCell)graph.insertVertex(relationVertex, attr.getName(), attr, 1, attributeOffset, width - 2, 25,
+        getAttributeStyle(attr,optimalImageSize));
+
+      graph.updateCellSize(attributeCell);
+      geo=attributeCell.getGeometry();
+
+      if(geo.getWidth()>maxWidth){
+        maxWidth=geo.getWidth();
+      }
+      attributeOffset += 25;
+    }
+
+    maxWidth += 5;
+    geo=relationVertex.getGeometry();
+    geo.setWidth(maxWidth);
+
+    for(Object child : graph.getChildVertices(relationVertex)){
+      if(child instanceof mxCell){
+        mxCell cell = (mxCell)child;
+        geo = cell.getGeometry();
+        geo.setWidth(maxWidth-2);
+        geo.setHeight(25);
+      }
     }
 
     return relationVertex;
-  }
-
-  /**
-   * Returns the with to contain all elements
-   *
-   * @param schema the relation to work with
-   * @return the with of relation to display
-   */
-  private int getRequiredWidth(RelationSchema schema) {
-    int maxWidth = 0,currentWidth;
-    int imgWidth  = super.getImageWidth(getImageSize(schema)) +15;
-
-    for (Attribute attr : schema.getAttributes()) {
-      currentWidth=imgWidth + (9 * attr.getName().length());
-      if (currentWidth > maxWidth) {
-        maxWidth = currentWidth;
-      }
-    }
-    if (schema.getName().length() * 15 >= maxWidth) {
-      maxWidth = schema.getName().length() * 15;
-    }
-
-    return maxWidth;
   }
 
   protected ImageSize getImageSize(RelationSchema relation){

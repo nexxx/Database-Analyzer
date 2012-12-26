@@ -55,14 +55,4 @@ public class RelationUpdater {
     }
   }
 
-  protected int getImageWidth(ImageSize imgSize){
-    switch(imgSize){
-      case BIG:
-        return 38;
-      case SMALL:
-        return 21;
-      default:
-        return 0;
-    }
-  }
 }
