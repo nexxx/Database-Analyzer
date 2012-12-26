@@ -118,51 +118,20 @@ public class RelationView extends JGraphView{
   }
 
   /**
-   * Adds the Styles for Attributes and Relations
+   * Adds the Styles for Relations and Edges
    */
+  @Override
   @SuppressWarnings("unchecked")
-  private void initStyle() {
+  protected void initStyle() {
+    super.initStyle();
+
     mxStylesheet stylesheet = graph.getStylesheet();
 
-    // Define Style for Attribute with no Key
-    Hashtable<String, Object> style = new Hashtable<>();
-    style.put(mxConstants.STYLE_SHAPE, mxConstants.SHAPE_LABEL);
-    style.put(mxConstants.STYLE_VERTICAL_ALIGN, mxConstants.ALIGN_BOTTOM);
-    style.put(mxConstants.STYLE_ALIGN, mxConstants.ALIGN_LEFT);
-    style.put(mxConstants.STYLE_AUTOSIZE, true);
-    style.put(mxConstants.STYLE_FILLCOLOR, Options.getInstance().getAttributeColor());
-    style.put(mxConstants.STYLE_FONTCOLOR, Options.getInstance().getFontColor());
-    style.put(mxConstants.STYLE_FONTSIZE, 15);
-    style.put(mxConstants.STYLE_MOVABLE, false);
-    style.put(mxConstants.STYLE_EDITABLE, false);
-    style.put(mxConstants.STYLE_RESIZABLE, false);
-    style.put(mxConstants.STYLE_IMAGE_HEIGHT, 32);
-    style.put(mxConstants.STYLE_IMAGE_WIDTH, 32);
-    style.put(mxConstants.STYLE_IMAGE, "/res/icons/graph_nokey.png");
-    style.put(mxConstants.STYLE_STROKEWIDTH, 1);
-    stylesheet.putCellStyle("ATTRIBUTE_NOKEY", style);
-
-    // Define Style for Primary-Key Attribute
-    style = (Hashtable<String, Object>) style.clone();
-    style.put(mxConstants.STYLE_IMAGE, "/res/icons/graph_pk.png");
-    stylesheet.putCellStyle("ATTRIBUTE_PK", style);
-
-    // Define Style for Foreign-Key Attribute
-    style = (Hashtable<String, Object>) style.clone();
-    style.put(mxConstants.STYLE_IMAGE, "/res/icons/graph_fk.png");
-    stylesheet.putCellStyle("ATTRIBUTE_FK", style);
-
-    // Define Style for Primary-Key/Foreign-Key Attribute
-    style = (Hashtable<String, Object>) style.clone();
-    style.put(mxConstants.STYLE_IMAGE, "/res/icons/graph_pkfk.png");
-    stylesheet.putCellStyle("ATTRIBUTE_PKFK", style);
-
     // Define Style for Relations
-    style = new Hashtable<>();
+    Hashtable<String,Object> style = new Hashtable<>();
     style.put(mxConstants.STYLE_SHAPE, mxConstants.SHAPE_SWIMLANE);
     style.put(mxConstants.STYLE_ALIGN, mxConstants.ALIGN_CENTER);
     style.put(mxConstants.STYLE_VERTICAL_ALIGN, mxConstants.ALIGN_MIDDLE);
-    // style.put(mxConstants.STYLE_AUTOSIZE, true);
     style.put(mxConstants.STYLE_FONTCOLOR, Options.getInstance().getFontColor());
     style.put(mxConstants.STYLE_FONTSIZE, 20);
     style.put(mxConstants.STYLE_FILLCOLOR, Options.getInstance().getRelationColor());
@@ -189,3 +158,4 @@ public class RelationView extends JGraphView{
     stylesheet.putCellStyle("FK_ARROW", style);
   }
 }
+

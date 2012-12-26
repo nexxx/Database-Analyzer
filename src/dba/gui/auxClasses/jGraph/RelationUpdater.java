@@ -17,66 +17,42 @@
 
 package dba.gui.auxClasses.jGraph;
 
-import com.mxgraph.model.mxCell;
-import com.mxgraph.view.mxGraph;
+import dba.utils.ImageSize;
 import dbaCore.data.Attribute;
-import dbaCore.data.FunctionalDependency;
-import dbaCore.data.RelationSchema;
 
 /**
- * mxGraph-extension to provide custom behaviour
+ * Base-Class for graph-updates
  */
-public class XGraph extends mxGraph {
-
-  // Overrides method to provide a cell label in the display
-  @Override
-  public String convertValueToString(Object cell) {
-    if (cell instanceof mxCell) {
-      mxCell xCell = (mxCell) cell;
-      Object value = xCell.getValue();
-
-      if (value instanceof RelationSchema) {
-        return ((RelationSchema) value).getName();
-      } else if (value instanceof Attribute) {
-
-        if(xCell.isVertex()){
-          return ((Attribute) value).getName();
-        }
-        else{
-          return "";
-        }
-
-      } else if(value instanceof FunctionalDependency){
-        return "";
-      }
-    }
-
-    return super.convertValueToString(cell);
-  }
+public class RelationUpdater {
 
   /**
-   * Disallow selection of invisible Cells
+   * Gets the right style for the pk/fk constallation
+   *
+   * @param attribute attribute to get the style for
+   * @return a String representing the Style for the attribute
    */
-  @Override
-  public boolean isCellSelectable(Object cell) {
-    if (cell != null) {
-      if (cell instanceof mxCell) {
-        if(((mxCell)cell).getStyle().contains("INVISIBLE")){
-          return false;
-        }
-      }
+  protected String getAttributeStyle(Attribute attribute,ImageSize optimalImageSize) {
+    if(optimalImageSize.equals(ImageSize.NO)) return "ATTRIBUTE_NOIMAGE";
+
+    if (attribute.getIsPrimaryKey() && attribute.getIsForeignKey()) {
+      return "ATTRIBUTE_PKFK";
+    } else if (attribute.getIsPrimaryKey()) {
+      return  "ATTRIBUTE_PK" + (optimalImageSize.equals(ImageSize.SMALL) ? "_SMALL" : "_BIG");
+    } else if (attribute.getIsForeignKey()) {
+      return "ATTRIBUTE_FK" + (optimalImageSize.equals(ImageSize.SMALL) ? "_SMALL" : "_BIG");
+    } else {
+      return "ATTRIBUTE_SPACE" + (optimalImageSize.equals(ImageSize.SMALL) ? "_SMALL" : "_BIG");
     }
-    return super.isCellSelectable(cell);
   }
 
-  @Override
-  public boolean  isValidSource(Object cell){
-    return false;
-  }
-
-  @Override
-  public boolean  isValidTarget(Object cell){
-    return false;
+  protected ImageSize getImageSizeClass(Attribute attribute){
+    if(attribute.getIsPrimaryKey() && attribute.getIsForeignKey()){
+      return ImageSize.BIG;
+    }else if(attribute.getIsPrimaryKey() || attribute.getIsForeignKey()){
+      return ImageSize.SMALL;
+    }else {
+      return ImageSize.NO;
+    }
   }
 
 }

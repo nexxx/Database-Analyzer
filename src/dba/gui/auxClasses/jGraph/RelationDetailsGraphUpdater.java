@@ -18,6 +18,7 @@
 package dba.gui.auxClasses.jGraph;
 
 import com.mxgraph.model.mxCell;
+import com.mxgraph.model.mxGeometry;
 import com.mxgraph.view.mxGraph;
 import dbaCore.data.Attribute;
 import dbaCore.data.FunctionalDependency;
@@ -28,7 +29,7 @@ import java.util.ArrayList;
 /**
  * Updates / Draws the RelationDetailsView
  */
-public class RelationDetailsGraphUpdater implements Runnable {
+public class RelationDetailsGraphUpdater extends RelationUpdater {
 
   private mxGraph graph;
   private Object parentPane;
@@ -39,10 +40,10 @@ public class RelationDetailsGraphUpdater implements Runnable {
     dbRelations = relations;
     parentPane = graph.getDefaultParent();
     this.graph = graph;
+    graph.setAutoSizeCells(true);
 
   }
 
-  @Override
   public void run() {
     graph.getModel().beginUpdate();
     try {
@@ -87,20 +88,31 @@ public class RelationDetailsGraphUpdater implements Runnable {
   private Object insertRelation(mxGraph graph, RelationSchema relation, int verticalOffset) {
     int attributeOffset;
     int horizontalOffset = 0;
-    int attributeWidth;
     ArrayList<mxCell> attributeCells = new ArrayList<>();
 
     mxCell relationVertex = (mxCell) graph.insertVertex(parentPane, relation.getName(), relation, horizontalOffset,
-      verticalOffset, getRequiredWidth(relation), 25, "RELATION_HEADER");
+      verticalOffset, 15 * relation.getName().length(), 25, "RELATION_HEADER");
 
     attributeOffset = (int) (relationVertex.getGeometry().getY() + 25);
 
     // Add attributes
     for (Attribute attr : relation.getAttributes()) {
-      attributeWidth = getRequiredWidth(attr);
       attributeCells.add((mxCell) graph.insertVertex(parentPane, attr.getName(), attr, horizontalOffset,
-        attributeOffset, attributeWidth, 25, getAttributeStyle(attr)));
-      horizontalOffset += attributeWidth;
+        attributeOffset, 30, 25, super.getAttributeStyle(attr, getImageSizeClass(attr))));
+      graph.updateCellSize(attributeCells.get(attributeCells.size()-1));
+      horizontalOffset += 30;
+    }
+
+    double currentXPos=0;
+    for(int i =0;i<attributeCells.size();i++){
+      mxGeometry geo = attributeCells.get(i).getGeometry();
+      if(i>0){
+        currentXPos+=attributeCells.get(i-1).getGeometry().getWidth();
+        geo.setX(currentXPos);
+      }
+
+      geo.setHeight(25);
+      geo.setWidth(geo.getWidth()+5);
     }
 
     drawFunctionalDependencies(relation.getAttributes(), attributeCells, relation.getFunctionalDependencies());
@@ -108,44 +120,6 @@ public class RelationDetailsGraphUpdater implements Runnable {
     return relationVertex;
   }
 
-  /**
-   * Returns the required width for a AttributeCell
-   *
-   * @param attribute the attribute to work with
-   * @return the required width
-   */
-  private int getRequiredWidth(Attribute attribute) {
-    return 80 + 8 * attribute.getName().length();
-  }
-
-  /**
-   * Returns the required width for a RelationCell
-   *
-   * @param relation the relation to work with
-   * @return the required width
-   */
-  private int getRequiredWidth(RelationSchema relation) {
-    return 80 + 12 * relation.getName().length();
-  }
-
-  /**
-   * Gets the right style for the pk/fk constallation
-   *
-   * @param attribute attribute to get the style for
-   * @return a String representing the Style for the attribute
-   */
-  private String getAttributeStyle(Attribute attribute) {
-
-    if (attribute.getIsPrimaryKey() && attribute.getIsForeignKey()) {
-      return "ATTRIBUTE_PKFK";
-    } else if (attribute.getIsPrimaryKey()) {
-      return "ATTRIBUTE_PK";
-    } else if (attribute.getIsForeignKey()) {
-      return "ATTRIBUTE_FK";
-    } else {
-      return "ATTRIBUTE_NOKEY";
-    }
-  }
 
   /**
    * draws all given functionalDependencies
