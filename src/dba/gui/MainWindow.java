@@ -285,9 +285,9 @@ public class MainWindow implements constants, Observer {
     pnlRight.add(feedbackbarPanel, BorderLayout.SOUTH);
 
     tabbedPaneOutline = new JTabbedPane();
-    tabbedPaneOutline.addTab("Tree", dbTreePanel);
-    //tabbedPaneOutline.addTab("Test", new JPanel());
-    //tabbedPaneOutline.setTabComponentAt(1, new ButtonTabComponent(tabbedPaneOutline));
+    tabbedPaneOutline.addTab(locale.getString("GUI_Tree"), dbTreePanel);
+    tabbedPaneOutline.addTab("Test", new JPanel());
+    tabbedPaneOutline.setTabComponentAt(1, new ButtonTabComponent(tabbedPaneOutline));
 
     splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, tabbedPaneOutline, pnlRight);
     splitPaneDividerSize = 5;
@@ -329,6 +329,7 @@ public class MainWindow implements constants, Observer {
 
     createFileMenu(menuBar);
     createEditMenu(menuBar);
+    createViewMenu(menuBar);
     createExtrasMenu(menuBar);
     createHelpMenu(menuBar);
 
@@ -475,6 +476,19 @@ public class MainWindow implements constants, Observer {
       }
     });
     editMenu.add(metaInfoMenuItem);
+  }
+
+  private void createViewMenu(JMenuBar menuBar){
+    JMenu viewMenu = new JMenu(locale.getString("GUI_View"));
+    menuBar.add(viewMenu);
+
+    JMenu navTabs = new JMenu(locale.getString("GUI_NavTabs"));
+    viewMenu.add(navTabs);
+
+    JCheckBoxMenuItem test = new JCheckBoxMenuItem("Test", true);
+    navTabs.add(test);
+
+
   }
 
   private void openInfoFrame() {
