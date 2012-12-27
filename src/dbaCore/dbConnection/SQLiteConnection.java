@@ -26,7 +26,7 @@ import java.sql.SQLException;
  * @author Andreas Freitag
  */
 public class SQLiteConnection extends DbConnection {
-
+  /*
   private String driver = null;
   private String DbUrl = null;
 
@@ -58,4 +58,5 @@ public class SQLiteConnection extends DbConnection {
       }
     }
   }
+      */
 }

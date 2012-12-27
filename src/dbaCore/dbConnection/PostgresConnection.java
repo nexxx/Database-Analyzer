@@ -26,7 +26,7 @@ import java.sql.SQLException;
  * @author Andreas Freitag
  */
 public class PostgresConnection extends DbConnection {
-
+  /*
   private String userName = null;
   private String password = null;
   private String driver = null;
@@ -62,4 +62,5 @@ public class PostgresConnection extends DbConnection {
       }
     }
   }
+  */
 }

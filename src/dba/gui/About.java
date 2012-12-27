@@ -97,7 +97,13 @@ public class About extends JDialog {
       "Analyzer<br>" + version_number + "<br><br>Authors: " +
       "Andreas Freitag, Sebastian Theuermann<br><br>DBA is " +
       "licensed under the GPL v3 license.<br>For more informations " +
-      "visit: " + "<br>http://www.gnu.org/licenses/</html>";
+      "visit: " + "<br>http://www.gnu.org/licenses/" +
+      "<br><br>" +
+      "Credits:<br>" +
+      "- JGraphx (BSD License) https://github.com/jgraph/jgraphx<br>" +
+      "- MigLayout (BSD/GPL license) http://www.miglayout.com/<br>" +
+      "- Freemaker (BSD-style license) http://freemarker.sourceforge.net/<br>" +
+      "- MySQL JDBC Connector (GPL license) http://dev.mysql.com/downloads/connector/j/</html>";
     JLabel lblText = new JLabel(text);
     lblText.setBackground(Color.white);
     lblText.setOpaque(true);
