@@ -18,10 +18,7 @@
 package dba.gui;
 
 
-import dba.gui.auxClasses.DatabaseTreePanel;
-import dba.gui.auxClasses.GuiLogic;
-import dba.gui.auxClasses.RelationDetailsView;
-import dba.gui.auxClasses.RelationView;
+import dba.gui.auxClasses.*;
 import dba.gui.auxClasses.feedback.FeedbackbarPanel;
 import dba.gui.auxClasses.toolBars.*;
 import dba.gui.metaInfoFrame.CustomerInfosFrame;
@@ -95,6 +92,7 @@ public class MainWindow implements constants, Observer {
   private JPanel pnlShowTree;
   private JButton btnShowTree;
   private int splitPaneDividerSize;
+  private JTabbedPane tabbedPaneOutline;
 
 
   /**
@@ -286,7 +284,12 @@ public class MainWindow implements constants, Observer {
     pnlRight.add(displayTab, BorderLayout.CENTER);
     pnlRight.add(feedbackbarPanel, BorderLayout.SOUTH);
 
-    splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, dbTreePanel, pnlRight);
+    tabbedPaneOutline = new JTabbedPane();
+    tabbedPaneOutline.addTab("Tree", dbTreePanel);
+    //tabbedPaneOutline.addTab("Test", new JPanel());
+    //tabbedPaneOutline.setTabComponentAt(1, new ButtonTabComponent(tabbedPaneOutline));
+
+    splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, tabbedPaneOutline, pnlRight);
     splitPaneDividerSize = 5;
     splitPane.setDividerSize(splitPaneDividerSize);
     splitPane.setDividerLocation(250);
