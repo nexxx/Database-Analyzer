@@ -724,14 +724,6 @@ public class GuiLogic extends Observable {
 
     String text = "";
 
-    /*for (RelationSchema relation : database.getDatabase()) {
-      text = text + relation.toString() + "<br>";
-      for (FunctionalDependency fd : relation.getFunctionalDependencies()) {
-        text = text + "(" + fd.toString() + ")" + "<br>";
-      }
-      text = text + "<br><br>";
-    }*/
-
     for (RelationSchema relation : database.getDatabase()) {
       text = text + relation.getName() + "<br>";
       text = text + "|-> Attributes<br>";
