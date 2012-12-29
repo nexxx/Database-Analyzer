@@ -61,7 +61,6 @@ public class RelationGraphUpdater extends RelationUpdater {
     } finally {
       graph.getModel().endUpdate();
     }
-
   }
 
   /**
@@ -139,7 +138,8 @@ public class RelationGraphUpdater extends RelationUpdater {
 
     // add the rest of the relations which don't occur in a foreignKey
     // constraint
-    offset = getLowestCellPoint() + 25;
+    int lowestPoint= getLowestCellPoint();
+    offset = lowestPoint != 0 ? lowestPoint + 25 : 0;
     for (RelationSchema relation : dbRelations) {
       if (!fkRelations.contains(relation.getName())) {
         relationCell = (mxCell) insertRelation(graph, relation, offset);
@@ -225,6 +225,7 @@ public class RelationGraphUpdater extends RelationUpdater {
     layout.setDisableEdgeStyle(false); //Use the specified EdgeStyle
     Object cell = graphComponent.getGraph().getDefaultParent();
     layout.execute(cell);
+    moveGraphVisible(); //moves graph to make all verticles visible
   }
 
   /**
@@ -379,6 +380,31 @@ public class RelationGraphUpdater extends RelationUpdater {
     }
 
     return fkCells;
+  }
+
+  /**
+   *  Moves the graph in order to display cells with negative positions
+   */
+  private void moveGraphVisible(){
+    double dx = 0;
+    double dy = 0;
+    mxGeometry geo;
+
+    for(Object obj : graph.getChildVertices(graph.getDefaultParent()))  {
+      if(obj instanceof mxCell){
+        geo = ((mxCell)obj).getGeometry();
+        if(geo.getX()<dx)  {
+          dx=geo.getX();
+        }
+        if(geo.getY()<dy) {
+          dy=geo.getY();
+        }
+      }
+    }
+
+    if(dx < 0 || dy < 0){
+      graph.moveCells(graph.getChildVertices(graph.getDefaultParent()),dx*-1,dy*-1,false);
+    }
   }
 
 }
