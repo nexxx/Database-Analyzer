@@ -40,15 +40,12 @@
           <root url="jar://$MODULE_DIR$/lib/jgraphx.jar!/" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES>
-          <root url="file://$USER_HOME$/Downloads/jgraphx-1.10.4.0/src" />
-        </SOURCES>
+        <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="library" name="freemarker" level="project" />
     <orderEntry type="library" name="junit-4.10" level="project" />
     <orderEntry type="library" name="mysql-connector-java-5.1.21-bin" level="project" />
-    <orderEntry type="library" name="jgraphx" level="project" />
   </component>
 </module>
 

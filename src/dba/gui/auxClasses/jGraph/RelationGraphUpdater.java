@@ -51,6 +51,7 @@ public class RelationGraphUpdater extends RelationUpdater {
     this.graphComponent = graphComponent;
     this.graph = graph;
 
+    graph.setAutoOrigin(true);
     graph.setAutoSizeCells(true);
   }
 
@@ -61,7 +62,6 @@ public class RelationGraphUpdater extends RelationUpdater {
     } finally {
       graph.getModel().endUpdate();
     }
-
   }
 
   /**
@@ -139,7 +139,8 @@ public class RelationGraphUpdater extends RelationUpdater {
 
     // add the rest of the relations which don't occur in a foreignKey
     // constraint
-    offset = getLowestCellPoint() + 25;
+    int lowestPoint= getLowestCellPoint();
+    offset = lowestPoint != 0 ? lowestPoint + 25 : 0;
     for (RelationSchema relation : dbRelations) {
       if (!fkRelations.contains(relation.getName())) {
         relationCell = (mxCell) insertRelation(graph, relation, offset);
@@ -380,5 +381,4 @@ public class RelationGraphUpdater extends RelationUpdater {
 
     return fkCells;
   }
-
 }
