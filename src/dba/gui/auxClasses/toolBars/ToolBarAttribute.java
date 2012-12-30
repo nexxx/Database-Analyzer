@@ -18,10 +18,7 @@
 package dba.gui.auxClasses.toolBars;
 
 import dba.gui.CustomTree;
-import dba.gui.auxClasses.AttrLogic;
-import dba.gui.auxClasses.DatabaseTreePanel;
-import dba.gui.auxClasses.RelationDetailsView;
-import dba.gui.auxClasses.RelationView;
+import dba.gui.auxClasses.*;
 import dba.utils.TreeEnum;
 import dbaCore.data.Attribute;
 
@@ -42,9 +39,9 @@ public class ToolBarAttribute extends ToolBar {
   private JToggleButton btnFK;
   private JTextField txtConstraints;
 
-  public ToolBarAttribute(DatabaseTreePanel dbTreePanel, RelationView relationView,
-                          RelationDetailsView relationDetailsView) {
-    super(relationView, relationDetailsView, dbTreePanel);
+  public ToolBarAttribute(RelationView relationView,
+                          RelationDetailsView relationDetailsView,GuiLogic logic) {
+    super(relationView, relationDetailsView,logic);
 
     attrLogic = new AttrLogic();
     tree = CustomTree.getInstance();

@@ -17,7 +17,6 @@
 
 package dba.gui.auxClasses.toolBars;
 
-import dba.createSqlDump.CreateSqlDump;
 import dba.gui.CustomTree;
 import dba.gui.DatatypeMappingFrame.DatatypeMappingFrame;
 import dba.gui.auxClasses.*;
@@ -52,7 +51,7 @@ public class ToolBarDatabase extends ToolBar {
 
   public ToolBarDatabase(DatabaseTreePanel dbTreePanel, RelationView relationView,
                          RelationDetailsView relationDetailsView, GuiLogic gL) {
-    super(relationView, relationDetailsView, dbTreePanel);
+    super(relationView, relationDetailsView,gL);
 
     tree = dbTreePanel.getTree();
     guiLogic = gL;
