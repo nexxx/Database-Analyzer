@@ -25,6 +25,7 @@ import dba.gui.metaInfoFrame.CustomerInfosFrame;
 import dba.init.Initialize;
 import dba.options.Feedback;
 import dba.options.FeedbackEnum;
+import dba.options.Options;
 import dba.utils.GetIcons;
 import dba.utils.Localization;
 import dba.utils.OpenUrl;
@@ -46,8 +47,10 @@ import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
+
 
 /**
  * Class which is a Observable. It represents and Paints the
@@ -93,6 +96,17 @@ public class MainWindow implements constants, Observer {
   private JButton btnShowTree;
   private int splitPaneDividerSize;
   private JTabbedPane tabbedPaneOutline;
+  private JCheckBoxMenuItem inspectMenuItem;
+  private JCheckBoxMenuItem outlineMenuItem;
+  private JCheckBoxMenuItem wikiMenuItem;
+  private JCheckBoxMenuItem toolboxMenuItem;
+  private JCheckBoxMenuItem themeMenuItem;
+  private Options options;
+  private JPanel pnlOutline;
+  private JPanel pnlWiki;
+  private JPanel pnlToolbox;
+  private JPanel pnlInspect;
+  private JPanel pnlTheming;
 
 
   /**
@@ -100,6 +114,7 @@ public class MainWindow implements constants, Observer {
    */
   public MainWindow() {
     super();
+    options = Options.getInstance();
     checker = new GeneralRelationCheck();
     GetIcons getIcon = GetIcons.getInstance();
     ImageIcon iconFrame = getIcon.getIconFrame();
@@ -285,9 +300,14 @@ public class MainWindow implements constants, Observer {
     pnlRight.add(feedbackbarPanel, BorderLayout.SOUTH);
 
     tabbedPaneOutline = new JTabbedPane();
-    tabbedPaneOutline.addTab(locale.getString("GUI_Tree"), dbTreePanel);
-    tabbedPaneOutline.addTab("Test", new JPanel());
-    tabbedPaneOutline.setTabComponentAt(1, new ButtonTabComponent(tabbedPaneOutline));
+
+    pnlInspect = new JPanel();
+    pnlOutline = new JPanel();
+    pnlTheming = new JPanel();
+    pnlToolbox = new JPanel();
+    pnlWiki = new JPanel();
+
+    updateNavTabs();
 
     splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, tabbedPaneOutline, pnlRight);
     splitPaneDividerSize = 5;
@@ -482,14 +502,68 @@ public class MainWindow implements constants, Observer {
     JMenu viewMenu = new JMenu(locale.getString("GUI_View"));
     menuBar.add(viewMenu);
 
-    JMenu navTabs = new JMenu(locale.getString("GUI_NavTabs"));
-    viewMenu.add(navTabs);
+    JMenu navTabMenu = new JMenu(locale.getString("GUI_NavTabs"));
+    viewMenu.add(navTabMenu);
 
-    JCheckBoxMenuItem test = new JCheckBoxMenuItem("Test", true);
-    navTabs.add(test);
 
+    inspectMenuItem = new JCheckBoxMenuItem(locale.getString("GUI_Inspect"), options.getShowTabInspect());
+    inspectMenuItem.addItemListener(new ItemListener() {
+      @Override
+      public void itemStateChanged(ItemEvent itemEvent) {
+        options.setShowTabInspect(inspectMenuItem.isSelected());
+        options.writeOptions();
+        updateNavTabs();
+      }
+    });
+    navTabMenu.add(inspectMenuItem);
+
+    outlineMenuItem = new JCheckBoxMenuItem(locale.getString("GUI_Outline"), options.getShowTabOutline());
+    outlineMenuItem.addItemListener(new ItemListener() {
+      @Override
+      public void itemStateChanged(ItemEvent itemEvent) {
+        options.setShowTabOutline(outlineMenuItem.isSelected());
+        options.writeOptions();
+        updateNavTabs();
+      }
+    });
+    navTabMenu.add(outlineMenuItem);
+
+    themeMenuItem = new JCheckBoxMenuItem(locale.getString("GUI_Theming"), options.getShowTabTheme());
+    themeMenuItem.addItemListener(new ItemListener() {
+      @Override
+      public void itemStateChanged(ItemEvent itemEvent) {
+        options.setShowTabTheme(themeMenuItem.isSelected());
+        options.writeOptions();
+        updateNavTabs();
+      }
+    });
+    navTabMenu.add(themeMenuItem);
+
+    toolboxMenuItem = new JCheckBoxMenuItem(locale.getString("GUI_Toolbox"), options.getShowTabToolbox());
+    toolboxMenuItem.addItemListener(new ItemListener() {
+      @Override
+      public void itemStateChanged(ItemEvent itemEvent) {
+        options.setShowTabToolbox(toolboxMenuItem.isSelected());
+        options.writeOptions();
+        updateNavTabs();       }
+    });
+    navTabMenu.add(toolboxMenuItem);
+
+
+    wikiMenuItem = new JCheckBoxMenuItem(locale.getString("GUI_Wiki"), options.getShowTabWiki());
+    wikiMenuItem.addItemListener(new ItemListener() {
+      @Override
+      public void itemStateChanged(ItemEvent itemEvent) {
+        options.setShowTabWiki(wikiMenuItem.isSelected());
+        options.writeOptions();
+        updateNavTabs();
+      }
+    });
+    navTabMenu.add(wikiMenuItem);
 
   }
+
+
 
   private void openInfoFrame() {
     CustomerInfosFrame infoFrame = new CustomerInfosFrame(database);
@@ -641,5 +715,31 @@ public class MainWindow implements constants, Observer {
       Feedback feedback = (Feedback) o;
       feedbackbarPanel.showFeedback(feedback.getText(), feedback.getFeedback());
     }
+  }
+
+  private void updateNavTabs(){
+    int numberOfTabs = tabbedPaneOutline.getTabCount();
+    System.out.println("Number of tabs: " + numberOfTabs);
+
+    tabbedPaneOutline.removeAll();
+
+    tabbedPaneOutline.addTab(locale.getString("GUI_Tree"), dbTreePanel);
+
+    if(options.getShowTabInspect()) {
+      tabbedPaneOutline.addTab(locale.getString("GUI_Inspect"), pnlInspect);
+    }
+    if(options.getShowTabOutline()) {
+      tabbedPaneOutline.addTab(locale.getString("GUI_Outline"), pnlOutline);
+    }
+    if(options.getShowTabTheme()) {
+      tabbedPaneOutline.addTab(locale.getString("GUI_Theming"), pnlTheming);
+    }
+    if(options.getShowTabToolbox()) {
+      tabbedPaneOutline.addTab(locale.getString("GUI_Toolbox"), pnlToolbox);
+    }
+    if(options.getShowTabWiki()) {
+      tabbedPaneOutline.addTab(locale.getString("GUI_Wiki"), pnlWiki);
+    }
+    tabbedPaneOutline.updateUI();
   }
 }

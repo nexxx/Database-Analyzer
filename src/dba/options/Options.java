@@ -56,6 +56,12 @@ public class Options extends Observable {
   private String lastUser;
   private String lastType;
   private HashMap<String, String> availLAF;
+  private Boolean showTabOutline;
+  private Boolean showTabInspect;
+  private Boolean showTabToolbox;
+  private Boolean showTabTheme;
+  private Boolean showTabWiki;
+
 
   /**
    * Constructor for the options class
@@ -99,6 +105,12 @@ public class Options extends Observable {
     lastAdress = "localhost/dba";
     lastUser = "username";
     lastType = "MYSQL";
+
+    showTabInspect = true;
+    showTabOutline = true;
+    showTabTheme = true;
+    showTabToolbox = true;
+    showTabWiki = true;
   }
 
   /**
@@ -170,6 +182,13 @@ public class Options extends Observable {
       prop.setProperty("lastAdress", lastAdress);
       prop.setProperty("lastUser", lastUser);
       prop.setProperty("lastType", lastType);
+      prop.setProperty("showTabInspect", showTabInspect.toString());
+      prop.setProperty("showTabOutline", showTabOutline.toString());
+      prop.setProperty("showTabTheme", showTabTheme.toString());
+      prop.setProperty("showTabToolbox", showTabToolbox.toString());
+      prop.setProperty("showTabWiki", showTabWiki.toString());
+
+
 
       // Save properties to DBN options folder
       prop.store(new FileOutputStream(optionsFile), "DBA options file");
@@ -202,7 +221,11 @@ public class Options extends Observable {
       lastAdress = prop.getProperty("lastAdress");
       lastUser = prop.getProperty("lastUser");
       lastType = prop.getProperty("lastType");
-
+      showTabTheme = Boolean.valueOf(prop.getProperty("showTabTheme"));
+      showTabToolbox = Boolean.valueOf(prop.getProperty("showTabToolbox"));
+      showTabWiki = Boolean.valueOf(prop.getProperty("showTabWiki"));
+      showTabOutline = Boolean.valueOf(prop.getProperty("showTabOutline"));
+      showTabInspect = Boolean.valueOf(prop.getProperty("showTabInspect"));
 
     } catch (Exception ex) {
       super.notifyObservers(new Feedback("Unable to load options file", FeedbackEnum.FAILED));
@@ -411,5 +434,45 @@ public class Options extends Observable {
    */
   public void setLastType(String lastType) {
     this.lastType = lastType;
+  }
+
+  public Boolean getShowTabOutline() {
+    return showTabOutline;
+  }
+
+  public void setShowTabOutline(Boolean showTabOutline) {
+    this.showTabOutline = showTabOutline;
+  }
+
+  public Boolean getShowTabInspect() {
+    return showTabInspect;
+  }
+
+  public void setShowTabInspect(Boolean showTabInspect) {
+    this.showTabInspect = showTabInspect;
+  }
+
+  public Boolean getShowTabToolbox() {
+    return showTabToolbox;
+  }
+
+  public void setShowTabToolbox(Boolean showTabToolbox) {
+    this.showTabToolbox = showTabToolbox;
+  }
+
+  public Boolean getShowTabTheme() {
+    return showTabTheme;
+  }
+
+  public void setShowTabTheme(Boolean showTabTheme) {
+    this.showTabTheme = showTabTheme;
+  }
+
+  public Boolean getShowTabWiki() {
+    return showTabWiki;
+  }
+
+  public void setShowTabWiki(Boolean showTabWiki) {
+    this.showTabWiki = showTabWiki;
   }
 }
