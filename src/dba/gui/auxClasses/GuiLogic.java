@@ -81,6 +81,9 @@ public class GuiLogic extends Observable {
 
   private void setLastFileName(String fileName) {
     lastFileName = fileName;
+    if(lastFileName != null && !fileName.endsWith(".xml")){
+      lastFileName += ".xml";
+    }
     super.setChanged();
     super.notifyObservers(lastFileName);
   }

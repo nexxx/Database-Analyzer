@@ -18,10 +18,7 @@
 package dba.gui.auxClasses.toolBars;
 
 import dba.gui.CustomTree;
-import dba.gui.auxClasses.DatabaseTreePanel;
-import dba.gui.auxClasses.FdLogic;
-import dba.gui.auxClasses.RelationDetailsView;
-import dba.gui.auxClasses.RelationView;
+import dba.gui.auxClasses.*;
 import dba.utils.TreeEnum;
 
 import javax.swing.*;
@@ -43,8 +40,9 @@ public class ToolBarFd extends ToolBar {
    */
   private static final long serialVersionUID = -3843390455939145286L;
 
-  public ToolBarFd(DatabaseTreePanel dbTreePanel, RelationView relationView, RelationDetailsView relationDetailsView) {
-    super(relationView, relationDetailsView, dbTreePanel);
+  public ToolBarFd(DatabaseTreePanel dbTreePanel, RelationView relationView, RelationDetailsView relationDetailsView,
+                   GuiLogic logic) {
+    super(relationView, relationDetailsView,logic);
 
     tree = dbTreePanel.getTree();
     fdLogic = new FdLogic();

@@ -173,15 +173,15 @@ public class MainWindow implements constants, Observer {
     JTabbedPane displayTab = new JTabbedPane(SwingConstants.TOP);
 
     pnlToolBar = new JPanel(new BorderLayout());
-    toolBar = new ToolBar(relationView, relationDetailsView, dbTreePanel);
+    toolBar = new ToolBar(relationView, relationDetailsView,guiLogic);
 
     pnlToolBar.add(toolBar, BorderLayout.CENTER);
     contentPane.add(pnlToolBar, BorderLayout.PAGE_START);
 
     toolBarDatabase = new ToolBarDatabase(dbTreePanel, relationView, relationDetailsView, guiLogic);
-    toolBarRelation = new ToolBarRelation(dbTreePanel, relationView, relationDetailsView);
-    toolBarAttribute = new ToolBarAttribute(dbTreePanel, relationView, relationDetailsView);
-    toolBarFd = new ToolBarFd(dbTreePanel, relationView, relationDetailsView);
+    toolBarRelation = new ToolBarRelation(dbTreePanel, relationView, relationDetailsView,guiLogic);
+    toolBarAttribute = new ToolBarAttribute(relationView, relationDetailsView,guiLogic);
+    toolBarFd = new ToolBarFd(dbTreePanel, relationView, relationDetailsView,guiLogic);
 
     PropertyChangeListener changeListener = new PropertyChangeListener() {
 

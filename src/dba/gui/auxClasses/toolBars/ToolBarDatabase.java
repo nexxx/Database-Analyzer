@@ -51,7 +51,7 @@ public class ToolBarDatabase extends ToolBar {
 
   public ToolBarDatabase(DatabaseTreePanel dbTreePanel, RelationView relationView,
                          RelationDetailsView relationDetailsView, GuiLogic gL) {
-    super(relationView, relationDetailsView, dbTreePanel);
+    super(relationView, relationDetailsView,gL);
 
     tree = dbTreePanel.getTree();
     guiLogic = gL;

@@ -17,7 +17,6 @@
 
 package dba.gui.auxClasses.toolBars;
 
-import dba.gui.auxClasses.DatabaseTreePanel;
 import dba.gui.auxClasses.GuiLogic;
 import dba.gui.auxClasses.RelationDetailsView;
 import dba.gui.auxClasses.RelationView;
@@ -62,10 +61,10 @@ public class ToolBar extends JToolBar implements Observer {
   /**
    * Defaultconstructor to create Toolbar
    */
-  public ToolBar(RelationView relView, RelationDetailsView relDetailView, DatabaseTreePanel dbTreePanel) {
+  public ToolBar(RelationView relView, RelationDetailsView relDetailView,GuiLogic logic) {
     super();
     feedbackbarPanel = FeedbackbarPanel.getInstance();
-    guiLogic = new GuiLogic(dbTreePanel);
+    guiLogic = logic;
     getIcons = GetIcons.getInstance();
     locale = Localization.getInstance();
     relationView = relView;

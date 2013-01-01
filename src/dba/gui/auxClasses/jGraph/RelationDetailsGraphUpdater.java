@@ -65,7 +65,7 @@ public class RelationDetailsGraphUpdater extends RelationUpdater {
    * Displays all relations with their functional dependencies
    */
   private void display() {
-    int offset = 25;
+    int offset = 5;
     mxCell relationCell;
 
     removeAllRelations();
