@@ -436,42 +436,72 @@ public class Options extends Observable {
     this.lastType = lastType;
   }
 
+  /**
+   * @return Show outline tab
+   */
   public Boolean getShowTabOutline() {
     return showTabOutline;
   }
 
+  /**
+   * @param showTabOutline Show outline tab
+   */
   public void setShowTabOutline(Boolean showTabOutline) {
     this.showTabOutline = showTabOutline;
   }
 
+  /**
+   * @return Show Inspect tab
+   */
   public Boolean getShowTabInspect() {
     return showTabInspect;
   }
 
+  /**
+   * @param showTabInspect Show Inspect tab
+   */
   public void setShowTabInspect(Boolean showTabInspect) {
     this.showTabInspect = showTabInspect;
   }
 
+  /**
+   * @return Show Toolbox tab
+   */
   public Boolean getShowTabToolbox() {
     return showTabToolbox;
   }
 
+  /**
+   * @param showTabToolbox Show Toolbox tab
+   */
   public void setShowTabToolbox(Boolean showTabToolbox) {
     this.showTabToolbox = showTabToolbox;
   }
 
+  /**
+   * @return Show Theming tab
+   */
   public Boolean getShowTabTheme() {
     return showTabTheme;
   }
 
+  /**
+   * @param showTabTheme Show Theming tab
+   */
   public void setShowTabTheme(Boolean showTabTheme) {
     this.showTabTheme = showTabTheme;
   }
 
+  /**
+   * @return Show Wiki tab
+   */
   public Boolean getShowTabWiki() {
     return showTabWiki;
   }
 
+  /**
+   * @param showTabWiki Show wiki tab
+   */
   public void setShowTabWiki(Boolean showTabWiki) {
     this.showTabWiki = showTabWiki;
   }

@@ -717,10 +717,11 @@ public class MainWindow implements constants, Observer {
     }
   }
 
+  /**
+   * Remove all tabs and add those tabs which are set to true in options
+   * Nav Tree is always shown
+   */
   private void updateNavTabs(){
-    int numberOfTabs = tabbedPaneOutline.getTabCount();
-    System.out.println("Number of tabs: " + numberOfTabs);
-
     tabbedPaneOutline.removeAll();
 
     tabbedPaneOutline.addTab(locale.getString("GUI_Tree"), dbTreePanel);
