@@ -38,29 +38,47 @@ import java.util.Properties;
 public class Options extends Observable {
   private Properties prop;
   private String language;
+  private final String defLanguage = "en";
+  ;
   private static Options instance = null;
   final private File optionsFolder;
   final private File optionsFile;
   final private File saveFolder;
   final private File exportFolder;
   private Boolean showTippsOnStartup;
+  private final Boolean defShowTippsOnStartup = true;
   private HashMap<String, String> availableLocale;
   private String attributeColor;
+  private final String defAttributeColor = "#00FF00";
   private String relationColor;
+  private final String defRelationColor = "#00CD00";
   private String backgroundColor;
+  private final String defBackgroundColor = "#A7E2FF";
   private String fontColor;
+  private final String defFontColor = "#000000";
   private String arrowFKColor;
+  private final String defArrowFKColor = "#0095C7";
   private String arrowFDColor;
+  private final String defArrowFDColor = "#000000";
   private String lookAndFeel;
+  private final String defLookAndFeel = "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel";
   private String lastAdress;
+  private final String defLastAdress = "localhost/dba";
   private String lastUser;
+  private final String defLastUser = "username";
   private String lastType;
+  private final String defLastType = "MYSQL";
   private HashMap<String, String> availLAF;
   private Boolean showTabOutline;
   private Boolean showTabInspect;
   private Boolean showTabToolbox;
   private Boolean showTabTheme;
   private Boolean showTabWiki;
+  private final Boolean defShowTabOutline = true;
+  private final Boolean defShowTabInspect = true;
+  private final Boolean defShowTabToolbox = true;
+  private final Boolean defShowTabTheme = true;
+  private final Boolean defShowTabWiki = true;
 
 
   /**
@@ -80,10 +98,10 @@ public class Options extends Observable {
     prop = new Properties();
 
     // Set Locale
-    language = "en";
+    language = defLanguage;
 
     // Show tipps
-    showTippsOnStartup = Boolean.TRUE;
+    showTippsOnStartup = defShowTippsOnStartup;
 
     // Files and Folders
     File homeFolder = new File(System.getProperty("user.home") + "/.dba");
@@ -93,24 +111,24 @@ public class Options extends Observable {
     saveFolder = new File(homeFolder + "/Save");
     exportFolder = new File(homeFolder + "/Export");
 
-    attributeColor = "#00FF00";
-    relationColor = "#00CD00";
-    backgroundColor = "#A7E2FF";
-    fontColor = "#000000";
-    arrowFDColor = "#000000";
-    arrowFKColor = "#0095C7";
+    attributeColor = defAttributeColor;
+    relationColor = defRelationColor;
+    backgroundColor = defBackgroundColor;
+    fontColor = defFontColor;
+    arrowFDColor = defArrowFDColor;
+    arrowFKColor = defArrowFKColor;
 
-    lookAndFeel = "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel";
+    lookAndFeel = defLookAndFeel;
 
-    lastAdress = "localhost/dba";
-    lastUser = "username";
-    lastType = "MYSQL";
+    lastAdress = defLastAdress;
+    lastUser = defLastUser;
+    lastType = defLastType;
 
-    showTabInspect = true;
-    showTabOutline = true;
-    showTabTheme = true;
-    showTabToolbox = true;
-    showTabWiki = true;
+    showTabInspect = defShowTabInspect;
+    showTabOutline = defShowTabOutline;
+    showTabTheme = defShowTabTheme;
+    showTabToolbox = defShowTabToolbox;
+    showTabWiki = defShowTabWiki;
   }
 
   /**
@@ -189,7 +207,6 @@ public class Options extends Observable {
       prop.setProperty("showTabWiki", showTabWiki.toString());
 
 
-
       // Save properties to DBN options folder
       prop.store(new FileOutputStream(optionsFile), "DBA options file");
 
@@ -204,29 +221,106 @@ public class Options extends Observable {
    */
   public void readOptions() {
     try {
+      String tmpString;
 
       prop.load(new FileInputStream(optionsFile));
 
       language = prop.getProperty("language");
+      if (language == null) {
+        language = defLanguage;
+      }
 
-      showTippsOnStartup = Boolean.valueOf(prop.getProperty("showTipOnStartup"));
+      tmpString = prop.getProperty("showTipOnStartup");
+      if (tmpString == null) {
+        showTippsOnStartup = defShowTippsOnStartup;
+      } else {
+        showTippsOnStartup = Boolean.valueOf(tmpString);
+      }
 
       attributeColor = prop.getProperty("attributeColor");
-      relationColor = prop.getProperty("relationColor");
-      backgroundColor = prop.getProperty("backgroundColor");
-      fontColor = prop.getProperty("fontColor");
-      arrowFKColor = prop.getProperty("arrowFKColor");
-      arrowFDColor = prop.getProperty("arrowFDColor");
-      lookAndFeel = prop.getProperty("lookAndFeed");
-      lastAdress = prop.getProperty("lastAdress");
-      lastUser = prop.getProperty("lastUser");
-      lastType = prop.getProperty("lastType");
-      showTabTheme = Boolean.valueOf(prop.getProperty("showTabTheme"));
-      showTabToolbox = Boolean.valueOf(prop.getProperty("showTabToolbox"));
-      showTabWiki = Boolean.valueOf(prop.getProperty("showTabWiki"));
-      showTabOutline = Boolean.valueOf(prop.getProperty("showTabOutline"));
-      showTabInspect = Boolean.valueOf(prop.getProperty("showTabInspect"));
+      if (attributeColor == null) {
+        attributeColor = defAttributeColor;
+      }
 
+      relationColor = prop.getProperty("relationColor");
+      if (relationColor == null) {
+        relationColor = defRelationColor;
+      }
+
+      backgroundColor = prop.getProperty("backgroundColor");
+      if (backgroundColor == null) {
+        backgroundColor = defBackgroundColor;
+      }
+
+      fontColor = prop.getProperty("fontColor");
+      if (fontColor == null) {
+        fontColor = defFontColor;
+      }
+
+      arrowFKColor = prop.getProperty("arrowFKColor");
+      if (arrowFKColor == null) {
+        arrowFKColor = defArrowFKColor;
+      }
+
+      arrowFDColor = prop.getProperty("arrowFDColor");
+      if (arrowFDColor == null) {
+        arrowFDColor = defArrowFDColor;
+      }
+
+      lookAndFeel = prop.getProperty("lookAndFeed");
+      if (lookAndFeel == null) {
+        lookAndFeel = defLookAndFeel;
+      }
+
+      lastAdress = prop.getProperty("lastAdress");
+      if (lastAdress == null) {
+        lastAdress = defLastAdress;
+      }
+
+      lastUser = prop.getProperty("lastUser");
+      if (lastUser == null) {
+        lastUser = defLastUser;
+      }
+
+      lastType = prop.getProperty("lastType");
+      if (lastType == null) {
+        lastType = defLastType;
+      }
+
+      tmpString = prop.getProperty("showTabTheme");
+      if (tmpString == null) {
+        showTabTheme = defShowTabTheme;
+      } else {
+        showTabTheme = Boolean.valueOf(tmpString);
+      }
+
+      tmpString = prop.getProperty("showTabToolbox");
+      if (tmpString == null) {
+        showTabToolbox = defShowTabToolbox;
+      } else {
+        showTabToolbox = Boolean.valueOf(tmpString);
+      }
+
+      tmpString = prop.getProperty("showTabWiki");
+      if (tmpString == null) {
+        showTabWiki = defShowTabWiki;
+      } else {
+        showTabWiki = Boolean.valueOf(tmpString);
+      }
+
+      tmpString = prop.getProperty("showTabOutline");
+      if (tmpString == null) {
+        showTabOutline = defShowTabOutline;
+      } else {
+        showTabOutline = Boolean.valueOf(tmpString);
+      }
+
+      tmpString = prop.getProperty("showTabInspect");
+      if (tmpString == null) {
+        showTabInspect = defShowTabInspect;
+      } else {
+        showTabInspect = Boolean.valueOf(tmpString);
+      }
     } catch (Exception ex) {
       super.notifyObservers(new Feedback("Unable to load options file", FeedbackEnum.FAILED));
     }
