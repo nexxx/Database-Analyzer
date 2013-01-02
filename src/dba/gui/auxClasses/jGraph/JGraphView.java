@@ -86,6 +86,14 @@ public abstract class JGraphView extends JPanel {
       }
     });
 
+    //Notice when user zooms via the outline-tab
+    graph.getView().addListener("scale",new mxEventSource.mxIEventListener() {
+      @Override
+      public void invoke(Object sender, mxEventObject evt) {
+        notifyObservers();
+      }
+    });
+
     //Uses Mouswheel+Control to zoom zoom zoom
     graphComponent.addMouseWheelListener(new MouseWheelListener() {
       @Override
@@ -111,6 +119,14 @@ public abstract class JGraphView extends JPanel {
 
       }
     });
+  }
+
+  /**
+   * Returns the mxGraphComponent used in this View
+   * @return the currently used mxGraphComponent
+   */
+  public mxGraphComponent getGraphComponent(){
+    return graphComponent;
   }
 
   /**

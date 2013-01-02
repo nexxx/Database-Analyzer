@@ -20,6 +20,7 @@ package dba.gui;
 
 import dba.gui.auxClasses.*;
 import dba.gui.auxClasses.feedback.FeedbackbarPanel;
+import dba.gui.auxClasses.jGraph.JGraphView;
 import dba.gui.auxClasses.toolBars.*;
 import dba.gui.metaInfoFrame.CustomerInfosFrame;
 import dba.init.Initialize;
@@ -47,7 +48,6 @@ import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -102,7 +102,7 @@ public class MainWindow implements constants, Observer {
   private JCheckBoxMenuItem toolboxMenuItem;
   private JCheckBoxMenuItem themeMenuItem;
   private Options options;
-  private JPanel pnlOutline;
+  private OutlinePanel pnlOutline;
   private JPanel pnlWiki;
   private JPanel pnlToolbox;
   private JPanel pnlInspect;
@@ -273,20 +273,21 @@ public class MainWindow implements constants, Observer {
       @Override
       public void stateChanged(ChangeEvent changeEvent) {
         JTabbedPane tabPane = (JTabbedPane) changeEvent.getSource();
-        //User selected relationView
-        if (tabPane.getSelectedIndex() == 0) {
-          relationView.setZoomEnabled(true);
-          relationDetailsView.setZoomEnabled(false);
-          toolBarAttribute.updateZoom(relationView);
-          toolBarRelation.updateZoom(relationView);
-          toolBarDatabase.updateZoom(relationView);
-          //User selected relationDetailsView
-        } else if (tabPane.getSelectedIndex() == 1) {
-          relationView.setZoomEnabled(false);
-          relationDetailsView.setZoomEnabled(true);
-          toolBarAttribute.updateZoom(relationDetailsView);
-          toolBarRelation.updateZoom(relationDetailsView);
-          toolBarDatabase.updateZoom(relationDetailsView);
+
+        //Disable zooming for all tabs
+        for(int i = 0 ; i<tabPane.getTabCount();i++){
+          if(tabPane.getComponentAt(i) instanceof JGraphView){
+            ((JGraphView)tabPane.getComponentAt(i)).setZoomEnabled(false);
+          }
+        }
+
+        //Enable zooming for the selected tab
+        Object obj = tabPane.getSelectedComponent();
+        if(obj instanceof JGraphView){
+          JGraphView view = (JGraphView)obj;
+          view.setZoomEnabled(true);
+          updateZoomFactors(view);
+          pnlOutline.setContent(view.getGraphComponent());
         }
       }
     });
@@ -302,7 +303,7 @@ public class MainWindow implements constants, Observer {
     tabbedPaneOutline = new JTabbedPane();
 
     pnlInspect = new JPanel();
-    pnlOutline = new JPanel();
+    pnlOutline = new OutlinePanel(relationView.getGraphComponent());
     pnlTheming = new JPanel();
     pnlToolbox = new JPanel();
     pnlWiki = new JPanel();
@@ -354,6 +355,13 @@ public class MainWindow implements constants, Observer {
     createHelpMenu(menuBar);
 
     dbTreePanel.getTree().setSelectedItem(0);
+  }
+
+  private void updateZoomFactors(JGraphView view){
+    toolBarAttribute.updateZoom(view);
+    toolBarFd.updateZoom(view);
+    toolBarRelation.updateZoom(view);
+    toolBarDatabase.updateZoom(view);
   }
 
   /**
@@ -741,6 +749,5 @@ public class MainWindow implements constants, Observer {
     if(options.getShowTabWiki()) {
       tabbedPaneOutline.addTab(locale.getString("GUI_Wiki"), pnlWiki);
     }
-    tabbedPaneOutline.updateUI();
   }
 }

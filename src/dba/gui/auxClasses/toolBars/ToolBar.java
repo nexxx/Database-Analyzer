@@ -21,6 +21,7 @@ import dba.gui.auxClasses.GuiLogic;
 import dba.gui.auxClasses.RelationDetailsView;
 import dba.gui.auxClasses.RelationView;
 import dba.gui.auxClasses.feedback.FeedbackbarPanel;
+import dba.gui.auxClasses.jGraph.JGraphView;
 import dba.options.FeedbackEnum;
 import dba.utils.GetIcons;
 import dba.utils.Localization;
@@ -176,10 +177,8 @@ public class ToolBar extends JToolBar implements Observer {
   }
 
   public void updateZoom(Object observable) {
-    if (observable == relationView) {
-      updateComboZoom(relationView.getZoomFactors());
-    } else if (observable == relationDetailView) {
-      updateComboZoom(relationDetailView.getZoomFactors());
+    if(observable instanceof JGraphView){
+      updateComboZoom(((JGraphView)observable).getZoomFactors());
     }
   }
 
