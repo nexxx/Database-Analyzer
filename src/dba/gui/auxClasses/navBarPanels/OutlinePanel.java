@@ -1,4 +1,4 @@
-package dba.gui.auxClasses;
+package dba.gui.auxClasses.navBarPanels;
 
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.swing.mxGraphOutline;

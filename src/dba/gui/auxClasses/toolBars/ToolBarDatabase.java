@@ -20,6 +20,7 @@ package dba.gui.auxClasses.toolBars;
 import dba.gui.CustomTree;
 import dba.gui.DatatypeMappingFrame.DatatypeMappingFrame;
 import dba.gui.auxClasses.*;
+import dba.gui.auxClasses.navBarPanels.DatabaseTreePanel;
 import dba.options.FeedbackEnum;
 import dba.utils.TreeEnum;
 import dbaCore.data.Database;

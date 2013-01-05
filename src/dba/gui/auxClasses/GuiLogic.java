@@ -24,6 +24,7 @@ import dba.gui.ImportDbFrame;
 import dba.gui.auxClasses.events.GraphicalExportRequested;
 import dba.gui.auxClasses.events.GraphicalExportRequestedListener;
 import dba.gui.auxClasses.feedback.FeedbackbarPanel;
+import dba.gui.auxClasses.navBarPanels.DatabaseTreePanel;
 import dba.options.FeedbackEnum;
 import dba.options.Options;
 import dba.utils.Localization;

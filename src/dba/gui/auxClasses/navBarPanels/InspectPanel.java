@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.      *
  ******************************************************************************/
 
-package dba.gui.auxClasses;
+package dba.gui.auxClasses.navBarPanels;
 
 import dba.gui.CustomTree;
 import dba.utils.RelationInspectorGui;

@@ -15,9 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.      *
  ******************************************************************************/
 
-package dba.gui.auxClasses;
+package dba.gui.auxClasses.navBarPanels;
 
 import dba.gui.CustomTree;
+import dba.gui.auxClasses.CustomTreeCellRenderer;
 import dba.gui.auxClasses.nodes.AttributeNode;
 import dba.gui.auxClasses.nodes.DatabaseNode;
 import dba.gui.auxClasses.nodes.FunctionalDependencyNode;

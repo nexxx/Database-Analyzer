@@ -19,6 +19,7 @@ package dba.gui.auxClasses.toolBars;
 
 import dba.gui.CustomTree;
 import dba.gui.auxClasses.*;
+import dba.gui.auxClasses.navBarPanels.DatabaseTreePanel;
 import dba.utils.TreeEnum;
 
 import javax.swing.*;
