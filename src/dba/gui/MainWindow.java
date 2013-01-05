@@ -184,41 +184,6 @@ public class MainWindow implements constants, Observer {
     toolBarAttribute = new ToolBarAttribute(relationView, relationDetailsView,guiLogic);
     toolBarFd = new ToolBarFd(dbTreePanel, relationView, relationDetailsView,guiLogic);
 
-    PropertyChangeListener changeListener = new PropertyChangeListener() {
-
-      @Override
-      public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equalsIgnoreCase("TreeClick")) {
-          if (((String) evt.getNewValue()).equalsIgnoreCase("Database")) {
-            pnlToolBar.removeAll();
-            if (CustomTree.getInstance().getDatabase().getDatabase().isEmpty()) {
-              toolBarDatabase.setEnabledInspect(false);
-            } else {
-              toolBarDatabase.setEnabledInspect(true);
-            }
-            toolBarDatabase.updateDatatype();
-            pnlToolBar.add(toolBarDatabase, BorderLayout.CENTER);
-          } else if (((String) evt.getNewValue()).equalsIgnoreCase("Relation")) {
-            pnlToolBar.removeAll();
-            enableOptimizeButtons();
-            pnlToolBar.add(toolBarRelation, BorderLayout.CENTER);
-          } else if (((String) evt.getNewValue()).equalsIgnoreCase("Attribute")) {
-            pnlToolBar.removeAll();
-            toolBarAttribute.updateElements();
-            pnlToolBar.add(toolBarAttribute, BorderLayout.CENTER);
-          } else if (((String) evt.getNewValue()).equalsIgnoreCase("FD")) {
-            pnlToolBar.removeAll();
-            pnlToolBar.add(toolBarFd, BorderLayout.CENTER);
-          } else {
-            pnlToolBar.removeAll();
-            pnlToolBar.add(toolBar, BorderLayout.CENTER);
-          }
-        }
-        SwingUtilities.updateComponentTreeUI(pnlToolBar);
-
-      }
-    };
-
     undoMenuItem = new JMenuItem(locale.getString("GUI_Undo"), iconUndo);
     undoMenuItem.setEnabled(false);
     redoMenuItem = new JMenuItem(locale.getString("GUI_Redo"), iconRedo);
@@ -256,7 +221,7 @@ public class MainWindow implements constants, Observer {
 
     minimumSizeSplitPane = new Dimension(100, 50);
 
-    dbTreePanel.addPropertyChangeListener(changeListener);
+    dbTreePanel.addPropertyChangeListener(new ToolbarChangeListener());
     // relationView.addPropertyChangeListener(changeListener);
 
     JPanel pnlRight = new JPanel(new BorderLayout());
@@ -357,6 +322,8 @@ public class MainWindow implements constants, Observer {
 
     dbTreePanel.getTree().setSelectedItem(0);
   }
+
+
 
   private void updateZoomFactors(JGraphView view){
     toolBarAttribute.updateZoom(view);
@@ -751,6 +718,40 @@ public class MainWindow implements constants, Observer {
     }
     if(options.getShowTabWiki()) {
       tabbedPaneOutline.addTab(locale.getString("GUI_Wiki"), pnlWiki);
+    }
+  }
+
+  class ToolbarChangeListener implements PropertyChangeListener {
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+      if (evt.getPropertyName().equalsIgnoreCase("TreeClick")) {
+        if (((String) evt.getNewValue()).equalsIgnoreCase("Database")) {
+          pnlToolBar.removeAll();
+          if (CustomTree.getInstance().getDatabase().getDatabase().isEmpty()) {
+            toolBarDatabase.setEnabledInspect(false);
+          } else {
+            toolBarDatabase.setEnabledInspect(true);
+          }
+          toolBarDatabase.updateDatatype();
+          pnlToolBar.add(toolBarDatabase, BorderLayout.CENTER);
+        } else if (((String) evt.getNewValue()).equalsIgnoreCase("Relation")) {
+          pnlToolBar.removeAll();
+          enableOptimizeButtons();
+          pnlToolBar.add(toolBarRelation, BorderLayout.CENTER);
+        } else if (((String) evt.getNewValue()).equalsIgnoreCase("Attribute")) {
+          pnlToolBar.removeAll();
+          toolBarAttribute.updateElements();
+          pnlToolBar.add(toolBarAttribute, BorderLayout.CENTER);
+        } else if (((String) evt.getNewValue()).equalsIgnoreCase("FD")) {
+          pnlToolBar.removeAll();
+          pnlToolBar.add(toolBarFd, BorderLayout.CENTER);
+        } else {
+          pnlToolBar.removeAll();
+          pnlToolBar.add(toolBar, BorderLayout.CENTER);
+        }
+      }
+      SwingUtilities.updateComponentTreeUI(pnlToolBar);
+
     }
   }
 }
