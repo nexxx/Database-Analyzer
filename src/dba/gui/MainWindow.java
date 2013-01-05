@@ -105,7 +105,7 @@ public class MainWindow implements constants, Observer {
   private OutlinePanel pnlOutline;
   private JPanel pnlWiki;
   private JPanel pnlToolbox;
-  private JPanel pnlInspect;
+  private InspectPanel pnlInspect;
   private JPanel pnlTheming;
 
 
@@ -302,7 +302,7 @@ public class MainWindow implements constants, Observer {
 
     tabbedPaneOutline = new JTabbedPane();
 
-    pnlInspect = new JPanel();
+    pnlInspect = new InspectPanel();
     pnlOutline = new OutlinePanel(relationView.getGraphComponent());
     pnlTheming = new JPanel();
     pnlToolbox = new JPanel();
@@ -713,6 +713,8 @@ public class MainWindow implements constants, Observer {
 
     relationView.display(database);
     relationDetailsView.display(database);
+
+    pnlInspect.updateScrollpane();
   }
 
   @Override
