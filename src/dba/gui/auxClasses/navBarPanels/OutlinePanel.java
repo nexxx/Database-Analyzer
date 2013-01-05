@@ -1,7 +1,7 @@
 package dba.gui.auxClasses.navBarPanels;
 
 import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.swing.mxGraphOutline;
+import dba.gui.auxClasses.jGraph.XGraphOutline;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,12 +11,12 @@ import java.awt.*;
  * @author theuers
  */
 public class OutlinePanel extends JPanel {
-  private mxGraphOutline outline;
+  private XGraphOutline outline;
 
   public OutlinePanel(mxGraphComponent content) {
     super();
     this.setLayout(new BorderLayout());
-    outline = new mxGraphOutline(content);
+    outline = new XGraphOutline(content);
     outline.setDrawLabels(true);
     outline.setTripleBuffered(false);
     this.add(outline);

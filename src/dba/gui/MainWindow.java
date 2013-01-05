@@ -672,6 +672,7 @@ public class MainWindow implements constants, Observer {
     relationView.display(database);
     relationDetailsView.display(database);
 
+    if(pnlInspect != null)
     pnlInspect.updateScrollpane();
   }
 
