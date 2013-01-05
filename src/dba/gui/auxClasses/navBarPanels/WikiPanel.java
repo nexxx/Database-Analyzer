@@ -26,43 +26,21 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Panel which contains the inspect sumary.
+ * Panel which contains the wiki page.
  * For use in Navigation Tabbedpane
  *
  * @author Andreas Freitag
  */
-public class InspectPanel extends JPanel {
-  private JTextArea resultField;
+public class WikiPanel extends JPanel {
   private JScrollPane scrollpane;
 
 
-  public InspectPanel() {
+  public WikiPanel() {
     super();
     this.setLayout(new BorderLayout());
 
-    resultField = new JTextArea(getInspectText());
-    resultField.setEditable(false);
 
-    scrollpane = new JScrollPane(resultField);
+    scrollpane = new JScrollPane();
     this.add(scrollpane);
-  }
-
-  /**
-   * Set update the Text inside the inspect panel
-   */
-  public void updateScrollpane(){
-    resultField.setText(getInspectText());
-    System.out.println("Update Inspect Panel");
-  }
-
-  private String getInspectText(){
-    Database database = CustomTree.getInstance().getDatabase();
-    String result = "";
-    for (RelationSchema relation : database.getDatabase()) {
-      RelationInspectorGui inspector = new RelationInspectorGui();
-      result = result + relation.getName() + ":\n";
-      result = result + inspector.inspectRelation(relation) + "\n";
-    }
-    return result;
   }
 }

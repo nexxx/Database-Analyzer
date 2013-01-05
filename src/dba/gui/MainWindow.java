@@ -21,9 +21,7 @@ package dba.gui;
 import dba.gui.auxClasses.*;
 import dba.gui.auxClasses.feedback.FeedbackbarPanel;
 import dba.gui.auxClasses.jGraph.JGraphView;
-import dba.gui.auxClasses.navBarPanels.DatabaseTreePanel;
-import dba.gui.auxClasses.navBarPanels.InspectPanel;
-import dba.gui.auxClasses.navBarPanels.OutlinePanel;
+import dba.gui.auxClasses.navBarPanels.*;
 import dba.gui.auxClasses.toolBars.*;
 import dba.gui.metaInfoFrame.CustomerInfosFrame;
 import dba.init.Initialize;
@@ -106,10 +104,10 @@ public class MainWindow implements constants, Observer {
   private JCheckBoxMenuItem themeMenuItem;
   private Options options;
   private OutlinePanel pnlOutline;
-  private JPanel pnlWiki;
-  private JPanel pnlToolbox;
+  private WikiPanel pnlWiki;
+  private ToolboxPanel pnlToolbox;
   private InspectPanel pnlInspect;
-  private JPanel pnlTheming;
+  private ThemingPanel pnlTheming;
 
 
   /**
@@ -307,9 +305,9 @@ public class MainWindow implements constants, Observer {
 
     pnlInspect = new InspectPanel();
     pnlOutline = new OutlinePanel(relationView.getGraphComponent());
-    pnlTheming = new JPanel();
-    pnlToolbox = new JPanel();
-    pnlWiki = new JPanel();
+    pnlTheming = new ThemingPanel();
+    pnlToolbox = new ToolboxPanel();
+    pnlWiki = new WikiPanel();
 
     updateNavTabs();
 
