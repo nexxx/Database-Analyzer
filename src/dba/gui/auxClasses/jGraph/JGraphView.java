@@ -27,6 +27,7 @@ import com.mxgraph.view.mxGraph;
 import com.mxgraph.view.mxStylesheet;
 import dba.gui.CustomTree;
 import dba.options.Options;
+import dba.utils.Localization;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -39,6 +40,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.Observer;
 
@@ -52,11 +54,13 @@ public abstract class JGraphView extends JPanel {
   protected boolean zoomEnabled;
   protected mxGraphComponent graphComponent;
   protected mxCell selectedCell;
+  protected Localization locale;
 
   protected JGraphView() {
     super();
     observers = new ArrayList<>();
     graph = new mxGraph();
+    locale = Localization.getInstance();
     zoomEnabled=true;
   }
 
@@ -136,15 +140,11 @@ public abstract class JGraphView extends JPanel {
    */
   public String[] getZoomFactors() {
     ArrayList<String> factors = new ArrayList<>();
-    String[] fixedFactors = new String[]{"25%", "50%", "75%", "100%", "125%", "150%"};
+    String[] fixedFactors = new String[]{"25%", "50%", "75%", "100%", "125%", "150%", locale.getString("Width"),
+      locale.getString("Page")};
 
     factors.add((int) (graph.getView().getScale() * 100) + "%");
-
-    for (String factor : fixedFactors) {
-      if (!factors.contains(factor)) {
-        factors.add(factor);
-      }
-    }
+    factors.addAll(Arrays.asList(fixedFactors));
 
     return factors.toArray(new String[factors.size()]);
   }
@@ -161,17 +161,47 @@ public abstract class JGraphView extends JPanel {
    */
   public void zoom(String factor) {
     if(zoomEnabled){
-    factor = factor.replace("%", "");
+      if(factor.equals(locale.getString("Width"))){
+        fitWidth();
+      } else if(factor.equals(locale.getString("Page"))){
+        fitPage();
+      } else {
+        setZoomFactor(Double.parseDouble(factor.replace("%", "")));
+      }
+    }
+  }
 
-    Double newScale = Double.parseDouble(factor);
-    if (newScale != null) {
-      newScale /= 100;
-      if (newScale != graph.getView().getScale()) {
-        graphComponent.zoomTo(newScale, false);
+  /**
+   * Changes the ZoomFactor in order to display all horizontal content
+   */
+  private void fitWidth(){
+    double difference = (graphComponent.getWidth() - 25) / graph.getGraphBounds().getWidth();
+    setZoomFactor((graph.getView().getScale() * 100) * difference);
+  }
+
+  /**
+   * Changes the ZoomFactor in order to display all horizonal and vertical content
+   */
+  private void fitPage(){
+    double horizontalDelta = (graphComponent.getWidth() - 25) / graph.getGraphBounds().getWidth();
+    double verticalDelta = (graphComponent.getHeight() - 25) / graph.getGraphBounds().getHeight();
+
+    double delta = horizontalDelta < verticalDelta ? horizontalDelta : verticalDelta;
+
+    setZoomFactor((graph.getView().getScale() * 100) * delta);
+  }
+
+  /**
+   * Changes the zoomFactor of the GraphComponent
+   * @param factor the zoomFactor
+   */
+  private void setZoomFactor(Double factor){
+    if (factor != null) {
+      factor /= 100;
+      if (factor != graph.getView().getScale()) {
+        graphComponent.zoomTo(factor, false);
         notifyObservers();
       }
-
-    }
     }
   }
 
