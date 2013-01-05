@@ -159,17 +159,7 @@ public class MainWindow implements constants, Observer {
     relationView = new RelationView(guiLogic);
     relationDetailsView = new RelationDetailsView(guiLogic);
 
-    //guiLogic.showDbQuestion();
-    WelcomeScreen wcs = new WelcomeScreen(guiLogic, database);
-    FeedbackEnum retVal;
-    do {
-      wcs.showScreen();
-      retVal = wcs.getRetVal();
-    } while (retVal != FeedbackEnum.SUCCESSFUL);
-
-    if (wcs.openClicked()) {
-      updateDBAfterChange();
-    }
+    showWelcomeScreen();
 
     JTabbedPane displayTab = new JTabbedPane(SwingConstants.TOP);
 
@@ -718,6 +708,19 @@ public class MainWindow implements constants, Observer {
     }
     if(options.getShowTabWiki()) {
       tabbedPaneOutline.addTab(locale.getString("GUI_Wiki"), pnlWiki);
+    }
+  }
+
+  private void showWelcomeScreen(){
+    WelcomeScreen wcs = new WelcomeScreen(guiLogic, database);
+    FeedbackEnum retVal;
+    do {
+      wcs.showScreen();
+      retVal = wcs.getRetVal();
+    } while (retVal != FeedbackEnum.SUCCESSFUL);
+
+    if (wcs.openClicked()) {
+      updateDBAfterChange();
     }
   }
 
