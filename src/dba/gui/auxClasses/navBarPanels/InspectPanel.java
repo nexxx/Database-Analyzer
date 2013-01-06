@@ -50,12 +50,11 @@ public class InspectPanel extends JPanel {
   /**
    * Set update the Text inside the inspect panel
    */
-  public void updateScrollpane(){
+  public void updateScrollpane() {
     resultField.setText(getInspectText());
-    System.out.println("Update Inspect Panel");
   }
 
-  private String getInspectText(){
+  private String getInspectText() {
     Database database = CustomTree.getInstance().getDatabase();
     String result = "";
     for (RelationSchema relation : database.getDatabase()) {

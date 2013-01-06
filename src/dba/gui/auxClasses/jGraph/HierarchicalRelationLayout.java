@@ -31,42 +31,39 @@ import java.util.Set;
  * User: theuers
  * Date: 12/11/12
  * Time: 3:06 PM
- *
  */
 public class HierarchicalRelationLayout extends mxHierarchicalLayout {
   /**
    * Constructs a hierarchical layout that ignores every Cell inside Relation-Cells
-   * @param graph the graph to lay out
-   * @param orientation <code>SwingConstants.NORTH, SwingConstants.EAST, SwingConstants.SOUTH</code> or <code> SwingConstants.WEST</code>
    *
+   * @param graph       the graph to lay out
+   * @param orientation <code>SwingConstants.NORTH, SwingConstants.EAST, SwingConstants.SOUTH</code> or <code>
+   *                    SwingConstants.WEST
+  </code>
    */
-  public HierarchicalRelationLayout(mxGraph graph, int orientation)
-  {
-    super(graph,orientation);
+  public HierarchicalRelationLayout(mxGraph graph, int orientation) {
+    super(graph, orientation);
   }
 
   /**
    * Creates a set of descendant cells, Attribute-Cells get ignored
+   *
    * @param cell The cell whose descendants are to be calculated
    * @return the descendants of the cell (not the cell)
    */
-  public Set<Object> filterDescendants(Object cell)
-  {
+  public Set<Object> filterDescendants(Object cell) {
     mxIGraphModel model = graph.getModel();
     Set<Object> result = new LinkedHashSet<>();
 
-    if (model.isVertex(cell) && cell != this.parent && model.isVisible(cell))
-    {
+    if (model.isVertex(cell) && cell != this.parent && model.isVisible(cell)) {
       result.add(cell);
     }
 
-    if (((mxCell)cell).getStyle()!="RELATION" && (this.traverseAncestors || cell == this.parent
-      && model.isVisible(cell)))
-    {
+    if (((mxCell) cell).getStyle() != "RELATION" && (this.traverseAncestors || cell == this.parent && model.isVisible
+      (cell))) {
       int childCount = model.getChildCount(cell);
 
-      for (int i = 0; i < childCount; i++)
-      {
+      for (int i = 0; i < childCount; i++) {
         Object child = model.getChildAt(cell, i);
         result.addAll(filterDescendants(child));
       }

@@ -19,7 +19,10 @@ package dba.gui.auxClasses.toolBars;
 
 import dba.gui.CustomTree;
 import dba.gui.DatatypeMappingFrame.DatatypeMappingFrame;
-import dba.gui.auxClasses.*;
+import dba.gui.auxClasses.DatabaseLogic;
+import dba.gui.auxClasses.GuiLogic;
+import dba.gui.auxClasses.RelationDetailsView;
+import dba.gui.auxClasses.RelationView;
 import dba.gui.auxClasses.navBarPanels.DatabaseTreePanel;
 import dba.options.FeedbackEnum;
 import dba.utils.TreeEnum;
@@ -52,7 +55,7 @@ public class ToolBarDatabase extends ToolBar {
 
   public ToolBarDatabase(DatabaseTreePanel dbTreePanel, RelationView relationView,
                          RelationDetailsView relationDetailsView, GuiLogic gL) {
-    super(relationView, relationDetailsView,gL);
+    super(relationView, relationDetailsView, gL);
 
     tree = dbTreePanel.getTree();
     guiLogic = gL;

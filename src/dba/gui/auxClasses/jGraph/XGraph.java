@@ -39,14 +39,13 @@ public class XGraph extends mxGraph {
         return ((RelationSchema) value).getName();
       } else if (value instanceof Attribute) {
 
-        if(xCell.isVertex()){
+        if (xCell.isVertex()) {
           return ((Attribute) value).getName();
-        }
-        else{
+        } else {
           return "";
         }
 
-      } else if(value instanceof FunctionalDependency){
+      } else if (value instanceof FunctionalDependency) {
         return "";
       }
     }
@@ -61,7 +60,7 @@ public class XGraph extends mxGraph {
   public boolean isCellSelectable(Object cell) {
     if (cell != null) {
       if (cell instanceof mxCell) {
-        if(((mxCell)cell).getStyle().contains("INVISIBLE")){
+        if (((mxCell) cell).getStyle().contains("INVISIBLE")) {
           return false;
         }
       }
@@ -70,12 +69,12 @@ public class XGraph extends mxGraph {
   }
 
   @Override
-  public boolean  isValidSource(Object cell){
+  public boolean isValidSource(Object cell) {
     return false;
   }
 
   @Override
-  public boolean  isValidTarget(Object cell){
+  public boolean isValidTarget(Object cell) {
     return false;
   }
 

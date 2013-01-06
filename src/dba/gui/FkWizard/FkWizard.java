@@ -150,7 +150,9 @@ public class FkWizard extends JDialog implements constants {
     for (String relationName : db.getAllRelationNames()) {
       listMRelation.addElement(relationName);
     }
-    if(!listMRelation.contains(sourceRelation.getName()))listMRelation.addElement(sourceRelation.getName());
+    if (!listMRelation.contains(sourceRelation.getName())) {
+      listMRelation.addElement(sourceRelation.getName());
+    }
 
     // Pre-Select first relation if existing
     if (!listMRelation.isEmpty()) {
@@ -200,13 +202,15 @@ public class FkWizard extends JDialog implements constants {
   private void updateAttributeList(String relationName) {
     listMAttribute.clear();
     RelationSchema relation = db.getRelationSchemaByName(relationName);
-    if(relation == null) relation = sourceRelation;
+    if (relation == null) {
+      relation = sourceRelation;
+    }
 
-      for (Attribute attribute : relation.getAttributes()) {
-        if (attribute.getIsPrimaryKey()) {
-          listMAttribute.addElement(attribute.getName());
-        }
+    for (Attribute attribute : relation.getAttributes()) {
+      if (attribute.getIsPrimaryKey()) {
+        listMAttribute.addElement(attribute.getName());
       }
+    }
   }
 
   /**

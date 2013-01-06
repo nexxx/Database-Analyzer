@@ -17,6 +17,7 @@
 
 package dba.gui.metaInfoFrame;
 
+import dba.gui.auxClasses.ExtensionFilter;
 import dba.options.Feedback;
 import dba.options.FeedbackEnum;
 import dba.options.Options;
@@ -295,7 +296,7 @@ public class CustomerInfosFrame extends JDialog implements Observable {
 
   private void exportToCSV() {
     JFileChooser fc = new JFileChooser(Options.getInstance().getExportFolder());
-    FileFilter type = new ExtensionFilter();
+    FileFilter type = new ExtensionFilter(".csv", ".csv");
     fc.addChoosableFileFilter(type);
     fc.setFileFilter(type);
     fc.setAcceptAllFileFilterUsed(false);
@@ -382,44 +383,6 @@ public class CustomerInfosFrame extends JDialog implements Observable {
   private void notify(Object arg) {
     for (Observer observer : observers) {
       observer.update(null, arg);
-    }
-  }
-
-  /**
-   * Class to provide a extension filter for Filechooser
-   */
-  public class ExtensionFilter extends FileFilter {
-    private String extensions[];
-
-    private String description;
-
-    public ExtensionFilter() {
-      this(new String[]{".csv"});
-    }
-
-    public ExtensionFilter(String extensions[]) {
-      super();
-      this.description = ".csv";
-      this.extensions = extensions.clone();
-    }
-
-    @Override
-    public boolean accept(File file) {
-      if (file.isDirectory()) {
-        return true;
-      }
-      String path = file.getAbsolutePath();
-      for (String ext : extensions) {
-        if (path.endsWith(ext) && path.charAt(path.length() - ext.length()) == '.') {
-          return true;
-        }
-      }
-      return false;
-    }
-
-    @Override
-    public String getDescription() {
-      return description == null ? extensions[0] : description;
     }
   }
 }

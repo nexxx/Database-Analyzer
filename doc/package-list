@@ -1,11 +1,15 @@
+
 dba
 dba.fileIO
 dba.gui
+dba.gui.DatatypeMappingFrame
 dba.gui.FDWizard
 dba.gui.FkWizard
 dba.gui.auxClasses
+dba.gui.auxClasses.events
 dba.gui.auxClasses.feedback
 dba.gui.auxClasses.jGraph
+dba.gui.auxClasses.navBarPanels
 dba.gui.auxClasses.nodes
 dba.gui.auxClasses.toolBars
 dba.gui.inspectFrame

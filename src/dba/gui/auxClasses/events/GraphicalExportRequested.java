@@ -21,15 +21,15 @@ import java.util.EventObject;
 
 /**
  * Event that symbolizes a request for a graphical export
+ *
  * @author Sebastian Theuermann
  */
-public class GraphicalExportRequested extends EventObject
-{
+public class GraphicalExportRequested extends EventObject {
   String path;
 
-  public GraphicalExportRequested(Object source,String path) {
+  public GraphicalExportRequested(Object source, String path) {
     super(source);
-    this.path=path;
+    this.path = path;
   }
 
   public String getPath() {

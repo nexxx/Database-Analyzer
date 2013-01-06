@@ -20,6 +20,7 @@ package dba.gui.auxClasses.events;
 
 /**
  * Listener for the GraphicalExportRequested - Event
+ *
  * @author Sebastian Theuermann
  */
 public interface GraphicalExportRequestedListener {

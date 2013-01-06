@@ -139,7 +139,7 @@ public class RelationGraphUpdater extends RelationUpdater {
 
     // add the rest of the relations which don't occur in a foreignKey
     // constraint
-    int lowestPoint= getLowestCellPoint();
+    int lowestPoint = getLowestCellPoint();
     offset = lowestPoint != 0 ? lowestPoint + 25 : 0;
     for (RelationSchema relation : dbRelations) {
       if (!fkRelations.contains(relation.getName())) {
@@ -162,7 +162,7 @@ public class RelationGraphUpdater extends RelationUpdater {
     // Compensate big header
     int attributeOffset = 40;
     int width = relation.getName().length() * 15;
-    ImageSize optimalImageSize =getImageSize(relation);
+    ImageSize optimalImageSize = getImageSize(relation);
 
     mxCell relationVertex = (mxCell) graph.insertVertex(parentPane, relation.getName(), relation, 0, offset, width,
       40 + 1 + relation.getAttributes().size() * 25, "RELATION");
@@ -172,27 +172,27 @@ public class RelationGraphUpdater extends RelationUpdater {
     // Add attributes
     mxGeometry geo;
     for (Attribute attr : relation.getAttributes()) {
-      mxCell attributeCell = (mxCell)graph.insertVertex(relationVertex, attr.getName(), attr, 1, attributeOffset, width - 2, 25,
-        getAttributeStyle(attr,optimalImageSize));
+      mxCell attributeCell = (mxCell) graph.insertVertex(relationVertex, attr.getName(), attr, 1, attributeOffset,
+        width - 2, 25, getAttributeStyle(attr, optimalImageSize));
 
       graph.updateCellSize(attributeCell);
-      geo=attributeCell.getGeometry();
+      geo = attributeCell.getGeometry();
 
-      if(geo.getWidth()>maxWidth){
-        maxWidth=geo.getWidth();
+      if (geo.getWidth() > maxWidth) {
+        maxWidth = geo.getWidth();
       }
       attributeOffset += 25;
     }
 
     maxWidth += 5;
-    geo=relationVertex.getGeometry();
+    geo = relationVertex.getGeometry();
     geo.setWidth(maxWidth);
 
-    for(Object child : graph.getChildVertices(relationVertex)){
-      if(child instanceof mxCell){
-        mxCell cell = (mxCell)child;
+    for (Object child : graph.getChildVertices(relationVertex)) {
+      if (child instanceof mxCell) {
+        mxCell cell = (mxCell) child;
         geo = cell.getGeometry();
-        geo.setWidth(maxWidth-2);
+        geo.setWidth(maxWidth - 2);
         geo.setHeight(25);
       }
     }
@@ -200,20 +200,26 @@ public class RelationGraphUpdater extends RelationUpdater {
     return relationVertex;
   }
 
-  protected ImageSize getImageSize(RelationSchema relation){
-    int pkANDfk=0;
-    int pkORfk=0;
+  protected ImageSize getImageSize(RelationSchema relation) {
+    int pkANDfk = 0;
+    int pkORfk = 0;
 
-    for(Attribute attribute : relation.getAttributes()){
-      if(attribute.getIsPrimaryKey() && attribute.getIsForeignKey()) pkANDfk++;
-      else if(attribute.getIsPrimaryKey() || attribute.getIsForeignKey()) pkORfk++;
+    for (Attribute attribute : relation.getAttributes()) {
+      if (attribute.getIsPrimaryKey() && attribute.getIsForeignKey()) {
+        pkANDfk++;
+      } else if (attribute.getIsPrimaryKey() || attribute.getIsForeignKey()) {
+        pkORfk++;
+      }
     }
 
-    if(pkANDfk>0)return ImageSize.BIG;
-    else if(pkORfk>0)return ImageSize.SMALL;
-    else return ImageSize.NO;
+    if (pkANDfk > 0) {
+      return ImageSize.BIG;
+    } else if (pkORfk > 0) {
+      return ImageSize.SMALL;
+    } else {
+      return ImageSize.NO;
+    }
   }
-
 
 
   /**
@@ -261,8 +267,9 @@ public class RelationGraphUpdater extends RelationUpdater {
 
     if (fkCells.size() == 2) {
       if (visible) {
-        mxCell cell = (mxCell)graph.insertEdge(parentPane, null, fkCells.get(0).getValue(), fkCells.get(0), fkCells.get(1), "FK_ARROW");
-        handleSelfReference(cell,fkCells.get(0),fkCells.get(1));
+        mxCell cell = (mxCell) graph.insertEdge(parentPane, null, fkCells.get(0).getValue(), fkCells.get(0),
+          fkCells.get(1), "FK_ARROW");
+        handleSelfReference(cell, fkCells.get(0), fkCells.get(1));
       } else {
         graph.insertEdge(parentPane, null, "", fkCells.get(0), fkCells.get(1), "INVISIBLE_EDGE");
       }
@@ -271,24 +278,27 @@ public class RelationGraphUpdater extends RelationUpdater {
 
   /**
    * Moves a Edge that references the same Relation outside of the Relation-Area
-   * @param edge the ForeignKey-mxCell to work with
+   *
+   * @param edge       the ForeignKey-mxCell to work with
    * @param firstCell  the first cell to work with
    * @param secondCell the second cell to work with
    */
-  private void handleSelfReference(mxCell edge,mxCell firstCell,mxCell secondCell){
-    if(firstCell.getParent() == secondCell.getParent()){
+  private void handleSelfReference(mxCell edge, mxCell firstCell, mxCell secondCell) {
+    if (firstCell.getParent() == secondCell.getParent()) {
       mxGeometry edgeGeo = graph.getModel().getGeometry(edge);
       List<mxPoint> points = edgeGeo.getPoints();
-      if(points==null) points=new ArrayList<>();
+      if (points == null) {
+        points = new ArrayList<>();
+      }
 
-      points.add(new mxPoint(edgeGeo.getX()+graph.getModel().getGeometry(firstCell).getWidth()+20,
+      points.add(new mxPoint(edgeGeo.getX() + graph.getModel().getGeometry(firstCell).getWidth() + 20,
         graph.getModel().getGeometry(firstCell).getCenterY()));
 
-      points.add(new mxPoint(edgeGeo.getX()+graph.getModel().getGeometry(firstCell).getWidth()+20,
+      points.add(new mxPoint(edgeGeo.getX() + graph.getModel().getGeometry(firstCell).getWidth() + 20,
         graph.getModel().getGeometry(secondCell).getCenterY()));
 
       edgeGeo.setPoints(points);
-      graph.getModel().setGeometry(edge,edgeGeo);
+      graph.getModel().setGeometry(edge, edgeGeo);
     }
   }
 
@@ -367,7 +377,7 @@ public class RelationGraphUpdater extends RelationUpdater {
           sourceCell = cell;
         }
         if (relationName.equals(fk.getTargetRelationName())) {
-            targetCell = cell;
+          targetCell = cell;
         }
       }
     }

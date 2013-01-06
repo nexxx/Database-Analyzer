@@ -36,7 +36,7 @@ import java.util.Hashtable;
 /**
  * Displays the relations and their functional dependencies
  */
-public class RelationDetailsView extends JGraphView{
+public class RelationDetailsView extends JGraphView {
   /**
    *
    */

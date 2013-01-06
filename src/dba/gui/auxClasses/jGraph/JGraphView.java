@@ -61,7 +61,7 @@ public abstract class JGraphView extends JPanel {
     observers = new ArrayList<>();
     graph = new mxGraph();
     locale = Localization.getInstance();
-    zoomEnabled=true;
+    zoomEnabled = true;
   }
 
   /**
@@ -91,7 +91,7 @@ public abstract class JGraphView extends JPanel {
     });
 
     //Notice when user zooms via the outline-tab
-    graph.getView().addListener("scale",new mxEventSource.mxIEventListener() {
+    graph.getView().addListener("scale", new mxEventSource.mxIEventListener() {
       @Override
       public void invoke(Object sender, mxEventObject evt) {
         notifyObservers();
@@ -127,9 +127,10 @@ public abstract class JGraphView extends JPanel {
 
   /**
    * Returns the mxGraphComponent used in this View
+   *
    * @return the currently used mxGraphComponent
    */
-  public mxGraphComponent getGraphComponent(){
+  public mxGraphComponent getGraphComponent() {
     return graphComponent;
   }
 
@@ -160,10 +161,10 @@ public abstract class JGraphView extends JPanel {
    * @param factor the zoomFactor e.g. 100, 50%
    */
   public void zoom(String factor) {
-    if(zoomEnabled){
-      if(factor.equals(locale.getString("Width"))){
+    if (zoomEnabled) {
+      if (factor.equals(locale.getString("Width"))) {
         fitWidth();
-      } else if(factor.equals(locale.getString("Page"))){
+      } else if (factor.equals(locale.getString("Page"))) {
         fitPage();
       } else {
         setZoomFactor(Double.parseDouble(factor.replace("%", "")));
@@ -174,7 +175,7 @@ public abstract class JGraphView extends JPanel {
   /**
    * Changes the ZoomFactor in order to display all horizontal content
    */
-  private void fitWidth(){
+  private void fitWidth() {
     double difference = (graphComponent.getWidth() - 25) / graph.getGraphBounds().getWidth();
     setZoomFactor((graph.getView().getScale() * 100) * difference);
   }
@@ -182,7 +183,7 @@ public abstract class JGraphView extends JPanel {
   /**
    * Changes the ZoomFactor in order to display all horizonal and vertical content
    */
-  private void fitPage(){
+  private void fitPage() {
     double horizontalDelta = (graphComponent.getWidth() - 25) / graph.getGraphBounds().getWidth();
     double verticalDelta = (graphComponent.getHeight() - 25) / graph.getGraphBounds().getHeight();
 
@@ -193,9 +194,10 @@ public abstract class JGraphView extends JPanel {
 
   /**
    * Changes the zoomFactor of the GraphComponent
+   *
    * @param factor the zoomFactor
    */
-  private void setZoomFactor(Double factor){
+  private void setZoomFactor(Double factor) {
     if (factor != null) {
       factor /= 100;
       if (factor != graph.getView().getScale()) {
@@ -208,7 +210,7 @@ public abstract class JGraphView extends JPanel {
   /**
    * Updates the selected Item of the Tree when the user click on a Cell
    */
-  private void updateSelectedCell(){
+  private void updateSelectedCell() {
     selectedCell = (mxCell) graph.getSelectionCell();
 
     if (selectedCell != null) {
@@ -220,15 +222,16 @@ public abstract class JGraphView extends JPanel {
 
   /**
    * Exports the graph to a .png-file
+   *
    * @param path the target-location for the .png-file
    * @param name the name of the .png-file
    */
-  public void exportToPng(String path,String name) {
+  public void exportToPng(String path, String name) {
     Dimension d = graphComponent.getGraphControl().getSize();
     BufferedImage image = new BufferedImage(d.width, d.height, BufferedImage.TYPE_INT_ARGB);
     Graphics2D g = image.createGraphics();
     graphComponent.getGraphControl().paint(g);
-    final File outputfile = new File(path.replace(".png", name+".png"));
+    final File outputfile = new File(path.replace(".png", name + ".png"));
     try {
       ImageIO.write(image, "png", outputfile);
     } catch (IOException e) {
@@ -260,14 +263,14 @@ public abstract class JGraphView extends JPanel {
     stylesheet.putCellStyle("ATTRIBUTE_NOIMAGE", style);
 
     // Define Style for Primary-Key Attribute represented by a small "space"-image
-    style=(Hashtable<String,Object>)style.clone();
-    style.put(mxConstants.STYLE_SPACING_LEFT,21); //16 + 5 Pixel space
-    stylesheet.putCellStyle("ATTRIBUTE_SPACE_SMALL",style);
+    style = (Hashtable<String, Object>) style.clone();
+    style.put(mxConstants.STYLE_SPACING_LEFT, 21); //16 + 5 Pixel space
+    stylesheet.putCellStyle("ATTRIBUTE_SPACE_SMALL", style);
 
     // Define Style for Primary-Key Attribute represented by a big "space"-image
-    style=(Hashtable<String,Object>)style.clone();
-    style.put(mxConstants.STYLE_SPACING_LEFT,38);    //33 + 5 Pixel space
-    stylesheet.putCellStyle("ATTRIBUTE_SPACE_BIG",style);
+    style = (Hashtable<String, Object>) style.clone();
+    style.put(mxConstants.STYLE_SPACING_LEFT, 38);    //33 + 5 Pixel space
+    stylesheet.putCellStyle("ATTRIBUTE_SPACE_BIG", style);
 
     // Define Style for Primary-Key/Foreign-Key Attribute
     style = (Hashtable<String, Object>) style.clone();
@@ -287,15 +290,15 @@ public abstract class JGraphView extends JPanel {
     stylesheet.putCellStyle("ATTRIBUTE_FK_BIG", style);
 
     // Define Style for Primary-Key Attribute represented by a small image
-    style = (Hashtable<String,Object>)style.clone();
-    style.put(mxConstants.STYLE_SPACING_LEFT,21); //16 + 5 Pixel space
-    style.put(mxConstants.STYLE_IMAGE,"/res/icons/graph_pk.png");
-    stylesheet.putCellStyle("ATTRIBUTE_PK_SMALL",style);
+    style = (Hashtable<String, Object>) style.clone();
+    style.put(mxConstants.STYLE_SPACING_LEFT, 21); //16 + 5 Pixel space
+    style.put(mxConstants.STYLE_IMAGE, "/res/icons/graph_pk.png");
+    stylesheet.putCellStyle("ATTRIBUTE_PK_SMALL", style);
 
     // Define Style for Foreign-KEy Attribute represented by a small image
-    style=(Hashtable<String,Object>)style.clone();
-    style.put(mxConstants.STYLE_IMAGE,"/res/icons/graph_fk.png");
-    stylesheet.putCellStyle("ATTRIBUTE_FK_SMALL",style);
+    style = (Hashtable<String, Object>) style.clone();
+    style.put(mxConstants.STYLE_IMAGE, "/res/icons/graph_fk.png");
+    stylesheet.putCellStyle("ATTRIBUTE_FK_SMALL", style);
 
   }
 

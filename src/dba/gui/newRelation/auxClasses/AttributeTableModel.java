@@ -110,7 +110,7 @@ public class AttributeTableModel extends AbstractTableModel {
 
   @Override
   public boolean isCellEditable(int row, int col) {
-      return true;
+    return true;
   }
 
   @Override
@@ -142,8 +142,8 @@ public class AttributeTableModel extends AbstractTableModel {
           if ((Boolean) value) {
             FkWizard wizard = new FkWizard(database, relation, attr);
             wizard.setVisible(true);
-          } else{
-            database.removeForeignKey(relation.getName(),attr.getName());
+          } else {
+            database.removeForeignKey(relation.getName(), attr.getName());
           }
           attr.setIsForeignKey((Boolean) value);
           return;

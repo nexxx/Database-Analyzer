@@ -17,9 +17,6 @@
 
 package dbaCore.dbConnection;
 
-import java.sql.DriverManager;
-import java.sql.SQLException;
-
 /**
  * Create a connection to a Database and import Relations, Attributes and Keys
  *

@@ -18,7 +18,6 @@
 package dba.gui.auxClasses;
 
 import dba.gui.CustomTree;
-import dba.gui.metaInfoFrame.CustomTable;
 import dbaCore.data.Attribute;
 import dbaCore.data.ForeignKeyConstraint;
 import dbaCore.data.RelationSchema;
@@ -32,44 +31,46 @@ import java.util.ArrayList;
  */
 public class CreateSqlDump {
 
-  public String getDump(){
+  public String getDump() {
     ArrayList<RelationSchema> relations = CustomTree.getInstance().getDatabase().getDatabase();
     String sqlDump = "";
 
-    sqlDump = sqlDump  + "set foreign_key_checks=0;\n";
-    for(RelationSchema rel : relations) {
-      sqlDump = sqlDump  + "drop table if exists " + rel.getName() + ";\n";
+    sqlDump = sqlDump + "set foreign_key_checks=0;\n";
+    for (RelationSchema rel : relations) {
+      sqlDump = sqlDump + "drop table if exists " + rel.getName() + ";\n";
     }
-    sqlDump = sqlDump  + "set foreign_key_checks=1;\n\n";
-    for(RelationSchema rel : relations) {
-      sqlDump = sqlDump  + "create table " + rel.getName() + "\n(\n";
+    sqlDump = sqlDump + "set foreign_key_checks=1;\n\n";
+    for (RelationSchema rel : relations) {
+      sqlDump = sqlDump + "create table " + rel.getName() + "\n(\n";
       String pks = "";
       String tmpString = "";
-      for(Attribute attr : rel.getAttributes()) {
+      for (Attribute attr : rel.getAttributes()) {
         tmpString = tmpString + "\n  " + attr.getName() + " " + attr.getConstraints() + ",";
-        if (attr.getIsPrimaryKey()){
+        if (attr.getIsPrimaryKey()) {
           pks = pks + attr.getName() + ", ";
         }
       }
-      sqlDump = sqlDump  + tmpString + "\n";
+      sqlDump = sqlDump + tmpString + "\n";
       pks = pks.substring(0, pks.length() - 2);
-      sqlDump = sqlDump  + "  primary key(" + pks + ")\n";
-      sqlDump = sqlDump  + ");\n\n";
+      sqlDump = sqlDump + "  primary key(" + pks + ")\n";
+      sqlDump = sqlDump + ");\n\n";
 
     }
 
     ArrayList<ForeignKeyConstraint> fks = CustomTree.getInstance().getDatabase().getForeignKeys();
     int i = 0;
-    for(RelationSchema rel : relations){
-      for(Attribute attr : rel.getAttributes()){
-        String fkTarget= "";
-        if(attr.getIsForeignKey()){
-          for(ForeignKeyConstraint fk : fks){
-            if(fk.getSourceRelationName().equalsIgnoreCase(rel.getName()) && fk.getSourceAttributeName().equalsIgnoreCase(attr.getName())){
+    for (RelationSchema rel : relations) {
+      for (Attribute attr : rel.getAttributes()) {
+        String fkTarget = "";
+        if (attr.getIsForeignKey()) {
+          for (ForeignKeyConstraint fk : fks) {
+            if (fk.getSourceRelationName().equalsIgnoreCase(rel.getName()) && fk.getSourceAttributeName()
+              .equalsIgnoreCase(attr.getName())) {
               fkTarget = fk.getTargetRelationName() + "(" + fk.getTargetAttributeName() + ")";
             }
           }
-          sqlDump = sqlDump  + "alter table " + rel.getName() + " add constraint fk_" + attr.getName() + i++ + " foreign key (" + attr.getName() + ")" + " references " + fkTarget + ";\n";
+          sqlDump = sqlDump + "alter table " + rel.getName() + " add constraint fk_" + attr.getName() + i++ + " " +
+            "foreign key (" + attr.getName() + ")" + " references " + fkTarget + ";\n";
         }
       }
     }

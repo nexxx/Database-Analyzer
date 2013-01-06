@@ -102,221 +102,222 @@
     <h2 title="Class AttributeTableModelEdit" class="title">Class AttributeTableModelEdit</h2>
 </div>
 <div class="contentContainer">
-    <ul class="inheritance">
-        <li>java.lang.Object</li>
-        <li>
-            <ul class="inheritance">
-                <li>javax.swing.table.AbstractTableModel</li>
-                <li>
-                    <ul class="inheritance">
-                        <li><a href="../../../../dba/gui/newRelation/auxClasses/AttributeTableModel.html"
-                               title="class in dba.gui.newRelation.auxClasses">dba.gui.newRelation.auxClasses.AttributeTableModel</a>
+<ul class="inheritance">
+    <li>java.lang.Object</li>
+    <li>
+        <ul class="inheritance">
+            <li>javax.swing.table.AbstractTableModel</li>
+            <li>
+                <ul class="inheritance">
+                    <li><a href="../../../../dba/gui/newRelation/auxClasses/AttributeTableModel.html"
+                           title="class in dba.gui.newRelation.auxClasses">dba.gui.newRelation.auxClasses.AttributeTableModel</a>
+                    </li>
+                    <li>
+                        <ul class="inheritance">
+                            <li>dba.gui.newRelation.auxClasses.AttributeTableModelEdit</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+</ul>
+<div class="description">
+    <ul class="blockList">
+        <li class="blockList">
+            <dl>
+                <dt>All Implemented Interfaces:</dt>
+                <dd>java.io.Serializable, javax.swing.table.TableModel</dd>
+            </dl>
+            <hr>
+            <br>
+<pre>public class <span class="strong">AttributeTableModelEdit</span>
+extends <a href="../../../../dba/gui/newRelation/auxClasses/AttributeTableModel.html"
+           title="class in dba.gui.newRelation.auxClasses">AttributeTableModel</a></pre>
+            <div class="block">Custom Tablemodel which can handle our ArrayList with Attributes
+                and contains all Actions to handle it
+            </div>
+            <dl>
+                <dt><span class="strong">Author:</span></dt>
+                <dd>Andreas Freitag</dd>
+                <dt><span class="strong">See Also:</span></dt>
+                <dd>
+                    <a href="../../../../serialized-form.html#dba.gui.newRelation.auxClasses.AttributeTableModelEdit">Serialized
+                        Form</a></dd>
+            </dl>
+        </li>
+    </ul>
+</div>
+<div class="summary">
+    <ul class="blockList">
+        <li class="blockList">
+            <!-- =========== FIELD SUMMARY =========== -->
+            <ul class="blockList">
+                <li class="blockList"><a name="field_summary">
+                    <!--   -->
+                </a>
+
+                    <h3>Field Summary</h3>
+                    <ul class="blockList">
+                        <li class="blockList"><a
+                                name="fields_inherited_from_class_javax.swing.table.AbstractTableModel">
+                            <!--   -->
+                        </a>
+
+                            <h3>Fields inherited from class&nbsp;javax.swing.table.AbstractTableModel</h3>
+                            <code>listenerList</code></li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- ======== CONSTRUCTOR SUMMARY ======== -->
+            <ul class="blockList">
+                <li class="blockList"><a name="constructor_summary">
+                    <!--   -->
+                </a>
+
+                    <h3>Constructor Summary</h3>
+                    <table class="overviewSummary" border="0" cellpadding="3" cellspacing="0"
+                           summary="Constructor Summary table, listing constructors, and an explanation">
+                        <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
+                        <tr>
+                            <th class="colOne" scope="col">Constructor and Description</th>
+                        </tr>
+                        <tr class="altColor">
+                            <td class="colOne"><code><strong><a
+                                    href="../../../../dba/gui/newRelation/auxClasses/AttributeTableModelEdit.html#AttributeTableModelEdit(java.util.ArrayList, dbaCore.data.Database, dbaCore.data.RelationSchema)">AttributeTableModelEdit</a></strong>(java.util.ArrayList&lt;<a
+                                    href="../../../../dbaCore/data/Attribute.html" title="class in dbaCore.data">Attribute</a>&gt;&nbsp;data,
+                                <a href="../../../../dbaCore/data/Database.html"
+                                   title="class in dbaCore.data">Database</a>&nbsp;db,
+                                <a href="../../../../dbaCore/data/RelationSchema.html"
+                                   title="class in dbaCore.data">RelationSchema</a>&nbsp;rel)</code>&nbsp;</td>
+                        </tr>
+                    </table>
+                </li>
+            </ul>
+            <!-- ========== METHOD SUMMARY =========== -->
+            <ul class="blockList">
+                <li class="blockList"><a name="method_summary">
+                    <!--   -->
+                </a>
+
+                    <h3>Method Summary</h3>
+                    <table class="overviewSummary" border="0" cellpadding="3" cellspacing="0"
+                           summary="Method Summary table, listing methods, and an explanation">
+                        <caption><span>Methods</span><span class="tabEnd">&nbsp;</span></caption>
+                        <tr>
+                            <th class="colFirst" scope="col">Modifier and Type</th>
+                            <th class="colLast" scope="col">Method and Description</th>
+                        </tr>
+                        <tr class="altColor">
+                            <td class="colFirst"><code>boolean</code></td>
+                            <td class="colLast"><code><strong><a
+                                    href="../../../../dba/gui/newRelation/auxClasses/AttributeTableModelEdit.html#isCellEditable(int, int)">isCellEditable</a></strong>(int&nbsp;row,
+                                int&nbsp;col)</code>&nbsp;</td>
+                        </tr>
+                    </table>
+                    <ul class="blockList">
+                        <li class="blockList"><a
+                                name="methods_inherited_from_class_dba.gui.newRelation.auxClasses.AttributeTableModel">
+                            <!--   -->
+                        </a>
+
+                            <h3>Methods inherited from class&nbsp;dba.gui.newRelation.auxClasses.<a
+                                    href="../../../../dba/gui/newRelation/auxClasses/AttributeTableModel.html"
+                                    title="class in dba.gui.newRelation.auxClasses">AttributeTableModel</a></h3>
+                            <code><a
+                                    href="../../../../dba/gui/newRelation/auxClasses/AttributeTableModel.html#getColumnClass(int)">getColumnClass</a>,
+                                <a href="../../../../dba/gui/newRelation/auxClasses/AttributeTableModel.html#getColumnCount()">getColumnCount</a>,
+                                <a href="../../../../dba/gui/newRelation/auxClasses/AttributeTableModel.html#getColumnName(int)">getColumnName</a>,
+                                <a href="../../../../dba/gui/newRelation/auxClasses/AttributeTableModel.html#getRowCount()">getRowCount</a>,
+                                <a href="../../../../dba/gui/newRelation/auxClasses/AttributeTableModel.html#getValueAt(int, int)">getValueAt</a>,
+                                <a href="../../../../dba/gui/newRelation/auxClasses/AttributeTableModel.html#removeRow(int)">removeRow</a>,
+                                <a href="../../../../dba/gui/newRelation/auxClasses/AttributeTableModel.html#setValueAt(java.lang.Object, int, int)">setValueAt</a></code>
                         </li>
-                        <li>
-                            <ul class="inheritance">
-                                <li>dba.gui.newRelation.auxClasses.AttributeTableModelEdit</li>
-                            </ul>
+                    </ul>
+                    <ul class="blockList">
+                        <li class="blockList"><a
+                                name="methods_inherited_from_class_javax.swing.table.AbstractTableModel">
+                            <!--   -->
+                        </a>
+
+                            <h3>Methods inherited from class&nbsp;javax.swing.table.AbstractTableModel</h3>
+                            <code>addTableModelListener, findColumn, fireTableCellUpdated, fireTableChanged,
+                                fireTableDataChanged, fireTableRowsDeleted, fireTableRowsInserted,
+                                fireTableRowsUpdated, fireTableStructureChanged, getListeners,
+                                getTableModelListeners, removeTableModelListener</code></li>
+                    </ul>
+                    <ul class="blockList">
+                        <li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
+                            <!--   -->
+                        </a>
+
+                            <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
+                            <code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait,
+                                wait, wait</code></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+<div class="details">
+    <ul class="blockList">
+        <li class="blockList">
+            <!-- ========= CONSTRUCTOR DETAIL ======== -->
+            <ul class="blockList">
+                <li class="blockList"><a name="constructor_detail">
+                    <!--   -->
+                </a>
+
+                    <h3>Constructor Detail</h3>
+                    <a name="AttributeTableModelEdit(java.util.ArrayList, dbaCore.data.Database, dbaCore.data.RelationSchema)">
+                        <!--   -->
+                    </a>
+                    <ul class="blockListLast">
+                        <li class="blockList">
+                            <h4>AttributeTableModelEdit</h4>
+<pre>public&nbsp;AttributeTableModelEdit(java.util.ArrayList&lt;<a href="../../../../dbaCore/data/Attribute.html"
+                                                                   title="class in dbaCore.data">Attribute</a>&gt;&nbsp;data,
+                       <a href="../../../../dbaCore/data/Database.html" title="class in dbaCore.data">Database</a>&nbsp;db,
+                       <a href="../../../../dbaCore/data/RelationSchema.html" title="class in dbaCore.data">RelationSchema</a>&nbsp;rel)</pre>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- ============ METHOD DETAIL ========== -->
+            <ul class="blockList">
+                <li class="blockList"><a name="method_detail">
+                    <!--   -->
+                </a>
+
+                    <h3>Method Detail</h3>
+                    <a name="isCellEditable(int, int)">
+                        <!--   -->
+                    </a>
+                    <ul class="blockListLast">
+                        <li class="blockList">
+                            <h4>isCellEditable</h4>
+<pre>public&nbsp;boolean&nbsp;isCellEditable(int&nbsp;row,
+                     int&nbsp;col)</pre>
+                            <dl>
+                                <dt><strong>Specified by:</strong></dt>
+                                <dd><code>isCellEditable</code>&nbsp;in interface&nbsp;<code>javax.swing.table.TableModel</code>
+                                </dd>
+                                <dt><strong>Overrides:</strong></dt>
+                                <dd><code><a
+                                        href="../../../../dba/gui/newRelation/auxClasses/AttributeTableModel.html#isCellEditable(int, int)">isCellEditable</a></code>&nbsp;in
+                                    class&nbsp;<code><a
+                                            href="../../../../dba/gui/newRelation/auxClasses/AttributeTableModel.html"
+                                            title="class in dba.gui.newRelation.auxClasses">AttributeTableModel</a></code>
+                                </dd>
+                            </dl>
                         </li>
                     </ul>
                 </li>
             </ul>
         </li>
     </ul>
-    <div class="description">
-        <ul class="blockList">
-            <li class="blockList">
-                <dl>
-                    <dt>All Implemented Interfaces:</dt>
-                    <dd>java.io.Serializable, javax.swing.table.TableModel</dd>
-                </dl>
-                <hr>
-                <br>
-<pre>public class <span class="strong">AttributeTableModelEdit</span>
-extends <a href="../../../../dba/gui/newRelation/auxClasses/AttributeTableModel.html"
-           title="class in dba.gui.newRelation.auxClasses">AttributeTableModel</a></pre>
-                <div class="block">Custom Tablemodel which can handle our ArrayList with Attributes
-                    and contains all Actions to handle it
-                </div>
-                <dl>
-                    <dt><span class="strong">Author:</span></dt>
-                    <dd>Andreas Freitag</dd>
-                    <dt><span class="strong">See Also:</span></dt>
-                    <dd>
-                        <a href="../../../../serialized-form.html#dba.gui.newRelation.auxClasses.AttributeTableModelEdit">Serialized
-                            Form</a></dd>
-                </dl>
-            </li>
-        </ul>
-    </div>
-    <div class="summary">
-        <ul class="blockList">
-            <li class="blockList">
-                <!-- =========== FIELD SUMMARY =========== -->
-                <ul class="blockList">
-                    <li class="blockList"><a name="field_summary">
-                        <!--   -->
-                    </a>
-
-                        <h3>Field Summary</h3>
-                        <ul class="blockList">
-                            <li class="blockList"><a
-                                    name="fields_inherited_from_class_javax.swing.table.AbstractTableModel">
-                                <!--   -->
-                            </a>
-
-                                <h3>Fields inherited from class&nbsp;javax.swing.table.AbstractTableModel</h3>
-                                <code>listenerList</code></li>
-                        </ul>
-                    </li>
-                </ul>
-                <!-- ======== CONSTRUCTOR SUMMARY ======== -->
-                <ul class="blockList">
-                    <li class="blockList"><a name="constructor_summary">
-                        <!--   -->
-                    </a>
-
-                        <h3>Constructor Summary</h3>
-                        <table class="overviewSummary" border="0" cellpadding="3" cellspacing="0"
-                               summary="Constructor Summary table, listing constructors, and an explanation">
-                            <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
-                            <tr>
-                                <th class="colOne" scope="col">Constructor and Description</th>
-                            </tr>
-                            <tr class="altColor">
-                                <td class="colOne"><code><strong><a
-                                        href="../../../../dba/gui/newRelation/auxClasses/AttributeTableModelEdit.html#AttributeTableModelEdit(java.util.ArrayList, dbaCore.data.Database, dbaCore.data.RelationSchema)">AttributeTableModelEdit</a></strong>(java.util.ArrayList&lt;<a
-                                        href="../../../../dbaCore/data/Attribute.html" title="class in dbaCore.data">Attribute</a>&gt;&nbsp;data,
-                                    <a href="../../../../dbaCore/data/Database.html" title="class in dbaCore.data">Database</a>&nbsp;db,
-                                    <a href="../../../../dbaCore/data/RelationSchema.html"
-                                       title="class in dbaCore.data">RelationSchema</a>&nbsp;rel)</code>&nbsp;</td>
-                            </tr>
-                        </table>
-                    </li>
-                </ul>
-                <!-- ========== METHOD SUMMARY =========== -->
-                <ul class="blockList">
-                    <li class="blockList"><a name="method_summary">
-                        <!--   -->
-                    </a>
-
-                        <h3>Method Summary</h3>
-                        <table class="overviewSummary" border="0" cellpadding="3" cellspacing="0"
-                               summary="Method Summary table, listing methods, and an explanation">
-                            <caption><span>Methods</span><span class="tabEnd">&nbsp;</span></caption>
-                            <tr>
-                                <th class="colFirst" scope="col">Modifier and Type</th>
-                                <th class="colLast" scope="col">Method and Description</th>
-                            </tr>
-                            <tr class="altColor">
-                                <td class="colFirst"><code>boolean</code></td>
-                                <td class="colLast"><code><strong><a
-                                        href="../../../../dba/gui/newRelation/auxClasses/AttributeTableModelEdit.html#isCellEditable(int, int)">isCellEditable</a></strong>(int&nbsp;row,
-                                    int&nbsp;col)</code>&nbsp;</td>
-                            </tr>
-                        </table>
-                        <ul class="blockList">
-                            <li class="blockList"><a
-                                    name="methods_inherited_from_class_dba.gui.newRelation.auxClasses.AttributeTableModel">
-                                <!--   -->
-                            </a>
-
-                                <h3>Methods inherited from class&nbsp;dba.gui.newRelation.auxClasses.<a
-                                        href="../../../../dba/gui/newRelation/auxClasses/AttributeTableModel.html"
-                                        title="class in dba.gui.newRelation.auxClasses">AttributeTableModel</a></h3>
-                                <code><a
-                                        href="../../../../dba/gui/newRelation/auxClasses/AttributeTableModel.html#getColumnClass(int)">getColumnClass</a>,
-                                    <a href="../../../../dba/gui/newRelation/auxClasses/AttributeTableModel.html#getColumnCount()">getColumnCount</a>,
-                                    <a href="../../../../dba/gui/newRelation/auxClasses/AttributeTableModel.html#getColumnName(int)">getColumnName</a>,
-                                    <a href="../../../../dba/gui/newRelation/auxClasses/AttributeTableModel.html#getRowCount()">getRowCount</a>,
-                                    <a href="../../../../dba/gui/newRelation/auxClasses/AttributeTableModel.html#getValueAt(int, int)">getValueAt</a>,
-                                    <a href="../../../../dba/gui/newRelation/auxClasses/AttributeTableModel.html#removeRow(int)">removeRow</a>,
-                                    <a href="../../../../dba/gui/newRelation/auxClasses/AttributeTableModel.html#setValueAt(java.lang.Object, int, int)">setValueAt</a></code>
-                            </li>
-                        </ul>
-                        <ul class="blockList">
-                            <li class="blockList"><a
-                                    name="methods_inherited_from_class_javax.swing.table.AbstractTableModel">
-                                <!--   -->
-                            </a>
-
-                                <h3>Methods inherited from class&nbsp;javax.swing.table.AbstractTableModel</h3>
-                                <code>addTableModelListener, findColumn, fireTableCellUpdated, fireTableChanged,
-                                    fireTableDataChanged, fireTableRowsDeleted, fireTableRowsInserted,
-                                    fireTableRowsUpdated, fireTableStructureChanged, getListeners,
-                                    getTableModelListeners, removeTableModelListener</code></li>
-                        </ul>
-                        <ul class="blockList">
-                            <li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
-                                <!--   -->
-                            </a>
-
-                                <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
-                                <code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait,
-                                    wait, wait</code></li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-    <div class="details">
-        <ul class="blockList">
-            <li class="blockList">
-                <!-- ========= CONSTRUCTOR DETAIL ======== -->
-                <ul class="blockList">
-                    <li class="blockList"><a name="constructor_detail">
-                        <!--   -->
-                    </a>
-
-                        <h3>Constructor Detail</h3>
-                        <a name="AttributeTableModelEdit(java.util.ArrayList, dbaCore.data.Database, dbaCore.data.RelationSchema)">
-                            <!--   -->
-                        </a>
-                        <ul class="blockListLast">
-                            <li class="blockList">
-                                <h4>AttributeTableModelEdit</h4>
-<pre>public&nbsp;AttributeTableModelEdit(java.util.ArrayList&lt;<a href="../../../../dbaCore/data/Attribute.html"
-                                                                   title="class in dbaCore.data">Attribute</a>&gt;&nbsp;data,
-                       <a href="../../../../dbaCore/data/Database.html" title="class in dbaCore.data">Database</a>&nbsp;db,
-                       <a href="../../../../dbaCore/data/RelationSchema.html" title="class in dbaCore.data">RelationSchema</a>&nbsp;rel)</pre>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-                <!-- ============ METHOD DETAIL ========== -->
-                <ul class="blockList">
-                    <li class="blockList"><a name="method_detail">
-                        <!--   -->
-                    </a>
-
-                        <h3>Method Detail</h3>
-                        <a name="isCellEditable(int, int)">
-                            <!--   -->
-                        </a>
-                        <ul class="blockListLast">
-                            <li class="blockList">
-                                <h4>isCellEditable</h4>
-<pre>public&nbsp;boolean&nbsp;isCellEditable(int&nbsp;row,
-                     int&nbsp;col)</pre>
-                                <dl>
-                                    <dt><strong>Specified by:</strong></dt>
-                                    <dd><code>isCellEditable</code>&nbsp;in interface&nbsp;<code>javax.swing.table.TableModel</code>
-                                    </dd>
-                                    <dt><strong>Overrides:</strong></dt>
-                                    <dd><code><a
-                                            href="../../../../dba/gui/newRelation/auxClasses/AttributeTableModel.html#isCellEditable(int, int)">isCellEditable</a></code>&nbsp;in
-                                        class&nbsp;<code><a
-                                                href="../../../../dba/gui/newRelation/auxClasses/AttributeTableModel.html"
-                                                title="class in dba.gui.newRelation.auxClasses">AttributeTableModel</a></code>
-                                    </dd>
-                                </dl>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </div>
+</div>
 </div>
 <!-- ========= END OF CLASS DATA ========= -->
 <!-- ======= START OF BOTTOM NAVBAR ====== -->

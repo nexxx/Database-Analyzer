@@ -34,7 +34,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-public class RelationView extends JGraphView{
+public class RelationView extends JGraphView {
   /**
    *
    */
@@ -92,7 +92,6 @@ public class RelationView extends JGraphView{
     graphComponent.setConnectable(false);
 
 
-
     add(graphComponent, BorderLayout.CENTER);
 
   }
@@ -128,7 +127,7 @@ public class RelationView extends JGraphView{
     mxStylesheet stylesheet = graph.getStylesheet();
 
     // Define Style for Relations
-    Hashtable<String,Object> style = new Hashtable<>();
+    Hashtable<String, Object> style = new Hashtable<>();
     style.put(mxConstants.STYLE_SHAPE, mxConstants.SHAPE_SWIMLANE);
     style.put(mxConstants.STYLE_ALIGN, mxConstants.ALIGN_CENTER);
     style.put(mxConstants.STYLE_VERTICAL_ALIGN, mxConstants.ALIGN_MIDDLE);
@@ -145,7 +144,7 @@ public class RelationView extends JGraphView{
     // Define Invisibility-Style for Edges
     style = new Hashtable<>();
     style.put(mxConstants.STYLE_OPACITY, 0);
-    style.put(mxConstants.STYLE_EDGE,mxConstants.EDGESTYLE_ELBOW);
+    style.put(mxConstants.STYLE_EDGE, mxConstants.EDGESTYLE_ELBOW);
     stylesheet.putCellStyle("INVISIBLE_EDGE", style);
 
     // Define Invisibility-Style for Edges
@@ -154,7 +153,7 @@ public class RelationView extends JGraphView{
     style.put(mxConstants.STYLE_EDITABLE, false);
     style.put(mxConstants.STYLE_RESIZABLE, false);
     style.put(mxConstants.STYLE_STROKECOLOR, Options.getInstance().getArrowFKColor());
-    style.put(mxConstants.STYLE_EDGE,mxConstants.EDGESTYLE_ELBOW);
+    style.put(mxConstants.STYLE_EDGE, mxConstants.EDGESTYLE_ELBOW);
     stylesheet.putCellStyle("FK_ARROW", style);
   }
 }

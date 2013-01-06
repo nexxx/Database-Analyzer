@@ -62,7 +62,7 @@ public class ToolBar extends JToolBar implements Observer {
   /**
    * Defaultconstructor to create Toolbar
    */
-  public ToolBar(RelationView relView, RelationDetailsView relDetailView,GuiLogic logic) {
+  public ToolBar(RelationView relView, RelationDetailsView relDetailView, GuiLogic logic) {
     super();
     feedbackbarPanel = FeedbackbarPanel.getInstance();
     guiLogic = logic;
@@ -177,8 +177,8 @@ public class ToolBar extends JToolBar implements Observer {
   }
 
   public void updateZoom(Object observable) {
-    if(observable instanceof JGraphView){
-      updateComboZoom(((JGraphView)observable).getZoomFactors());
+    if (observable instanceof JGraphView) {
+      updateComboZoom(((JGraphView) observable).getZoomFactors());
     }
   }
 

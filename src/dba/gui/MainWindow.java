@@ -18,7 +18,9 @@
 package dba.gui;
 
 
-import dba.gui.auxClasses.*;
+import dba.gui.auxClasses.GuiLogic;
+import dba.gui.auxClasses.RelationDetailsView;
+import dba.gui.auxClasses.RelationView;
 import dba.gui.auxClasses.feedback.FeedbackbarPanel;
 import dba.gui.auxClasses.jGraph.JGraphView;
 import dba.gui.auxClasses.navBarPanels.*;
@@ -164,15 +166,15 @@ public class MainWindow implements constants, Observer {
     JTabbedPane displayTab = new JTabbedPane(SwingConstants.TOP);
 
     pnlToolBar = new JPanel(new BorderLayout());
-    toolBar = new ToolBar(relationView, relationDetailsView,guiLogic);
+    toolBar = new ToolBar(relationView, relationDetailsView, guiLogic);
 
     pnlToolBar.add(toolBar, BorderLayout.CENTER);
     contentPane.add(pnlToolBar, BorderLayout.PAGE_START);
 
     toolBarDatabase = new ToolBarDatabase(dbTreePanel, relationView, relationDetailsView, guiLogic);
-    toolBarRelation = new ToolBarRelation(dbTreePanel, relationView, relationDetailsView,guiLogic);
-    toolBarAttribute = new ToolBarAttribute(relationView, relationDetailsView,guiLogic);
-    toolBarFd = new ToolBarFd(dbTreePanel, relationView, relationDetailsView,guiLogic);
+    toolBarRelation = new ToolBarRelation(dbTreePanel, relationView, relationDetailsView, guiLogic);
+    toolBarAttribute = new ToolBarAttribute(relationView, relationDetailsView, guiLogic);
+    toolBarFd = new ToolBarFd(dbTreePanel, relationView, relationDetailsView, guiLogic);
 
     undoMenuItem = new JMenuItem(locale.getString("GUI_Undo"), iconUndo);
     undoMenuItem.setEnabled(false);
@@ -231,16 +233,16 @@ public class MainWindow implements constants, Observer {
         JTabbedPane tabPane = (JTabbedPane) changeEvent.getSource();
 
         //Disable zooming for all tabs
-        for(int i = 0 ; i<tabPane.getTabCount();i++){
-          if(tabPane.getComponentAt(i) instanceof JGraphView){
-            ((JGraphView)tabPane.getComponentAt(i)).setZoomEnabled(false);
+        for (int i = 0; i < tabPane.getTabCount(); i++) {
+          if (tabPane.getComponentAt(i) instanceof JGraphView) {
+            ((JGraphView) tabPane.getComponentAt(i)).setZoomEnabled(false);
           }
         }
 
         //Enable zooming for the selected tab
         Object obj = tabPane.getSelectedComponent();
-        if(obj instanceof JGraphView){
-          JGraphView view = (JGraphView)obj;
+        if (obj instanceof JGraphView) {
+          JGraphView view = (JGraphView) obj;
           view.setZoomEnabled(true);
           updateZoomFactors(view);
           pnlOutline.setContent(view.getGraphComponent());
@@ -314,8 +316,7 @@ public class MainWindow implements constants, Observer {
   }
 
 
-
-  private void updateZoomFactors(JGraphView view){
+  private void updateZoomFactors(JGraphView view) {
     toolBarAttribute.updateZoom(view);
     toolBarFd.updateZoom(view);
     toolBarRelation.updateZoom(view);
@@ -464,7 +465,7 @@ public class MainWindow implements constants, Observer {
     editMenu.add(metaInfoMenuItem);
   }
 
-  private void createViewMenu(JMenuBar menuBar){
+  private void createViewMenu(JMenuBar menuBar) {
     JMenu viewMenu = new JMenu(locale.getString("GUI_View"));
     menuBar.add(viewMenu);
 
@@ -511,7 +512,8 @@ public class MainWindow implements constants, Observer {
       public void itemStateChanged(ItemEvent itemEvent) {
         options.setShowTabToolbox(toolboxMenuItem.isSelected());
         options.writeOptions();
-        updateNavTabs();       }
+        updateNavTabs();
+      }
     });
     navTabMenu.add(toolboxMenuItem);
 
@@ -528,7 +530,6 @@ public class MainWindow implements constants, Observer {
     navTabMenu.add(wikiMenuItem);
 
   }
-
 
 
   private void openInfoFrame() {
@@ -672,8 +673,9 @@ public class MainWindow implements constants, Observer {
     relationView.display(database);
     relationDetailsView.display(database);
 
-    if(pnlInspect != null)
-    pnlInspect.updateScrollpane();
+    if (pnlInspect != null) {
+      pnlInspect.updateScrollpane();
+    }
   }
 
   @Override
@@ -690,29 +692,29 @@ public class MainWindow implements constants, Observer {
    * Remove all tabs and add those tabs which are set to true in options
    * Nav Tree is always shown
    */
-  private void updateNavTabs(){
+  private void updateNavTabs() {
     tabbedPaneOutline.removeAll();
 
     tabbedPaneOutline.addTab(locale.getString("GUI_Tree"), dbTreePanel);
 
-    if(options.getShowTabInspect()) {
+    if (options.getShowTabInspect()) {
       tabbedPaneOutline.addTab(locale.getString("GUI_Inspect"), pnlInspect);
     }
-    if(options.getShowTabOutline()) {
+    if (options.getShowTabOutline()) {
       tabbedPaneOutline.addTab(locale.getString("GUI_Outline"), pnlOutline);
     }
-    if(options.getShowTabTheme()) {
+    if (options.getShowTabTheme()) {
       tabbedPaneOutline.addTab(locale.getString("GUI_Theming"), pnlTheming);
     }
-    if(options.getShowTabToolbox()) {
+    if (options.getShowTabToolbox()) {
       tabbedPaneOutline.addTab(locale.getString("GUI_Toolbox"), pnlToolbox);
     }
-    if(options.getShowTabWiki()) {
+    if (options.getShowTabWiki()) {
       tabbedPaneOutline.addTab(locale.getString("GUI_Wiki"), pnlWiki);
     }
   }
 
-  private void showWelcomeScreen(){
+  private void showWelcomeScreen() {
     WelcomeScreen wcs = new WelcomeScreen(guiLogic, database);
     FeedbackEnum retVal;
     do {

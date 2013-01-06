@@ -17,6 +17,7 @@
 
 package dba.gui;
 
+import dba.gui.auxClasses.ExtensionFilter;
 import dba.init.Initialize;
 import dba.options.Options;
 import dba.utils.GetIcons;
@@ -24,9 +25,15 @@ import dba.utils.Localization;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Properties;
 
 /**
  * Class to print the options menu frame
@@ -338,6 +345,130 @@ public class optionsMenu extends JDialog {
     });
     panelLeft.add(btnDefault);
 
+    JButton btnLoad = new JButton("Load Theme");
+    btnLoad.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent actionEvent) {
+        exportImportColorTheme(IOType.IMPORT);
+      }
+    });
+    panelLeft.add(new JLabel());
+    panelLeft.add(btnLoad);
+
+
+    JButton btnSave = new JButton("Save Theme");
+    btnSave.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent actionEvent) {
+        exportImportColorTheme(IOType.EXPORT);
+      }
+    });
+    panelLeft.add(new JLabel());
+    panelLeft.add(btnSave);
+
+
     return panel;
+  }
+
+
+  private void exportImportColorTheme(IOType type) {
+    String path;
+    JFileChooser fc = new JFileChooser(options.getSaveFolder());
+    String title = type == IOType.EXPORT ? "DCT Export" : "DCT Import";
+    fc.setDialogTitle(title);
+    FileFilter typeDCT = new ExtensionFilter(".dtc", ".dtc"); //DTC: DBA Color Theme
+    fc.addChoosableFileFilter(typeDCT);
+    fc.setFileFilter(typeDCT);
+    fc.setAcceptAllFileFilterUsed(false);
+    int returnVal = type == IOType.EXPORT ? fc.showSaveDialog(fc) : fc.showOpenDialog(fc);
+
+    if (returnVal == JFileChooser.APPROVE_OPTION) {
+      try {
+        path = fc.getSelectedFile().getCanonicalPath();
+        if (!path.endsWith(".dtc")) {
+          path = path + ".dtc";
+        }
+        exportImportDTC(path, type);
+
+      } catch (IOException e1) {
+      }
+    }
+  }
+
+  private void exportImportDTC(String path, IOType type) {
+    File file = new File(path);
+
+    if (!path.endsWith(".dtc")) {
+      file = new File(path + ".dtc");
+    }
+
+    if (type == IOType.IMPORT) {
+      readDTC(path);
+    } else {
+
+      if (file.exists()) {
+        Object[] options = {locale.getString("Yes"), locale.getString("No")};
+        int result = JOptionPane.showOptionDialog(null, locale.getString("GUI_TheFile") + " " + file.getName() +
+          " " + locale.getString("GUI_AlreadyExisting"), "Export", JOptionPane.YES_NO_OPTION,
+          JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+
+        switch (result) {
+          case JOptionPane.YES_OPTION:
+            writeDTC(path);
+            break;
+          case JOptionPane.NO_OPTION:
+            exportImportColorTheme(type);
+            break;
+        }
+      } else {
+        writeDTC(path);
+      }
+    }
+  }
+
+  private void writeDTC(String path) {
+    try {
+      Properties prop = new Properties();
+      prop.setProperty("currentAttrColor", colorAttr);
+      prop.setProperty("currentRelColor", colorRel);
+      prop.setProperty("currentFontColor", colorFont);
+      prop.setProperty("currentArrowFkColor", colorArrowFk);
+      prop.setProperty("currentArrowFdColor", colorArrowFd);
+      prop.setProperty("currentBgColor", colorBG);
+
+      prop.store(new FileOutputStream(path), "DBA Color Theme");
+    } catch (IOException e) {
+    }
+  }
+
+  private void readDTC(String path) {
+    try {
+      Properties prop = new Properties();
+      prop.load(new FileInputStream(path));
+      colorAttr = prop.getProperty("currentAttrColor");
+      colorRel = prop.getProperty("currentRelColor");
+      colorFont = prop.getProperty("currentFontColor");
+      colorArrowFk = prop.getProperty("currentArrowFkColor");
+      colorArrowFd = prop.getProperty("currentArrowFdColor");
+      colorBG = prop.getProperty("currentBgColor");
+    } catch (IOException e) {
+    }
+
+    pnlBG.setBackground(Color.decode(colorBG));
+    pnlBG.revalidate();
+    pnlAttr.setBackground(Color.decode(colorAttr));
+    pnlAttr.revalidate();
+    pnlRel.setBackground(Color.decode(colorRel));
+    pnlRel.revalidate();
+    pnlFont.setBackground(Color.decode(colorFont));
+    pnlFont.revalidate();
+    pnlArrowFk.setBackground(Color.decode(colorArrowFk));
+    pnlArrowFk.revalidate();
+    pnlArrowFd.setBackground(Color.decode(colorArrowFd));
+    pnlArrowFd.revalidate();
+  }
+
+  private enum IOType {
+    EXPORT, IMPORT;
   }
 }

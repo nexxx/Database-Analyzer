@@ -137,8 +137,9 @@ public class DatatypeMappingFrame extends JDialog {
 
   private void setVisibleRowCount(JTable table, int rows) {
     int height = 0;
-    for (int row = 0; row < rows; row++)
+    for (int row = 0; row < rows; row++) {
       height += table.getRowHeight(row);
+    }
 
     table.setPreferredScrollableViewportSize(new Dimension(table.getPreferredScrollableViewportSize().width, height));
   }

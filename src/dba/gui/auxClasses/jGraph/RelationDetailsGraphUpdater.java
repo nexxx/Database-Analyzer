@@ -99,20 +99,20 @@ public class RelationDetailsGraphUpdater extends RelationUpdater {
     for (Attribute attr : relation.getAttributes()) {
       attributeCells.add((mxCell) graph.insertVertex(parentPane, attr.getName(), attr, horizontalOffset,
         attributeOffset, 30, 25, super.getAttributeStyle(attr, getImageSizeClass(attr))));
-      graph.updateCellSize(attributeCells.get(attributeCells.size()-1));
+      graph.updateCellSize(attributeCells.get(attributeCells.size() - 1));
       horizontalOffset += 30;
     }
 
-    double currentXPos=0;
-    for(int i =0;i<attributeCells.size();i++){
+    double currentXPos = 0;
+    for (int i = 0; i < attributeCells.size(); i++) {
       mxGeometry geo = attributeCells.get(i).getGeometry();
-      if(i>0){
-        currentXPos+=attributeCells.get(i-1).getGeometry().getWidth();
+      if (i > 0) {
+        currentXPos += attributeCells.get(i - 1).getGeometry().getWidth();
         geo.setX(currentXPos);
       }
 
       geo.setHeight(25);
-      geo.setWidth(geo.getWidth()+5);
+      geo.setWidth(geo.getWidth() + 5);
     }
 
     drawFunctionalDependencies(relation.getAttributes(), attributeCells, relation.getFunctionalDependencies());

@@ -82,7 +82,7 @@ public class GuiLogic extends Observable {
 
   private void setLastFileName(String fileName) {
     lastFileName = fileName;
-    if(lastFileName != null && !fileName.endsWith(".xml")){
+    if (lastFileName != null && !fileName.endsWith(".xml")) {
       lastFileName += ".xml";
     }
     super.setChanged();
@@ -449,41 +449,6 @@ public class GuiLogic extends Observable {
       return FeedbackEnum.SUCCESSFUL;
     } catch (Exception e) {
       return FeedbackEnum.FAILED;
-    }
-  }
-
-  public class ExtensionFilter extends FileFilter {
-    private String extensions[];
-
-    private String description;
-
-    public ExtensionFilter(String description, String extension) {
-      this(description, new String[]{extension});
-    }
-
-    public ExtensionFilter(String description, String extensions[]) {
-      super();
-      this.description = description;
-      this.extensions = extensions.clone();
-    }
-
-    @Override
-    public boolean accept(File file) {
-      if (file.isDirectory()) {
-        return true;
-      }
-      String path = file.getAbsolutePath();
-      for (String ext : extensions) {
-        if (path.endsWith(ext) && path.charAt(path.length() - ext.length()) == '.') {
-          return true;
-        }
-      }
-      return false;
-    }
-
-    @Override
-    public String getDescription() {
-      return description == null ? extensions[0] : description;
     }
   }
 
@@ -863,7 +828,7 @@ public class GuiLogic extends Observable {
     }
   }
 
-  private FeedbackEnum writeSqlDump(String path){
+  private FeedbackEnum writeSqlDump(String path) {
     try {
       BufferedWriter out = new BufferedWriter(new FileWriter(path));
       CreateSqlDump createSqlDump = new CreateSqlDump();

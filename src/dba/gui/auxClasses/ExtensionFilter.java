@@ -15,11 +15,47 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.      *
  ******************************************************************************/
 
-package dba.utils;
+package dba.gui.auxClasses;
+
+import javax.swing.filechooser.FileFilter;
+import java.io.File;
 
 /**
- * Enum that represents different Image-Sizes
+ * Custom Extension Filter for FileChooser
+ *
+ * @author Andreas Freitag
  */
-public enum ImageSize {
-  NO, SMALL, BIG;
+public class ExtensionFilter extends FileFilter {
+  private String extensions[];
+
+  private String description;
+
+  public ExtensionFilter(String description, String extension) {
+    this(description, new String[]{extension});
+  }
+
+  public ExtensionFilter(String description, String extensions[]) {
+    super();
+    this.description = description;
+    this.extensions = extensions.clone();
+  }
+
+  @Override
+  public boolean accept(File file) {
+    if (file.isDirectory()) {
+      return true;
+    }
+    String path = file.getAbsolutePath();
+    for (String ext : extensions) {
+      if (path.endsWith(ext) && path.charAt(path.length() - ext.length()) == '.') {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  @Override
+  public String getDescription() {
+    return description == null ? extensions[0] : description;
+  }
 }

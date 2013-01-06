@@ -31,13 +31,15 @@ public class RelationUpdater {
    * @param attribute attribute to get the style for
    * @return a String representing the Style for the attribute
    */
-  protected String getAttributeStyle(Attribute attribute,ImageSize optimalImageSize) {
-    if(optimalImageSize.equals(ImageSize.NO)) return "ATTRIBUTE_NOIMAGE";
+  protected String getAttributeStyle(Attribute attribute, ImageSize optimalImageSize) {
+    if (optimalImageSize.equals(ImageSize.NO)) {
+      return "ATTRIBUTE_NOIMAGE";
+    }
 
     if (attribute.getIsPrimaryKey() && attribute.getIsForeignKey()) {
       return "ATTRIBUTE_PKFK";
     } else if (attribute.getIsPrimaryKey()) {
-      return  "ATTRIBUTE_PK" + (optimalImageSize.equals(ImageSize.SMALL) ? "_SMALL" : "_BIG");
+      return "ATTRIBUTE_PK" + (optimalImageSize.equals(ImageSize.SMALL) ? "_SMALL" : "_BIG");
     } else if (attribute.getIsForeignKey()) {
       return "ATTRIBUTE_FK" + (optimalImageSize.equals(ImageSize.SMALL) ? "_SMALL" : "_BIG");
     } else {
@@ -45,12 +47,12 @@ public class RelationUpdater {
     }
   }
 
-  protected ImageSize getImageSizeClass(Attribute attribute){
-    if(attribute.getIsPrimaryKey() && attribute.getIsForeignKey()){
+  protected ImageSize getImageSizeClass(Attribute attribute) {
+    if (attribute.getIsPrimaryKey() && attribute.getIsForeignKey()) {
       return ImageSize.BIG;
-    }else if(attribute.getIsPrimaryKey() || attribute.getIsForeignKey()){
+    } else if (attribute.getIsPrimaryKey() || attribute.getIsForeignKey()) {
       return ImageSize.SMALL;
-    }else {
+    } else {
       return ImageSize.NO;
     }
   }

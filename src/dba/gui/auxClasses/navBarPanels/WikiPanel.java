@@ -17,11 +17,6 @@
 
 package dba.gui.auxClasses.navBarPanels;
 
-import dba.gui.CustomTree;
-import dba.utils.RelationInspectorGui;
-import dbaCore.data.Database;
-import dbaCore.data.RelationSchema;
-
 import javax.swing.*;
 import java.awt.*;
 

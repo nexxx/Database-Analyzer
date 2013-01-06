@@ -8,6 +8,7 @@ import java.awt.*;
 
 /**
  * Displays a Outline-View of a given mxGraphComponent
+ *
  * @author theuers
  */
 public class OutlinePanel extends JPanel {
@@ -24,11 +25,12 @@ public class OutlinePanel extends JPanel {
 
   /**
    * Sets the mxGraphComponent to display
+   *
    * @param content the content which should be displayed
    */
-  public void setContent(mxGraphComponent content){
-     outline.setGraphComponent(content);
-     outline.updateFinder(true);
-     outline.repaint();
+  public void setContent(mxGraphComponent content) {
+    outline.setGraphComponent(content);
+    outline.updateFinder(true);
+    outline.repaint();
   }
 }

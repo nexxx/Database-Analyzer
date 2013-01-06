@@ -18,7 +18,8 @@
 package dbaCore.data.dBTypes;
 
 import dbaCore.data.Database;
-import dbaCore.data.dBTypes.types.*;
+import dbaCore.data.dBTypes.types.DbType;
+import dbaCore.data.dBTypes.types.MySql;
 
 /**
  * Factory Class to provide the correct datatype class

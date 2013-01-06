@@ -32,7 +32,7 @@ import java.beans.PropertyChangeSupport;
 public final class TimeLine extends HistoricObject {
   private static TimeLine instance;
   private static History history;
-  private PropertyChangeSupport changes = new PropertyChangeSupport( this );
+  private PropertyChangeSupport changes = new PropertyChangeSupport(this);
 
   private TimeLine() {
     super();
@@ -112,9 +112,9 @@ public final class TimeLine extends HistoricObject {
 
   @Override
   public void setDirty(boolean dirty) {
-    boolean oldValue=history.isDirty();
+    boolean oldValue = history.isDirty();
     history.setDirty(dirty);
-    changes.firePropertyChange("isDirty",oldValue,dirty);
+    changes.firePropertyChange("isDirty", oldValue, dirty);
   }
 
   /**
@@ -149,14 +149,12 @@ public final class TimeLine extends HistoricObject {
     return null;
   }
 
-  public void addPropertyChangeListener( PropertyChangeListener listener )
-  {
-    changes.addPropertyChangeListener( listener );
+  public void addPropertyChangeListener(PropertyChangeListener listener) {
+    changes.addPropertyChangeListener(listener);
   }
 
-  public void removePropertyChangeListener( PropertyChangeListener listener )
-  {
-    changes.removePropertyChangeListener( listener );
+  public void removePropertyChangeListener(PropertyChangeListener listener) {
+    changes.removePropertyChangeListener(listener);
   }
 
 }
