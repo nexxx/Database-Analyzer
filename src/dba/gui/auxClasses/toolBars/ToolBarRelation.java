@@ -108,21 +108,29 @@ public class ToolBarRelation extends ToolBar {
 
       @Override
       public void actionPerformed(ActionEvent arg0) {
-        int x = tree.getNewSelectedItem(TreeEnum.DelRelation);
-        relLogic.deleteRelation();
-        tree.setSelectedItem(x);
+        delRel();
       }
     });
+    KeyStroke delete = KeyStroke.getKeyStroke("DELETE");
+    InputMap inputMapDel = btnDelete.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+    inputMapDel.put(delete, "Delete");
+    ActionMap actionMapDel = btnDelete.getActionMap();
+    actionMapDel.put("Delete", new CustomActionListenerDelRel());
+    btnDelete.setActionMap(actionMapDel);
 
     btnRename.addActionListener(new ActionListener() {
 
       @Override
       public void actionPerformed(ActionEvent arg0) {
-        int x = tree.getNewSelectedItem(TreeEnum.RenameRel);
-        relLogic.renameRelation();
-        tree.setSelectedItem(x);
+        renRel();
       }
     });
+    KeyStroke f2 = KeyStroke.getKeyStroke("F2");
+    InputMap inputMapRen = btnRename.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+    inputMapRen.put(f2, "Rename");
+    ActionMap actionMapRen = btnRename.getActionMap();
+    actionMapRen.put("Rename", new CustomActionListenerRenRel());
+    btnRename.setActionMap(actionMapRen);
 
     btnInspect.addActionListener(new ActionListener() {
 
@@ -190,6 +198,32 @@ public class ToolBarRelation extends ToolBar {
 
   public void setEnabledFD(boolean enabled) {
     btnNewFd.setEnabled(enabled);
+  }
+
+  private void delRel() {
+    int x = tree.getNewSelectedItem(TreeEnum.DelRelation);
+    relLogic.deleteRelation();
+    tree.setSelectedItem(x);
+  }
+
+  private void renRel() {
+    int x = tree.getNewSelectedItem(TreeEnum.RenameRel);
+    relLogic.renameRelation();
+    tree.setSelectedItem(x);
+  }
+
+  private class CustomActionListenerDelRel extends AbstractAction {
+    @Override
+    public void actionPerformed(ActionEvent actionEvent) {
+      delRel();
+    }
+  }
+
+  private class CustomActionListenerRenRel extends AbstractAction {
+    @Override
+    public void actionPerformed(ActionEvent actionEvent) {
+      renRel();
+    }
   }
 
 }

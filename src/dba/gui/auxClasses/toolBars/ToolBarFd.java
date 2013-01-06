@@ -61,11 +61,15 @@ public class ToolBarFd extends ToolBar {
 
       @Override
       public void actionPerformed(ActionEvent arg0) {
-        int x = tree.getNewSelectedItem(TreeEnum.DelFD);
-        fdLogic.deleteFd();
-        tree.setSelectedItem(x);
+        delFd();
       }
     });
+    KeyStroke delete = KeyStroke.getKeyStroke("DELETE");
+    InputMap inputMapDel = btnDelete.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+    inputMapDel.put(delete, "Delete");
+    ActionMap actionMapDel = btnDelete.getActionMap();
+    actionMapDel.put("Delete", new CustomActionListenerDelFd());
+    btnDelete.setActionMap(actionMapDel);
 
     btnEdit.addActionListener(new ActionListener() {
 
@@ -79,6 +83,19 @@ public class ToolBarFd extends ToolBar {
 
     add(btnDelete);
     add(btnEdit);
+  }
+
+  private void delFd() {
+    int x = tree.getNewSelectedItem(TreeEnum.DelFD);
+    fdLogic.deleteFd();
+    tree.setSelectedItem(x);
+  }
+
+  private class CustomActionListenerDelFd extends AbstractAction {
+    @Override
+    public void actionPerformed(ActionEvent actionEvent) {
+      delFd();
+    }
   }
 
 }

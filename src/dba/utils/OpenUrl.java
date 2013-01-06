@@ -35,13 +35,13 @@ public class OpenUrl {
       return;
     }
     Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
-      if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
-        try {
-          desktop.browse(page);
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
+    if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+      try {
+        desktop.browse(page);
+      } catch (Exception e) {
+        e.printStackTrace();
       }
     }
   }
+}
 

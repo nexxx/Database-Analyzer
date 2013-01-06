@@ -63,21 +63,31 @@ public class ToolBarAttribute extends ToolBar {
 
       @Override
       public void actionPerformed(ActionEvent arg0) {
-        int x = tree.getNewSelectedItem(TreeEnum.DelAttribute);
-        attrLogic.deleteAttribute();
-        tree.setSelectedItem(x);
+        delAttr();
       }
     });
+    KeyStroke delete = KeyStroke.getKeyStroke("DELETE");
+    InputMap inputMapDel = btnDelete.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+    inputMapDel.put(delete, "Delete");
+    ActionMap actionMapDel = btnDelete.getActionMap();
+    actionMapDel.put("Delete", new CustomActionListenerDelAttr());
+    btnDelete.setActionMap(actionMapDel);
+
 
     btnRename.addActionListener(new ActionListener() {
 
       @Override
       public void actionPerformed(ActionEvent arg0) {
-        int x = tree.getNewSelectedItem(TreeEnum.RenameAttr);
-        attrLogic.renameAttribute();
-        tree.setSelectedItem(x);
+        renAttr();
       }
     });
+    KeyStroke f2 = KeyStroke.getKeyStroke("F2");
+    InputMap inputMapRen = btnRename.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+    inputMapRen.put(f2, "Rename");
+    ActionMap actionMapRen = btnRename.getActionMap();
+    actionMapRen.put("Rename", new CustomActionListenerRenAttr());
+    btnRename.setActionMap(actionMapRen);
+
 
     btnPK.addActionListener(new ActionListener() {
 
@@ -109,6 +119,7 @@ public class ToolBarAttribute extends ToolBar {
         tree.setSelectedItem(x);
       }
     });
+
     add(btnDelete);
     add(btnRename);
     add(btnPK);
@@ -138,4 +149,32 @@ public class ToolBarAttribute extends ToolBar {
 
     txtConstraints.setText(attr.getConstraints());
   }
+
+  private void delAttr() {
+    int x = tree.getNewSelectedItem(TreeEnum.DelAttribute);
+    attrLogic.deleteAttribute();
+    tree.setSelectedItem(x);
+  }
+
+  private void renAttr() {
+    int x = tree.getNewSelectedItem(TreeEnum.RenameAttr);
+    attrLogic.renameAttribute();
+    tree.setSelectedItem(x);
+  }
+
+  private class CustomActionListenerDelAttr extends AbstractAction {
+    @Override
+    public void actionPerformed(ActionEvent actionEvent) {
+      delAttr();
+    }
+  }
+
+  private class CustomActionListenerRenAttr extends AbstractAction {
+    @Override
+    public void actionPerformed(ActionEvent actionEvent) {
+      renAttr();
+    }
+  }
 }
+
+

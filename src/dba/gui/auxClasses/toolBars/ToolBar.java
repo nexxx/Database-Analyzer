@@ -45,10 +45,6 @@ import java.util.Observer;
 public class ToolBar extends JToolBar implements Observer {
   GetIcons getIcons;
   Localization locale;
-
-  /**
-   *
-   */
   private static final long serialVersionUID = -4014383640978265021L;
   private GuiLogic guiLogic;
   private RelationView relationView;
