@@ -17,7 +17,9 @@
 
 package dba.utils;
 
-import javax.swing.*;
+import java.awt.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 /**
  * Util Class to open a Url in Browser
@@ -25,24 +27,21 @@ import javax.swing.*;
  * @author Andreas Freitag
  */
 public class OpenUrl {
-  public static void openURL(String url) {
-    String osName = System.getProperty("os.name");
+  public static void openURL(String uri) {
+    URI page;
     try {
-      if (osName.startsWith("Windows")) {
-        Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
-      } else {
-        String[] browsers = {"firefox", "opera", "konqueror", "epiphany", "mozilla", "netscape", "chrome", "chromium"};
-        String browser = null;
-        for (int count = 0; count < browsers.length && browser == null; count++) {
-          if (Runtime.getRuntime().exec(new String[]{"which", browsers[count]}).waitFor() == 0) {
-            browser = browsers[count];
-          }
+      page = new URI(uri);
+    } catch (URISyntaxException e) {
+      return;
+    }
+    Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+      if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+        try {
+          desktop.browse(page);
+        } catch (Exception e) {
+          e.printStackTrace();
         }
-        Runtime.getRuntime().exec(new String[]{browser, url});
       }
-    } catch (Exception e) {
-      JOptionPane.showMessageDialog(null, Localization.getInstance().getString("OU_Error") + ":\n" + e
-        .getLocalizedMessage());
     }
   }
-}
+
