@@ -106,10 +106,7 @@ public class MainWindow implements constants, Observer {
   private JCheckBoxMenuItem themeMenuItem;
   private Options options;
   private OutlinePanel pnlOutline;
-  private WikiPanel pnlWiki;
-  private ToolboxPanel pnlToolbox;
   private InspectPanel pnlInspect;
-  private ThemingPanel pnlTheming;
 
 
   /**
@@ -262,9 +259,6 @@ public class MainWindow implements constants, Observer {
 
     pnlInspect = new InspectPanel();
     pnlOutline = new OutlinePanel(relationView.getGraphComponent());
-    pnlTheming = new ThemingPanel();
-    pnlToolbox = new ToolboxPanel();
-    pnlWiki = new WikiPanel();
 
     updateNavTabs();
 
@@ -494,41 +488,6 @@ public class MainWindow implements constants, Observer {
       }
     });
     navTabMenu.add(outlineMenuItem);
-
-    themeMenuItem = new JCheckBoxMenuItem(locale.getString("GUI_Theming"), options.getShowTabTheme());
-    themeMenuItem.addItemListener(new ItemListener() {
-      @Override
-      public void itemStateChanged(ItemEvent itemEvent) {
-        options.setShowTabTheme(themeMenuItem.isSelected());
-        options.writeOptions();
-        updateNavTabs();
-      }
-    });
-    navTabMenu.add(themeMenuItem);
-
-    toolboxMenuItem = new JCheckBoxMenuItem(locale.getString("GUI_Toolbox"), options.getShowTabToolbox());
-    toolboxMenuItem.addItemListener(new ItemListener() {
-      @Override
-      public void itemStateChanged(ItemEvent itemEvent) {
-        options.setShowTabToolbox(toolboxMenuItem.isSelected());
-        options.writeOptions();
-        updateNavTabs();
-      }
-    });
-    navTabMenu.add(toolboxMenuItem);
-
-
-    wikiMenuItem = new JCheckBoxMenuItem(locale.getString("GUI_Wiki"), options.getShowTabWiki());
-    wikiMenuItem.addItemListener(new ItemListener() {
-      @Override
-      public void itemStateChanged(ItemEvent itemEvent) {
-        options.setShowTabWiki(wikiMenuItem.isSelected());
-        options.writeOptions();
-        updateNavTabs();
-      }
-    });
-    navTabMenu.add(wikiMenuItem);
-
   }
 
 
@@ -702,15 +661,6 @@ public class MainWindow implements constants, Observer {
     }
     if (options.getShowTabOutline()) {
       tabbedPaneOutline.addTab(locale.getString("GUI_Outline"), pnlOutline);
-    }
-    if (options.getShowTabTheme()) {
-      tabbedPaneOutline.addTab(locale.getString("GUI_Theming"), pnlTheming);
-    }
-    if (options.getShowTabToolbox()) {
-      tabbedPaneOutline.addTab(locale.getString("GUI_Toolbox"), pnlToolbox);
-    }
-    if (options.getShowTabWiki()) {
-      tabbedPaneOutline.addTab(locale.getString("GUI_Wiki"), pnlWiki);
     }
   }
 

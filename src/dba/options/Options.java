@@ -71,14 +71,8 @@ public class Options extends Observable {
   private HashMap<String, String> availLAF;
   private Boolean showTabOutline;
   private Boolean showTabInspect;
-  private Boolean showTabToolbox;
-  private Boolean showTabTheme;
-  private Boolean showTabWiki;
   private final Boolean defShowTabOutline = true;
   private final Boolean defShowTabInspect = true;
-  private final Boolean defShowTabToolbox = true;
-  private final Boolean defShowTabTheme = true;
-  private final Boolean defShowTabWiki = true;
 
 
   /**
@@ -126,9 +120,6 @@ public class Options extends Observable {
 
     showTabInspect = defShowTabInspect;
     showTabOutline = defShowTabOutline;
-    showTabTheme = defShowTabTheme;
-    showTabToolbox = defShowTabToolbox;
-    showTabWiki = defShowTabWiki;
   }
 
   /**
@@ -202,10 +193,6 @@ public class Options extends Observable {
       prop.setProperty("lastType", lastType);
       prop.setProperty("showTabInspect", showTabInspect.toString());
       prop.setProperty("showTabOutline", showTabOutline.toString());
-      prop.setProperty("showTabTheme", showTabTheme.toString());
-      prop.setProperty("showTabToolbox", showTabToolbox.toString());
-      prop.setProperty("showTabWiki", showTabWiki.toString());
-
 
       // Save properties to DBN options folder
       prop.store(new FileOutputStream(optionsFile), "DBA options file");
@@ -285,27 +272,6 @@ public class Options extends Observable {
       lastType = prop.getProperty("lastType");
       if (lastType == null) {
         lastType = defLastType;
-      }
-
-      tmpString = prop.getProperty("showTabTheme");
-      if (tmpString == null) {
-        showTabTheme = defShowTabTheme;
-      } else {
-        showTabTheme = Boolean.valueOf(tmpString);
-      }
-
-      tmpString = prop.getProperty("showTabToolbox");
-      if (tmpString == null) {
-        showTabToolbox = defShowTabToolbox;
-      } else {
-        showTabToolbox = Boolean.valueOf(tmpString);
-      }
-
-      tmpString = prop.getProperty("showTabWiki");
-      if (tmpString == null) {
-        showTabWiki = defShowTabWiki;
-      } else {
-        showTabWiki = Boolean.valueOf(tmpString);
       }
 
       tmpString = prop.getProperty("showTabOutline");
@@ -556,47 +522,5 @@ public class Options extends Observable {
    */
   public void setShowTabInspect(Boolean showTabInspect) {
     this.showTabInspect = showTabInspect;
-  }
-
-  /**
-   * @return Show Toolbox tab
-   */
-  public Boolean getShowTabToolbox() {
-    return showTabToolbox;
-  }
-
-  /**
-   * @param showTabToolbox Show Toolbox tab
-   */
-  public void setShowTabToolbox(Boolean showTabToolbox) {
-    this.showTabToolbox = showTabToolbox;
-  }
-
-  /**
-   * @return Show Theming tab
-   */
-  public Boolean getShowTabTheme() {
-    return showTabTheme;
-  }
-
-  /**
-   * @param showTabTheme Show Theming tab
-   */
-  public void setShowTabTheme(Boolean showTabTheme) {
-    this.showTabTheme = showTabTheme;
-  }
-
-  /**
-   * @return Show Wiki tab
-   */
-  public Boolean getShowTabWiki() {
-    return showTabWiki;
-  }
-
-  /**
-   * @param showTabWiki Show wiki tab
-   */
-  public void setShowTabWiki(Boolean showTabWiki) {
-    this.showTabWiki = showTabWiki;
   }
 }
