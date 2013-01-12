@@ -126,33 +126,36 @@ public class GuiLogic extends Observable {
 
     if (returnVal == JFileChooser.APPROVE_OPTION) {
       try {
-        path = fc.getSelectedFile().getCanonicalPath();
-        File inputFile = new File(path);
-        ReadFromXML reader = new ReadFromXML();
-        try {
-          dbTree.disselectItems();
-          database = reader.ReadDbNow(inputFile);
-          dbTree.setDatabase(database);
-          database.initPropertyChangeListeners();
-          TimeLine.getInstance().setDirty(false);
-          lastFileName = path;
-          lastFileNameBackup = path;
-          TimeLine.getInstance().initialize(database);
-
-          tree.setSelectionRow(0);
-          return FeedbackEnum.SUCCESSFUL;
-
-        } catch (Exception e) {
-          return FeedbackEnum.FAILED;
-        }
-
-      } catch (IOException ex) {
+        return openFromPath(fc.getSelectedFile().getCanonicalPath());
+      } catch (IOException e) {
         return FeedbackEnum.FAILED;
       }
     } else {
       return FeedbackEnum.CANCEL;
     }
 
+  }
+
+  public FeedbackEnum openFromPath(String path) {
+
+    File inputFile = new File(path);
+    ReadFromXML reader = new ReadFromXML();
+    try {
+      dbTree.disselectItems();
+      database = reader.ReadDbNow(inputFile);
+      dbTree.setDatabase(database);
+      database.initPropertyChangeListeners();
+      TimeLine.getInstance().setDirty(false);
+      lastFileName = path;
+      lastFileNameBackup = path;
+      TimeLine.getInstance().initialize(database);
+
+      tree.setSelectionRow(0);
+      return FeedbackEnum.SUCCESSFUL;
+
+    } catch (Exception e) {
+      return FeedbackEnum.FAILED;
+    }
   }
 
   /**

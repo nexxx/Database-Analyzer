@@ -47,12 +47,18 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.dnd.DnDConstants;
+import java.awt.dnd.DropTarget;
+import java.awt.dnd.DropTargetDropEvent;
 import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.List;
 
 
 /**
@@ -299,6 +305,23 @@ public class MainWindow implements constants, Observer {
 
     JMenuBar menuBar = new JMenuBar();
     frame.setJMenuBar(menuBar);
+
+    frame.setDropTarget(new DropTarget() {
+      public synchronized void drop(DropTargetDropEvent evt) {
+        try {
+          evt.acceptDrop(DnDConstants.ACTION_COPY);
+          List<File> droppedFiles = (List<File>) evt.getTransferable().getTransferData(DataFlavor.javaFileListFlavor);
+
+          String path = droppedFiles.get(0).getCanonicalPath();
+          if(path.endsWith(".xml")) {
+            guiLogic.openFromPath(path);
+          }
+
+        } catch (Exception ex) {
+          ex.printStackTrace();
+        }
+      }
+    });
 
     createFileMenu(menuBar);
     createEditMenu(menuBar);
