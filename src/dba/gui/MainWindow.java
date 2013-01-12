@@ -41,6 +41,7 @@ import dbaCore.data.TimeLine;
 import dbaCore.data.events.Change;
 import dbaCore.data.events.ChangeListener;
 import dbaCore.data.events.Time;
+import dbaCore.logging.MyLogger;
 import dbaCore.logic.Analysis.GeneralRelationCheck;
 
 import javax.swing.*;
@@ -55,10 +56,13 @@ import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -110,6 +114,8 @@ public class MainWindow implements constants, Observer {
   private Options options;
   private OutlinePanel pnlOutline;
   private InspectPanel pnlInspect;
+  private static Logger logger =  Logger.getLogger(MainWindow.class.getName());
+
 
 
   /**
@@ -117,6 +123,9 @@ public class MainWindow implements constants, Observer {
    */
   public MainWindow() {
     super();
+
+    logger.log(Level.INFO, "Started DBA");
+
     options = Options.getInstance();
     checker = new GeneralRelationCheck();
     GetIcons getIcon = GetIcons.getInstance();

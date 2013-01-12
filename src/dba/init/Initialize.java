@@ -18,8 +18,10 @@
 package dba.init;
 
 import dba.options.Options;
+import dbaCore.logging.MyLogger;
 
 import javax.swing.*;
+import java.io.IOException;
 
 
 /**
@@ -34,6 +36,11 @@ public class Initialize {
 
   private Initialize() {
     super();
+    try {
+      MyLogger.setup();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
     options = Options.getInstance();
   }
 
@@ -57,6 +64,7 @@ public class Initialize {
     options.readOptions();
     this.checkSaveFolder();
     this.checkExportFolder();
+    this.checkLogFolder();
     this.setLookAndFeel();
   }
 
@@ -83,6 +91,12 @@ public class Initialize {
       options.getExportFolder().mkdirs();
     }
 
+  }
+
+  private void checkLogFolder(){
+    if (!options.getLogFolder().exists()) {
+      options.getLogFolder().mkdirs();
+    }
   }
 
   public void setLookAndFeel() {

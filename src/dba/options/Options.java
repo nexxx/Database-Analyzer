@@ -39,12 +39,13 @@ public class Options extends Observable {
   private Properties prop;
   private String language;
   private final String defLanguage = "en";
-  ;
   private static Options instance = null;
   final private File optionsFolder;
   final private File optionsFile;
   final private File saveFolder;
   final private File exportFolder;
+  final private File logFolder;
+  final private File logFile;
   private Boolean showTippsOnStartup;
   private final Boolean defShowTippsOnStartup = true;
   private HashMap<String, String> availableLocale;
@@ -104,6 +105,8 @@ public class Options extends Observable {
     optionsFile = new File(optionsFolder + "/dba.properties");
     saveFolder = new File(homeFolder + "/Save");
     exportFolder = new File(homeFolder + "/Export");
+    logFolder = new File(homeFolder + "/Logs");
+    logFile = new File(logFolder + "/dba.html");
 
     attributeColor = defAttributeColor;
     relationColor = defRelationColor;
@@ -426,7 +429,7 @@ public class Options extends Observable {
     return arrowFDColor;
   }
 
-  /**
+  /**                                         ;
    * @param arrowFDColor Arrowcolor FD(e.g. #000000)
    */
   public void setArrowFDColor(String arrowFDColor) {
@@ -523,4 +526,20 @@ public class Options extends Observable {
   public void setShowTabInspect(Boolean showTabInspect) {
     this.showTabInspect = showTabInspect;
   }
+
+  /**
+   * @return The Log-Folder
+   */
+  public File getLogFolder() {
+    return logFolder;
+  }
+
+  /**
+   * @return The Log-File
+   */
+  public File getLogFile() {
+    return logFile;
+  }
+
+
 }
