@@ -107,9 +107,6 @@ public class MainWindow implements constants, Observer {
   private JTabbedPane tabbedPaneOutline;
   private JCheckBoxMenuItem inspectMenuItem;
   private JCheckBoxMenuItem outlineMenuItem;
-  private JCheckBoxMenuItem wikiMenuItem;
-  private JCheckBoxMenuItem toolboxMenuItem;
-  private JCheckBoxMenuItem themeMenuItem;
   private Options options;
   private OutlinePanel pnlOutline;
   private InspectPanel pnlInspect;
@@ -314,7 +311,12 @@ public class MainWindow implements constants, Observer {
 
           String path = droppedFiles.get(0).getCanonicalPath();
           if(path.endsWith(".xml")) {
-            guiLogic.openFromPath(path);
+            FeedbackEnum returnVal = guiLogic.openFromPath(path);
+            if (returnVal == FeedbackEnum.FAILED) {
+              feedbackbarPanel.showFeedback(locale.getString("FB_OpenFailed"), FeedbackEnum.FAILED);
+            }
+          } else {
+            feedbackbarPanel.showFeedback(locale.getString("FB_OpenFailed"), FeedbackEnum.FAILED);
           }
 
         } catch (Exception ex) {
