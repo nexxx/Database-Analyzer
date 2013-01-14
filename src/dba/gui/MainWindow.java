@@ -124,7 +124,7 @@ public class MainWindow implements constants, Observer {
   public MainWindow() {
     super();
 
-    logger.log(Level.INFO, "Started DBA");
+    logger.log(Level.INFO, "Starting DBA");
 
     options = Options.getInstance();
     checker = new GeneralRelationCheck();
@@ -219,6 +219,7 @@ public class MainWindow implements constants, Observer {
 
     Initialize init = Initialize.getInstance();
     init.init();
+    logger.log(Level.INFO, "Initialization finished");
 
     minimumSizeSplitPane = new Dimension(100, 50);
 
@@ -341,6 +342,8 @@ public class MainWindow implements constants, Observer {
     createHelpMenu(menuBar);
 
     dbTreePanel.getTree().setSelectedItem(0);
+    logger.log(Level.INFO, "Started GUI");
+
   }
 
 
@@ -717,11 +720,7 @@ public class MainWindow implements constants, Observer {
       if (evt.getPropertyName().equalsIgnoreCase("TreeClick")) {
         if (((String) evt.getNewValue()).equalsIgnoreCase("Database")) {
           pnlToolBar.removeAll();
-          if (CustomTree.getInstance().getDatabase().getDatabase().isEmpty()) {
-            toolBarDatabase.setEnabledInspect(false);
-          } else {
-            toolBarDatabase.setEnabledInspect(true);
-          }
+          toolBarDatabase.setEnabledInspect(!CustomTree.getInstance().getDatabase().getDatabase().isEmpty());
           toolBarDatabase.updateDatatype();
           pnlToolBar.add(toolBarDatabase, BorderLayout.CENTER);
         } else if (((String) evt.getNewValue()).equalsIgnoreCase("Relation")) {
