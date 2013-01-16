@@ -34,15 +34,12 @@ import dba.utils.GetIcons;
 import dba.utils.Localization;
 import dba.utils.OpenUrl;
 import dba.utils.constants;
-import dbaCore.data.Database;
-import dbaCore.data.FunctionalDependency;
-import dbaCore.data.NormalForm;
-import dbaCore.data.TimeLine;
+import dbaCore.data.*;
 import dbaCore.data.events.Change;
 import dbaCore.data.events.ChangeListener;
 import dbaCore.data.events.Time;
-import dbaCore.logging.MyLogger;
 import dbaCore.logic.Analysis.GeneralRelationCheck;
+import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -56,7 +53,6 @@ import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -114,6 +110,12 @@ public class MainWindow implements constants, Observer {
   private Options options;
   private OutlinePanel pnlOutline;
   private InspectPanel pnlInspect;
+  private JTextField txtSearch;
+  private ArrayList<Object> searchResults;
+  private JButton btnNext;
+  private JButton btnPrev;
+  private int searchIterator;
+  private String lastSearchName = "THISWILLNEVERBEANAMEINADATABASE123!\"§@";
   private static Logger logger =  Logger.getLogger(MainWindow.class.getName());
 
 
@@ -163,6 +165,8 @@ public class MainWindow implements constants, Observer {
     frame.setContentPane(contentPane);
 
     database = new Database();
+
+    searchResults = new ArrayList<>();
 
     dbTreePanel = new DatabaseTreePanel(database);
     guiLogic = new GuiLogic(dbTreePanel);
@@ -268,14 +272,68 @@ public class MainWindow implements constants, Observer {
     pnlRight.add(displayTab, BorderLayout.CENTER);
     pnlRight.add(feedbackbarPanel, BorderLayout.SOUTH);
 
+    JPanel pnlLeft = new JPanel(new BorderLayout());
+    JPanel pnlSearch = new JPanel(new MigLayout("wrap 3", "[grow, fill][grow,fill,38:38:38][grow,fill,38:38:38]"));
+    btnNext = new JButton(getIcon.getNext());
+    btnNext.setBorderPainted(false);
+    btnNext.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent actionEvent) {
+        if(searchResults.isEmpty() || !lastSearchName.equals(txtSearch.getText())) {
+          lastSearchName = txtSearch.getText();
+          search();
+          return;
+        }
+        if((++searchIterator) < searchResults.size()) {
+          CustomTree.getInstance().setSelectedNode(searchResults.get(searchIterator));
+        } else {
+          searchIterator = 0;
+          CustomTree.getInstance().setSelectedNode(searchResults.get(searchIterator));
+        }
+      }
+    });
+    btnPrev = new JButton(getIcon.getPrev());
+    btnPrev.setBorderPainted(false);
+    btnPrev.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent actionEvent) {
+        if(searchResults.isEmpty() || !lastSearchName.equals(txtSearch.getText())) {
+          lastSearchName = txtSearch.getText();
+          search();
+          return;
+        }
+        if((--searchIterator) >= 0) {
+          CustomTree.getInstance().setSelectedNode(searchResults.get(searchIterator));
+        } else {
+          searchIterator = searchResults.size()-1;
+          CustomTree.getInstance().setSelectedNode(searchResults.get(searchIterator));
+        }
+      }
+    });
+
+    txtSearch = new JTextField();
+    txtSearch.setColumns(Integer.MAX_VALUE);
+    txtSearch.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent actionEvent) {
+        lastSearchName = txtSearch.getText();
+        search();
+      }
+    });
+    pnlSearch.add(txtSearch);
+    pnlSearch.add(btnPrev);
+    pnlSearch.add(btnNext);
+    pnlLeft.add(pnlSearch, BorderLayout.SOUTH);
+
     tabbedPaneOutline = new JTabbedPane();
+    pnlLeft.add(tabbedPaneOutline, BorderLayout.CENTER);
 
     pnlInspect = new InspectPanel();
     pnlOutline = new OutlinePanel(relationView.getGraphComponent());
 
     updateNavTabs();
 
-    splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, tabbedPaneOutline, pnlRight);
+    splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pnlLeft, pnlRight);
     splitPaneDividerSize = 5;
     splitPane.setDividerSize(splitPaneDividerSize);
     splitPane.setDividerLocation(250);
@@ -314,6 +372,7 @@ public class MainWindow implements constants, Observer {
     frame.setJMenuBar(menuBar);
 
     frame.setDropTarget(new DropTarget() {
+      @Override
       public synchronized void drop(DropTargetDropEvent evt) {
         try {
           evt.acceptDrop(DnDConstants.ACTION_COPY);
@@ -741,6 +800,19 @@ public class MainWindow implements constants, Observer {
       }
       SwingUtilities.updateComponentTreeUI(pnlToolBar);
 
+    }
+  }
+
+  private void search(){
+    if (txtSearch.getText().isEmpty()) {
+      return;
+    }
+    searchResults = database.search(txtSearch.getText());
+    searchIterator = 0;
+    if (searchResults.size() > 0) {
+      CustomTree.getInstance().setSelectedNode(searchResults.get(searchIterator));
+    } else {
+      feedbackbarPanel.showFeedback(txtSearch.getText() + " " + locale.getString("GUI_NotFound"), FeedbackEnum.FAILED);
     }
   }
 }

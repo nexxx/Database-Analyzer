@@ -96,6 +96,9 @@ public class GetIcons implements constants {
   private ImageIcon tb3NF;
   private ImageIcon tbBCNF;
   private ImageIcon dbaLogo;
+  private ImageIcon next;
+  private ImageIcon prev;
+
 
   private GetIcons() {
     super();
@@ -166,6 +169,8 @@ public class GetIcons implements constants {
     tbBCNF = getIcon("bcnf.png", toolBarIconSize);
     iconOptionsFrame = getIcon("options.png", 32);
     dbaLogo = getIcon("dba.png", 300);
+    next = getIcon("next.png", 16);
+    prev = getIcon("previous.png", 16);
   }
 
   /**
@@ -666,5 +671,19 @@ public class GetIcons implements constants {
    */
   public ImageIcon getMenuImport() {
     return menuImport;
+  }
+
+  /**
+   * @return the next icon
+   */
+  public ImageIcon getNext() {
+    return next;
+  }
+
+  /**
+   * @return get previous icon
+   */
+  public ImageIcon getPrev() {
+    return prev;
   }
 }

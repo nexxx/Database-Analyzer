@@ -40,6 +40,7 @@ public class Database extends HistoricObject {
   private String notes;
   private ArrayList<Person> persons;
   private TypeEnum type;
+  private ArrayList<Object> searchResult;
 
   private ArrayList<ForeignKeyConstraint> foreignKeys;
 
@@ -66,6 +67,7 @@ public class Database extends HistoricObject {
     notes = "";
     persons = new ArrayList<>();
     type = TypeEnum.MYSQL;
+    searchResult = new ArrayList<>();
   }
 
   @XmlElementWrapper(name = "relations")
@@ -556,6 +558,27 @@ public class Database extends HistoricObject {
    */
   public void setType(TypeEnum type) {
     this.type = type;
+  }
+
+  /**
+   * Search all relations and attributes for the given String
+   * @param searchForString String to search for
+   * @return Arraylist with all found elements;
+   */
+  public ArrayList<Object> search(String searchForString) {
+    searchResult.clear();
+    for(RelationSchema rel: database) {
+      if(rel.getName().toUpperCase().contains(searchForString.toUpperCase())) {
+        searchResult.add(rel);
+      }
+      for(Attribute attr : rel.getAttributes()) {
+        if(attr.getName().toUpperCase().contains(searchForString.toUpperCase())) {
+          searchResult.add(attr);
+        }
+      }
+    }
+
+    return searchResult;
   }
 }
 
