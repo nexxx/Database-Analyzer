@@ -299,18 +299,9 @@ public class MainWindow implements constants, Observer {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
         if (splitPane.getDividerLocation() > minimumSizeSplitPane.width) {
-          dbTreePanel.setMinimumSize(new Dimension());
-          lastSplitPaneLocation = splitPane.getDividerLocation();
-          splitPane.setDividerLocation(0);
-          splitPane.setEnabled(false);
-          btnShowTree.setText(">");
-          splitPane.setDividerSize(0);
+          hideTree();
         } else {
-          dbTreePanel.setMinimumSize(minimumSizeSplitPane);
-          splitPane.setDividerLocation(lastSplitPaneLocation);
-          splitPane.setEnabled(true);
-          btnShowTree.setText("<");
-          splitPane.setDividerSize(splitPaneDividerSize);
+          showTree();
         }
       }
     });
@@ -500,6 +491,9 @@ public class MainWindow implements constants, Observer {
     findMenuItem.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
+        if (splitPane.getDividerLocation() < minimumSizeSplitPane.width) {
+          showTree();
+        }
         pnlLeft.add(pnlSearch, BorderLayout.SOUTH);
         pnlLeft.revalidate();
       }
@@ -737,6 +731,23 @@ public class MainWindow implements constants, Observer {
     if (wcs.openClicked()) {
       updateDBAfterChange();
     }
+  }
+
+  private void hideTree(){
+    dbTreePanel.setMinimumSize(new Dimension());
+    lastSplitPaneLocation = splitPane.getDividerLocation();
+    splitPane.setDividerLocation(0);
+    splitPane.setEnabled(false);
+    btnShowTree.setText(">");
+    splitPane.setDividerSize(0);
+  }
+
+  private void showTree(){
+    dbTreePanel.setMinimumSize(minimumSizeSplitPane);
+    splitPane.setDividerLocation(lastSplitPaneLocation);
+    splitPane.setEnabled(true);
+    btnShowTree.setText("<");
+    splitPane.setDividerSize(splitPaneDividerSize);
   }
 
   class ToolbarChangeListener implements PropertyChangeListener {
