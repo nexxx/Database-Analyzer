@@ -51,6 +51,7 @@ public class GetIcons implements constants {
   private ImageIcon iconOptionsFrame;
   private ImageIcon menuUndo;
   private ImageIcon menuRedo;
+  private ImageIcon menuSearch;
   private ImageIcon menuEditInfos;
   private ImageIcon menuAbout;
   private ImageIcon menuHelp;
@@ -125,6 +126,7 @@ public class GetIcons implements constants {
     iconEditInfosFrame = getIcon("editInfos.png", 32);
     menuUndo = getIcon("undo.png", constants.popupIconSize);
     menuRedo = getIcon("redo.png", constants.popupIconSize);
+    menuSearch = getIcon("search.png", constants.popupIconSize);
     menuEditInfos = getIcon("editInfos.png", popupIconSize);
     menuAbout = getIcon("about.png", constants.popupIconSize);
     menuHelp = getIcon("help.png", constants.popupIconSize);
@@ -695,5 +697,12 @@ public class GetIcons implements constants {
    */
   public ImageIcon getButtonClose() {
     return buttonClose;
+  }
+
+  /**
+   * @return tje menu search icon
+   */
+  public ImageIcon getMenuSearch() {
+    return menuSearch;
   }
 }

@@ -85,6 +85,7 @@ public class MainWindow implements constants, Observer {
   private ImageIcon iconHelp;
   private ImageIcon iconDonate;
   private ImageIcon iconGithib;
+  private ImageIcon iconSearch;
   private Localization locale;
   private JPanel pnlToolBar;
   private ToolBar toolBar;
@@ -141,6 +142,7 @@ public class MainWindow implements constants, Observer {
     iconHelp = getIcon.getMenuHelp();
     iconDonate = getIcon.getMenuDonate();
     iconGithib = getIcon.getMenuGithub();
+    iconSearch = getIcon.getMenuSearch();
 
     locale = Localization.getInstance();
     feedbackbarPanel = FeedbackbarPanel.getInstance();
@@ -272,7 +274,6 @@ public class MainWindow implements constants, Observer {
     pnlSearch = new SearchPanel();
     ((SearchPanel)pnlSearch).addObserver(this);
 
-    pnlLeft.add(pnlSearch, BorderLayout.SOUTH);
 
     tabbedPaneOutline = new JTabbedPane();
     pnlLeft.add(tabbedPaneOutline, BorderLayout.CENTER);
@@ -494,6 +495,19 @@ public class MainWindow implements constants, Observer {
 
     editMenu.add(new JSeparator());
 
+    JMenuItem findMenuItem = new JMenuItem(locale.getString("GUI_Search"), iconSearch);
+    findMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, InputEvent.CTRL_MASK));
+    findMenuItem.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent actionEvent) {
+        pnlLeft.add(pnlSearch, BorderLayout.SOUTH);
+        pnlLeft.revalidate();
+      }
+    });
+    editMenu.add(findMenuItem);
+
+    editMenu.add(new JSeparator());
+
     JMenuItem metaInfoMenuItem = new JMenuItem(locale.getString("MI_CustInfo"), iconMetaInfo);
     metaInfoMenuItem.addActionListener(new ActionListener() {
       @Override
@@ -690,7 +704,6 @@ public class MainWindow implements constants, Observer {
       Feedback feedback = (Feedback) o;
       feedbackbarPanel.showFeedback(feedback.getText(), feedback.getFeedback());
     } else if(o instanceof SearchPanel) {
-      System.out.println("Notified");
       pnlLeft.remove(pnlSearch);              //Close Search Panel
       pnlLeft.revalidate();
     }
