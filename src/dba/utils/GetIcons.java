@@ -77,6 +77,7 @@ public class GetIcons implements constants {
   private ImageIcon buttonDelete;
   private ImageIcon buttonAttribute;
   private ImageIcon buttonFd;
+  private ImageIcon buttonClose;
   private ImageIcon tbNew;
   private ImageIcon tbOpen;
   private ImageIcon tbSave;
@@ -98,6 +99,7 @@ public class GetIcons implements constants {
   private ImageIcon dbaLogo;
   private ImageIcon next;
   private ImageIcon prev;
+
 
 
   private GetIcons() {
@@ -149,6 +151,7 @@ public class GetIcons implements constants {
     buttonDelete = getIcon("delete.png", constants.buttonIconSize);
     buttonAttribute = getIcon("attribute.png", constants.buttonIconSize);
     buttonFd = getIcon("fd.png", constants.buttonIconSize);
+    buttonClose = getIcon("close.png", constants.buttonIconSize);
     tbNew = getIcon("new.png", constants.toolBarIconSize);
     tbOpen = getIcon("open.png", constants.toolBarIconSize);
     tbSave = getIcon("save.png", constants.toolBarIconSize);
@@ -685,5 +688,12 @@ public class GetIcons implements constants {
    */
   public ImageIcon getPrev() {
     return prev;
+  }
+
+  /**
+   * @return get icon for close search
+   */
+  public ImageIcon getButtonClose() {
+    return buttonClose;
   }
 }

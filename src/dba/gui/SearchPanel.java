@@ -21,6 +21,7 @@ import dba.gui.auxClasses.feedback.FeedbackbarPanel;
 import dba.options.FeedbackEnum;
 import dba.utils.GetIcons;
 import dba.utils.Localization;
+import dba.utils.Observable;
 import dbaCore.data.Database;
 import net.miginfocom.swing.MigLayout;
 
@@ -28,13 +29,14 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Observer;
 
 /**
  * Provide the search panel
  *
  * @author Andreas Freitag
  */
-public class SearchPanel extends JPanel{
+public class SearchPanel extends JPanel implements Observable {
   private GetIcons getIcon;
   private JPanel panel;
   private JTextField txtSearch;
@@ -44,15 +46,28 @@ public class SearchPanel extends JPanel{
   private int searchIterator;
   private String lastSearchName = "THISWILLNEVERBEANAMEINADATABASE123!\"§@";
   private FeedbackbarPanel feedbackbarPanel;
+  private ArrayList<Observer> observers;
+  private Localization locale;
 
 
   public SearchPanel() {
     super();
     this.panel = this;
+    this.observers = new ArrayList<>();
     this.searchResults = new ArrayList<>();
     this.getIcon = GetIcons.getInstance();
-    feedbackbarPanel = FeedbackbarPanel.getInstance();
+    this.feedbackbarPanel = FeedbackbarPanel.getInstance();
+    this.locale = Localization.getInstance();
+
     panel.setLayout(new MigLayout("wrap 3", "[grow, fill][grow,fill,38:38:38][grow,fill,38:38:38]"));
+    JLabel lblsearch = new JLabel(locale.getString("GUI_Search"));
+    JButton btnClose = new JButton(getIcon.getButtonClose());
+    btnClose.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent actionEvent) {
+        notifyObservers();
+      }
+    });
 
     btnNext = new JButton(getIcon.getNext());
     btnNext.setBorderPainted(false);
@@ -100,6 +115,8 @@ public class SearchPanel extends JPanel{
         search();
       }
     });
+    panel.add(lblsearch, "span 2");
+    panel.add(btnClose);
     panel.add(txtSearch);
     panel.add(btnPrev);
     panel.add(btnNext);
@@ -117,7 +134,27 @@ public class SearchPanel extends JPanel{
     if (!searchResults.isEmpty()) {
       CustomTree.getInstance().setSelectedNode(searchResults.get(searchIterator));
     } else {
-      feedbackbarPanel.showFeedback(txtSearch.getText() + " " + Localization.getInstance().getString("GUI_NotFound"), FeedbackEnum.FAILED);
+      feedbackbarPanel.showFeedback(txtSearch.getText() + " " + locale.getString("GUI_NotFound"), FeedbackEnum.FAILED);
+    }
+  }
+
+
+  /**
+   * Add a Observer to the Collection
+   *
+   * @param observer the observer to add
+   * @return true for success
+   */
+  public boolean addObserver(Observer observer) {
+    return observers.add(observer);
+  }
+
+  /**
+   * Notifies Observers about change
+   */
+  protected void notifyObservers() {
+    for (Observer stalker : observers) {
+      stalker.update(null, this);
     }
   }
 }

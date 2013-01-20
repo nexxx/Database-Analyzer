@@ -39,7 +39,6 @@ import dbaCore.data.events.Change;
 import dbaCore.data.events.ChangeListener;
 import dbaCore.data.events.Time;
 import dbaCore.logic.Analysis.GeneralRelationCheck;
-import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -110,6 +109,8 @@ public class MainWindow implements constants, Observer {
   private Options options;
   private OutlinePanel pnlOutline;
   private InspectPanel pnlInspect;
+  private JPanel pnlSearch;
+  private JPanel pnlLeft;
   private static Logger logger =  Logger.getLogger(MainWindow.class.getName());
 
 
@@ -266,9 +267,12 @@ public class MainWindow implements constants, Observer {
     pnlRight.add(displayTab, BorderLayout.CENTER);
     pnlRight.add(feedbackbarPanel, BorderLayout.SOUTH);
 
-    JPanel pnlLeft = new JPanel(new BorderLayout());
+    pnlLeft = new JPanel(new BorderLayout());
 
-    pnlLeft.add(new SearchPanel(), BorderLayout.SOUTH);
+    pnlSearch = new SearchPanel();
+    ((SearchPanel)pnlSearch).addObserver(this);
+
+    pnlLeft.add(pnlSearch, BorderLayout.SOUTH);
 
     tabbedPaneOutline = new JTabbedPane();
     pnlLeft.add(tabbedPaneOutline, BorderLayout.CENTER);
@@ -685,6 +689,10 @@ public class MainWindow implements constants, Observer {
     } else if (o instanceof Feedback) {
       Feedback feedback = (Feedback) o;
       feedbackbarPanel.showFeedback(feedback.getText(), feedback.getFeedback());
+    } else if(o instanceof SearchPanel) {
+      System.out.println("Notified");
+      pnlLeft.remove(pnlSearch);              //Close Search Panel
+      pnlLeft.revalidate();
     }
   }
 
