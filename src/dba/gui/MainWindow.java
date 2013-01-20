@@ -110,12 +110,6 @@ public class MainWindow implements constants, Observer {
   private Options options;
   private OutlinePanel pnlOutline;
   private InspectPanel pnlInspect;
-  private JTextField txtSearch;
-  private ArrayList<Object> searchResults;
-  private JButton btnNext;
-  private JButton btnPrev;
-  private int searchIterator;
-  private String lastSearchName = "THISWILLNEVERBEANAMEINADATABASE123!\"§@";
   private static Logger logger =  Logger.getLogger(MainWindow.class.getName());
 
 
@@ -166,7 +160,7 @@ public class MainWindow implements constants, Observer {
 
     database = new Database();
 
-    searchResults = new ArrayList<>();
+
 
     dbTreePanel = new DatabaseTreePanel(database);
     guiLogic = new GuiLogic(dbTreePanel);
@@ -273,57 +267,8 @@ public class MainWindow implements constants, Observer {
     pnlRight.add(feedbackbarPanel, BorderLayout.SOUTH);
 
     JPanel pnlLeft = new JPanel(new BorderLayout());
-    JPanel pnlSearch = new JPanel(new MigLayout("wrap 3", "[grow, fill][grow,fill,38:38:38][grow,fill,38:38:38]"));
-    btnNext = new JButton(getIcon.getNext());
-    btnNext.setBorderPainted(false);
-    btnNext.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent actionEvent) {
-        if(searchResults.isEmpty() || !lastSearchName.equals(txtSearch.getText())) {
-          lastSearchName = txtSearch.getText();
-          search();
-          return;
-        }
-        if((++searchIterator) < searchResults.size()) {
-          CustomTree.getInstance().setSelectedNode(searchResults.get(searchIterator));
-        } else {
-          searchIterator = 0;
-          CustomTree.getInstance().setSelectedNode(searchResults.get(searchIterator));
-        }
-      }
-    });
-    btnPrev = new JButton(getIcon.getPrev());
-    btnPrev.setBorderPainted(false);
-    btnPrev.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent actionEvent) {
-        if(searchResults.isEmpty() || !lastSearchName.equals(txtSearch.getText())) {
-          lastSearchName = txtSearch.getText();
-          search();
-          return;
-        }
-        if((--searchIterator) >= 0) {
-          CustomTree.getInstance().setSelectedNode(searchResults.get(searchIterator));
-        } else {
-          searchIterator = searchResults.size()-1;
-          CustomTree.getInstance().setSelectedNode(searchResults.get(searchIterator));
-        }
-      }
-    });
 
-    txtSearch = new JTextField();
-    txtSearch.setColumns(Integer.MAX_VALUE);
-    txtSearch.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent actionEvent) {
-        lastSearchName = txtSearch.getText();
-        search();
-      }
-    });
-    pnlSearch.add(txtSearch);
-    pnlSearch.add(btnPrev);
-    pnlSearch.add(btnNext);
-    pnlLeft.add(pnlSearch, BorderLayout.SOUTH);
+    pnlLeft.add(new SearchPanel(), BorderLayout.SOUTH);
 
     tabbedPaneOutline = new JTabbedPane();
     pnlLeft.add(tabbedPaneOutline, BorderLayout.CENTER);
@@ -800,19 +745,6 @@ public class MainWindow implements constants, Observer {
       }
       SwingUtilities.updateComponentTreeUI(pnlToolBar);
 
-    }
-  }
-
-  private void search(){
-    if (txtSearch.getText().isEmpty()) {
-      return;
-    }
-    searchResults = database.search(txtSearch.getText());
-    searchIterator = 0;
-    if (searchResults.size() > 0) {
-      CustomTree.getInstance().setSelectedNode(searchResults.get(searchIterator));
-    } else {
-      feedbackbarPanel.showFeedback(txtSearch.getText() + " " + locale.getString("GUI_NotFound"), FeedbackEnum.FAILED);
     }
   }
 }
