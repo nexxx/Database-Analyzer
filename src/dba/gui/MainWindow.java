@@ -21,6 +21,7 @@ package dba.gui;
 import dba.gui.auxClasses.GuiLogic;
 import dba.gui.auxClasses.RelationDetailsView;
 import dba.gui.auxClasses.RelationView;
+import dba.gui.auxClasses.SearchPanel;
 import dba.gui.auxClasses.feedback.FeedbackbarPanel;
 import dba.gui.auxClasses.jGraph.JGraphView;
 import dba.gui.auxClasses.navBarPanels.*;
@@ -364,6 +365,7 @@ public class MainWindow implements constants, Observer {
   }
 
   private void createFileMenu(JMenuBar menuBar) {
+    logger.log(Level.INFO, "Creating File Menu bar NOW");
     JMenu fileMenu = new JMenu(locale.getString("GUI_File"));
     menuBar.add(fileMenu);
 

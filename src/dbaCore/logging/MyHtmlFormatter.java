@@ -55,7 +55,16 @@ class MyHtmlFormatter extends Formatter
     buf.append("</td>");
     buf.append("<td>");
     buf.append(formatMessage(rec));
+    buf.append("</td>");
     buf.append("<td>");
+    String s;
+    if(rec.getSourceMethodName().equalsIgnoreCase("<init>")) {
+      s = "init";
+    } else {
+      s = rec.getSourceMethodName();
+    }
+    buf.append(rec.getSourceClassName() + " &lt;" + s + "&gt;");
+    buf.append("</td>");
     buf.append("</tr>\n");
     return buf.toString();
   }
@@ -69,12 +78,13 @@ class MyHtmlFormatter extends Formatter
 
   @Override
   public String getHead(Handler h) {
-    return "<HTML>\n<HEAD>\n" + (new Date())
-      + "\n</HEAD>\n<BODY>\n<PRE>\n"
+    return "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\"\n\"http://www.w3.org/TR/html4/strict.dtd\">\n"
++    "<HTML>\n<HEAD>\n" + "<meta charset=\"utf-8\">\n"
+      + "\n</HEAD>\n<BODY>" + "<p>" +(new Date())+ "</p>" +"\n<PRE>\n"
       + "<table width=\"100%\" border>\n  "
       + "<tr><th>Level</th>" +
       "<th>Time</th>" +
-      "<th>Log Message</th>" +
+      "<th>Log Message</th>" + "<th>Class</th>" +
       "</tr>\n";
   }
 

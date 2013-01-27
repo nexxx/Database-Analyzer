@@ -34,13 +34,15 @@ public class MyLogger {
   //static private FileHandler fileTxt;
   //static private SimpleFormatter formatterTxt;
 
+  //Change me to set Log Level!
+  static private Level logLevel = Level.INFO;
   static private FileHandler fileHTML;
   static private Formatter formatterHTML;
 
   static public void setup() throws IOException {
     // Create Logger
     Logger logger = Logger.getLogger("");
-    logger.setLevel(Level.INFO);
+    logger.setLevel(logLevel);
     //fileTxt = new FileHandler("Logging.txt");
     fileHTML = new FileHandler(Options.getInstance().getLogFile().getCanonicalPath());
 
