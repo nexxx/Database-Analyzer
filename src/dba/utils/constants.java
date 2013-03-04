@@ -31,5 +31,7 @@ public interface constants {
   public static final int treeIconSize = 16;
   public static final int popupIconSize = 18;
   public static final int toolBarIconSize = 32;
+  public static final double maximumZoomFactor=20;
+  public static final double minimumZoomFactor=0.15;
 
 }

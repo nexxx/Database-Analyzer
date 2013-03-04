@@ -95,6 +95,9 @@ public class ToolBar extends JToolBar implements Observer {
 
     cmbZoom.setToolTipText(locale.getString("GUI_ZoomFactor"));
     cmbZoom.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
+    cmbZoom.setPreferredSize(new Dimension(88,29));
+    cmbZoom.setEditable(true);
+    ((JTextField)cmbZoom.getEditor().getEditorComponent()).setHorizontalAlignment(JTextField.CENTER);
 
     relationView.addObserver(this);
     relationDetailView.addObserver(this);

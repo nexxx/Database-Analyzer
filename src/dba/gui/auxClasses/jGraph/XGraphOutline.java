@@ -6,6 +6,7 @@ import com.mxgraph.view.mxGraphView;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
+import dba.utils.constants;
 
 /**
  * Wrapper for mxGraphOutline, enforces maximum and minimum ZoomFactors
@@ -59,10 +60,10 @@ public class XGraphOutline extends mxGraphOutline {
           double newScale = scale - (dx * scale) / w;
 
           //Enforce minimum and maximum ZoomLevels
-          if (newScale > 20) {
-            newScale = 20;
-          } else if (newScale < 0.15) {
-            newScale = 0.15;
+          if (newScale > constants.maximumZoomFactor) {
+            newScale = constants.maximumZoomFactor;
+          } else if (newScale < constants.minimumZoomFactor) {
+            newScale = constants.minimumZoomFactor;
           }
 
           double factor = newScale / scale;

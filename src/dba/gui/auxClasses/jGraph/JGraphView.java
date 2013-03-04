@@ -28,6 +28,7 @@ import com.mxgraph.view.mxStylesheet;
 import dba.gui.CustomTree;
 import dba.options.Options;
 import dba.utils.Localization;
+import dba.utils.constants;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -110,11 +111,11 @@ public abstract class JGraphView extends JPanel {
         }
 
         if (event.getWheelRotation() < 0) {
-          if (scale < 20) {
+          if (scale < constants.maximumZoomFactor) {
             graphComponent.zoomIn();
           }
         } else {
-          if (scale > 0.15) {
+          if (scale > constants.minimumZoomFactor) {
             graphComponent.zoomOut();
           }
         }
@@ -162,12 +163,12 @@ public abstract class JGraphView extends JPanel {
    */
   public void zoom(String factor) {
     if (zoomEnabled) {
-      if (factor.equals(locale.getString("Width"))) {
+      if (factor.equalsIgnoreCase(locale.getString("Width"))) {
         fitWidth();
-      } else if (factor.equals(locale.getString("Page"))) {
+      } else if (factor.equalsIgnoreCase(locale.getString("Page"))) {
         fitPage();
       } else {
-        setZoomFactor(Double.parseDouble(factor.replace("%", "")));
+        setZoomFactor(filterZoomFactor(factor));
       }
     }
   }
@@ -202,9 +203,32 @@ public abstract class JGraphView extends JPanel {
       factor /= 100;
       if (factor != graph.getView().getScale()) {
         graphComponent.zoomTo(factor, false);
-        notifyObservers();
       }
+      notifyObservers();
     }
+  }
+
+  /**
+   * Filters the zoomLevel entered by the user
+   * @param value  the value to be filtered
+   * @return a zoomlevel between acceptable bounds
+   */
+  private double filterZoomFactor(String value){
+    double factor;
+
+    try{
+      factor = Double.parseDouble((value).replace("%",""));
+    }catch (NumberFormatException ex){
+      factor = -1;
+    }
+
+    if (factor > constants.maximumZoomFactor * 100) {
+      factor = constants.maximumZoomFactor * 100;
+    } else if (factor < constants.minimumZoomFactor * 100) {
+      factor = constants.minimumZoomFactor * 100;
+    }
+
+    return factor;
   }
 
   /**
