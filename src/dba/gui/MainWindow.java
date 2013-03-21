@@ -755,26 +755,66 @@ public class MainWindow implements constants, Observer {
   class ToolbarChangeListener implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+
+      SwingUtilities.invokeLater(new Runnable() {
+
+        @Override
+        public void run() {
+
+
+        }
+      });
+
       if (evt.getPropertyName().equalsIgnoreCase("TreeClick")) {
         if (((String) evt.getNewValue()).equalsIgnoreCase("Database")) {
-          pnlToolBar.removeAll();
-          toolBarDatabase.setEnabledInspect(!CustomTree.getInstance().getDatabase().getDatabase().isEmpty());
-          toolBarDatabase.updateDatatype();
-          pnlToolBar.add(toolBarDatabase, BorderLayout.CENTER);
+          SwingUtilities.invokeLater(new Runnable() {
+
+            @Override
+            public void run() {
+              pnlToolBar.removeAll();
+              toolBarDatabase.setEnabledInspect(!CustomTree.getInstance().getDatabase().getDatabase().isEmpty());
+              toolBarDatabase.updateDatatype();
+              pnlToolBar.add(toolBarDatabase, BorderLayout.CENTER);
+            }
+          });
         } else if (((String) evt.getNewValue()).equalsIgnoreCase("Relation")) {
-          pnlToolBar.removeAll();
-          enableOptimizeButtons();
-          pnlToolBar.add(toolBarRelation, BorderLayout.CENTER);
+          SwingUtilities.invokeLater(new Runnable() {
+
+            @Override
+            public void run() {
+              pnlToolBar.removeAll();
+              enableOptimizeButtons();
+              pnlToolBar.add(toolBarRelation, BorderLayout.CENTER);
+            }
+          });
         } else if (((String) evt.getNewValue()).equalsIgnoreCase("Attribute")) {
-          pnlToolBar.removeAll();
-          toolBarAttribute.updateElements();
-          pnlToolBar.add(toolBarAttribute, BorderLayout.CENTER);
+          SwingUtilities.invokeLater(new Runnable() {
+
+            @Override
+            public void run() {
+              pnlToolBar.removeAll();
+              toolBarAttribute.updateElements();
+              pnlToolBar.add(toolBarAttribute, BorderLayout.CENTER);
+            }
+          });
         } else if (((String) evt.getNewValue()).equalsIgnoreCase("FD")) {
-          pnlToolBar.removeAll();
-          pnlToolBar.add(toolBarFd, BorderLayout.CENTER);
+          SwingUtilities.invokeLater(new Runnable() {
+
+            @Override
+            public void run() {
+              pnlToolBar.removeAll();
+              pnlToolBar.add(toolBarFd, BorderLayout.CENTER);
+            }
+          });
         } else {
-          pnlToolBar.removeAll();
-          pnlToolBar.add(toolBar, BorderLayout.CENTER);
+          SwingUtilities.invokeLater(new Runnable() {
+
+            @Override
+            public void run() {
+              pnlToolBar.removeAll();
+              pnlToolBar.add(toolBar, BorderLayout.CENTER);
+            }
+          });
         }
       }
       SwingUtilities.updateComponentTreeUI(pnlToolBar);

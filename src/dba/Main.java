@@ -21,6 +21,8 @@ import dba.gui.MainWindow;
 import dba.gui.tippOfTheDayFrame;
 import dba.init.Initialize;
 
+import javax.swing.*;
+
 
 public class Main {
 
@@ -30,15 +32,23 @@ public class Main {
    * @param args Arguments ( -cmd to start as commandline application)
    */
   public static void main(String[] args) {
-
     // Initialize - Load options ETC
     Initialize initialize = Initialize.getInstance();
     initialize.init();
 
-    MainWindow mainWindow = new MainWindow();
-    mainWindow.getFrame().setVisible(true);
-    tippOfTheDayFrame tippFrame = new tippOfTheDayFrame();
-    tippFrame.showTOD();
+    SwingUtilities.invokeLater(new Runnable() {
+
+      @Override
+      public void run() {
+
+
+        MainWindow mainWindow = new MainWindow();
+        mainWindow.getFrame().setVisible(true);
+        tippOfTheDayFrame tippFrame = new tippOfTheDayFrame();
+        tippFrame.showTOD();
+      }
+    });
+
   }
 
 }

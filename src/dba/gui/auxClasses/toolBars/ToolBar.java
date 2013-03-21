@@ -103,11 +103,24 @@ public class ToolBar extends JToolBar implements Observer {
     cmbZoom.getEditor().getEditorComponent().addFocusListener(
       new FocusListener(){
         public void focusGained(FocusEvent arg0) {
-          System.out.println("GAINED");
+          SwingUtilities.invokeLater(new Runnable() {
+
+            @Override
+            public void run() {
+              ((JTextField) cmbZoom.getEditor().getEditorComponent()).selectAll();
+
+            }
+          });
         }
 
         public void focusLost(FocusEvent arg0) {
-          System.out.println("LOST");
+          SwingUtilities.invokeLater(new Runnable() {
+
+            @Override
+            public void run() {
+              ((JTextField) cmbZoom.getEditor().getEditorComponent()).setCaretPosition(0);
+            }
+          });
         }
       });
 
