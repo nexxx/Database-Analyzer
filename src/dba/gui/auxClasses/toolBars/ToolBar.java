@@ -33,6 +33,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -95,9 +97,19 @@ public class ToolBar extends JToolBar implements Observer {
 
     cmbZoom.setToolTipText(locale.getString("GUI_ZoomFactor"));
     cmbZoom.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 16));
-    cmbZoom.setPreferredSize(new Dimension(88,29));
+    cmbZoom.setPreferredSize(new Dimension(88, 29));
     cmbZoom.setEditable(true);
     ((JTextField)cmbZoom.getEditor().getEditorComponent()).setHorizontalAlignment(JTextField.CENTER);
+    cmbZoom.getEditor().getEditorComponent().addFocusListener(
+      new FocusListener(){
+        public void focusGained(FocusEvent arg0) {
+          System.out.println("GAINED");
+        }
+
+        public void focusLost(FocusEvent arg0) {
+          System.out.println("LOST");
+        }
+      });
 
     relationView.addObserver(this);
     relationDetailView.addObserver(this);
