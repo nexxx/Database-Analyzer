@@ -373,7 +373,7 @@ public class optionsMenu extends JDialog {
 
   private void exportImportColorTheme(IOType type) {
     String path;
-    JFileChooser fc = new JFileChooser(options.getSaveFolder());
+    JFileChooser fc = new JFileChooser(options.getSchemeFolder());
     String title = type == IOType.EXPORT ? "DCT Export" : "DCT Import";
     fc.setDialogTitle(title);
     FileFilter typeDCT = new ExtensionFilter(".dtc", ".dtc"); //DTC: DBA Color Theme

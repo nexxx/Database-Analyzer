@@ -21,7 +21,7 @@ import dba.options.Options;
 import dbaCore.logging.MyLogger;
 
 import javax.swing.*;
-import java.io.IOException;
+import java.io.*;
 
 
 /**
@@ -65,6 +65,7 @@ public class Initialize {
     this.checkSaveFolder();
     this.checkExportFolder();
     this.checkLogFolder();
+    this.checkSchemeFolder();
     this.setLookAndFeel();
   }
 
@@ -97,6 +98,34 @@ public class Initialize {
     if (!options.getLogFolder().exists()) {
       options.getLogFolder().mkdirs();
     }
+  }
+
+  private void checkSchemeFolder(){
+    if (!options.getSchemeFolder().exists()) {
+      options.getSchemeFolder().mkdirs();
+    }
+    writeSchemeFile("res/colorScheme/Default.dtc");
+    writeSchemeFile("res/colorScheme/Noir.dtc");
+    writeSchemeFile("res/colorScheme/BlackAndWhite.dtc");
+  }
+
+  private void writeSchemeFile(String path){
+    try {
+      InputStream ddlStream = this.getClass().getClassLoader().getResourceAsStream(path);
+      String file = new File(path).getName();
+      FileOutputStream fos = new FileOutputStream(options.getSchemeFolder()+"/"+file);
+      byte[] buf = new byte[4096];
+      int r = ddlStream.read(buf);
+      while(r != -1) {
+        fos.write(buf, 0, r);
+        r = ddlStream.read(buf);
+      }
+      fos.close();
+      ddlStream.close();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
   }
 
   public void setLookAndFeel() {

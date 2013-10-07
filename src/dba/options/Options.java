@@ -46,6 +46,7 @@ public class Options extends Observable {
   final private File exportFolder;
   final private File logFolder;
   final private File logFile;
+  final private File schemeFolder;
   private Boolean showTippsOnStartup;
   private final Boolean defShowTippsOnStartup = true;
   private HashMap<String, String> availableLocale;
@@ -107,6 +108,7 @@ public class Options extends Observable {
     exportFolder = new File(homeFolder + "/Export");
     logFolder = new File(homeFolder + "/Logs");
     logFile = new File(logFolder + "/dba.html");
+    schemeFolder = new File(homeFolder+"/ColorSchemes");
 
     attributeColor = defAttributeColor;
     relationColor = defRelationColor;
@@ -541,5 +543,10 @@ public class Options extends Observable {
     return logFile;
   }
 
-
+  /**
+   * @return The Theme-Folder
+   */
+  public File getSchemeFolder() {
+    return schemeFolder;
+  }
 }
