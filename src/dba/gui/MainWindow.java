@@ -44,6 +44,7 @@ import dbaCore.logic.Analysis.GeneralRelationCheck;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
+import javax.swing.plaf.basic.BasicSplitPaneUI;
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.dnd.DnDConstants;
@@ -102,8 +103,6 @@ public class MainWindow implements constants, Observer {
   private JSplitPane splitPane;
   private Dimension minimumSizeSplitPane;
   private int lastSplitPaneLocation;
-  private JPanel pnlShowTree;
-  private JButton btnShowTree;
   private int splitPaneDividerSize;
   private JTabbedPane tabbedPaneOutline;
   private JCheckBoxMenuItem inspectMenuItem;
@@ -285,27 +284,10 @@ public class MainWindow implements constants, Observer {
     updateNavTabs();
 
     splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pnlLeft, pnlRight);
+    splitPane.setOneTouchExpandable(true);
     splitPaneDividerSize = 5;
     splitPane.setDividerSize(splitPaneDividerSize);
     splitPane.setDividerLocation(250);
-
-    pnlShowTree = new JPanel(new BorderLayout());
-    btnShowTree = new JButton("<");
-    Border emptyBorder = BorderFactory.createEmptyBorder(4, 4, 4, 4);
-    btnShowTree.setBorder(emptyBorder);
-    pnlShowTree.add(btnShowTree, BorderLayout.CENTER);
-    contentPane.add(pnlShowTree, BorderLayout.WEST);
-
-    btnShowTree.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent actionEvent) {
-        if (splitPane.getDividerLocation() > minimumSizeSplitPane.width) {
-          hideTree();
-        } else {
-          showTree();
-        }
-      }
-    });
 
     dbTreePanel.setMinimumSize(minimumSizeSplitPane);
     frame.add(splitPane, BorderLayout.CENTER);
@@ -494,7 +476,9 @@ public class MainWindow implements constants, Observer {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
         if (splitPane.getDividerLocation() < minimumSizeSplitPane.width) {
-          showTree();
+          BasicSplitPaneUI ui = (BasicSplitPaneUI)splitPane.getUI();
+          JButton oneClick = (JButton)ui.getDivider().getComponent(1);
+          oneClick.doClick();
         }
         pnlLeft.add(pnlSearch, BorderLayout.SOUTH);
         pnlLeft.revalidate();
@@ -733,23 +717,6 @@ public class MainWindow implements constants, Observer {
     if (wcs.openClicked()) {
       updateDBAfterChange();
     }
-  }
-
-  private void hideTree(){
-    dbTreePanel.setMinimumSize(new Dimension());
-    lastSplitPaneLocation = splitPane.getDividerLocation();
-    splitPane.setDividerLocation(0);
-    splitPane.setEnabled(false);
-    btnShowTree.setText(">");
-    splitPane.setDividerSize(0);
-  }
-
-  private void showTree(){
-    dbTreePanel.setMinimumSize(minimumSizeSplitPane);
-    splitPane.setDividerLocation(lastSplitPaneLocation);
-    splitPane.setEnabled(true);
-    btnShowTree.setText("<");
-    splitPane.setDividerSize(splitPaneDividerSize);
   }
 
   class ToolbarChangeListener implements PropertyChangeListener {
