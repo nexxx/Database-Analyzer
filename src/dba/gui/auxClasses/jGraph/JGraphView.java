@@ -284,6 +284,7 @@ public abstract class JGraphView extends JPanel {
     style.put(mxConstants.STYLE_RESIZABLE, false);
     style.put(mxConstants.STYLE_STROKEWIDTH, 1);
     style.put(mxConstants.STYLE_IMAGE_HEIGHT, 22);
+    style.put(mxConstants.STYLE_STROKECOLOR, Options.getInstance().getBorderColor());
     stylesheet.putCellStyle("ATTRIBUTE_NOIMAGE", style);
 
     // Define Style for Primary-Key Attribute represented by a small "space"-image

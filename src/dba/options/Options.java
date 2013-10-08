@@ -62,6 +62,8 @@ public class Options extends Observable {
   private final String defArrowFKColor = "#0095C7";
   private String arrowFDColor;
   private final String defArrowFDColor = "#000000";
+  private String borderColor;
+  private final String defBorderColor = "#0095C7";
   private String lookAndFeel;
   private final String defLookAndFeel = "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel";
   private String lastAdress;
@@ -116,6 +118,7 @@ public class Options extends Observable {
     fontColor = defFontColor;
     arrowFDColor = defArrowFDColor;
     arrowFKColor = defArrowFKColor;
+    borderColor = defBorderColor;
 
     lookAndFeel = defLookAndFeel;
 
@@ -198,6 +201,7 @@ public class Options extends Observable {
       prop.setProperty("lastType", lastType);
       prop.setProperty("showTabInspect", showTabInspect.toString());
       prop.setProperty("showTabOutline", showTabOutline.toString());
+      prop.setProperty("borderColor", borderColor);
 
       // Save properties to DBN options folder
       prop.store(new FileOutputStream(optionsFile), "DBA options file");
@@ -257,6 +261,11 @@ public class Options extends Observable {
       arrowFDColor = prop.getProperty("arrowFDColor");
       if (arrowFDColor == null) {
         arrowFDColor = defArrowFDColor;
+      }
+
+      borderColor = prop.getProperty("borderColor");
+      if (borderColor == null) {
+        borderColor = defBorderColor;
       }
 
       lookAndFeel = prop.getProperty("lookAndFeed");
@@ -548,5 +557,19 @@ public class Options extends Observable {
    */
   public File getSchemeFolder() {
     return schemeFolder;
+  }
+
+  /**
+   * @return The Border Color
+   */
+  public String getBorderColor() {
+    return borderColor;
+  }
+
+  /**
+   * @param borderColor The Border Color
+   */
+  public void setBorderColor(String borderColor) {
+    this.borderColor = borderColor;
   }
 }

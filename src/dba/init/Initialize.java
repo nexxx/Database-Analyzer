@@ -107,6 +107,7 @@ public class Initialize {
     writeSchemeFile("res/colorScheme/Default.dtc");
     writeSchemeFile("res/colorScheme/Noir.dtc");
     writeSchemeFile("res/colorScheme/BlackAndWhite.dtc");
+    writeSchemeFile("res/colorScheme/Light.dtc");
   }
 
   private void writeSchemeFile(String path){

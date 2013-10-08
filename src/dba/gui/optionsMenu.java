@@ -56,6 +56,7 @@ public class optionsMenu extends JDialog {
   private String currentFontColor;
   private String currentArrowFkColor;
   private String currentArrowFdColor;
+  private String currentBorderColor;
   private Localization locale;
   private String colorBG;
   private String colorAttr;
@@ -63,12 +64,14 @@ public class optionsMenu extends JDialog {
   private String colorFont;
   private String colorArrowFk;
   private String colorArrowFd;
+  private String colorBorder;
   private JPanel pnlBG;
   private JPanel pnlAttr;
   private JPanel pnlRel;
   private JPanel pnlFont;
   private JPanel pnlArrowFk;
   private JPanel pnlArrowFd;
+  private JPanel pnlBorder;
   private JComboBox<String> cbLaf;
   private JFrame mainFrame;
 
@@ -87,6 +90,7 @@ public class optionsMenu extends JDialog {
     currentRelColor = options.getRelationColor();
     currentArrowFkColor = options.getArrowFKColor();
     currentArrowFdColor = options.getArrowFDColor();
+    currentBorderColor = options.getBorderColor();
     frame = this;
     setResizable(false);
     this.setModal(true);
@@ -119,6 +123,7 @@ public class optionsMenu extends JDialog {
         options.setRelationColor(colorRel);
         options.setArrowFKColor(colorArrowFk);
         options.setArrowFDColor(colorArrowFd);
+        options.setBorderColor(colorBorder);
         options.setLookAndFeel(selectedLAF);
 
         boolean needToRestart = !currentLocale.equalsIgnoreCase(options.getLanguage());
@@ -128,6 +133,7 @@ public class optionsMenu extends JDialog {
         needToRestart = needToRestart || !currentArrowFkColor.equalsIgnoreCase(options.getArrowFKColor());
         needToRestart = needToRestart || !currentArrowFdColor.equalsIgnoreCase(options.getArrowFDColor());
         needToRestart = needToRestart || !currentFontColor.equalsIgnoreCase(options.getFontColor());
+        needToRestart = needToRestart || !currentBorderColor.equalsIgnoreCase(options.getBorderColor());
         if (needToRestart) {
           JOptionPane.showMessageDialog(null, locale.getString("OPT_Restart"));
         }
@@ -197,6 +203,7 @@ public class optionsMenu extends JDialog {
     colorRel = options.getRelationColor();
     colorArrowFk = options.getArrowFKColor();
     colorArrowFd = options.getArrowFDColor();
+    colorBorder = options.getBorderColor();
 
     JPanel panel = new JPanel(new BorderLayout());
     JPanel panelLeft = new JPanel(new GridLayout(0, 2));
@@ -310,6 +317,24 @@ public class optionsMenu extends JDialog {
     panelLeft.add(btnArrowFd);
     panelLeft.add(pnlArrowFd);
 
+    pnlBorder = new JPanel();
+    pnlBorder.setBackground(Color.decode(options.getBorderColor()));
+    JButton btnBorder = new JButton(locale.getString("OPT_ArrowFd"));
+    btnBorder.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent actionEvent) {
+        Color tmpColor = JColorChooser.showDialog(null, locale.getString("OPT_ArrowFdColor"),
+          Color.decode(options.getBorderColor()));
+        if (tmpColor != null) {
+          colorBorder = "#" + (Integer.toHexString(tmpColor.getRGB())).substring(2);
+          pnlBorder.setBackground(Color.decode(colorBorder));
+          pnlBorder.revalidate();
+        }
+      }
+    });
+    panelLeft.add(btnBorder);
+    panelLeft.add(pnlBorder);
+
     JButton btnDefault = new JButton(locale.getString("OPT_ResetTheme"));
     btnDefault.addActionListener(new ActionListener() {
       @Override
@@ -340,6 +365,10 @@ public class optionsMenu extends JDialog {
           colorArrowFd = "#000000";
           pnlArrowFd.setBackground(Color.decode(colorArrowFd));
           pnlArrowFd.revalidate();
+
+          colorBorder = "#0095C7";
+          pnlBorder.setBackground(Color.decode(colorBorder));
+          pnlBorder.revalidate();
         }
       }
     });
@@ -435,6 +464,7 @@ public class optionsMenu extends JDialog {
       prop.setProperty("currentArrowFkColor", colorArrowFk);
       prop.setProperty("currentArrowFdColor", colorArrowFd);
       prop.setProperty("currentBgColor", colorBG);
+      prop.setProperty("currentBorderColor", colorBorder);
 
       prop.store(new FileOutputStream(path), "DBA Color Theme");
     } catch (IOException e) {
@@ -451,6 +481,7 @@ public class optionsMenu extends JDialog {
       colorArrowFk = prop.getProperty("currentArrowFkColor");
       colorArrowFd = prop.getProperty("currentArrowFdColor");
       colorBG = prop.getProperty("currentBgColor");
+      colorBorder = prop.getProperty("currentBorderColor");
     } catch (IOException e) {
     }
 
@@ -466,6 +497,8 @@ public class optionsMenu extends JDialog {
     pnlArrowFk.revalidate();
     pnlArrowFd.setBackground(Color.decode(colorArrowFd));
     pnlArrowFd.revalidate();
+    pnlBorder.setBackground(Color.decode(colorBorder));
+    pnlBorder.revalidate();
   }
 
   private enum IOType {

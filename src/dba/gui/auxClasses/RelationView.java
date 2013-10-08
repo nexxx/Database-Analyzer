@@ -134,6 +134,7 @@ public class RelationView extends JGraphView {
     style.put(mxConstants.STYLE_FONTCOLOR, Options.getInstance().getFontColor());
     style.put(mxConstants.STYLE_FONTSIZE, 20);
     style.put(mxConstants.STYLE_FILLCOLOR, Options.getInstance().getRelationColor());
+    style.put(mxConstants.STYLE_STROKECOLOR, Options.getInstance().getBorderColor());
     style.put(mxConstants.STYLE_FONTSTYLE, mxConstants.FONT_BOLD);
     style.put(mxConstants.STYLE_EDITABLE, false);
     style.put(mxConstants.STYLE_RESIZABLE, false);
