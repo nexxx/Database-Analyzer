@@ -319,11 +319,11 @@ public class optionsMenu extends JDialog {
 
     pnlBorder = new JPanel();
     pnlBorder.setBackground(Color.decode(options.getBorderColor()));
-    JButton btnBorder = new JButton(locale.getString("OPT_ArrowFd"));
+    JButton btnBorder = new JButton(locale.getString("OPT_Border"));
     btnBorder.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent actionEvent) {
-        Color tmpColor = JColorChooser.showDialog(null, locale.getString("OPT_ArrowFdColor"),
+        Color tmpColor = JColorChooser.showDialog(null, locale.getString("OPT_BorderColor"),
           Color.decode(options.getBorderColor()));
         if (tmpColor != null) {
           colorBorder = "#" + (Integer.toHexString(tmpColor.getRGB())).substring(2);
