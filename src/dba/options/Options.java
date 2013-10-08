@@ -20,6 +20,8 @@
  */
 package dba.options;
 
+import dba.Main;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -51,19 +53,19 @@ public class Options extends Observable {
   private final Boolean defShowTippsOnStartup = true;
   private HashMap<String, String> availableLocale;
   private String attributeColor;
-  private final String defAttributeColor = "#00FF00";
+  private String defAttributeColor = "#00FF00";
   private String relationColor;
-  private final String defRelationColor = "#00CD00";
+  private String defRelationColor = "#00CD00";
   private String backgroundColor;
-  private final String defBackgroundColor = "#A7E2FF";
+  private String defBackgroundColor = "#A7E2FF";
   private String fontColor;
-  private final String defFontColor = "#000000";
+  private String defFontColor = "#000000";
   private String arrowFKColor;
-  private final String defArrowFKColor = "#0095C7";
+  private String defArrowFKColor = "#0095C7";
   private String arrowFDColor;
-  private final String defArrowFDColor = "#000000";
+  private String defArrowFDColor = "#000000";
   private String borderColor;
-  private final String defBorderColor = "#0095C7";
+  private String defBorderColor = "#0095C7";
   private String lookAndFeel;
   private final String defLookAndFeel = "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel";
   private String lastAdress;
@@ -111,6 +113,22 @@ public class Options extends Observable {
     logFolder = new File(homeFolder + "/Logs");
     logFile = new File(logFolder + "/dba.html");
     schemeFolder = new File(homeFolder+"/ColorSchemes");
+
+
+    try {
+      Properties colorProp = new Properties();
+      colorProp.load(this.getClass().getClassLoader().getResourceAsStream("res/colorScheme/Default.dtc"));
+      defArrowFDColor = colorProp.getProperty("currentArrowFdColor");
+      defAttributeColor = colorProp.getProperty("currentAttrColor");
+      defFontColor = colorProp.getProperty("currentFontColor");
+      defBackgroundColor = colorProp.getProperty("currentBgColor");
+      defArrowFKColor = colorProp.getProperty("currentArrowFkColor");
+      defRelationColor = colorProp.getProperty("currentRelColor");
+      defBorderColor = colorProp.getProperty("currentBorderColor");
+    } catch (IOException e) {
+      e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+    }
+
 
     attributeColor = defAttributeColor;
     relationColor = defRelationColor;

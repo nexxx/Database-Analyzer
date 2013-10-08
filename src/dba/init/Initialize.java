@@ -36,11 +36,6 @@ public class Initialize {
 
   private Initialize() {
     super();
-    try {
-      MyLogger.setup();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
     options = Options.getInstance();
   }
 
@@ -67,6 +62,11 @@ public class Initialize {
     this.checkLogFolder();
     this.checkSchemeFolder();
     this.setLookAndFeel();
+    try {
+      MyLogger.setup();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   private void checkOptionsFolderFiles() {
