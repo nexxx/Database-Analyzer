@@ -20,6 +20,7 @@ package dba.gui.auxClasses;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.view.mxStylesheet;
+import dba.gui.CustomTree;
 import dba.gui.auxClasses.events.GraphicalExportRequested;
 import dba.gui.auxClasses.events.GraphicalExportRequestedListener;
 import dba.gui.auxClasses.jGraph.JGraphView;
@@ -159,10 +160,5 @@ public class RelationDetailsView extends JGraphView implements Observer {
     style = (Hashtable<String, Object>) style.clone();
     style.put(mxConstants.STYLE_ENDARROW, mxConstants.NONE);
     stylesheet.putCellStyle("EDGE_PLAIN", style);
-  }
-
-  @Override
-  public void update(Observable observable, Object o) {
-    //TODO
   }
 }

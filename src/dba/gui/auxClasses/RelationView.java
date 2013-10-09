@@ -44,7 +44,7 @@ public class RelationView extends JGraphView {
 
   public RelationView() {
     super();
-    initGraphics();
+    Options.getInstance().addObserver(this);
   }
 
   /**
@@ -54,7 +54,7 @@ public class RelationView extends JGraphView {
    * @param logic the GUiLogic to observe
    */
   public RelationView(GuiLogic logic) {
-    super();
+    this();
 
     //logic.addObserver(this);
     logic.addGraphicalExportRequestedListener(new GraphicalExportRequestedListener() {
@@ -157,5 +157,7 @@ public class RelationView extends JGraphView {
     style.put(mxConstants.STYLE_EDGE, mxConstants.EDGESTYLE_ELBOW);
     stylesheet.putCellStyle("FK_ARROW", style);
   }
+
+
 }
 

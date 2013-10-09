@@ -29,6 +29,7 @@ import dba.gui.CustomTree;
 import dba.options.Options;
 import dba.utils.Localization;
 import dba.utils.constants;
+import dbaCore.data.Database;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -40,12 +41,9 @@ import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Hashtable;
-import java.util.Observer;
+import java.util.*;
 
-public abstract class JGraphView extends JPanel {
+public abstract class JGraphView extends JPanel implements Observer {
   /**
    *
    */
@@ -347,5 +345,18 @@ public abstract class JGraphView extends JPanel {
     for (Observer stalker : observers) {
       stalker.update(null, this);
     }
+  }
+
+  public abstract void display(Database database);
+
+  @Override
+  public void update(Observable observable, Object o) {
+    graph.getModel().beginUpdate();
+    initStyle();
+    graph.getModel().endUpdate();
+    graphComponent.getViewport().setBackground(Color.decode(Options.getInstance().getBackgroundColor()));
+
+    display(CustomTree.getInstance().getDatabase());
+    this.revalidate();
   }
 }
