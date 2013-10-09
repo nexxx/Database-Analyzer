@@ -80,7 +80,6 @@ public class Options extends Observable {
   private final Boolean defShowTabOutline = true;
   private final Boolean defShowTabInspect = true;
 
-
   /**
    * Constructor for the options class
    */
@@ -200,6 +199,9 @@ public class Options extends Observable {
    * Saves all Options to a File
    */
   public void writeOptions() {
+    if(!this.hasChanged()) {
+      return;
+    }
 
     try {
       // Set the properties value
@@ -348,14 +350,20 @@ public class Options extends Observable {
    * @param showTippsOnStartup true or false
    */
   public void setShowTippsOnStartup(Boolean showTippsOnStartup) {
-    this.showTippsOnStartup = showTippsOnStartup;
+    if(this.showTippsOnStartup != showTippsOnStartup) {
+      this.showTippsOnStartup = showTippsOnStartup;
+      this.setChanged();
+    }
   }
 
   /**
    * @param language the language to set
    */
   public void setLanguage(String language) {
-    this.language = language;
+    if(!this.language.equals(language)) {
+      this.language = language;
+      this.setChanged();
+    }
   }
 
   /**
@@ -392,7 +400,11 @@ public class Options extends Observable {
    * @param attributeColor Attributecolor (e.g. #00FF00)
    */
   public void setAttributeColor(String attributeColor) {
-    this.attributeColor = attributeColor;
+    if(!this.attributeColor.equals(attributeColor)) {
+      this.attributeColor = attributeColor;
+      this.setChanged();
+    }
+
   }
 
   /**
@@ -406,7 +418,11 @@ public class Options extends Observable {
    * @param relationColor Relationcolor (e.g. #00FF00)
    */
   public void setRelationColor(String relationColor) {
-    this.relationColor = relationColor;
+    if(!this.relationColor.equals(relationColor)) {
+      this.relationColor = relationColor;
+      this.setChanged();
+    }
+
   }
 
   /**
@@ -420,7 +436,11 @@ public class Options extends Observable {
    * @param backgroundColor Backgroundcolor (e.g. #00FF00)
    */
   public void setBackgroundColor(String backgroundColor) {
-    this.backgroundColor = backgroundColor;
+    if(!this.backgroundColor.equals(backgroundColor)) {
+      this.backgroundColor = backgroundColor;
+      this.setChanged();
+    }
+
   }
 
   /**
@@ -434,7 +454,11 @@ public class Options extends Observable {
    * @param fontColor Fontcolor (e.g. #00FF00)
    */
   public void setFontColor(String fontColor) {
-    this.fontColor = fontColor;
+    if(!this.fontColor.equals(fontColor)) {
+      this.fontColor = fontColor;
+      this.setChanged();
+    }
+
   }
 
   /**
@@ -448,7 +472,10 @@ public class Options extends Observable {
    * @param arrowFKColor Arrowcolor FK(e.g. #000000)
    */
   public void setArrowFKColor(String arrowFKColor) {
-    this.arrowFKColor = arrowFKColor;
+    if(!this.arrowFKColor.equals(arrowFKColor)) {
+      this.arrowFKColor = arrowFKColor;
+      this.setChanged();
+    }
   }
 
   /**
@@ -462,7 +489,10 @@ public class Options extends Observable {
    * @param arrowFDColor Arrowcolor FD(e.g. #000000)
    */
   public void setArrowFDColor(String arrowFDColor) {
-    this.arrowFDColor = arrowFDColor;
+    if(!this.arrowFDColor.equals(arrowFDColor)) {
+      this.arrowFDColor = arrowFDColor;
+      this.setChanged();
+    }
   }
 
   /**
@@ -476,7 +506,10 @@ public class Options extends Observable {
    * @param lookAndFeel LAF String
    */
   public void setLookAndFeel(String lookAndFeel) {
-    this.lookAndFeel = lookAndFeel;
+    if(!this.lookAndFeel.equals(lookAndFeel)) {
+      this.lookAndFeel = lookAndFeel;
+      this.setChanged();
+    }
   }
 
   /**
@@ -497,7 +530,10 @@ public class Options extends Observable {
    * @param lastAdress Last used Adress for DB Import
    */
   public void setLastAdress(String lastAdress) {
-    this.lastAdress = lastAdress;
+    if(!this.lastAdress.equals(lastAdress)) {
+      this.lastAdress = lastAdress;
+      this.setChanged();
+    }
   }
 
   /**
@@ -511,7 +547,10 @@ public class Options extends Observable {
    * @param lastUser Last used Username for DB Import
    */
   public void setLastUser(String lastUser) {
-    this.lastUser = lastUser;
+    if(!this.lastUser.equals(lastUser)) {
+      this.lastUser = lastUser;
+      this.setChanged();
+    }
   }
 
   /**
@@ -525,7 +564,10 @@ public class Options extends Observable {
    * @param lastType Last used DB Type for DB Import
    */
   public void setLastType(String lastType) {
-    this.lastType = lastType;
+    if(!this.lastType.equals(lastType)) {
+      this.lastType = lastType;
+      this.setChanged();
+    }
   }
 
   /**
@@ -539,7 +581,10 @@ public class Options extends Observable {
    * @param showTabOutline Show outline tab
    */
   public void setShowTabOutline(Boolean showTabOutline) {
-    this.showTabOutline = showTabOutline;
+    if(this.showTabOutline != showTabOutline) {
+      this.showTabOutline = showTabOutline;
+      this.setChanged();
+    }
   }
 
   /**
@@ -553,7 +598,10 @@ public class Options extends Observable {
    * @param showTabInspect Show Inspect tab
    */
   public void setShowTabInspect(Boolean showTabInspect) {
-    this.showTabInspect = showTabInspect;
+    if(this.showTabInspect != showTabInspect) {
+      this.showTabInspect = showTabInspect;
+      this.setChanged();
+    }
   }
 
   /**
@@ -588,6 +636,10 @@ public class Options extends Observable {
    * @param borderColor The Border Color
    */
   public void setBorderColor(String borderColor) {
-    this.borderColor = borderColor;
+    if(!this.borderColor.equals(borderColor)) {
+      this.borderColor = borderColor;
+      this.setChanged();
+    }
   }
+
 }

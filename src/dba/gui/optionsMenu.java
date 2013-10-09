@@ -142,6 +142,8 @@ public class optionsMenu extends JDialog {
         Initialize.getInstance().setLookAndFeel();
         SwingUtilities.updateComponentTreeUI(mainFrame);
 
+        options.notifyObservers();
+
         frame.dispose();
       }
     });

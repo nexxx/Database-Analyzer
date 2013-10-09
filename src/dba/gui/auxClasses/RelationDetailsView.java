@@ -32,11 +32,13 @@ import dbaCore.data.RelationSchema;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Displays the relations and their functional dependencies
  */
-public class RelationDetailsView extends JGraphView {
+public class RelationDetailsView extends JGraphView implements Observer {
   /**
    *
    */
@@ -44,24 +46,25 @@ public class RelationDetailsView extends JGraphView {
 
   public RelationDetailsView() {
     super();
-    initGraphics();
+    Options.getInstance().addObserver(this);
   }
 
   /**
    * Creates a new instance and registers this instance as a observer
    * of given GuiLogic
    *
-   * @param logic the GUiLogic to observe
+   * @param logic the GUILogic to observe
    */
   public RelationDetailsView(GuiLogic logic) {
-    super();
-
-    logic.addGraphicalExportRequestedListener(new GraphicalExportRequestedListener() {
-      @Override
-      public void GraphicalExportRequested(GraphicalExportRequested exportRequest) {
-        exportToPng(exportRequest.getPath(), "_export_fd");
-      }
-    });
+    this();
+    if(logic != null) {
+      logic.addGraphicalExportRequestedListener(new GraphicalExportRequestedListener() {
+        @Override
+        public void GraphicalExportRequested(GraphicalExportRequested exportRequest) {
+          exportToPng(exportRequest.getPath(), "_export_fd");
+        }
+      });
+    }
     initGraphics();
   }
 
@@ -156,5 +159,10 @@ public class RelationDetailsView extends JGraphView {
     style = (Hashtable<String, Object>) style.clone();
     style.put(mxConstants.STYLE_ENDARROW, mxConstants.NONE);
     stylesheet.putCellStyle("EDGE_PLAIN", style);
+  }
+
+  @Override
+  public void update(Observable observable, Object o) {
+    //TODO
   }
 }
