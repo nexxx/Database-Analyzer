@@ -79,6 +79,7 @@ public class Options extends Observable {
   private Boolean showTabInspect;
   private final Boolean defShowTabOutline = true;
   private final Boolean defShowTabInspect = true;
+  private boolean needToRestart = false;
 
   /**
    * Constructor for the options class
@@ -362,6 +363,7 @@ public class Options extends Observable {
   public void setLanguage(String language) {
     if(!this.language.equals(language)) {
       this.language = language;
+      this.needToRestart = true;
       this.setChanged();
     }
   }
@@ -642,4 +644,19 @@ public class Options extends Observable {
     }
   }
 
+  /**
+   * Show of a application restart is needed
+   * @return NeedToRestart
+   */
+  public boolean isNeedToRestart() {
+    return needToRestart;
+  }
+
+  /**
+   * Set if application needs to restart
+   * @param needToRestart
+   */
+  public void setNeedToRestart(boolean needToRestart) {
+    this.needToRestart = needToRestart;
+  }
 }

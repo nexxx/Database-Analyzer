@@ -126,16 +126,9 @@ public class optionsMenu extends JDialog {
         options.setBorderColor(colorBorder);
         options.setLookAndFeel(selectedLAF);
 
-        boolean needToRestart = !currentLocale.equalsIgnoreCase(options.getLanguage());
-        needToRestart = needToRestart || !currentAttrColor.equalsIgnoreCase(options.getAttributeColor());
-        needToRestart = needToRestart || !currentBgColor.equalsIgnoreCase(options.getBackgroundColor());
-        needToRestart = needToRestart || !currentRelColor.equalsIgnoreCase(options.getRelationColor());
-        needToRestart = needToRestart || !currentArrowFkColor.equalsIgnoreCase(options.getArrowFKColor());
-        needToRestart = needToRestart || !currentArrowFdColor.equalsIgnoreCase(options.getArrowFDColor());
-        needToRestart = needToRestart || !currentFontColor.equalsIgnoreCase(options.getFontColor());
-        needToRestart = needToRestart || !currentBorderColor.equalsIgnoreCase(options.getBorderColor());
-        if (needToRestart) {
+        if (options.isNeedToRestart()) {
           JOptionPane.showMessageDialog(null, locale.getString("OPT_Restart"));
+          options.setNeedToRestart(false);
         }
         options.writeOptions();
 
