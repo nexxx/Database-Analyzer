@@ -152,7 +152,7 @@ public class RelationDetailsView extends JGraphView implements Observer {
     style.put(mxConstants.STYLE_MOVABLE, false);
     style.put(mxConstants.STYLE_EDITABLE, false);
     style.put(mxConstants.STYLE_RESIZABLE, false);
-    style.put(mxConstants.STYLE_STROKEWIDTH, 2);
+    style.put(mxConstants.STYLE_STROKEWIDTH, 1.5);
     style.put(mxConstants.STYLE_STROKECOLOR, Options.getInstance().getArrowFDColor());
     stylesheet.putCellStyle("EDGE_ARROW", style);
 

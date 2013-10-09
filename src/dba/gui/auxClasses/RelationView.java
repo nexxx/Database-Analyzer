@@ -155,6 +155,7 @@ public class RelationView extends JGraphView {
     style.put(mxConstants.STYLE_RESIZABLE, false);
     style.put(mxConstants.STYLE_STROKECOLOR, Options.getInstance().getArrowFKColor());
     style.put(mxConstants.STYLE_EDGE, mxConstants.EDGESTYLE_ELBOW);
+    style.put(mxConstants.STYLE_STROKEWIDTH, 1.5);
     stylesheet.putCellStyle("FK_ARROW", style);
   }
 
