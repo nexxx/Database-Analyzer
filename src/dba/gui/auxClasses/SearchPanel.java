@@ -116,12 +116,13 @@ public class SearchPanel extends JPanel implements Observable {
         search();
       }
     });
+
+    panel.add(new JSeparator(), "span");
     panel.add(lblsearch, "span 2");
     panel.add(btnClose);
     panel.add(txtSearch);
     panel.add(btnPrev);
     panel.add(btnNext);
-
   }
 
   private void search(){
